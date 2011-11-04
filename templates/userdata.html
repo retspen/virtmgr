@@ -1,0 +1,57 @@
+{% extends "usr.html" %}
+
+{% block urls %}
+<li><a href=#><h2 style="color: #000">Hello, {{usr_name}}</h2></a></li>
+<li></li>
+<li><a href=/hosts/><h2>Main</h2></a></li>
+<li><a href=/usr/logout><h2>Logout</h2></a></li>
+{% endblock %}
+
+{% block content %}
+</tr><tr>
+
+<td id="content">
+
+<h3>Connections<h3>
+{% if host_info %}
+<table>
+<tr style="text-align:center; background:#f4f8fa"><td colspan=4><h2>Virt host:<h2></td></tr>
+<tr style="background:#f4f8fa"><td>Hostname:</td><td>IP address:</td><td>SSH user:</td><td>Delete:</td></tr>
+{% for name, info in host_info.items %}
+<tr style="background:#f4f8fa"><td>{{name}}</td><td>{{info.0}}</td><td>{{info.1}}</td><td><form action="/usr/profile/" method="post"><input type="hidden" name="host" value="{{name}}"><input type="submit" name="action" value="delete" onclick="return confirm('Are you sure?')"></form></td></tr>
+{% endfor %}
+</table>
+<br />
+{% else %}
+<center><h3>You do not have to connect to hosts. Press to button "New host"<h3></center>
+{% endif %}
+<center><button onclick="toggleview('q1')" style="width:100px;">New host</button></center>
+<div id='q1' style="display:none">
+<br />
+<form action="/usr/profile/" method="post">
+<table>
+<tr>
+<td>Hostname:</td>
+<td><input type="text" name="name" placeholder="Name" value="" style="width:120px;"></td>
+</tr>
+<tr>
+<td>IP address:</td>
+<td><input type="text" name="ipaddr" placeholder="192.168.1.1" value="" style="width:120px;"></td>
+</tr>
+<tr>
+<td>Login:</td>
+<td><input type="text" name="sshusr" placeholder="Name" value="" style="width:120px;"></td>
+</tr>
+<tr>
+<td>Password:</td>
+<td><input type="password" name="passw" placeholder="Password" value="" style="width:120px;"></td>
+</tr>
+<tr>
+<td colspan=2 style="text-align:center;"><input style="width:100px;" type="submit" name="action" value="add"></td>
+</tr>
+</table>
+</form>
+</div>
+</td>
+
+{% endblock %}

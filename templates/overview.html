@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+</tr><tr>
+<td id="nav">
+<h3>Virt Machine:</h3>
+<ul>
+<a href=/overview/{{host}}/><h4>{{host}}:</h4></a>
+{% if not all_vm %}
+		<li><a href=/newvm/{{host}}/>Add VM</a></li>
+{% endif %}
+{% for name, state in all_vm.items %}
+	{% if name == '000x' %}
+		<li>Not connected</li>
+	{% else %}
+		<li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
+  {% endif %}
+  {% if not name %}
+		<li><a href=/newvm/{{host}}/>Add VM</a></li>
+  {% endif %}
+{% endfor %}
+</ul>
+</td>
+
+<td id="content">
+{% if info %}
+<ul>
+<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
+<li><a href=/network/{{host}}/><h3>Network</h3></a></li>
+<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
+<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
+</ul>
+<h3>Overview:</h3>
+<p>Hostname: {{host}}</p>
+<p>Connection: {{info.0}}</p>
+<p>Architecture: {{info.1}}</p>
+<p>Memory: {{info.2}}Mb</p>
+<p>Logical CPUs: {{info.3}} x {{info.4}}Mhz</p>
+{% else %}
+<h2>Not conncted!</h2>
+{% endif %}
+</td>
+{% endblock %}

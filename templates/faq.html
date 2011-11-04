@@ -1,0 +1,27 @@
+{% extends "usr.html" %}
+{% block urls %}
+<a href=/help/>Help</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<a href=/support/>Support</a>
+<a href=/faq/>FAQ</a>
+{% if user.is_authenticated %}<button onclick="location.href='{% url registration_register %}'">Create new account</button>{% endif %}
+{% endblock %}
+{% block content %}
+</tr><tr>
+<td id="content">
+<h1>Frequently Asked Questions</h1>
+<br />
+<p>Q: How to add image in the list of installation images?</p>
+<p>A: All images must be stored in a directory which is defined as a storage pool. For example: /var/lib/libvirt/images/cdrom.iso</p>
+<br />
+<p>Q: Why it doesn`t  show the images of HDD i can`t  create a new VM?</p>
+<p>A: Before creating a new VM image HDD must be created beforehand in the storage tab.</p>
+<br />
+<p>Q: How occur the connection to the VNC?</p>
+<p>A: The VNC connection created via SSH tunnel.</p>
+<br />
+<p>Q: The service is not functional i need.</p>
+<p>A: Write to us all problems that you seen to email we will solve that.</p>
+</td>
+{% endblock %}

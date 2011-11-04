@@ -1,0 +1,55 @@
+{% extends "usr.html" %}
+
+{% block urls %}
+<button onclick="location.href='{% url  auth_login %}'">Log in systems</button>
+{% endblock %}
+
+{% block content %}
+</tr><tr>
+
+<td id="content">
+{% if user.is_authenticated %}
+<h3>You are registered. Do you mean <a href="{% url auth_logout %}">logout</a> or go to page <a href=/hosts/>connetions</a>.</h3>
+{% else %}
+<br />
+<div class="sign-in">
+<div class="signin-box">
+  <h2>Registration</h2><br />
+  <form id="gaia_loginform" action="" method="post">
+{% for field in form %}
+     {% if field.errors %}
+     	<font color="red">{{ field.errors }}</font><br /><br />
+     {% endif %}
+{% endfor %}
+<label>
+  <strong class="user-label">Username</strong>
+  <input name="username" id="Username" type="text">
+</label>
+<label>
+  <strong class="user-label">Email</strong>
+  <input name="email" id="Email" type="text">
+</label>
+<label>
+  <strong class="passwd-label">Password</strong>
+  <input name="password1" id="Passwd" type="password">
+</label>
+<label>
+  <strong class="passwd-label">Password</strong>
+  <input name="password2" id="Passwd" type="password">
+</label>
+  <input name="signIn" id="signIn" value="Registration" type="submit">
+  </form>
+</div>
+</div>
+
+<div class="product-info">
+<div class="product-headers">
+  <h1>Web Virtual Manager Machine</h1>
+  <h2>Registrarion</h2>
+</div>
+  <p>Before we can activate your account one last step must be taken to complete your registration. The activation code to be sent to you at email.</p>
+</div>
+{% endif %}
+</td>
+
+{% endblock %}

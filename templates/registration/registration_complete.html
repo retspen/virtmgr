@@ -1,0 +1,21 @@
+{% extends "usr.html" %}
+
+{% block urls %}
+<button onclick="location.href='{% url registration_register %}'">Create new account</button>
+{% endblock %}
+
+{% block content %}
+</tr><tr>
+
+<td id="content">
+
+{% if user.is_authenticated %}
+You are loggined. Do you mean <a href="{% url auth_logout %}">logout</a> or go to <a href=/hosts>hosts</a> page.
+{% else %}
+<h1>Web Virtual Manager Machine</h1>
+<h2>Thank you for your time. In your e-mail sent confirmation code.<br /> Need to confirm registration simply clicking on the link. Go to <a href=/>home page</a></h2>
+{% endif %}
+
+</td>
+
+{% endblock %}

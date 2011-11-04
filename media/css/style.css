@@ -1,0 +1,52 @@
+* {padding: 0; margin: 0; font: normal 100% 'Times New Roman'}
+body {color: #000; background: #d8e2e8;}
+html {height: 100%; width:1000px; margin-left:auto; margin-right:auto;}
+table {margin-left: auto; margin-right: auto;}
+li {list-style: none;}
+
+/* tables */
+#tab {width: 100%; min-height: 100%; height: 100%; border-collapse: collapse}
+#tab td {padding: 3px 15px}
+
+/* header */
+#header {clear: both; height: 50px; background: #f4f8fa; border-bottom: 1px solid #d3eefd;}
+#header img {float: left; margin 0; padding 0; border: 0;}
+#header h2 {font: bold 14px Arial; color: #99b8c6}
+#header a {font: bold 14px Arial; color: #676866;}
+#header button { margin: 5 10; height: 32px; width: 140px; font-size: 13px; }
+#header ul {float: right; margin: 0; padding: 0;}
+#header li {float: left; padding: 10px 5px;}
+#header li a {text-decoration: none; clear: both; display: block; padding: 10px 5px;}
+
+/* navigation */
+#nav {width: 150px; background: #f5faf3; border-right: 1px solid #d3eefd;}
+#nav h3 {font: bold 20px Arial; color: #676866; margin-top: 15px; border-bottom: 1px solid #d3eefd;}
+#nav h4 {font: bold 16px Arial; color: #6da9c7; margin-top: 5px; margin-left: 10px;}
+#nav ul {margin 0; padding 0; margin-top: 15px;}
+#nav li {margin-top: 5px; margin-left: 20px; list-style: none;}
+#nav a {color: #78858c; text-decoration: none; border-bottom: 1px dashed blue;}
+#nav input {width: 45px;}
+
+/* content */
+#content {background: #fff; width: auto; padding: 3px 15px 20px 15px !important}
+#content p {font: normal 100% 'Times New Roman'; text-align: justify; margin-top: 5px; margin-bottom: 5px; text-indent: 10px; padding-right: 5em}
+#content h1 {font: bold 24px Arial; color: #617ec1; margin-top: 15px; margin-bottom: 10px;}
+#content h2 {font: bold 22px Arial; color: #a0a6a8; margin-top: 15px; margin-bottom: 10px;}
+#content h3 {font: bold 20px Arial; color: #a0a6a8; margin-top: 15px;}
+#content h4 {font: bold 18px Arial; color: #a0a6a8; margin-top: 15px;}
+#content hr {margin: 10px 10px;}
+#content ul {float: right; margin 0; padding 0;}
+#content li {float: left;}
+#content a {font: bold 16px Arial; color: #99b8c6; margin: 0; padding: 0; text-decoration: none;}
+#content li a {display: block; padding: 10px 5px; text-decoration: none;}
+#content li a h3 {color: #99b8c6;}
+#content pre {border: 1px solid #999999; background: #eeeeee; color: black; padding: 1em;}
+#content code {font: bold 16px Arial; color: #9ec9f9; margin-top: 15px;} 
+
+
+#nav, #content {vertical-align: top}
+#nav h3, #content h3 {margin-bottom: 10px !important}
+
+/* footer */
+#footer {height: 50px; background: #e2e2e2; border-top: 1px solid #d3eefd;}
+#footer * {font: bold 14px Arial; color: #676866;}

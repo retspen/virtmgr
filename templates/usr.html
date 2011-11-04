@@ -1,0 +1,133 @@
+<html>
+<head>
+  <title>Web Virtual Manager Machine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name='yandex-verification' content='483f16ffaf876d7d' />
+  <meta name="google-site-verification" content="6cjnY28z1QD9e5p1d9SMVJBhNV_t9bMsntnfjWV1ACI" />
+  <meta name="description" content="Web Virtual Manager Machine" />
+  <meta name="keywords" content="web kvm, web libvirt, web virt-manager, web virt manager, kvm, libvirt, libvirt web interface, libvirt web frontend, libvirt web admin, libvirt web management, virt-manager, kvm web interface, kvm web panel, kvm web panel, kvm web manager, kvm web console" />
+
+  <link rel="stylesheet" type="text/css" href="/media/css/style.css" media="screen">
+  <link rel="icon" href="/media/img/favicon.ico" type="image/x-icon">
+<script type="text/javascript">
+function toggleview(itm) 
+{ 
+   var itmx = document.getElementById(itm); 
+   if (itmx.style.display == "none") 
+   { 
+      itmx.style.display = "block"; 
+   } 
+   else 
+   { 
+      itmx.style.display = "none"; 
+   } 
+} 
+</script>
+<style type="text/css">
+  .content {
+  width: auto;
+  max-width: 1000px;
+  min-width: 780px;
+  }
+  .product-info {
+  margin: 0 385px 0 0;
+  }
+  .product-info h3 {
+  font-size: 1.23em;
+  font-weight: normal;
+  }
+  .sign-in {
+  width: 335px;
+  float: right;
+  }
+  .signin-box,
+  .accountchooser-box {
+  margin: 12px 0 0;
+  padding: 20px 25px 15px;
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  }
+  .product-headers {
+  margin: 0 0 1.5em;
+  }
+</style>
+<style type="text/css">
+  .signin-box h2 {
+  font-size: 16px;
+  line-height: 16px;
+  height: 16px;
+  margin: 0 0 1.2em;
+  position: relative;
+  }
+  .signin-box h2 strong {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 1px;
+  height: 19px;
+  width: 52px;
+  }
+  .signin-box label {
+  display: block;
+  margin: 0 0 1.5em;
+  }
+  .signin-box input[type=text],
+  .signin-box input[type=password] {
+  width: 100%;
+  height: 32px;
+  font-size: 15px;
+  }
+  .signin-box .user-label,
+  .signin-box .email-label,
+  .signin-box .passwd-label {
+  font-weight: bold;
+  margin: 0 0 .5em;
+  display: block;
+  }
+  .signin-box input[type=submit] {
+  margin: 0 1.5em 1.2em 0;
+  height: 32px;
+  width: 80px;
+  font-size: 13px;
+  }
+  .signin-box ul {
+  margin: 0;
+  }
+</style>
+</head>
+<body>
+<table id="tab">
+<tbody><tr>
+<td colspan="2" id="header">
+<a href=/><img src=/media/img/logo.png></a>
+<ul>
+{% block urls %}{% endblock %}
+</ul>
+</td>
+{% block content %}{% endblock %}
+</tr><tr>
+<td colspan="2" id="footer">
+<p>© 2011 X-systems
+<a href=/help/>Help</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<a href=/support/>Support</a>
+<a href=/faq/>FAQ</a>
+</p>
+<!-- Yandex.Metrika counter -->
+<div style="display:none;"><script type="text/javascript">
+(function(w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter10346776 = new Ya.Metrika({id:10346776, enableAll: true});
+        }
+        catch(e) { }
+    });
+})(window, "yandex_metrika_callbacks");
+</script></div>
+<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
+<noscript><div><img src="//mc.yandex.ru/watch/10346776" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</tr>
+</tbody></table>
+</body></html>

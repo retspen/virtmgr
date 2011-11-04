@@ -1,0 +1,55 @@
+{% extends "usr.html" %}
+
+{% block urls %}
+<button onclick="location.href='{% url registration_register %}'">Create new account</button>
+{% endblock %}
+
+{% block content %}
+</tr><tr>
+
+<td id="content">
+
+{% if user.is_authenticated %}
+<h1>Web Virtual Manager Machine</h1>
+<h2>You are loggined. Do you mean <a href="{% url auth_logout %}">logout</a> or go to <a href=/hosts>hosts</a> page.</h2>
+{% else %}
+
+
+<br />
+<div class="sign-in">
+<div class="signin-box">
+  <h2>Login<strong></strong></h2>
+{% if form.non_field_errors %}
+	<font color="red">{{ form.non_field_errors }}</font>
+{% endif %}
+  <form id="gaia_loginform" action="{% url auth_login %}" method="post">
+<label>
+  <strong class="user-label">Username</strong>
+  <input name="username" id="Username" type="text">
+</label>
+{% for field in form %}
+     {% if field.errors %}
+     	<font color="red">{{ field.errors }}</font><br /><br />
+     {% endif %}
+{% endfor %}
+<label>
+  <strong class="passwd-label">Password</strong>
+  <input name="password" id="Passwd" type="password">
+</label>
+   <input name="next" id="next" type="hidden" value="/hosts/">
+  <input class="sigIn-label" name="signIn" id="signIn" value="Login" type="submit">
+<ul>
+ <li><a href="{% url auth_password_reset %}">Lost password?</a></li>
+</ul>
+  </form>
+</div>
+</div>
+
+<h1>Web Virtual Manager Machine</h1>
+<h2>Your account has been alredy activated.</h2>
+
+{% endif %}
+
+</td>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+</tr><tr>
+<td id="nav">
+<h3>Network pool:</h3>
+<ul>
+{% for name in pools %}
+  <li><a href=/network/{{host}}/{{name}}/>{{name}}</a></li>
+{% endfor %}
+</ul>
+<br />
+<form action="/network/{{host}}/{{pool}}/" method="post">
+  <input type="button" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
+{% if status = 0 %}
+  <input type="submit" name="net_pool" value="start">
+  <input type="submit" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
+{% else %}
+  <input type="submit" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
+{% endif %}
+</form>
+</td>
+
+<td id="content">
+<ul>
+<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
+<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
+<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
+<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
+</ul>
+<h3>Network:</h3>
+<br />
+<table>
+<tr><td colspan=2 style="text-align: center;"><h2>New pool</h2></td></tr>
+<form action="/network/{{host}}/new_net_pool/" method="post">
+<tr><td>Pool Name:</td>
+<td><input type="text" name="name_pool" placeholder="Name" value="" style="width:160px;"></td></tr>
+<tr><td>IP Address:</td>
+<td><input type="text" name="net_addr" value="192.168.100.0/24" style="width:160px;"></td></tr>
+<tr><td>Use DHCP:</td>
+<td><input type="checkbox" name="dhcp" value="yes" style="width:20px;"></td></tr>
+<tr><td>Forward Type:</td>
+<td><select name="forward" style="width:160px;"> 
+    <option value="nat">NAT</option>
+    <option value="route">Route</option>
+    <option value="none">Isolate</option>
+</select></td></tr>
+<tr><td colspan=2 style="text-align: center;"><input type="submit" value="create"></td></tr>
+</form>
+</table>
+</td>
+{% endblock %}

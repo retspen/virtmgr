@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+</tr><tr>
+<td id="content">
+<h2 style="font: bold 32px Arial;text-align: center;">Connections</h2>
+{% if not kvm_host %}
+<center><p><h3>You do not have to connect to hosts. Add connection to <a href=/usr/profile/>hosts</a></h3></p></center>
+{% else %}
+<table>
+{% for host in kvm_host %}
+<tr><td colspan=5><h1>{{host}}:</h1></td></tr>
+<tr>
+<td><a href=/overview/{{host}}/><h3>Overview</h3></a></td>
+<td><a href=/storage/{{host}}/><h3>Storage</h3></a></td>
+<td><a href=/network/{{host}}/><h3>Network</h3></a></td>
+<td><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></td>
+<td><a href=/newvm/{{host}}/><h3>Add VM</h3></a></td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+</td>
+{% endblock %}

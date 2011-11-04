@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+</tr><tr>
+<td id="nav">
+<h3>Network pool:</h3>
+<ul>
+{% for name in pools %}
+  <li><a href=/network/{{host}}/{{name}}/>{{name}}</a></li>
+{% endfor %}
+</ul>
+<br />
+<form action="/network/{{host}}/{{pool}}/" method="post">
+  <input type="button" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
+{% if status = 0 %}
+  <input type="submit" name="net_pool" value="start">
+  <input type="submit" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
+{% else %}
+  <input type="submit" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
+{% endif %}
+</form>
+</td>
+
+<td id="content">
+<ul>
+<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
+<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
+<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
+<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
+</ul>
+<h3>Virtual Networks:</h3>
+<p><b>Name</b>: {{ pool }}</p>
+<p><b>Device</b>: {{ bridge }}</p>
+<p><b>Status</b>: {% if status == 1 %} <font color="green">Active</font> {% else %} <font color="red">Not Active</font> {% endif %}</p>
+<p><b>Autostart</b>: {% if start == 1 %} <font color="green">Enable</font> {% else %} <font color="red">Disable</font> {% endif %}</p>
+<hr />
+<h3>IPv4 configuration</h3>
+<p><b>Network</b>: {{ network }}</p>
+{% for dhcp in dhcprange %}
+  {% if forloop.counter = 1 %}
+  <p><b>Start</b>:
+  {% else %}
+  <p><b>End</b>:
+  {% endif %}
+  {{dhcp}}</p>
+{% endfor %}
+<p><b>Foward</b>:{% if netmode.0 == 'nat' %} NAT {% else %} ROUTE {% endif %}</p>
+</td>
+{% endblock %}

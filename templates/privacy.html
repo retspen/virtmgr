@@ -1,0 +1,16 @@
+{% extends "usr.html" %}
+{% block urls %}
+<a href=/help/>Help</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<a href=/support/>Support</a>
+<a href=/faq/>FAQ</a>
+{% if user.is_authenticated %}<button onclick="location.href='{% url registration_register %}'">Create new account</button>{% endif %}
+{% endblock %}
+{% block content %}
+</tr><tr>
+<td id="content">
+<h2>Privacy</h2>
+<p>To be published</p>
+</td>
+{% endblock %}

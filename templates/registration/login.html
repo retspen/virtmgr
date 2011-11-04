@@ -1,0 +1,67 @@
+{% extends "usr.html" %}
+{% block urls %}
+<a href=/help/>Help</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<a href=/support/>Support</a>
+<a href=/faq/>FAQ</a>
+<button onclick="location.href='{% url registration_register %}'">Create new account</button>
+{% endblock %}
+{% block content %}
+</tr><tr>
+<td id="content">
+{% if user.is_authenticated %}
+<h3>You are loggined. Do you mean <a href="{% url auth_logout %}">logout</a> or go to page <a href=/hosts/>connetions</a>.</h3>
+{% else %}
+<br />
+<div class="sign-in">
+<div class="signin-box">
+  <h2>Login</h2><br />
+{% if form.non_field_errors %}
+	<font color="red">{{ form.non_field_errors }}</font>
+{% endif %}
+  <form id="gaia_loginform" action="/usr/login/" method="post">
+<label>
+  <strong class="user-label">Username</strong>
+  <input name="username" id="Username" type="text">
+</label>
+{% for field in form %}
+     {% if field.errors %}
+     	<font color="red">{{ field.errors }}</font><br /><br />
+     {% endif %}
+{% endfor %}
+<label>
+  <strong class="passwd-label">Password</strong>
+  <input name="password" id="Passwd" type="password">
+</label>
+   <input name="next" id="next" type="hidden" value="/hosts/">
+  <input name="signin" id="signin" value="Login" type="submit">
+<ul>
+ <li><a href="{% url auth_password_reset %}">Lost password?</a></li>
+</ul>
+  </form>
+</div>
+   <center><h2>Support us via PayPal</h2>
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="EK4TSD8WA63JJ">
+    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form></center>
+</div>
+
+<div class="product-info">
+<div class="product-headers">
+  <h1>Web Virtual Manager Machine</h1>
+  <p>Web Virtual Manager service for managing virtual machines on your servers. Create new domains, configuration & adjustment of a domain's resource allocation. An VNC viewer over SSH tunnel presents a full graphical console to the guest domain.</p>
+  <h2>Service technology</h2>
+  <p>The application logic is written in Python & Django. The LIBVIRT Python bindings are used to interacting with the underlying hypervisor. KVM primary supported platform.</p>
+  <h3>Necessary steps to work with the service:</h3>
+  <p>1. <a href=/usr/register/>Create</a> new account and confirm registration.</p>
+  <p>2. Install and <a href=/help/>configure</a> libvirt and KVM to your server.</p>
+  <p>3. Log in and add a connection to the host.</p>
+ </div>
+</div>
+{% endif %}
+</td>
+{% endblock %}

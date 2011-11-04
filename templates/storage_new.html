@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+</tr><tr>
+<td id="nav">
+<h3>Storage pool:</h3>
+<ul>
+{% for name in pools %}
+  <li><a href=/storage/{{host}}/{{name}}/>{{name}}</a></li>
+{% endfor %}
+</ul>
+<br />
+<form action="/storage/{{host}}/{{pool}}/" method="post">
+  <input type="button" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
+{% if status = 0 %}
+  <input type="submit" name="stg_pool" value="start">
+  <input type="submit" name="stg_pool" value="del" onclick="return confirm('Are you sure?')">
+{% else %}
+  <input type="submit" name="stg_pool" value="stop" onclick="return confirm('Are you sure?')">
+{% endif %}
+</form>
+</td>
+
+<td id="content">
+<ul>
+<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
+<li><a href=/network/{{host}}/><h3>Network</h3></a></li>
+<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
+<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
+</ul>
+<h3>Storage:</h3>
+<br />
+<table>
+<tr><td colspan=2 style="text-align:center;"><h2>New pool</h2></td></tr>
+<form action="/storage/{{host}}/{{pool}}/" method="post">
+<tr><td>Pool Name:</td>
+<td><input type="text" name="name_pool" value="" style="width:160px;"></td></tr>
+<tr><td>Pool Path:</td>
+<td><input type="text" name="path_pool" value="/var/lib/libvirt/images/" style="width:160px;"></td></tr>
+<tr><td>Pool Type:</td>
+<td><select name="type_pool"> 
+    <option value="dir">Filesystem Directory</option>
+</select></td><tr>
+<tr><td colspan=2 style="text-align:center;"><input type="submit" value="create"></td></tr>
+</table>
+</form>
+</td>
+{% endblock %}
