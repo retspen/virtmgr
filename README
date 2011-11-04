@@ -1,0 +1,10 @@
+Version 1.0.1a:
+
+Web Virtual Manager service for managing virtual machines on your servers. 
+Create new domains, configuration & adjustment of a domain's resource allocation. 
+An VNC viewer over SSH tunnel presents a full graphical console to the guest domain.
+
+Technology:
+
+The application logic is written in Python & Django. The LIBVIRT Python bindings 
+are used to interacting with the underlying hypervisor. KVM primary supported platform.
