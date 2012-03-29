@@ -1,49 +1,69 @@
 {% extends "base.html" %}
-
 {% block content %}
-</tr><tr>
-<td id="nav">
-<h3>Network pool:</h3>
-<ul>
-{% for name in pools %}
-  <li><a href=/network/{{host}}/{{name}}/>{{name}}</a></li>
-{% endfor %}
-</ul>
-<br />
-<form action="/network/{{host}}/{{pool}}/" method="post">
-  <input type="button" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
-{% if status = 0 %}
-  <input type="submit" name="net_pool" value="start">
-  <input type="submit" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
-{% else %}
-  <input type="submit" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
-{% endif %}
-</form>
-</td>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Сетвой пул:</li>
+              {% for name in pools %}
+              <li><a href=/network/{{host}}/{{name}}/>{{name}}</a></li>
+              {% endfor %}
+              <form action="/network/{{host}}/{{pool}}/" method="post">
+                <input type="button" class="btn btn-primary" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
+              {% if status = 0 %}
+                <input type="submit" class="btn btn-primary" name="net_pool" value="start">
+                <input type="submit" class="btn btn-primary" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
+              {% else %}
+                <input type="submit" class="btn btn-primary" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
+              {% endif %}
+              </form>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
 
-<td id="content">
-<ul>
-<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
-<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
-<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
-<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
-</ul>
-<h3>Virtual Networks:</h3>
-<p><b>Name</b>: {{ pool }}</p>
-<p><b>Device</b>: {{ bridge }}</p>
-<p><b>Status</b>: {% if status == 1 %} <font color="green">Active</font> {% else %} <font color="red">Not Active</font> {% endif %}</p>
-<p><b>Autostart</b>: {% if start == 1 %} <font color="green">Enable</font> {% else %} <font color="red">Disable</font> {% endif %}</p>
-<hr />
-<h3>IPv4 configuration</h3>
-<p><b>Network</b>: {{ network }}</p>
-{% for dhcp in dhcprange %}
-  {% if forloop.counter = 1 %}
-  <p><b>Start</b>:
-  {% else %}
-  <p><b>End</b>:
-  {% endif %}
-  {{dhcp}}</p>
-{% endfor %}
-<p><b>Foward</b>:{% if netmode.0 == 'nat' %} NAT {% else %} ROUTE {% endif %}</p>
-</td>
+    <div class="span9">
+      <div class="hero-unit">
+      <ul class="nav nav-pills pull-right">
+        <li><a href=/overview/{{host}}/>Обзор</a></li>
+        <li><a href=/storage/{{host}}/>Хранилище</a></li>
+        <li class="active"><a href=/network/{{host}}/>Сеть</a></li>
+        <li><a href=/newvm/{{host}}/>Добавить</a></li>
+      </ul>
+      <h2>Cети на <i>{{host}}</i></h2>
+      <hr>
+      <div class="row">
+        <div class="span3">
+          <p>Название:</p>
+          <p>Устройство:</p>
+          <p>Состояние:</p>
+          <p>Автостарт:</p>
+        </div>
+        <div class="span3">
+          <p>{{ pool }}</p>
+          <p>{{ bridge }}</p>
+          <p>{% if status == 1 %} <font color="green">Активен</font> {% else %} <font color="red">Не Активен</font> {% endif %}</p>
+          <p>{% if start == 1 %} <font color="green">Включен</font> {% else %} <font color="red">Выключен</font> {% endif %}</p>
+        </div>
+      </div>
+      <hr>
+      <h4>Конфигурация IPVv4:</h4><br>
+        <div class="row">
+        <div class="span3">
+          <p>Сеть:</p>
+          <p>Начало:</p>
+          <p>Конец:</p>
+          <p>Тип:</p>
+        </div>
+        <div class="span3">
+          <p>{{ network }}</p>
+          {% for dhcp in dhcprange %} 
+            <p>{{dhcp}}</p>
+          {% endfor %}
+          <p>{% if netmode.0 == 'nat' %} NAT {% else %} ROUTE {% endif %}</p>
+        </div>
+      </div>
+           </div>
+          </div>
+        </div>
 {% endblock %}

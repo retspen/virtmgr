@@ -1,11 +1,24 @@
-{% extends "usr.html" %}
-{% block urls %}
-<button onclick="location.href='{% url registration_register %}'">Create new account</button>
-{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-</tr><tr>
-<td id="content">
-<center><h2>Install and cofigure libvirt and KVM on CentOS/Fedora.</h2></center>
-<p><h4>1. In console: yum insall libvirt kvm</h4></p>
-</td>
+   <div class="container">
+      <div class="hero-unit">
+        <h1>Web Virtual Manager</h1><br>
+        <p><strong>WebVirtMgr</strong> сервис для управления виртуальными серверами с помощью браузера. В качестве основных технологий используються: гипервизор <strong>KVM</strong> и библиотека управления виртуализацией <strong>libvirt</strong>. Созадние новых виртуальных машин, конфигурирование и управление их ресурсами. Графический доступ к вашей виртуальной машние предоставляется с помощью VNC через SSH туннель.</p><br>
+        <p><a class="btn btn-success btn-large" href="/user/register"><strong>Зарегистрироваться</strong></a></p>
+      </div>
+      <div class="row">
+        <div class="well span6">
+          <h2>С чего начать?</h2>
+          <br>
+          <p>1. <a href=/user/register/>Зарегистрироваться</a> и подтвердить регистрацию.</p>
+          <p>2. Установить и <a href=/settings/>настроить</a> libvirt и KVM на вашем сервере.</p>
+          <p>3. <a href=/user/login/>Войти</a> и добавить ваш сервер для его управления.</p>
+        </div>
+        <div class="well span5">
+          <h2>Возникли проблемы?</h2>
+          <br>
+          <p>Если у вас возникли проблемы по работе с сервисом мы всегда готовы Вам помочь.</p>
+          <p>Напишите нам на email <a href="mailto:webmaster@x-sys.com.ua">webmaster@x-sys.com.ua</a></p>
+        </div>
+      </div>
 {% endblock %}

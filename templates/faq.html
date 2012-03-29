@@ -1,27 +1,20 @@
-{% extends "usr.html" %}
-{% block urls %}
-<a href=/help/>Help</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<a href=/support/>Support</a>
-<a href=/faq/>FAQ</a>
-{% if user.is_authenticated %}<button onclick="location.href='{% url registration_register %}'">Create new account</button>{% endif %}
-{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-</tr><tr>
-<td id="content">
+   <div class="container">
 <h1>Frequently Asked Questions</h1>
 <br />
-<p>Q: How to add image in the list of installation images?</p>
-<p>A: All images must be stored in a directory which is defined as a storage pool. For example: /var/lib/libvirt/images/cdrom.iso</p>
+<p>В: Какой дистрибутив линукса полностью поддерживается для установки?</p>
+<p>О: Пока только Fedora (остальные дистрибутивы добавим поздже).</p>
 <br />
-<p>Q: Why it doesn`t  show the images of HDD i can`t  create a new VM?</p>
-<p>A: Before creating a new VM image HDD must be created beforehand in the storage tab.</p>
+<p>В: Как добавить iso образ для установки образа виртуальной машины?</p>
+<p>О: Все образы должны находиться в директории которые определын в пуле хранилища. Пример: /var/lib/libvirt/images/cdrom.iso</p>
 <br />
-<p>Q: How occur the connection to the VNC?</p>
-<p>A: The VNC connection created via SSH tunnel.</p>
+<p>В: Почему не остутствует HDD образ при создании виртуальной машины?</p>
+<p>О: Перед созданием виртуальной машины необходимо создать образ HDD во вкладке хранилище.</p>
 <br />
-<p>Q: The service is not functional i need.</p>
-<p>A: Write to us all problems that you seen to email we will solve that.</p>
-</td>
+<p>В: Как происходит подключение по VNC к виртуальной машине?</p>
+<p>О: Подключение по VNC происходит через SSH туннель (необходимо создать пользователя с ssh доступом).</p>
+<br />
+<p>В: У сервиса отсутствует функционал которой меня интересует, что делать?</p>
+<p>О: Пишите все свои пожелания нам на почту и мы попытаемся их реализовать.</p>
 {% endblock %}

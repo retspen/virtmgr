@@ -1,43 +1,62 @@
 {% extends "base.html" %}
-
 {% block content %}
-</tr><tr>
-<td id="nav">
-<h3>Virt Machine:</h3>
-<ul>
-<a href=/overview/{{host}}/><h4>{{host}}:</h4></a>
-{% if not all_vm %}
-		<li><a href=/newvm/{{host}}/>Add VM</a></li>
-{% endif %}
-{% for name, state in all_vm.items %}
-	{% if name == '000x' %}
-		<li>Not connected</li>
-	{% else %}
-		<li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
-  {% endif %}
-  {% if not name %}
-		<li><a href=/newvm/{{host}}/>Add VM</a></li>
-  {% endif %}
-{% endfor %}
-</ul>
-</td>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Виртуалки:</li>
+              <li class="active"><a href=/overview/{{host}}/>{{host}}:</a></li>
+              	<ul>
+              		{% if not all_vm %}
+					<li><a href=/newvm/{{host}}/>Добавить</a></li>
+					{% endif %}
+					{% for name, state in all_vm.items %}
+						{% if name == '000x' %}
+							<li>Не подключено</li>
+						{% else %}
+							<li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
+						{% endif %}
+						{% if not name %}
+							<li><a href=/newvm/{{host}}/>Добавить</a></li>
+						{% endif %}
+					{% endfor %}
+              	</ul>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
 
-<td id="content">
-{% if info %}
-<ul>
-<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
-<li><a href=/network/{{host}}/><h3>Network</h3></a></li>
-<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
-<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
-</ul>
-<h3>Overview:</h3>
-<p>Hostname: {{host}}</p>
-<p>Connection: {{info.0}}</p>
-<p>Architecture: {{info.1}}</p>
-<p>Memory: {{info.2}}Mb</p>
-<p>Logical CPUs: {{info.3}} x {{info.4}}Mhz</p>
-{% else %}
-<h2>Not conncted!</h2>
-{% endif %}
-</td>
+		<div class="span9">
+			<div class="hero-unit">
+			{% if info %}
+			<ul class="nav nav-pills pull-right">
+				<li class="active"><a href=/overview/{{host}}/>Обзор</a></li>
+				<li><a href=/storage/{{host}}/>Хранилище</a></li>
+				<li><a href=/network/{{host}}/>Сеть</a></li>
+				<li><a href=/newvm/{{host}}/>Добавить</a></li>
+			</ul>
+			<h2>Обзор на <i>{{host}}</i></h2>
+			<hr>
+			<div class="row">
+				<div class="span3">
+					<p>Hostname:</p>
+					<p>Подключения:</p>
+					<p>Архитектура:</p>
+					<p>Памяти:</p>
+					<p>Логицеские ЦПУ:</p>
+				</div>
+				<div class="span3">
+					<p>{{host}}</p>
+					<p>{{info.0}}</p>
+					<p>{{info.1}}</p>
+					<p>{{info.2}}Mb</p>
+					<p>{{info.3}} x {{info.4}}Mhz</p>
+				</div>
+			</div>
+			{% else %}
+			<h3>Невозможно подключиться!</h3>
+			{% endif %}
+           </div>
+          </div>
+        </div>
 {% endblock %}

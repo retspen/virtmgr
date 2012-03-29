@@ -3,7 +3,7 @@ Thank you for registering at the Web Virtual Manager Machine. Before we can acti
 Please note - you must complete this last step to become a registered member. You will only need to visit this URL once to activate your account.
 
 To complete your registration, please visit this URL:
-http://{{ site }}/usr/activate/{{ activation_key }}/
+http://{{ site }}/user/activate/{{ activation_key }}/
 
 
 If you are still having problems signing up please contact a member of our support staff at webmaster@x-sys.com.ua

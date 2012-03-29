@@ -1,52 +1,64 @@
 {% extends "base.html" %}
-
 {% block content %}
-</tr><tr>
-<td id="nav">
-<h3>Network pool:</h3>
-<ul>
-{% for name in pools %}
-  <li><a href=/network/{{host}}/{{name}}/>{{name}}</a></li>
-{% endfor %}
-</ul>
-<br />
-<form action="/network/{{host}}/{{pool}}/" method="post">
-  <input type="button" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
-{% if status = 0 %}
-  <input type="submit" name="net_pool" value="start">
-  <input type="submit" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
-{% else %}
-  <input type="submit" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
-{% endif %}
-</form>
-</td>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Сетвой пул:</li>
+              {% for name in pools %}
+              <li><a href=/network/{{host}}/{{name}}/>{{name}}</a></li>
+              {% endfor %}
+              <form action="/network/{{host}}/{{pool}}/" method="post">
+                <input type="button" class="btn btn-primary" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
+              {% if status = 0 %}
+                <input type="submit" class="btn btn-primary" name="net_pool" value="start">
+                <input type="submit" class="btn btn-primary" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
+              {% else %}
+                <input type="submit" class="btn btn-primary" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
+              {% endif %}
+              </form>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
 
-<td id="content">
-<ul>
-<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
-<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
-<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
-<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
-</ul>
-<h3>Network:</h3>
-<br />
-<table>
-<tr><td colspan=2 style="text-align: center;"><h2>New pool</h2></td></tr>
-<form action="/network/{{host}}/new_net_pool/" method="post">
-<tr><td>Pool Name:</td>
-<td><input type="text" name="name_pool" placeholder="Name" value="" style="width:160px;"></td></tr>
-<tr><td>IP Address:</td>
-<td><input type="text" name="net_addr" value="192.168.100.0/24" style="width:160px;"></td></tr>
-<tr><td>Use DHCP:</td>
-<td><input type="checkbox" name="dhcp" value="yes" style="width:20px;"></td></tr>
-<tr><td>Forward Type:</td>
-<td><select name="forward" style="width:160px;"> 
-    <option value="nat">NAT</option>
-    <option value="route">Route</option>
-    <option value="none">Isolate</option>
-</select></td></tr>
-<tr><td colspan=2 style="text-align: center;"><input type="submit" value="create"></td></tr>
-</form>
-</table>
-</td>
+		<div class="span9">
+			<div class="hero-unit">
+			<ul class="nav nav-pills pull-right">
+				<li><a href=/overview/{{host}}/>Обзор</a></li>
+				<li class="active"><a href=/storage/{{host}}/>Хранилище</a></li>
+				<li><a href=/network/{{host}}/>Сеть</a></li>
+				<li><a href=/newvm/{{host}}/>Добавить</a></li>
+			</ul>
+			<h2>Новый пул:</h2>
+			<hr>
+			<div class="row show-grid">
+				<div class="span3">
+					<p>Название пула:</p>
+					<p>IP адресс:</p>
+					<p>Использовать DHCP:</p>
+					<p>Тип Forward:</p>
+				</div>
+				<div class="span3">
+					<form action="/network/{{host}}/new_net_pool/" method="post">
+						<input type="text" class="input-meddle" name="name_pool" placeholder="Name" value="" style="height:30px;">
+						<input type="text" class="input-meddle"  name="net_addr" value="192.168.100.0/24" style="height:30px;">
+						<input type="checkbox" name="dhcp" value="yes" style="height:30px;">
+						<select name="forward"> 
+						    <option value="nat">NAT</option>
+						    <option value="route">Route</option>
+						    <option value="none">Isolate</option>
+						</select>
+						<input class="btn btn-primary" type="submit" value="create">
+					</form>
+				</div>
+			</div>
+           </div>
+          </div>
+        </div>
+
+
+
+
+
 {% endblock %}

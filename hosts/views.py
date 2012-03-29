@@ -5,7 +5,7 @@ from virtmgr.model.models import *
 def index(request):
 
    	if not request.user.is_authenticated():
-	   	return HttpResponseRedirect('/')
+	   	return HttpResponseRedirect('/user/login')
 
 	usr_id = request.user.id
 	usr_name = request.user

@@ -5,13 +5,20 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Users
-    url(r'^usr/register/$', 'registration.views.register', {'form_class': RegistrationFormUniqueEmail, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
-    url(r'^usr/', include('registration.urls')),
-    url(r'^usr/profile/$', 'virtmgr.userdata.views.index'),
+    # Static pages
+    url(r'^$', 'virtmgr.pages.views.index'),
+    url(r'^about/', 'virtmgr.pages.views.about'),
+    url(r'^support/', 'virtmgr.pages.views.support'),
+    url(r'^settings/', 'virtmgr.pages.views.settings'),
+    url(r'^faq/', 'virtmgr.pages.views.faq'),
 
-    #Index
-    url(r'^$', 'virtmgr.pages.views.redir'),
+    # Users
+    url(r'^user/register/$', 'registration.views.register', {'form_class': RegistrationFormUniqueEmail, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
+    url(r'^user/', include('registration.urls')),
+    url(r'^user/profile/$', include('registration.urls')),
+    
+    # Newhost
+    url(r'^newhosts/$', 'virtmgr.newhosts.views.index'),
 
     # Servers
     url(r'^hosts/', 'virtmgr.hosts.views.index'),
@@ -35,9 +42,9 @@ urlpatterns = patterns('',
     url(r'^network/', 'virtmgr.network.views.redir'),
 
     # Interfaces
-    url(r'^interfaces/(\w+)/$', 'virtmgr.interfaces.views.index'),
-    url(r'^interfaces/(\w+)/(\w+)/$', 'virtmgr.interfaces.views.ifcfg'),
-    url(r'^interfaces/', 'virtmgr.interfaces.views.redir'),
+    #url(r'^interfaces/(\w+)/$', 'virtmgr.interfaces.views.index'),
+    #url(r'^interfaces/(\w+)/(\w+)/$', 'virtmgr.interfaces.views.ifcfg'),
+    #url(r'^interfaces/', 'virtmgr.interfaces.views.redir'),
 
     # VM
     url(r'^vm/(\w+)/(\w+)/$', 'virtmgr.vm.views.index'),
@@ -52,13 +59,6 @@ urlpatterns = patterns('',
     # Media
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
 
-    # Static pages
-    url(r'^about/', 'virtmgr.pages.views.about'),
-    url(r'^support/', 'virtmgr.pages.views.support'),
-    url(r'^privacy/', 'virtmgr.pages.views.privacy'),
-    url(r'^help/', 'virtmgr.pages.views.help'),
-    url(r'^faq/', 'virtmgr.pages.views.faq'),
-
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^vrtadm/', include(admin.site.urls)),
 )

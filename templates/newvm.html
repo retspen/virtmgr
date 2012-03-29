@@ -1,86 +1,105 @@
 {% extends "base.html" %}
-
 {% block content %}
-</tr><tr>
-<td id="nav">
-<h3>Virt Machine:</h3>
-<ul>
-<a href=/overview/{{host}}/><h4>{{host}}:</h4></a>
-{% if not all_vm %}
-        <li><a href=/newvm/{{host}}/>Add VM</a></li>
-{% endif %}
-{% for name, state in all_vm.items %}
-    <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
-{% endfor %}
-</ul>
-</td>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Виртуалки:</li>
+              <li class="active"><a href=/overview/{{host}}/>{{host}}:</a></li>
+                <ul>
+                    {% if not all_vm %}
+                    <li><a href=/newvm/{{host}}/>Добавить</a></li>
+                    {% endif %}
+                    {% for name, state in all_vm.items %}
+                        {% if name == '000x' %}
+                            <li>Не подключено</li>
+                        {% else %}
+                            <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
+                        {% endif %}
+                        {% if not name %}
+                            <li><a href=/newvm/{{host}}/>Добавить</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
 
-<td id="content">
-<ul>
-<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
-<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
-<li><a href=/network/{{host}}/><h3>Network</h3></a></li>
-<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
-</ul>
-<h3>New VM:</h3>
-<br />
-<table>
-<tr><td colspan=2 style="text-align:center;"><h2>New VM</h2></td></tr>
-<form action="/newvm/{{host}}/" method="post">
-<tr><td>Name:</td>
-<td><input style="width:160px;" type="text" name="name" placeholder="Name" value=""></td></tr>
-<tr><td>Arch:</td>
-<td><select name="arch" style="width:160px;">
-    {% if arch == 'x86_64' %}
-    <option value="x86_64">x86_64</option>
-    {% endif %}
-    <option value="i686">i686</option>
-</select><br /></td></tr>
-<tr><td>Memory:</td>
-<td><select name="memory" style="width:160px;">
-    <option value="256">256 Mb</option>
-    <option value="386">386 Mb</option>
-    <option value="512">512 Mb</option>
-    <option value="768">768 Mb</option>
-    <option value="1024">1024 Mb</option>
-    <option value="2048">2048 Mb</option>
-    <option value="4096">4096 Mb</option>
-    <option value="8192">8192 Mb</option>
-</select></td></tr>
-<tr><td>CPUs:</td>
-<td><select name="cpus" style="width:160px;">
-{% for cpu in cpus %}
-    <option value="{{cpu}}">{{cpu}}</option>
-{% endfor %}
-</select></td></tr>
-<tr><td>ISO:</td>
-<td><select name="iso" style="width:160px;">
-{% if all_iso %}
-{% for name in all_iso %}
-    <option value="{{name}}">{{name}}</option>
-{% endfor %}
-{% else %}
-    <option value="none">None</option>
-{% endif %}
-</select></td></tr>
-<tr><td>Disk:</td>
-<td><select name="img" style="width:160px;">
-{% if all_img %}
-{% for name in all_img %}
-    <option value="{{name}}">{{name}}</option>
-{% endfor %}
-{% else %}
-    <option value="none">None</option>
-{% endif %}
-</select></td></tr>
-<tr><td>Network:</td>
-<td><select name="bridge" style="width:160px;">
-{% for net in bridge %}
-    <option value="{{net}}">{{net}}</option>
-{% endfor %}
-</select></td></tr>
-<tr><td colspan=2 style="text-align:center;"><input style="width: 80px;" type="submit" name="newvm" value="create"></td></tr>
-</form>
-</table>
-</td>
+        <div class="span9">
+            <div class="hero-unit">
+            <ul class="nav nav-pills pull-right">
+                <li><a href=/overview/{{host}}/>Обзор</a></li>
+                <li><a href=/storage/{{host}}/>Хранилище</a></li>
+                <li><a href=/network/{{host}}/>Сеть</a></li>
+                <li class="active"><a href=/newvm/{{host}}/>Добавить</a></li>
+            </ul> 
+            <h2>Довавить на <i>{{host}}</i></h2>
+            <hr>
+            <div class="row show-grid">
+                <div class="span3">
+                    <p>Название:</p>
+                    <p>Архитектура:</p>
+                    <p>Память:</p>
+                    <p>ЦПУ ядра:</p>
+                    <p>ISO образ:</p>
+                    <p>HDD образ:</p>
+                    <p>Сетевой мост:</p>
+                </div>
+                <div class="span3">
+                    <form action="/newvm/{{host}}/" method="post">
+                        <input style="height:30px;" class="input-large" type="text" name="name" placeholder="Name" value="">
+                        <select name="arch">
+                            {% if arch == 'x86_64' %}
+                            <option value="x86_64">x86_64</option>
+                            {% endif %}
+                            <option value="i686">i686</option>
+                        </select>
+                        <select name="memory">
+                            <option value="256">256 Mb</option>
+                            <option value="386">386 Mb</option>
+                            <option value="512">512 Mb</option>
+                            <option value="768">768 Mb</option>
+                            <option value="1024">1024 Mb</option>
+                            <option value="2048">2048 Mb</option>
+                            <option value="4096">4096 Mb</option>
+                            <option value="8192">8192 Mb</option>
+                        </select>
+                        <select name="cpus">
+                        {% for cpu in cpus %}
+                            <option value="{{cpu}}">{{cpu}}</option>
+                        {% endfor %}
+                        </select>
+                        <select name="iso">
+                        {% if all_iso %}
+                        {% for name in all_iso %}
+                            <option value="{{name}}">{{name}}</option>
+                        {% endfor %}
+                        {% else %}
+                            <option value="none">None</option>
+                        {% endif %}
+                        </select>
+                        <select name="img">
+                        {% if all_img %}
+                        {% for name in all_img %}
+                            <option value="{{name}}">{{name}}</option>
+                        {% endfor %}
+                        {% else %}
+                            <option value="none">None</option>
+                        {% endif %}
+                        </select>
+                        <select name="bridge">
+                        {% for net in bridge %}
+                            <option value="{{net}}">{{net}}</option>
+                        {% endfor %}
+                            <option value="br0">br0 (если настроен)</option>
+                            <option value="br1">br1 (если настроен)</option>
+                        </select>
+                        <input class="btn btn-primary" type="submit" name="newvm" value="create">
+                    </form>
+                </div>
+            </div>
+           </div>
+          </div>
+        </div>
 {% endblock %}

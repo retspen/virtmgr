@@ -1,85 +1,86 @@
 {% extends "base.html" %}
-
 {% block content %}
-</tr><tr>
-<td id="nav">
-<h3>Virt Machine:</h3>
-<ul>
-<a href=/overview/{{host}}/><h4>{{host}}:</h4></a>
-{% for name, state in all_vm.items %}
-  {% if name == '000x' %}
-    <li>Not connected</li>
-  {% else %}
-    <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
-  {% endif %}
-{% endfor %}
-</ul>
-</td>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Виртуалки:</li>
+              <li class="active"><a href=/overview/{{host}}/>{{host}}:</a></li>
+                <ul lass="nav nav-list">
+                    {% if not all_vm %}
+                    <li><a href=/newvm/{{host}}/>Добавить</a></li>
+                    {% endif %}
+                    {% for name, state in all_vm.items %}
+                        {% if name == '000x' %}
+                            <li>Не подключен</li>
+                        {% else %}
+                            <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green">{{name}}</font>{% else %}<font color="red">{{name}}</font>{% endif %}</a></li>
+                        {% endif %}
+                        {% if not name %}
+                            <li><a href=/newvm/{{host}}/>Добавить</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
 
-<td id="content">
-<ul>
-<li><a href=/overview/{{host}}/><h3>Overview</h3></a></li>
-<li><a href=/storage/{{host}}/><h3>Storage</h3></a></li>
-<li><a href=/network/{{host}}/><h3>Network</h3></a></li>
-<li><a href=/interfaces/{{host}}/><h3>Interfaces</h3></a></li>
-<li><a href=/newvm/{{host}}/><h3>Add VM</h3></a></li>
-</ul>
-<h3>Virtual Machine:</h3>
-<br />
-<br />
-<form action="/vm/{{host}}/{{vname}}/" method="post">
-{% if state = 5 %}
-  <input style="width: 100px;" type="submit" name="action" value="start">
-{% endif %}
-{% if state = 3 %}
-  <input style="width: 100px;" type="submit" name="action" value="resume">
-{% endif %}
-{% if state = 1 %}
-  <input style="width: 100px;" type="submit" name="action" value="suspend" onclick="return confirm('Are you sure?')">
-  <input style="width: 100px;" type="submit" name="action" value="shutdown" onclick="return confirm('Are you sure?')">
-  <input style="width: 100px;" type="submit" name="action" value="destroy" onclick="return confirm('Are you sure?')">
-  <input style="width: 100px;" type="submit" name="action" value="reboot" onclick="return confirm('Are you sure?')">
-{% endif %}
-</form>
-<br />
-<p><b>Name</b>: {{vname}}</p>
-<p><b>UUID</b>: {{uuid}}</p>
-<p><b>Status</b>: {% if active == 1 %} <font color="green">Active</font> {% else %} <font color="red">Not Active</font> {% endif %}</p>
-<p><b>Autostart</b>: {% if autostart == 1 %} <font color="green">Enable</font> {% else %} <font color="red">Disable</font> {% endif %} </p>
-<p><b>CPUs</b>: {{cpu}}</p>
-<p><b>Memory</b>: {{ memory|filesizeformat }}</p>
-<p><b>Boot menu</b>: {% if boot_menu == 'yes' %} <font color="green">Enable</font> {% else %} <font color="red">Disable</font> {% endif %} </p>
-<p><b>HDD</b>: {{ hdd }}</p>
-<p><b>CDROM</b>: {{ cdrom }}
-<form action="/vm/{{host}}/{{vname}}/" method="post">
-{% if cdrom %}
-<input style="width: 100px;" type="submit" name="action" value="disconnect" onclick="return confirm('Are you sure?')">
-{% else %}
-<select name="iso_img" style="width:160px;">
-{% for iso in isos %}
-    <option value="{{iso}}">{{iso}}</option>
-{% endfor %} 
-</select>
-<input style="width: 100px;" type="submit" name="action" value="connect"> 
-{% endif %}
-</form></p>
+        <div class="span9">
+            <div class="hero-unit">
+              <h2>Виртуалка: <i>{{vname}}</i></h2>
+              <hr>
+              <form action="/vm/{{host}}/{{vname}}/" method="post">
+              {% if state = 5 %}
+                <input class="btn btn-primary" type="submit" name="action" value="start">
+              {% endif %}
+              {% if state = 3 %}
+                <input class="btn btn-primary" type="submit" name="action" value="resume">
+              {% endif %}
+              {% if state = 1 %}
+                <input class="btn btn-primary" type="submit" name="action" value="suspend" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="action" value="shutdown" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="action" value="destroy" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="action" value="reboot" onclick="return confirm('Вы уверены?')">
+              {% endif %}
+              </form>
 
-<br />
-<form action="/vm/{{host}}/{{vname}}/" method="post">
-{% if autostart == 1 %}
-  <input style="width: 100px;" type="submit" name="action" value="auto OFF" onclick="return confirm('Are you sure?')">
-{% else %}
-  <input style="width: 100px;" type="submit" name="action" value="auto ON" onclick="return confirm('Are you sure?')"> 
-{% endif %}
-{% if state == 1 %}
-  <input style="width: 100px;" type="button" value="VNC" onclick="window.open('/vnc/{{host}}/{{vname}}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
-{% else %}
-  <input style="width: 100px;" type="submit" name="action" value="undefine" onclick="return confirm('Are you sure?')">
-{% endif %}
-</form>
+              <p><b>Название</b>: {{vname}}</p>
+              <p><b>UUID</b>: {{uuid}}</p>
+              <p><b>Статус</b>: {% if active == 1 %} <font color="green">Активен</font> {% else %} <font color="red">Не Активен</font> {% endif %}</p>
+              <p><b>Автостарт</b>: {% if autostart == 1 %} <font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+              <p><b>Логические ЦПУ</b>: {{cpu}}</p>
+              <p><b>Память</b>: {{ memory|filesizeformat }}</p>
+              <p><b>Boot Меню</b>: {% if boot_menu == 'yes' %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+              <p><b>HDD</b>: {{ hdd }}</p>
+              <p><b>CDROM</b>: {{ cdrom }}
 
-{% if error %}
-        <p style="color: red;">Please submit a search term 20 characters or shorter.</p>
-{% endif %}
+              <form action="/vm/{{host}}/{{vname}}/" method="post">
+              {% if cdrom %}
+              <input class="btn btn-primary" type="submit" name="action" value="disconnect" onclick="return confirm('Вы уверены?')">
+              {% else %}
+              <select name="iso_img" style="width:160px;">
+              {% for iso in isos %}
+                  <option value="{{iso}}">{{iso}}</option>
+              {% endfor %} 
+              </select>
+              <input class="btn btn-primary" type="submit" name="action" value="connect"> 
+              {% endif %}
+              </form>
 
+              <form action="/vm/{{host}}/{{vname}}/" method="post">
+              {% if autostart == 1 %}
+                <input class="btn btn-primary" type="submit" name="action" value="auto OFF" onclick="return confirm('Вы уверены?')">
+              {% else %}
+                <input class="btn btn-primary" type="submit" name="action" value="auto ON" onclick="return confirm('Вы уверены?')"> 
+              {% endif %}
+              {% if state == 1 %}
+                <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{host}}/{{vname}}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
+              {% else %}
+                <input class="btn btn-primary" type="submit" name="action" value="undefine" onclick="return confirm('Вы уверены?')">
+              {% endif %}
+              </form>
+            </div>
+          </div>
+        </div>
 {% endblock %}

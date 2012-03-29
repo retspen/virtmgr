@@ -1,66 +1,126 @@
 <html>
 <head>
-  <title>Web Virtual Manager Machine</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name='yandex-verification' content='483f16ffaf876d7d' />
-  <meta name="google-site-verification" content="6cjnY28z1QD9e5p1d9SMVJBhNV_t9bMsntnfjWV1ACI" />
-  <meta name="description" content="Web Virtual Manager Machine" />
-  <meta name="keywords" content="web kvm, web libvirt, web virt-manager, web virt manager, kvm, libvirt, libvirt web interface, libvirt web frontend, libvirt web admin, libvirt web management, virt-manager, kvm web interface, kvm web panel, kvm web panel, kvm web manager, kvm web console" />
+    <title>Web Virtual Manager Machine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='yandex-verification' content='483f16ffaf876d7d' />
+    <meta name="google-site-verification" content="6cjnY28z1QD9e5p1d9SMVJBhNV_t9bMsntnfjWV1ACI" />
+    <meta name="description" content="Web Virtual Manager Machine" />
+    <meta name="keywords" content="web kvm, web libvirt, web virt-manager, web virt manager, kvm, libvirt, libvirt web interface, libvirt web frontend, libvirt web admin, libvirt web management, virt-manager, kvm web interface, kvm web panel, kvm web panel, kvm web manager, kvm web console" />
+    <meta name="author" content="Anatoliy Guskov">
 
-  <link rel="stylesheet" type="text/css" href="/media/css/style.css" media="screen">
-  <link rel="icon" href="/media/img/favicon.ico" type="image/x-icon">
-<script type="text/javascript"> 
-function toggleview(itm) 
-{ 
-   var itmx = document.getElementById(itm); 
-   if (itmx.style.display == "none") 
-   { 
-      itmx.style.display = "block"; 
-   } 
-   else 
-   { 
-      itmx.style.display = "none"; 
-   } 
-} 
-</script> 
+    <!-- Le styles -->
+    <link href="/media/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="/media/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="data:text/css,">
 </head>
-<body>
-<table id="tab">
-<tbody><tr>
-<td colspan="2" id="header">
-<a href=/><img src=/media/img/logo.png></a>
-<ul>
-<li><a href=#><h2 style="color: #000">Hello, {{usr_name}}</h2></a></li>
-<li></li>
-<li><a href=/usr/profile><h2>Connections</h2></a></li>
-<li><a href=/usr/logout><h2>Logout</h2></a></li>
-</ul>
-</td>
-{% block content %}{% endblock %}
-</tr><tr>
-<td colspan="2" id="footer">
-<p>© 2011 X-systems
-<a href=/help/>Help</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<a href=/support/>Support</a>
-<a href=/faq/>FAQ</a>
-</p>
-<!-- Yandex.Metrika counter -->
-<div style="display:none;"><script type="text/javascript">
-(function(w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter10346776 = new Ya.Metrika({id:10346776, enableAll: true});
-        }
-        catch(e) { }
-    });
-})(window, "yandex_metrika_callbacks");
-</script></div>
-<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
-<noscript><div><img src="//mc.yandex.ru/watch/10346776" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-</td>
-</tr>
-</tbody></table>
-</body></html>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand strong" href="/">WebVirtMgr</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="/settings">Настройка</a></li>
+              <li><a href="/support">Поддержка</a></li>
+              <li><a href="/faq">FAQ</a></li>
+              <li><a href="/about">О проекте</a></li>
+            </ul>
+
+            {% if user.is_authenticated or request.user.is_authenticated %}
+              <ul class="nav pull-right">
+                <li><a href="/newhosts/">Хосты</a></li>
+                <li class="divider-vertical"></li>
+                <li class="navbar-text">Вы вошли как</li>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown">{{usr_name}}<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Профиль</a></li>
+                    <li><a href="/user/logout">Выход</a></li>
+                  </ul>
+                </li>
+              </ul>
+            {% else %}
+              <a class="btn btn-primary pull-right" href="/user/login/"><strong>Войти</strong></a>
+            {% endif %}
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+      
+      <hr>
+
+      <footer>
+        <p>© X-Systems 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+	<!-- Yandex.Metrika counter -->
+	<script type="text/javascript">
+	(function (d, w, c) {
+    	(w[c] = w[c] || []).push(function() {
+        	try {
+            	w.yaCounter7719478 = new Ya.Metrika({id:7719478, enableAll: true, trackHash:true, webvisor:true});
+        	} catch(e) {}
+    	});
+    
+    	var n = d.getElementsByTagName("script")[0],
+        	s = d.createElement("script"),
+        	f = function () { n.parentNode.insertBefore(s, n); };
+    	s.type = "text/javascript";
+    	s.async = true;
+    	s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    	if (w.opera == "[object Opera]") {
+        	d.addEventListener("DOMContentLoaded", f);
+    	} else { f(); }
+	})(document, window, "yandex_metrika_callbacks");
+	</script>
+	<noscript><div><img src="//mc.yandex.ru/watch/7719478" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<!-- /Yandex.Metrika counter -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/media/js/jquery.js"></script>
+    <script src="/media/js/bootstrap-transition.js"></script>
+    <script src="/media/js/bootstrap-alert.js"></script>
+    <script src="/media/js/bootstrap-modal.js"></script>
+    <script src="/media/js/bootstrap-dropdown.js"></script>
+    <script src="/media/js/bootstrap-scrollspy.js"></script>
+    <script src="/media/js/bootstrap-tab.js"></script>
+    <script src="/media/js/bootstrap-tooltip.js"></script>
+    <script src="/media/js/bootstrap-popover.js"></script>
+    <script src="/media/js/bootstrap-button.js"></script>
+    <script src="/media/js/bootstrap-collapse.js"></script>
+    <script src="/media/js/bootstrap-carousel.js"></script>
+    <script src="/media/js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>

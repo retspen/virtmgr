@@ -61,12 +61,13 @@ def index(request, host):
 			networks.append(name)
 		for name in conn.listDefinedNetworks():
 			networks.append(name)
-		for ifcfg in conn.listInterfaces():
-			if ifcfg != 'lo' and not re.findall("eth", ifcfg):
-				networks.append(ifcfg)
-		for ifcfg in conn.listDefinedInterfaces():
-			if ifcfg != 'lo' and not re.findall("eth", ifcfg):
-				networks.append(ifcfg)
+		# Not support all distro but Fedora!!!
+		#for ifcfg in conn.listInterfaces():
+		#	if ifcfg != 'lo' and not re.findall("eth", ifcfg):
+		#		networks.append(ifcfg)
+		#for ifcfg in conn.listDefinedInterfaces():
+		#	if ifcfg != 'lo' and not re.findall("eth", ifcfg):
+		#		networks.append(ifcfg)
 		return networks
 	
 	def get_arch():
@@ -141,7 +142,7 @@ def index(request, host):
 				  <on_reboot>restart</on_reboot>
 				  <on_crash>restart</on_crash>
 				  <devices>
-				    <emulator>/usr/bin/qemu-kvm</emulator>
+				    <emulator>/usr/bin/qemu-system-x86_64</emulator>
 				    <disk type='file' device='disk'>
 				      <driver name='qemu' type='%s'/>
 				      <source file='%s'/>
@@ -165,7 +166,7 @@ def index(request, host):
 		else:
 			xml += """<interface type='network'>
 					<source network='%s'/>""" % (bridge)
-		xml += """<address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+			xml += """<address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
 				    </interface>
 				    <input type='tablet' bus='usb'/>
 				    <input type='mouse' bus='ps2'/>

@@ -1,23 +1,13 @@
-{% extends "usr.html" %}
-{% block urls %}
-<a href=/help/>Help</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<a href=/support/>Support</a>
-<a href=/faq/>FAQ</a>
-{% if user.is_authenticated %}<button onclick="location.href='{% url registration_register %}'">Create new account</button>{% endif %}
-{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-</tr><tr>
-<td id="content">
-<h2>Support</h2>
-<p>If you find an errors or have any comments for some working elements  or have  a problems in using  service please contact us to email.</p><h2>Email</h2><p>webmaster@x-sys.com.ua</p>
-<h2>Support us via PayPal</h2>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="EK4TSD8WA63JJ">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-</td>
+   <div class="container">
+	<h2>Поддержка</h2>
+	<p>Если у вас возникли проблемы или есть предложения по работе с сервисом, пожалуйста связитесь с нами через email.</p><h2>Email</h2><p><a href="mailto:webmaster@x-sys.com.ua">webmaster@x-sys.com.ua</a></p>
+	<h2>Поддержите нас через PayPal</h2>
+	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="hosted_button_id" value="EK4TSD8WA63JJ">
+	<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
 {% endblock %}

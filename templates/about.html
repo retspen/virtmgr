@@ -1,16 +1,6 @@
-{% extends "usr.html" %}
-{% block urls %}
-<a href=/help/>Help</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<a href=/support/>Support</a>
-<a href=/faq/>FAQ</a>
-{% if user.is_authenticated %}<button onclick="location.href='{% url registration_register %}'">Create new account</button>{% endif %}
-{% endblock %}
-{% block content %}
-</tr><tr>
-<td id="content">
-<h2>About</h2>
-<p>This project is designed for management servers virtualization. We use open source technologies such as KVM and libvirt. This project is not  prepaid, i develop it in my spare time. If you want to help that service you can donate it  little amout what you can please write to our email, for instructions.</p><h3>Email</h3><p>webmaster@x-sys.com.ua</p>
-</td>
+{% extends "base.html" %}
+{{% block content %}
+	<div class="container">
+	<h2>О проекте</h2>
+	<p>Этот проект предназначен для управления виртуальными машинина. Альтернатива клиенту Virt-Manager для linux. Мы используем только свобдные программные технологии, такие как KVM и libvit. Проект является абсолютно бесплатным и разрабатывается свободное от работы время. Если у вас есть возможность помочь или есть предложение по улучшению работы ресурса тогда ждем ваших писем на наш email.</p><h3>Email</h3><p><a href="mailto:webmaster@x-sys.com.ua">webmaster@x-sys.com.ua</a></p>
 {% endblock %}
