@@ -13,9 +13,9 @@
 			  <input type="button" class="btn btn-primary" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
 			  {% if status = 0 %}
 			  <input type="submit" class="btn btn-primary" name="stg_pool" value="start">
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="del" onclick="return confirm('Are you sure?')">
+			  <input type="submit" class="btn btn-primary" name="stg_pool" value="del" onclick="return confirm('Вы уверены?')">
 			  {% else %}
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="stop" onclick="return confirm('Are you sure?')">
+			  <input type="submit" class="btn btn-primary" name="stg_pool" value="stop" onclick="return confirm('Вы уверены?')">
 			  {% endif %}
 			  </form>
             </ul>
@@ -40,8 +40,8 @@
 				</div>
 				<div class="span3">
 					<form action="/storage/{{host}}/{{pool}}/" method="post">
-						<input type="text" class="input-meddle" name="name_pool" value="" style="height:30px;"></td></tr>
-						<input type="text" class="input-meddle" name="path_pool" value="/var/lib/libvirt/images/" style="height:30px;"></td></tr>
+						<input type="text" class="input-meddle" name="name_pool" value="">
+						<input type="text" class="input-meddle" name="path_pool" value="/var/lib/libvirt/images/">
 						<select name="type_pool"> 
 						    <option value="dir">Filesystem Directory</option>
 						</select>

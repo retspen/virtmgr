@@ -13,9 +13,9 @@
                 <input type="button" class="btn btn-primary" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
               {% if status = 0 %}
                 <input type="submit" class="btn btn-primary" name="net_pool" value="start">
-                <input type="submit" class="btn btn-primary" name="net_pool" value="del" onclick="return confirm('Are you sure?')">
+                <input type="submit" class="btn btn-primary" name="net_pool" value="del" onclick="return confirm('Вы уверены?')">
               {% else %}
-                <input type="submit" class="btn btn-primary" name="net_pool" value="stop" onclick="return confirm('Are you sure?')">
+                <input type="submit" class="btn btn-primary" name="net_pool" value="stop" onclick="return confirm('Вы уверены?')">
               {% endif %}
               </form>
             </ul>
@@ -41,9 +41,9 @@
 				</div>
 				<div class="span3">
 					<form action="/network/{{host}}/new_net_pool/" method="post">
-						<input type="text" class="input-meddle" name="name_pool" placeholder="Name" value="" style="height:30px;">
-						<input type="text" class="input-meddle"  name="net_addr" value="192.168.100.0/24" style="height:30px;">
-						<input type="checkbox" name="dhcp" value="yes" style="height:30px;">
+						<input type="text" class="input-meddle" name="name_pool" placeholder="Name" value="">
+						<input type="text" class="input-meddle"  name="net_addr" value="192.168.100.0/24">
+						<input type="checkbox" name="dhcp" value="yes">
 						<select name="forward"> 
 						    <option value="nat">NAT</option>
 						    <option value="route">Route</option>

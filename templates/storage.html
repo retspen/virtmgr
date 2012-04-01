@@ -13,9 +13,9 @@
 			  <input type="button" class="btn btn-primary" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
 			  {% if status = 0 %}
 			  <input type="submit" class="btn btn-primary" name="stg_pool" value="start">
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="del" onclick="return confirm('Are you sure?')">
+			  <input type="submit" class="btn btn-primary" name="stg_pool" value="del" onclick="return confirm('Вы уверены?')">
 			  {% else %}
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="stop" onclick="return confirm('Are you sure?')">
+			  <input type="submit" class="btn btn-primary" name="stg_pool" value="stop" onclick="return confirm('Вы уверены?')">
 			  {% endif %}
 			  </form>
             </ul>
@@ -110,9 +110,9 @@
 							</div>
 							<div class="span3">
 								<form action="/storage/{{host}}/{{pool}}/" method="post">
-									<input type="text" class="input-large" name="img" placeholder="Name" value="" style="height:30px;">
-									<input type="text" class="input-large" name="size_max" value="1024" style="height:30px;">
-									<input type="text" class="input-large" name="size_aloc" value="0" style="height:30px;">
+									<input type="text" class="input-large" name="img" placeholder="Name" value="">
+									<input type="text" class="input-large" name="size_max" value="1024">
+									<input type="text" class="input-large" name="size_aloc" value="0">
 									<select name="format"> 
 									    <option value="qcow2">qcow2</option>
 									    <option value="raw">raw</option>

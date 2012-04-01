@@ -117,7 +117,6 @@ def index(request, host, vname):
          for img in stg.listVolumes():
             if vol == img:
                vl = stg.storageVolLookupByName(vol)
-      
       xml = """<disk type='file' device='cdrom'>
                   <driver name='qemu' type='raw'/>
                   <target dev='hdc' bus='ide'/>
@@ -134,10 +133,9 @@ def index(request, host, vname):
          for img in stg.listVolumes():
             if vol == img:
                vl = stg.storageVolLookupByName(vol)
-
       xml = dom.XMLDesc(0)
-      iso = "<driver name='qemu' type='raw'/>\n<source file='%s'/>" % vl.path()
-      xmldom = xml.replace("<driver name='qemu' type='raw'/>", iso)
+      iso = "<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>\n      <source file='%s'/>" % vl.path()
+      xmldom = xml.replace("<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>", iso)
       conn.defineXML(xmldom)
 
    def umnt_iso_on():

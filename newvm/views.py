@@ -127,7 +127,7 @@ def index(request, host):
 				  <currentMemory>%s</currentMemory>
 				  <vcpu>%s</vcpu>
 				  <os>
-				    <type arch='%s' machine='pc-0.13'>hvm</type>
+				    <type arch='%s' machine='pc-0.14'>hvm</type>
 				    <boot dev='hd'/>
 				    <boot dev='cdrom'/>
 				    <bootmenu enable='yes'/>

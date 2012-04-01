@@ -41,7 +41,7 @@
              <font color="red">{{ field.errors }}</font>
              {% endif %}
              {% endfor %}
-        <script type="text/javascript">
+          <script type="text/javascript">
           function toggleview(itm) 
           { 
              var itmx = document.getElementById(itm); 
@@ -67,10 +67,10 @@
               </div>
               <div class="span3">
                 <form action="/newhosts/" method="post">
-                  <input type="text" name="name" class="input-large focused" placeholder="Name" style="height:30px;">
-                  <input type="text" name="ipaddr" class="input-large" placeholder="192.168.1.1" style="height:30px;">
-                  <input type="text" name="sshusr" class="input-large" placeholder="Name" style="height:30px;">
-                  <input type="password" name="passw" class="input-large" placeholder="Password" style="height:30px;">
+                  <input type="text" name="name" class="input-large focused" placeholder="Name">
+                  <input type="text" name="ipaddr" class="input-large" placeholder="192.168.1.1">
+                  <input type="text" name="sshusr" class="input-large" placeholder="Name">
+                  <input type="password" name="passw" class="input-large" placeholder="Password">
                   <input type="submit" class="btn btn-primary" name="action" value="add">
                 </form>
               </div>

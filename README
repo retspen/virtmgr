@@ -1,3 +1,12 @@
+Version 2.1:
+- fix bootstrap height (text input)
+
+Version 2.0:
+
+- new design build on bootstrap
+- delete interfaces for ubuntu support
+- optimized code
+
 Version 1.0.1a:
 
 Web Virtual Manager service for managing virtual machines on your servers. 
