@@ -123,7 +123,7 @@ def index(request, host):
 		try:
 			emulator = []
 			xml = conn.getCapabilities()
-			arch = conn.getInfo()[0]
+			arch = util.get_xml_path(xml,"/capabilities/host/cpu/arch")
 			if arch == 'x86_64':
 				emulator.append(util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name"))
 				emulator.append(util.get_xml_path(xml,"/capabilities/guest[2]/arch/@name"))
