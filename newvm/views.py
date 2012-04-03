@@ -166,10 +166,10 @@ def index(request, host):
 				  <on_crash>restart</on_crash>
 				  <devices>""" % (name, mem, memaloc, cpus, arch, machine)
 			
-		if arch == 'x86_64':
-			xml += """<emulator>%s</emulator>""" % (emul[1])
-		else:
-			xml += """<emulator>%s</emulator>""" % (emul[0])
+			if arch == 'x86_64':
+				xml += """<emulator>%s</emulator>""" % (emul[1])
+			else:
+				xml += """<emulator>%s</emulator>""" % (emul[0])
 
 			xml += """<disk type='file' device='disk'>
 				      <driver name='qemu' type='%s'/>
@@ -189,11 +189,11 @@ def index(request, host):
 				    </controller>
 				    """ % (img_frmt, img, iso)
 
-		if re.findall("br", bridge):
-			xml += """<interface type='bridge'>
-					<source bridge='%s'/>""" % (bridge)
-		else:
-			xml += """<interface type='network'>
+			if re.findall("br", bridge):
+				xml += """<interface type='bridge'>
+						<source bridge='%s'/>""" % (bridge)
+			else:
+				xml += """<interface type='network'>
 					<source network='%s'/>""" % (bridge)
 			
 			xml += """<address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
