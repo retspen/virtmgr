@@ -123,7 +123,7 @@ def index(request, host):
 		try:
 			emulator = []
 			xml = conn.getCapabilities()
-			arch = util.get_xml_path(xml,"/capabilities/host/cpu/arch")
+			arch = conn.getInfo()[0]
 			if arch == 'x86_64':
 				emulator.append(util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name"))
 				emulator.append(util.get_xml_path(xml,"/capabilities/guest[2]/arch/@name"))
@@ -142,7 +142,7 @@ def index(request, host):
 			print 'Get info failed'
 
 	
-	def add_vm(name, mem, cpus, arch, machine, emul, machine, img_frmt, img, iso, bridge):
+	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
 		memaloc = mem
 		xml = """<domain type='kvm'>
 				  <name>%s</name>
@@ -166,7 +166,7 @@ def index(request, host):
 				  <on_crash>restart</on_crash>
 				  <devices>""" % (name, mem, memaloc, cpus, arch, machine)
 			
-		if arch = 'x86_64':
+		if arch == 'x86_64':
 			xml += """<emulator>%s</emulator>""" % (emul[1])
 		else:
 			xml += """<emulator>%s</emulator>""" % (emul[0])
