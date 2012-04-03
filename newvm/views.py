@@ -118,8 +118,31 @@ def index(request, host):
 			return info
 		except:
 			print 'Get info failed'
+
+	def get_emulator():
+		try:
+			emulator = []
+			xml = conn.getCapabilities()
+			arch = conn.getInfo()[0]
+			if arch == 'x86_64':
+				emulator.append(util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name"))
+				emulator.append(util.get_xml_path(xml,"/capabilities/guest[2]/arch/@name"))
+			else:
+				emulator = util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name")
+			return emulator
+		except:
+			print 'Get emulator failed'
+
+	def get_machine():
+		try:
+			xml = conn.getCapabilities()
+			machine = util.get_xml_path(xml,"/capabilities/guest/arch/machine/@canonical")
+			return machine
+		except:
+			print 'Get info failed'
+
 	
-	def add_vm(name, mem, cpus, arch, img_frmt, img, iso, bridge):
+	def add_vm(name, mem, cpus, arch, machine, emul, machine, img_frmt, img, iso, bridge):
 		memaloc = mem
 		xml = """<domain type='kvm'>
 				  <name>%s</name>
@@ -127,7 +150,7 @@ def index(request, host):
 				  <currentMemory>%s</currentMemory>
 				  <vcpu>%s</vcpu>
 				  <os>
-				    <type arch='%s' machine='pc-0.14'>hvm</type>
+				    <type arch='%s' machine='%s'>hvm</type>
 				    <boot dev='hd'/>
 				    <boot dev='cdrom'/>
 				    <bootmenu enable='yes'/>
@@ -141,9 +164,14 @@ def index(request, host):
 				  <on_poweroff>destroy</on_poweroff>
 				  <on_reboot>restart</on_reboot>
 				  <on_crash>restart</on_crash>
-				  <devices>
-				    <emulator>/usr/bin/qemu-system-x86_64</emulator>
-				    <disk type='file' device='disk'>
+				  <devices>""" % (name, mem, memaloc, cpus, arch, machine)
+			
+		if arch = 'x86_64':
+			xml += """<emulator>%s</emulator>""" % (emul[1])
+		else:
+			xml += """<emulator>%s</emulator>""" % (emul[0])
+
+			xml += """<disk type='file' device='disk'>
 				      <driver name='qemu' type='%s'/>
 				      <source file='%s'/>
 				      <target dev='hda' bus='ide'/>
@@ -159,13 +187,15 @@ def index(request, host):
 				    <controller type='ide' index='0'>
 				      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
 				    </controller>
-				    """ % (name, mem, memaloc, cpus, arch, img_frmt, img, iso)
+				    """ % (img_frmt, img, iso)
+
 		if re.findall("br", bridge):
 			xml += """<interface type='bridge'>
 					<source bridge='%s'/>""" % (bridge)
 		else:
 			xml += """<interface type='network'>
 					<source network='%s'/>""" % (bridge)
+			
 			xml += """<address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
 				    </interface>
 				    <input type='tablet' bus='usb'/>
@@ -194,6 +224,8 @@ def index(request, host):
 	all_img = find_all_img()
 	bridge = get_all_net()
 	arch = get_arch()
+	emul = get_emulator()
+	machine = get_machine()
 
 	# Core CPUS
 	cpus = []
@@ -212,7 +244,7 @@ def index(request, host):
 		hdd = get_img_path(img)
 		cdrom = get_img_path( iso)
 		hdd_frmt = get_img_format( img)
-		add_vm(name, mem, cpus, arch,hdd_frmt, hdd, cdrom, bridge)
+		add_vm(name, mem, cpus, arch, machine, emul, hdd_frmt, hdd, cdrom, bridge)
 		return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
 
 	return render_to_response('newvm.html', locals())
