@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Настройка</h1>
 <br>
 <script type="text/javascript">
 function toggleview(itm) { 
@@ -14,6 +13,8 @@ function toggleview(itm) {
 }
 </script>
 <div class="container">
+<h1>Настройка</h1>
+<br>
 <a href=# onclick="toggleview('q1')"><h1>Установка и настройка libvirt и KVM на Fedora/CentOS</h1></a>
 <div id='q1' style="display:none">
 <h2>Установка libvirt и KVM</h2>
@@ -185,4 +186,5 @@ Please enter your password:
 <p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост) по ссылке подключения.</p>
 </div>
+<br>
 {% endblock %}
