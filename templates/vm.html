@@ -28,7 +28,7 @@
 
         <div class="span9">
             <div class="hero-unit">
-              <h2>Виртуалка: <i>{{vname}}</i></h2>
+              <h2>Виртуалка: <i>{% if state == 1 %}<font color="green">{{vname}}</font>{% else %}<font color="red">{{vname}}</font>{% endif %}</i></h2>
               <hr>
               <form action="/vm/{{host}}/{{vname}}/" method="post">
               {% if state = 5 %}
