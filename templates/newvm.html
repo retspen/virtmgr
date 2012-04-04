@@ -31,7 +31,7 @@
            <ul class="nav nav-pills pull-right">
              <li><a href=/overview/{{host}}/>Подробности</a></li>
              <li><a href=/storage/{{host}}/>Хранилище</a></li>
-             <li><a href=/network/{{host}}/>Виртуальные Сети</a></li>
+             <li><a href=/network/{{host}}/>Сети</a></li>
              <li class="active"><a href=/newvm/{{host}}/>Добавить ВМ</a></li>
            </ul>
            <a href="#" class="btn btn-large btn-primary disabled">Хост: {{host}}</a>
@@ -57,13 +57,17 @@
                         </select>
                         <select name="memory">
                             <option value="256">256 Mb</option>
-                            <option value="386">386 Mb</option>
+                        {% if addmem < 512 %}
                             <option value="512">512 Mb</option>
-                            <option value="768">768 Mb</option>
+                        {% endif %}
                             <option value="1024">1024 Mb</option>
+                        {% if addmem < 1024 %}
                             <option value="2048">2048 Mb</option>
+                        {% endif %}
                             <option value="4096">4096 Mb</option>
+                        {% if addmem < 2048 %}
                             <option value="8192">8192 Mb</option>
+                        {% endif %}
                         </select>
                         <select name="cpus">
                         {% for cpu in cpus %}
