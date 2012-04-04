@@ -57,15 +57,19 @@
                         </select>
                         <select name="memory">
                             <option value="256">256 Mb</option>
-                        {% if addmem < 512 %}
+                        {% if addmem > 512 %}
                             <option value="512">512 Mb</option>
                         {% endif %}
+                        {% if addmem > 1024 %}
                             <option value="1024">1024 Mb</option>
-                        {% if addmem < 1024 %}
+                        {% endif %}
+                        {% if addmem > 2048 %}
                             <option value="2048">2048 Mb</option>
                         {% endif %}
+                        {% if addmem > 4096 %}
                             <option value="4096">4096 Mb</option>
-                        {% if addmem < 2048 %}
+                        {% endif %}
+                        {% if addmem > 8192 %}
                             <option value="8192">8192 Mb</option>
                         {% endif %}
                         </select>

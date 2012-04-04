@@ -225,7 +225,7 @@ def index(request, host):
 	arch = get_arch()
 	emul = get_emulator()
 	machine = get_machine()
-	addmem = dom.info()[1]
+	addmem = conn.getInfo()[1]
 
 	# Core CPUS
 	cpus = []
