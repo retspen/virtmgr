@@ -8,10 +8,10 @@ urlpatterns = patterns('',
     # Static pages
     url(r'^$', 'virtmgr.pages.views.index'),
     url(r'^about/', 'virtmgr.pages.views.about'),
-    url(r'^docs/', 'virtmgr.pages.views.docs'),
+    url(r'^docs/$', 'virtmgr.pages.views.docs'),
     url(r'^docs/settings/', 'virtmgr.pages.views.settings'),
-    url(r'^docs/support/', 'virtmgr.pages.views.support'),
-    url(r'^faq/', 'virtmgr.pages.views.faq'),
+    url(r'^docs/faq/', 'virtmgr.pages.views.faq'),
+    url(r'^support/', 'virtmgr.pages.views.support'),
 
     # Users
     url(r'^user/register/$', 'registration.views.register', {'form_class': RegistrationFormUniqueEmail, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
