@@ -3,7 +3,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 def index(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/newhosts/')
+		return HttpResponseRedirect('/hosts/')
 	else:
 		return render_to_response('index.html')
 

@@ -8,21 +8,18 @@ urlpatterns = patterns('',
     # Static pages
     url(r'^$', 'virtmgr.pages.views.index'),
     url(r'^about/', 'virtmgr.pages.views.about'),
+    url(r'^support/', 'virtmgr.pages.views.support'),
     url(r'^docs/$', 'virtmgr.pages.views.docs'),
     url(r'^docs/settings/', 'virtmgr.pages.views.settings'),
     url(r'^docs/faq/', 'virtmgr.pages.views.faq'),
-    url(r'^support/', 'virtmgr.pages.views.support'),
 
     # Users
     url(r'^user/register/$', 'registration.views.register', {'form_class': RegistrationFormUniqueEmail, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
     url(r'^user/', include('registration.urls')),
     url(r'^user/profile/$', include('registration.urls')),
     
-    # Newhost
-    url(r'^newhosts/$', 'virtmgr.newhosts.views.index'),
-
-    # Servers
-    url(r'^hosts/', 'virtmgr.hosts.views.index'),
+    # Host
+    url(r'^hosts/$', 'virtmgr.hosts.views.index'),
 
     # NewVM
     url(r'^newvm/(\w+)/$', 'virtmgr.newvm.views.index'),
