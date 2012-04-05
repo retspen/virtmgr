@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
+  <div class="row well">
+   	<div class="span3">
+   		<h2>Хост: {{host}}</h2>
+   	</div>
+   	<div class="span6">
+    	<ul class="nav nav-pills">
+			<li><a href=/overview/{{host}}/>Подробности</a></li>
+			<li class="active"><a href=/storage/{{host}}/>Хранилище</a></li>
+			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
+			<li><a href=/newvm/{{host}}/>Добавить ВМ</a></li>
+		</ul>
+	</div>
+   </div>
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
@@ -24,12 +37,6 @@
 
 		<div class="span9">
 			<div class="hero-unit">
-			<ul class="nav nav-pills pull-right">
-				<li><a href=/overview/{{host}}/>Обзор</a></li>
-				<li class="active"><a href=/storage/{{host}}/>Хранилище</a></li>
-				<li><a href=/network/{{host}}/>Сеть</a></li>
-				<li><a href=/newvm/{{host}}/>Добавить</a></li>
-			</ul>
 			<h2>Новый пул:</h2>
 			<hr>
 			<div class="row show-grid">
