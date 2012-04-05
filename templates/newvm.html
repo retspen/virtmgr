@@ -19,22 +19,19 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
-              <li><a href=/overview/{{host}}/><i class="icon-home"></i>{{host}}</a></li>
-                <ul class="nav nav-list">
-                    {% if not all_vm %}
-                    <li><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Добавить</a></li>
-                    {% endif %}
-                    {% for name, state in all_vm.items %}
-                        {% if name == '000x' %}
-                            <li>Не подключено</li>
-                        {% else %}
-                            <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
-                        {% endif %}
-                        {% if not name %}
-                            <li><a href=/newvm/{{host}}/><i class="icon-home"></i>Добавить</a></li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+              {% if not all_vm %}
+              <li><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Добавить</a></li>
+              {% endif %}
+              {% for name, state in all_vm.items %}
+              {% if name == '000x' %}
+              <li>Не подключено</li>
+              {% else %}
+              <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
+              {% endif %}
+              {% if not name %}
+              <li><a href=/newvm/{{host}}/><i class="icon-home"></i>Добавить</a></li>
+              {% endif %}
+              {% endfor %}
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
