@@ -18,9 +18,9 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Пул хранилища:</li>
+              <li class="nav-header">Пул хранилища</li>
               {% for name in pools %}
-  			  <li{% if pool == name %} class="active"{% endif %}><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i>{{name}}</a></li><br>
+  			  <li{% if pool == name %} class="active"{% endif %}><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
 			  {% endfor %}
 			  <form action="/storage/{{host}}/{{pool}}/" method="post">
 			  <input type="button" class="btn btn-primary" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
@@ -55,7 +55,6 @@
 						<p>{% if start == 1 %} <font color="green">Включен</font> {% else %} <font color="red">Выключен</font> {% endif %}</p>
 					</div>
 				</div>
-
 				{% if volinfo %}
 				<hr>
 				<h2>Образы:</h2>

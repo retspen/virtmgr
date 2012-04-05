@@ -18,9 +18,9 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Пул хранилища:</li>
+              <li class="nav-header">Пул хранилища</li>
               {% for name in pools %}
-  			  <li><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i>{{name}}</a></li><br>
+  			  <li><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
 			  {% endfor %}
 			  <form action="/storage/{{host}}/{{pool}}/" method="post">
 			  <input type="button" class="btn btn-primary" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
