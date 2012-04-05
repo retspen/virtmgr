@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^user/profile/$', include('registration.urls')),
     
     # Host
-    url(r'^hosts/$', 'virtmgr.hosts.views.index'),
+    url(r'^dashboard/$', 'virtmgr.dashboard.views.index'),
 
     # NewVM
     url(r'^newvm/(\w+)/$', 'virtmgr.newvm.views.index'),

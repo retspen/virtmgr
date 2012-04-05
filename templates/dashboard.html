@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+   <div class="container">
+      <div class="hero-unit">
+        <h2>Центр управления</h2>
+        <hr>  
+        {% if host_info %}
+        <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Имя хоста:</th>
+                <th>IP address:</th>
+                <th>KVM логин:</th>
+                <th>Действие</th>
+                <th>Удаление</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for name, info in host_info.items %}
+                <tr>
+                  <td>{{name}}</td>
+                  <td>{{info.0}}</td>
+                  <td>{{info.1}}</td>
+                  <td>
+                    <button class="btn btn-primary" onclick="location.href='/overview/{{name}}/'">Управление</button>
+                  </td>
+                  <td>
+                    <form action="/dashboard/" method="post">
+                      <input type="hidden" name="host" value="{{name}}">
+                      <input type="submit" class="btn btn-primary" name="action" value="delete" onclick="return confirm('Вы уверены?')">
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+          </tbody>
+          </table>
+        <hr>
+        {% else %}
+          <h4>У Вас отсутствуют подключения к хостам.</h4><br>
+        {% endif %}
+             {% for field in form %}
+             {% if field.errors %}
+             <font color="red">{{ field.errors }}</font>
+             {% endif %}
+             {% endfor %}
+          <script type="text/javascript">
+          function toggleview(itm) 
+          { 
+             var itmx = document.getElementById(itm); 
+             if (itmx.style.display == "none") 
+             { 
+                itmx.style.display = "block"; 
+             } 
+             else 
+             { 
+                itmx.style.display = "none"; 
+             } 
+          } 
+          </script>
+          <button class="btn btn-primary" onclick="toggleview('q1')">Добаить</button>
+          <div id='q1' style="display:none">
+            <br>
+            <div class="row show-grid">
+              <div class="span3">
+                <p>Имя хоста:</p>
+                <p>IP адрес:</p>
+                <p>KVM Логин:</p>
+                <p>KVM Пароль:</p>
+              </div>
+              <div class="span3">
+                <form action="/dashboard/" method="post">
+                  <input type="text" name="name" class="input-large focused" placeholder="Name">
+                  <input type="text" name="ipaddr" class="input-large" placeholder="192.168.1.1">
+                  <input type="text" name="sshusr" class="input-large" placeholder="Name">
+                  <input type="password" name="passw" class="input-large" placeholder="Password">
+                  <input type="submit" class="btn btn-primary" name="action" value="add">
+                </form>
+              </div>
+            </div>
+          </div>
+   </div>
+
+{% endblock %}
