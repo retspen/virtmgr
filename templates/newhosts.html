@@ -14,6 +14,7 @@
                 <th>IP address:</th>
                 <th>KVM логин:</th>
                 <th>Действие</th>
+                <th>Удаление</th>
               </tr>
             </thead>
             <tbody>
@@ -23,7 +24,7 @@
                   <td>{{info.0}}</td>
                   <td>{{info.1}}</td>
                   <td>
-                    <button class="btn btn-primary" onclick="location.href='/overview/{{name}}'">Управление</button>
+                    <button class="btn btn-primary" onclick="location.href='/overview/{{name}}/'">Управление</button>
                   </td>
                   <td>
                     <form action="/newhosts/" method="post">

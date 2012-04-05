@@ -14,9 +14,11 @@ def about(request):
 def support(request):
 	return render_to_response('support.html')
 
+def docs(request):
+	return render_to_response('docs.html')
+
 def settings(request):
 	return render_to_response('settings.html')
 
 def faq(request):
-
 	return render_to_response('faq.html')

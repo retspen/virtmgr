@@ -8,8 +8,9 @@ urlpatterns = patterns('',
     # Static pages
     url(r'^$', 'virtmgr.pages.views.index'),
     url(r'^about/', 'virtmgr.pages.views.about'),
-    url(r'^support/', 'virtmgr.pages.views.support'),
-    url(r'^settings/', 'virtmgr.pages.views.settings'),
+    url(r'^docs/', 'virtmgr.pages.views.docs'),
+    url(r'^docs/settings/', 'virtmgr.pages.views.settings'),
+    url(r'^docs/support/', 'virtmgr.pages.views.support'),
     url(r'^faq/', 'virtmgr.pages.views.faq'),
 
     # Users
