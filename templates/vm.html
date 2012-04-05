@@ -26,7 +26,7 @@
                	{% if name == '000x' %}
                 <li>Не подключено</li>
                 {% else %}
-                 <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
+                 <li{% if vname == name %} class="active"{% endif %}><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
                 {% endif %}
                 {% if not name %}
                 <li><a href=/newvm/{{host}}/><i class="icon-home"></i>Добавить</a></li>
