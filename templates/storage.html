@@ -20,7 +20,7 @@
             <ul class="nav nav-list">
               <li class="nav-header">Пул хранилища</li>
               {% for name in pools %}
-  			  <li{% if pool == name %} class="active"{% endif %}><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+  			  <li{% if pool == name %} class="active"{% endif %}><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li><br>
 			  {% endfor %}
 			  <form action="/storage/{{host}}/{{pool}}/" method="post">
 			  <input type="button" class="btn btn-primary" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
