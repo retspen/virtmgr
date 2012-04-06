@@ -49,13 +49,13 @@
               <li><a href="/about">О проекте</a></li>
             </ul>
 
-            {% if user.is_authenticated or request.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
               <ul class="nav pull-right">
                 <li><a href="/dashboard/">Dashboard</a></li>
                 <li class="divider-vertical"></li>
                 <li class="navbar-text"><i class="icon-user icon-white"></i></li>
                 <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown">{{usr_name}}<b class="caret"></b></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown">{{request.user}}<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Профиль</a></li>
                     <li><a href="/user/logout">Выход</a></li>

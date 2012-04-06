@@ -6,7 +6,7 @@ from virtmgr.model.models import *
 def index(request, host):
 
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/user/login/')
 
 	usr_id = request.user.id
 	kvm_host = Host.objects.get(user=usr_id,hostname=host)
@@ -75,6 +75,6 @@ def index(request, host):
 
 def redir(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/user/login/')
 	else:
 		return HttpResponseRedirect('/dashboard/')

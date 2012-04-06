@@ -1,23 +1,23 @@
 from django.shortcuts import render_to_response
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
 def index(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/dashboard/')
 	else:
-		return render_to_response('index.html')
+		return render_to_response('index.html', locals())
 
 def about(request):
-	return render_to_response('about.html')
+	return render_to_response('about.html', locals())
 
 def support(request):
-	return render_to_response('support.html')
+	return render_to_response('support.html', locals())
 
 def docs(request):
-	return render_to_response('docs.html')
+	return render_to_response('docs.html', locals())
 
 def settings(request):
-	return render_to_response('settings.html')
+	return render_to_response('settings.html', locals())
 
 def faq(request):
-	return render_to_response('faq.html')
+	return render_to_response('faq.html', locals())
