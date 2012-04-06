@@ -72,4 +72,4 @@ def redir(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 	else:
-		return HttpResponseRedirect('/hosts')
+		return HttpResponseRedirect('/dashboard/')

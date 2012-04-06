@@ -56,7 +56,7 @@
               </form>
 
               <p><b>Название</b>: {{vname}}</p>
-              <p><b>UUID</b>: {{uuid}}</p>
+              <!-- <p><b>UUID</b>: {{uuid}}</p> -->
               <p><b>Статус</b>: {% if active == 1 %} <font color="green">Активен</font> {% else %} <font color="red">Не Активен</font> {% endif %}</p>
               <p><b>Автостарт</b>: {% if autostart == 1 %} <font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
               <p><b>Логические ЦПУ</b>: {{cpu}}</p>
@@ -69,7 +69,7 @@
               {% if cdrom %}
               <input class="btn btn-primary" type="submit" name="action" value="disconnect" onclick="return confirm('Вы уверены?')">
               {% else %}
-              <select name="iso_img" style="width:160px;">
+              <select name="iso_img">
               {% for iso in isos %}
                   <option value="{{iso}}">{{iso}}</option>
               {% endfor %} 

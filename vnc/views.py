@@ -65,10 +65,10 @@ def redir_two(request, host):
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
    else:
-      return HttpResponseRedirect('/hosts')
+      return HttpResponseRedirect('/dashboard/')
 
 def redir_one(request):
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
    else:
-      return HttpResponseRedirect('/hosts')
+      return HttpResponseRedirect('/dashboard/')

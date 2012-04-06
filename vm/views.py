@@ -99,11 +99,13 @@ def index(request, host, vname):
    def get_vm_hdd():
       xml = dom.XMLDesc(0)
       hdd = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
+      hdd = re.sub('\/.*\/','', hdd)
       return hdd
 
    def get_vm_cdrom():
       xml = dom.XMLDesc(0)
       cdrom = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
+      cdrom = re.sub('\/.*\/','', cdrom)
       return cdrom
 
    def get_vm_boot_menu():
@@ -249,10 +251,10 @@ def redir_two(request, host):
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
    else:
-      return HttpResponseRedirect('/hosts')
+      return HttpResponseRedirect('/dashboard')
 
 def redir_one(request):
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
    else:
-      return HttpResponseRedirect('/hosts')
+      return HttpResponseRedirect('/dashboard/')
