@@ -67,7 +67,7 @@
           {% for dhcp in dhcprange %} 
             <p>{{dhcp}}</p>
           {% endfor %}
-          <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'nat' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
+          <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
         </div>
       </div>
            </div>
