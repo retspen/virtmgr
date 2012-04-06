@@ -20,8 +20,9 @@
             <ul class="nav nav-list">
               <li class="nav-header">Сетвой пул</li>
               {% for name in pools %}
-              <li{% if pool == name %} class="active"{% endif %}><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li><br>
+              <li{% if pool == name %} class="active"{% endif %}><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
               {% endfor %}
+              <br>
               <form action="/network/{{host}}/{{pool}}/" method="post">
                 <input type="button" class="btn btn-primary" value="add" onclick="location.href='/network/{{host}}/new_net_pool/'" />
               {% if status = 0 %}
@@ -53,12 +54,12 @@
         </div>
       </div>
       <hr>
-      <h4>Конфигурация IPVv4:</h4><br>
+      <h4>Конфигурация IPv4:</h4><br>
         <div class="row">
         <div class="span3">
           <p>Сеть:</p>
-          <p>Начало:</p>
-          <p>Конец:</p>
+          {% if dhcprange %}<p>Начало:</p>
+          <p>Конец:</p> {% endif %}
           <p>Тип:</p>
         </div>
         <div class="span3">
@@ -66,7 +67,7 @@
           {% for dhcp in dhcprange %} 
             <p>{{dhcp}}</p>
           {% endfor %}
-          <p>{% if netmode.0 == 'nat' %} NAT {% else %} ROUTE {% endif %}</p>
+          <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'nat' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
         </div>
       </div>
            </div>
