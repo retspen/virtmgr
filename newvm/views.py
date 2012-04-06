@@ -198,6 +198,7 @@ def index(request, host):
 			
 		xml += """<address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
 				    </interface>
+				    <input type='tablet' bus='usb'/>
 				    <input type='mouse' bus='ps2'/>
 				    <graphics type='vnc' port='-1' autoport='yes'/>
 				    <video>

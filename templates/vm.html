@@ -64,6 +64,7 @@
                   <p>ЦПУ:</p>
                   <p>Память:</p>
                   <p>Boot Меню:</p>
+                  {% if state = 1 %}<p>VNC порт:</p>{% endif %}
                   <p>HDD:</p>
                   <p>CDROM:</p>
                 </div>
@@ -74,6 +75,7 @@
                   <p>{{ cpu }}</p>
                   <p>{{ memory|filesizeformat }}</p>
                   <p>{% if boot_menu == 'yes' %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+                  {% if state = 1 %}<p>{{ vnc_port }} - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{{ cdrom }}</p>
                 </div>
