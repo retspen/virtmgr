@@ -6,10 +6,10 @@
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li class="active"><a href=/overview/{{host}}/>Подробности</a></li>
+			<li class="active"><a href=/overview/{{host}}/>Обзор</a></li>
+			<li><a href=/newvm/{{host}}/>Создать ВМ</a></li>
 			<li><a href=/storage/{{host}}/>Хранилище</a></li>
 			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
-			<li><a href=/newvm/{{host}}/>Добавить ВМ</a></li>
 		</ul>
 	</div>
   </div>
@@ -38,7 +38,7 @@
 		<div class="span9">
 			<div class="hero-unit">
 			{% if info %}
-			<h2>Подробности</h2>
+			<h2>Обзор</h2>
 			<hr>
 			<div class="row">
 				<div class="span3">

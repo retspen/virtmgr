@@ -6,10 +6,10 @@
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{host}}/>Подробности</a></li>
+			<li><a href=/overview/{{host}}/>Обзор</a></li>
+      <li><a href=/newvm/{{host}}/>Создать ВМ</a></li>
 			<li><a href=/storage/{{host}}/>Хранилище</a></li>
 			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
-			<li><a href=/newvm/{{host}}/>Добавить ВМ</a></li>
 		</ul>
 	</div>
    </div>
@@ -54,17 +54,28 @@
                 <input class="btn btn-primary" type="submit" name="action" value="reboot" onclick="return confirm('Вы уверены?')">
               {% endif %}
               </form>
-
-              <p><b>Название</b>: {{vname}}</p>
-              <!-- <p><b>UUID</b>: {{uuid}}</p> -->
-              <p><b>Статус</b>: {% if active == 1 %} <font color="green">Активен</font> {% else %} <font color="red">Не Активен</font> {% endif %}</p>
-              <p><b>Автостарт</b>: {% if autostart == 1 %} <font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
-              <p><b>Логические ЦПУ</b>: {{cpu}}</p>
-              <p><b>Память</b>: {{ memory|filesizeformat }}</p>
-              <p><b>Boot Меню</b>: {% if boot_menu == 'yes' %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
-              <p><b>HDD</b>: {{ hdd }}</p>
-              <p><b>CDROM</b>: {{ cdrom }}
-
+              <div class="row">
+                <div class="span2">
+                  <p>Название:</p>
+                  <p>Статус:</p>
+                  <p>Автостарт:</p>
+                  <p>ЦПУ:</p>
+                  <p>Память:</p>
+                  <p>Boot Меню:</p>
+                  <p>HDD:</p>
+                  <p>CDROM:</p>
+                </div>
+                <div class="span5">
+                  <p>{{ vname }}</p>
+                  <p>{% if active == 1 %}<font color="green">Активен</font>{% else %}<font color="red">Не Активен</font>{% endif %}</p>
+                  <p>{% if autostart == 1 %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+                  <p>{{ cpu }}</p>
+                  <p>{{ memory|filesizeformat }}</p>
+                  <p>{% if boot_menu == 'yes' %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+                  <p>{{ hdd }}</p>
+                  <p>{{ cdrom }}</p>
+                </div>
+              </div>
               <form action="/vm/{{host}}/{{vname}}/" method="post">
               {% if cdrom %}
               <input class="btn btn-primary" type="submit" name="action" value="disconnect" onclick="return confirm('Вы уверены?')">
