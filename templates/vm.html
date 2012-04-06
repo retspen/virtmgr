@@ -77,21 +77,22 @@
                   <p>{% if boot_menu == 'yes' %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
                   {% if state = 1 %}<p>{{ vnc_port }} - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
-                  <p>{{ cdrom }}</p>
+                  <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
+                    <form action="/vm/{{host}}/{{vname}}/" method="post">
+                      {% if cdrom %}
+                      <input class="btn btn-primary" type="submit" name="action" value="disconnect" onclick="return confirm('Вы уверены?')">
+                      {% else %}
+                      <select name="iso_img">
+                      {% for iso in isos %}
+                          <option value="{{iso}}">{{iso}}</option>
+                      {% endfor %} 
+                      </select>
+                      <input class="btn btn-primary" type="submit" name="action" value="connect"> 
+                      {% endif %}
+                    </form>
+                  </p>
                 </div>
               </div>
-              <form action="/vm/{{host}}/{{vname}}/" method="post">
-              {% if cdrom %}
-              <input class="btn btn-primary" type="submit" name="action" value="disconnect" onclick="return confirm('Вы уверены?')">
-              {% else %}
-              <select name="iso_img">
-              {% for iso in isos %}
-                  <option value="{{iso}}">{{iso}}</option>
-              {% endfor %} 
-              </select>
-              <input class="btn btn-primary" type="submit" name="action" value="connect"> 
-              {% endif %}
-              </form>
               <form action="/vm/{{host}}/{{vname}}/" method="post">
               {% if autostart == 1 %}
                 <input class="btn btn-primary" type="submit" name="action" value="auto OFF" onclick="return confirm('Вы уверены?')">
