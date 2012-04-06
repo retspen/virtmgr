@@ -29,6 +29,11 @@ def index(request, host):
 	   	auth = [flags, creds, None]
 		uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
 	   	try:
+	   		import socket
+	   		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	   		s.settimeout(1)
+	   		s.connect((kvm_host.ipaddr, 16509))
+	   		s.close()
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except:

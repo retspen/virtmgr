@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="row well">
+  <div class="row well" style="height:33px">
    	<div class="span3">
    		<h2>Хост: {{host}}</h2>
    	</div>
@@ -79,13 +79,10 @@
                         {% endfor %}
                         </select>
                         <select name="iso">
-                        {% if all_iso %}
                         {% for name in all_iso %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
-                        {% else %}
-                            <option value="none">None</option>
-                        {% endif %}
+                            <option value="">None</option>
                         </select>
                         <select name="img">
                         {% if all_img %}
@@ -93,7 +90,7 @@
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
                         {% else %}
-                            <option value="none">None</option>
+                            <option value="">None</option>
                         {% endif %}
                         </select>
                         <select name="bridge">

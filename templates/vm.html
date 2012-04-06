@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="row well">
+  <div class="row well" style="height:33px">
    	<div class="span3">
    		<h2>Хост: {{host}}</h2>
    	</div>
@@ -53,6 +53,7 @@
                 <input class="btn btn-primary" type="submit" name="action" value="shutdown" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="action" value="destroy" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="action" value="reboot" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{host}}/{{vname}}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
               <div class="row">
@@ -89,16 +90,13 @@
               <input class="btn btn-primary" type="submit" name="action" value="connect"> 
               {% endif %}
               </form>
-
               <form action="/vm/{{host}}/{{vname}}/" method="post">
               {% if autostart == 1 %}
                 <input class="btn btn-primary" type="submit" name="action" value="auto OFF" onclick="return confirm('Вы уверены?')">
               {% else %}
                 <input class="btn btn-primary" type="submit" name="action" value="auto ON" onclick="return confirm('Вы уверены?')"> 
               {% endif %}
-              {% if state == 1 %}
-                <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{host}}/{{vname}}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
-              {% else %}
+              {% if state != 1 %}
                 <input class="btn btn-primary" type="submit" name="action" value="undefine" onclick="return confirm('Вы уверены?')">
               {% endif %}
               </form>
