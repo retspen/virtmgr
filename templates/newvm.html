@@ -50,15 +50,18 @@
                     <form action="/newvm/{{host}}/" method="post">
                         <input class="input-large" type="text" name="name" placeholder="Name" value="">
                         <select name="arch">
+                            <option value="i686">i686</option>
                             {% if arch == 'x86_64' %}
                             <option value="x86_64">x86_64</option>
                             {% endif %}
-                            <option value="i686">i686</option>
                         </select>
                         <select name="memory">
                             <option value="256">256 Mb</option>
                         {% if addmem > 512 %}
                             <option value="512">512 Mb</option>
+                        {% endif %}
+                        {% if addmem > 768 %}
+                            <option value="768">768 Mb</option>
                         {% endif %}
                         {% if addmem > 1024 %}
                             <option value="1024">1024 Mb</option>

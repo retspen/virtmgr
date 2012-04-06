@@ -15,7 +15,7 @@ def index(request):
 		kvm_host = Host.objects.filter(user=usr_id)
 		name_ipddr = {}
 		for host in kvm_host:
-			name_ipddr[host.hostname] = (host.ipaddr, host.login, host.passwd)
+			name_ipddr[host.hostname] = (host.id, host.ipaddr, host.login, host.passwd)
 	   	return name_ipddr
 	
 	def del_host(host):
