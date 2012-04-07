@@ -19,7 +19,7 @@
             <tbody>
                 {% for name, info in host_info.items %}
                 <tr>
-                  <td>{% if info.4 == 1 %} Доступно {% else %} Не доступно {% endif %}</td>
+                  <td>{% if info.4 == 1 %}<font color="green">Доступно</font>{% else %}<font color="red">Доступно</font>Не доступно</font>{% endif %}</td>
                   <td>{{name}}</td>
                   <td>{{info.1}}</td>
                   <td>{{info.2}}</td>
