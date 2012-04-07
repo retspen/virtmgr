@@ -1,4 +1,5 @@
 import libvirt
+import socket
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
@@ -10,12 +11,20 @@ def index(request):
 	usr_id = request.user.id
 	usr_name = request.user
 	
-	def get_all_hosts():
+	def get_hosts_status():
 		usr_id = request.user.id
 		kvm_host = Host.objects.filter(user=usr_id)
 		name_ipddr = {}
 		for host in kvm_host:
-			name_ipddr[host.hostname] = (host.id, host.ipaddr, host.login, host.passwd)
+			try:
+				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				s.settimeout(1)
+				s.connect((host.ipaddr, 16509))
+				s.close()
+				status = 1
+			except:
+				status = 2
+			name_ipddr[host.hostname] = (host.id, host.ipaddr, host.login, host.passwd, status)
 	   	return name_ipddr
 	
 	def del_host(host):
@@ -31,7 +40,11 @@ def index(request):
 				hosts = Host(user_id=usr_id, hostname=host, ipaddr=ip, login=usr, passwd=passw)
 				hosts.save()
 
-	host_info = get_all_hosts()
+	def get_host_status(hosts):
+		for host, info in hosts.items():
+			print host, info
+
+	host_info = get_hosts_status()
 
 	if request.method == 'POST':
 		action = request.POST.get('action','')
