@@ -23,8 +23,7 @@
                   <td>{{name}}</td>
                   <td>{{info.1}}</td>
                   <td>{{info.2}}</td>
-                  <td>
-                    <button class="btn btn-primary" onclick="location.href='/overview/{{name}}/'">Управление</button>
+                  <td>{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{name}}/'">Управление</button>{% else %}<a href="#" class="btn btn-large btn-primary disabled">Управление</a>{% endif %}
                   </td>
                   <td>
                     <form action="/dashboard/" method="post">
