@@ -17,7 +17,6 @@ function toggleview(itm) {
 <br>
 <a href=# onclick="toggleview('q1')"><h2>Установка и настройка libvirt и KVM на Fedora/CentOS</h2></a>
 <div id='q1' style="display:none">
-<h2>Установка libvirt и KVM</h2>
 <p>Утилитой yum устанавливаем пакеты libvirt и KVM:</p>
 <pre>
 # yum -y install kvm libvirt
@@ -103,16 +102,15 @@ Please enter your password:
 
 <a href=# onclick="toggleview('q2')"><h2>Установка и настройка libvirt и KVM на Ubuntu</h2></a>
 <div id='q2' style="display:none">
-<h2>Установка libvirt и KVM</h2>
 <p>Утилитой apt-get устанавливаем пакеты libvirt, KVM и sasl:</p>
 <pre>
 # apt-get install kvm libvirt-bin sasl2-bin
 </pre>
 
-<p>Меняем параметр <code>-d</code> на <code>-l</code> в файле <code>/etc/default/libvirtd</code></p>
+<p>Добавляем параметр <code>-l</code> в файле <code>/etc/default/libvirtd</code></p>
 <pre>
 # options passed to libvirtd, add "-l" to listen on tcp
-libvirtd_opts="-l"
+libvirtd_opts="-d -l"
 </pre>
 
 <p>А так же раскомментируем следующие строки в файле <code>/etc/libvirt/libvirtd.conf</code></p>
