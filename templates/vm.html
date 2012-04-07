@@ -59,23 +59,23 @@
               <div class="row">
                 <div class="span2">
                   <p>Название:</p>
-                  <p>Статус:</p>
-                  <p>Автостарт:</p>
                   <p>ЦПУ:</p>
                   <p>Память:</p>
+                  <p>Статус:</p>
+                  <p>Автостарт:</p>
                   <p>Boot Меню:</p>
                   {% if state = 1 %}<p>VNC порт:</p>{% endif %}
                   <p>HDD:</p>
                   <p>CDROM:</p>
                 </div>
                 <div class="span5">
-                  <p>{{ vname }}</p>
-                  <p>{% if active == 1 %}<font color="green">Активно</font>{% else %}<font color="red">Не активно</font>{% endif %}</p>
-                  <p>{% if autostart == 1 %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+                  <p><strong>{{ vname }}</strong></p>
                   <p>{{ cpu }}</p>
                   <p>{{ memory|filesizeformat }}</p>
+                  <p>{% if active == 1 %}<font color="green">Активно</font>{% else %}<font color="red">Не активно</font>{% endif %}</p>
+                  <p>{% if autostart == 1 %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
                   <p>{% if boot_menu == 'yes' %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
-                  {% if state = 1 %}<p>{{ vnc_port }} - для iSSH</p>{% endif %}
+                  {% if state = 1 %}<p><strong>{{ vnc_port }}</strong> - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
                     <form action="/vm/{{host}}/{{vname}}/" method="post">
