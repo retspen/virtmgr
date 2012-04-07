@@ -20,7 +20,7 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-               <li><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Создать</a></li>
+               <li><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Создать ВМ</a></li>
               {% endif %}
               {% for name, state in all_vm.items %}
                	{% if name == '000x' %}
@@ -70,11 +70,11 @@
                 </div>
                 <div class="span5">
                   <p>{{ vname }}</p>
-                  <p>{% if active == 1 %}<font color="green">Активен</font>{% else %}<font color="red">Не Активен</font>{% endif %}</p>
+                  <p>{% if active == 1 %}<font color="green">Активно</font>{% else %}<font color="red">Не активно</font>{% endif %}</p>
                   <p>{% if autostart == 1 %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
                   <p>{{ cpu }}</p>
                   <p>{{ memory|filesizeformat }}</p>
-                  <p>{% if boot_menu == 'yes' %}<font color="green">Влючено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+                  <p>{% if boot_menu == 'yes' %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
                   {% if state = 1 %}<p>{{ vnc_port }} - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
