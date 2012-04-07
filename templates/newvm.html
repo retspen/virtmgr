@@ -20,7 +20,7 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-              <li class="active"><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Добавить</a></li>
+              <li class="active"><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Создать ВМ</a></li>
               {% endif %}
               {% for name, state in all_vm.items %}
                 {% if name == '000x' %}
