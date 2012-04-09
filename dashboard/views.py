@@ -3,7 +3,7 @@ import socket
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
-from virtmgr.dashboard.forms import add_host
+from virtmgr.dashboard.forms import AddNewHost
 
 def index(request):
 	if not request.user.is_authenticated():
@@ -45,7 +45,7 @@ def index(request):
 			del_host(host)
 			return HttpResponseRedirect('/dashboard/')
 		if action == 'add':
-			form = add_host(request.POST)
+			form = AddNewHost(request.POST)
 			if form.is_valid():
 				field = form.cleaned_data
 				name = field['host']
