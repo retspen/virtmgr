@@ -76,7 +76,7 @@
 						<td>
 						<form action="/storage/{{host}}/{{pool}}/" method="post">
 							<input type="hidden" name="img" value="{{name}}">
-							<input type="submit" class="btn btn-primary" name="volume" value="delete" onclick="return confirm('Вы уверены?')">
+							<input type="submit" class="btn btn-primary" name="vol_del" value="Удалить" onclick="return confirm('Вы уверены?')">
 						</form>
 						</td>
 					</tr>
@@ -88,8 +88,12 @@
 			        <hr>
 			        <h4>Какие либо образы отсутствуют</h4><br>
 				{% endif %}
-
 				{% if status = 1 %}
+				    {% if errors %}
+				    {% for error in errors %}
+				      <p><font color="red">{{error}}</font></p>
+				    {% endfor %}
+				    {% endif %}
 					<script type="text/javascript">
 					function toggleview(itm) 
 					{ 
@@ -123,7 +127,7 @@
 									    <option value="qcow2">qcow2</option>
 									    <option value="raw">raw</option>
 									</select>
-									<input type="submit" class="btn btn-primary" name="volume" value="create">
+									<input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
 								</form>
 							</div>
 						</div>

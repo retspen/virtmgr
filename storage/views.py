@@ -205,22 +205,27 @@ def pool(request, host, pool):
 			pool_delete()
 			return HttpResponseRedirect('/storage/' + host + '/')
 
-		volume = request.POST.get('volume','')
-
-		if volume == 'delete':
+		if request.POST.get('vol_del',''):
 			img = request.POST['img']
 			delete_volume(img)
-		if volume == 'create':
+		if request.POST.get('vol_add',''):
 			img = request.POST['img']
 			size_max = request.POST['size_max']
-			size_max = int(size_max) * 1048576
 			size_aloc = request.POST['size_aloc']
-			if size_aloc != "0":
-				size_aloc = int(size_aloc) * 1048576
-			else:
-				size_aloc = "0"
-			format = request.POST['format']
-			create_volume(img, size_max, size_aloc, format)
+			errors = []
+			if not img:
+				errors.append(u'Введите имя образа')
+			if not size_max:
+				errors.append(u'Введите размер образа')
+			if not errors:
+				size_max = int(size_max) * 1048576
+				if size_aloc != "0":
+					size_aloc = int(size_aloc) * 1048576
+				else:
+					size_aloc = "0"
+				format = request.POST['format']
+				create_volume(img, size_max, size_aloc, format)
+	
 		return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
 
 	return render_to_response('storage.html', locals())
