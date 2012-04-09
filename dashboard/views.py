@@ -3,7 +3,6 @@ import socket
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
-from virtmgr.dashboard.forms import AddNewHost
 
 def index(request):
 	if not request.user.is_authenticated():
@@ -52,7 +51,17 @@ def index(request):
 				ipaddr = field['ipaddr']
 				login = field['sshusr']
 				passw = field['passw']
-				add_host(name, ipaddr, login, passw)
+
+				hostname = Host.objects.filter(user=request.user, hostname=name)
+				ipaddr = Host.objects.filter(user=request.user, ipaddr=ipaddr)
+
+				if not name or not ipaddr or not login or not passw:
+					error = 'Inser all fields'
+				elif ipaddr or hostname:
+					error = 'Inser all fields'
+				else:
+					add_host(name, ipaddr, login, passw)
+
 				return HttpResponseRedirect('/dashboard/')
 
 	return render_to_response('dashboard.html', locals())

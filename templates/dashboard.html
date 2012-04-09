@@ -8,10 +8,10 @@
         <table class="table table-condensed">
             <thead>
               <tr>
-                <th>Статус:</th>
                 <th>Имя хоста:</th>
                 <th>IP address:</th>
                 <th>KVM логин:</th>
+                <th>Статус:</th>
                 <th>Управление</th>
                 <th>Действие</th>
               </tr>
@@ -19,10 +19,10 @@
             <tbody>
                 {% for name, info in host_info.items %}
                 <tr>
-                  <td>{% if info.4 == 1 %}<font color="green">Доступно</font>{% else %}<font color="red">Не доступно</font>{% endif %}</td>
                   <td>{{name}}</td>
                   <td>{{info.1}}</td>
                   <td>{{info.2}}</td>
+                  <td>{% if info.4 == 1 %}<font color="green">Доступно</font>{% else %}<font color="red">Не доступно</font>{% endif %}</td>
                   <td>{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{name}}/'">Управление</button>{% else %}<a href="#" class="btn btn-primary disabled">Управление</a>{% endif %}
                   </td>
                   <td>
@@ -44,6 +44,11 @@
              <font color="red">{{ field.errors }}</font>
              {% endif %}
              {% endfor %}
+
+          {% if error %}
+            <p><font color="red">{{error}}</font></p>
+          {% endif %}
+
           <script type="text/javascript">
           function toggleview(itm) 
           { 

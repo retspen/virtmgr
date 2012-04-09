@@ -1,3 +1,4 @@
+import registration
 from django import forms
 from virtmgr.model.models import *
 
@@ -14,7 +15,7 @@ class AddNewHost(forms.Form):
 			raise forms.ValidationError("Hostname alredy exist!")
 		return name
 
-	def clean_name(self):
+	def clean_ipaddr(self):
 		ip = self.cleaned_data['ipaddr']
 		ipaddr = Host.objects.filter(user=request.user, ipaddr=ip)
 		if ipaddr:
