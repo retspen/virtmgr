@@ -44,11 +44,10 @@ def index(request):
 			del_host(host)
 			return HttpResponseRedirect('/dashboard/')
 		if action == 'add':
-			field = form.cleaned_data
-			name = field['host']
-			ipaddr = field['ipaddr']
-			login = field['sshusr']
-			passw = field['passw']
+			name = request.POST.get('host','')
+			ipaddr = request.POST.get('ipaddr','')
+			login = request.POST.get('sshusr','')
+			passw = request.POST.get('passw','')
 
 			hostname = Host.objects.filter(user=request.user, hostname=name)
 			ipaddr = Host.objects.filter(user=request.user, ipaddr=ipaddr)
