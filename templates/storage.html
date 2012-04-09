@@ -24,12 +24,12 @@
 			  {% endfor %}
 			  <br>
 			  <form action="/storage/{{host}}/{{pool}}/" method="post">
-			  <input type="button" class="btn btn-primary" value="add" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
+			  <input type="button" class="btn btn-primary" value="Создать" onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
 			  {% if status = 0 %}
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="start">
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="del" onclick="return confirm('Вы уверены?')">
+			  <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
+			  <input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
 			  {% else %}
-			  <input type="submit" class="btn btn-primary" name="stg_pool" value="stop" onclick="return confirm('Вы уверены?')">
+			  <input type="submit" class="btn btn-primary" name="stop_pool" value="Стоп" onclick="return confirm('Вы уверены?')">
 			  {% endif %}
 			  </form>
             </ul>

@@ -196,12 +196,11 @@ def pool(request, host, pool):
 	volinfo = get_vl_info(listvol)
 
 	if request.method == 'POST':
-		stg_pool = request.POST.get('stg_pool','')
-		if stg_pool == 'stop':
+		if request.POST.get('stop_pool',''):
 			pool_stop()
-		if stg_pool == 'start':
+		if request.POST.get('start_pool',''):
 			pool_start()
-		if stg_pool == 'del':
+		if request.POST.get('del_pool',''):
 			pool_delete()
 			return HttpResponseRedirect('/storage/' + host + '/')
 
