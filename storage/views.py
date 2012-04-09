@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import libvirt
 import virtinst.util as util
 from django.shortcuts import render_to_response
@@ -170,11 +171,17 @@ def pool(request, host, pool):
 			name_pool = request.POST.get('name_pool','')
 			path_pool = request.POST.get('path_pool','')
 			type_pool = request.POST.get('type_pool','')
-			create_stg_pool(type_pool, name_pool, path_pool)
-			stg = get_conn_pool(name_pool)
-			pool_start()
-			stg_set_autostart(name_pool)
-			return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
+			errors = []
+			if not name_pool:
+				errors.append(u'Введите имя пула')
+			if not path_pool:
+				errors.append(u'Введите путь пула')
+			if not errors:
+				create_stg_pool(type_pool, name_pool, path_pool)
+				stg = get_conn_pool(name_pool)
+				pool_start()
+				stg_set_autostart(name_pool)
+				return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
 		return render_to_response('storage_new.html', locals())
 
 	stg = get_conn_pool(pool)
@@ -189,7 +196,6 @@ def pool(request, host, pool):
 	volinfo = get_vl_info(listvol)
 
 	if request.method == 'POST':
-
 		stg_pool = request.POST.get('stg_pool','')
 		if stg_pool == 'stop':
 			pool_stop()
@@ -215,7 +221,6 @@ def pool(request, host, pool):
 				size_aloc = "0"
 			format = request.POST['format']
 			create_volume(img, size_max, size_aloc, format)
-		
 		return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
 
 	return render_to_response('storage.html', locals())

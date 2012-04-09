@@ -39,10 +39,15 @@
 			<div class="hero-unit">
 			<h2>Новый пул</h2>
 			<hr>
+    {% if errors %}
+    {% for error in errors %}
+      <p><font color="red"><strong>{{error}}</strong></font></p>
+    {% endfor %}
+    {% endif %}
 			<div class="row show-grid">
 				<div class="span3">
 					<p>Название пула:</p>
-					<p>IP адресс:</p>
+					<p>IP подсеть:</p>
 					<p>Использовать DHCP:</p>
 					<p>Тип Forward:</p>
 				</div>
@@ -56,7 +61,7 @@
 						    <option value="route">Route</option>
 						    <option value="none">Isolate</option>
 						</select>
-						<input class="btn btn-primary" type="submit" value="create">
+						<input class="btn btn-primary" type="submit" name="create" value="Создать">
 					</form>
 				</div>
 			</div>

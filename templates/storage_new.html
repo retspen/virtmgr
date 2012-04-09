@@ -35,11 +35,15 @@
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
-
 		<div class="span9">
 			<div class="hero-unit">
 			<h2>Новый пул</h2>
 			<hr>
+		  {% if errors %}
+          {% for error in errors %}
+            <p><font color="red"><strong>{{error}}</strong></font></p>
+          {% endfor %}
+          {% endif %}
 			<div class="row show-grid">
 				<div class="span3">
 					<p>Название пула:</p>
@@ -53,7 +57,7 @@
 						<select name="type_pool"> 
 						    <option value="dir">Filesystem Directory</option>
 						</select>
-						<input type="submit" class="btn btn-primary" value="create">
+						<input type="submit" class="btn btn-primary" name="new_stg_pool" value="Создать">
 					</form>
 				</div>
 			</div>

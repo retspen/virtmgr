@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import libvirt
 import virtinst.util as util
 from virtmgr.network.IPy import IP
@@ -169,16 +170,22 @@ def pool(request, host, pool):
 			net_addr = request.POST.get('net_addr','')
 			forward = request.POST.get('forward','')
 			dhcp = request.POST.get('dhcp','')
-			netmask = IP(net_addr).strNetmask()
-			ipaddr = IP(net_addr)
-			gw_ipaddr = ipaddr[1].strNormal()
-			start_dhcp = ipaddr[2].strNormal()
-			end_dhcp = ipaddr[254].strNormal()
-			create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp)
-			net_set_autostart(name_pool)
-			net = get_conn_pool(name_pool)
-			pool_start()
-			return HttpResponseRedirect('/network/' + host + '/' + name_pool + '/')
+			errors = []
+			if not name_pool:
+				errors.append(u'Введите имя пула')
+			if not net_addr:
+				errors.append(u'Введите IP подсеть')
+			if not errors:
+				netmask = IP(net_addr).strNetmask()
+				ipaddr = IP(net_addr)
+				gw_ipaddr = ipaddr[1].strNormal()
+				start_dhcp = ipaddr[2].strNormal()
+				end_dhcp = ipaddr[254].strNormal()
+				create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp)
+				net_set_autostart(name_pool)
+				net = get_conn_pool(name_pool)
+				pool_start()
+				return HttpResponseRedirect('/network/' + host + '/' + name_pool + '/')
 		return render_to_response('network_new.html', locals())
 
 	net = get_conn_pool(pool)
