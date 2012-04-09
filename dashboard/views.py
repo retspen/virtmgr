@@ -38,25 +38,20 @@ def index(request):
 	host_info = get_hosts_status()
 
 	if request.method == 'POST':
-		
 		if request.POST.get('delete',''):
 			host = request.POST.get('host','')
 			del_host(host)
 			return HttpResponseRedirect('/dashboard/')
-		
 		if request.POST.get('add',''):
 			name = request.POST.get('host','')
 			ipaddr = request.POST.get('ipaddr','')
 			login = request.POST.get('sshusr','')
 			passw = request.POST.get('passw','')
-
 			hostname = Host.objects.filter(user=request.user, hostname=name)
 			ipaddr = Host.objects.filter(user=request.user, ipaddr=ipaddr)
-
+			errors = []
 			if not name:
-				error = 'Inser all fields'
-			elif ipaddr or hostname:
-				error = 'Host alredy exist'
+				errors.append('Enter a name')
 			else:
 				add_host(name, ipaddr, login, passw)
 
