@@ -242,7 +242,7 @@ def index(request, host):
 		img = request.POST.get('img','')
 		netbr = request.POST.get('bridge','')
 		archvm = request.POST.get('arch','') 
-		mem = int(mem) * 1024
+		setmem = int(setmem) * 1024
 		hdd = get_img_path(img)
 		cdrom = get_img_path(iso)
 		hdd_frmt = get_img_format(img)
