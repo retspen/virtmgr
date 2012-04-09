@@ -91,7 +91,7 @@
 				{% if status = 1 %}
 				    {% if errors %}
 				    {% for error in errors %}
-				      <p><font color="red">{{error}}</font></p>
+				      <div class="alert alert-error" style="width:150lpx">{{error}}</div>
 				    {% endfor %}
 				    {% endif %}
 					<script type="text/javascript">
