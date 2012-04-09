@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import libvirt
 import socket
 from django.shortcuts import render_to_response
@@ -51,15 +52,15 @@ def index(request):
 			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 			errors = []
 			if have_host or have_ip:
-				errors.append('Host alredy exist')
+				errors.append('Такой хост уже подключен')
 			if not name:
-				errors.append('Enter a name')
+				errors.append('Введите имя хоста')
 			if not ipaddr:
-				errors.append('Enter a IP addres')
+				errors.append('Введите IP адрес')
 			if not login:
-				errors.append('Enter a KVM login')
+				errors.append('Введите KVM логин')
 			if not passw:
-				errors.append('Enter a KVM login')
+				errors.append('Введите KVM пароль')
 			if not errors:
 				add_host(name, ipaddr, login, passw)
 				return HttpResponseRedirect('/dashboard/')
