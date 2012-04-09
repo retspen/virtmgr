@@ -198,8 +198,10 @@ def pool(request, host, pool):
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
 			pool_stop()
+			return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
 		if request.POST.get('start_pool',''):
 			pool_start()
+			return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
 		if request.POST.get('del_pool',''):
 			pool_delete()
 			return HttpResponseRedirect('/storage/' + host + '/')
