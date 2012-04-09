@@ -6,7 +6,7 @@ To complete your registration, please visit this URL:
 http://{{ site }}/user/activate/{{ activation_key }}/
 
 
-If you are still having problems signing up please contact a member of our support staff at webmaster@x-sys.com.ua
+If you are still having problems signing up please contact a member of our support staff at support@webvirtmgr.net
 
 All the best,
 Web Virtual Manager Machine
