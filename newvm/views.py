@@ -252,6 +252,8 @@ def index(request, host):
 		if not name:
 			errors.append(u'Введите название виртуальной машины')
 		if not errors:
+			if hdd == 'None':
+				hdd = ''
 			add_vm(name, setmem, cpus, archvm, machine, emul, hdd_frmt, hdd, cdrom, netbr)
 			return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
 
