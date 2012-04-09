@@ -35,15 +35,15 @@
                 {% endfor %}
           </tbody>
           </table>
-        <hr>
-        {% else %}
-          <h4>У Вас отсутствуют подключения к хостам.</h4><br>
-        {% endif %}
           {% if errors %}
             {% for error in errors %}
               <p><font color="red">{{error}}</font></p>
             {% endfor %}
           {% endif %}
+        <hr>
+        {% else %}
+          <h4>У Вас отсутствуют подключения к хостам.</h4><br>
+        {% endif %}
           <script type="text/javascript">
           function toggleview(itm) 
           { 

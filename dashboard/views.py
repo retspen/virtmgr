@@ -50,7 +50,7 @@ def index(request):
 			have_host = Host.objects.filter(user=request.user, hostname=name)
 			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 			errors = []
-			if have_host and have_ip:
+			if have_host or have_ip:
 				errors.append('Host alredy exist')
 			if not name:
 				errors.append('Enter a name')
