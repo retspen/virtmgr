@@ -38,12 +38,11 @@ def index(request):
 	host_info = get_hosts_status()
 
 	if request.method == 'POST':
-		action = request.POST.get('action','')
-		if action == 'delete':
+		if request.POST.get('delete',''):
 			host = request.POST.get('host','')
 			del_host(host)
 			return HttpResponseRedirect('/dashboard/')
-		if action == 'add':
+		if request.POST.get('add',''):
 			name = request.POST.get('host','')
 			ipaddr = request.POST.get('ipaddr','')
 			login = request.POST.get('sshusr','')

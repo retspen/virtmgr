@@ -28,7 +28,7 @@
                   <td>
                     <form action="/dashboard/" method="post">
                       <input type="hidden" name="host" value="{{name}}">
-                      <input type="submit" class="btn btn-primary" name="action" value="delete" onclick="return confirm('Вы уверены?')">
+                      <input type="submit" class="btn btn-primary" name="delete" value="Удалить" onclick="return confirm('Вы уверены?')">
                     </form>
                   </td>
                 </tr>
@@ -79,7 +79,7 @@
                   <input type="text" name="ipaddr" class="input-large" placeholder="192.168.1.1">
                   <input type="text" name="sshusr" class="input-large" placeholder="Name">
                   <input type="password" name="passw" class="input-large" placeholder="Password">
-                  <input type="submit" class="btn btn-primary" name="action" value="add">
+                  <input type="submit" class="btn btn-primary" name="add" value="Добавить">
                 </form>
               </div>
             </div>
