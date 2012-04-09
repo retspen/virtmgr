@@ -144,6 +144,8 @@ def index(request, host):
 
 	
 	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
+		if img == None
+			img = ''
 		memaloc = mem
 		xml = """<domain type='kvm'>
 				  <name>%s</name>
@@ -252,8 +254,6 @@ def index(request, host):
 		if not name:
 			errors.append(u'Введите название виртуальной машины')
 		if not errors:
-			if hdd == 'None':
-				hdd = ''
 			add_vm(name, setmem, cpus, archvm, machine, emul, hdd_frmt, hdd, cdrom, netbr)
 			return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
 
