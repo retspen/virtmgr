@@ -43,18 +43,25 @@ def index(request):
 			del_host(host)
 			return HttpResponseRedirect('/dashboard/')
 		if request.POST.get('add',''):
-			name = request.POST.get('host','')
+			name = request.POST.get('name','')
 			ipaddr = request.POST.get('ipaddr','')
 			login = request.POST.get('sshusr','')
 			passw = request.POST.get('passw','')
-			hostname = Host.objects.filter(user=request.user, hostname=name)
-			ipaddr = Host.objects.filter(user=request.user, ipaddr=ipaddr)
+			have_host = Host.objects.filter(user=request.user, hostname=name)
+			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 			errors = []
+			if have_host and have_ip:
+				errors.append('Host alredy exist')
 			if not name:
 				errors.append('Enter a name')
-			else:
+			if not ipaddr:
+				errors.append('Enter a IP addres')
+			if not login:
+				errors.append('Enter a KVM login')
+			if not passw:
+				errors.append('Enter a KVM login')
+			if not errors:
 				add_host(name, ipaddr, login, passw)
-
 			return HttpResponseRedirect('/dashboard/')
 
 	return render_to_response('dashboard.html', locals())
