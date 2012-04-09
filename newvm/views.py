@@ -144,7 +144,7 @@ def index(request, host):
 
 	
 	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
-		if img == None
+		if not img
 			img = ''
 		memaloc = mem
 		xml = """<domain type='kvm'>
