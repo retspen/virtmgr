@@ -198,12 +198,11 @@ def pool(request, host, pool):
 	netmode = get_ipv4_forward()
 
 	if request.method == 'POST':
-		net_pool = request.POST.get('net_pool','')
-		if net_pool == 'stop':
+		if request.POST.get('stop_pool',''):
 			pool_stop()
-		if net_pool == 'start':
+		if request.POST.get('start_pool',''):
 			pool_start()
-		if net_pool == 'del':
+		if request.POST.get('del_pool',''):
 			pool_delete()
 			return HttpResponseRedirect('/network/' + host + '/')
 		return HttpResponseRedirect('/network/' + host + '/' + pool + '/')
