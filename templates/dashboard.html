@@ -35,12 +35,12 @@
                 {% endfor %}
           </tbody>
           </table>
-          {% if errors %}
-            {% for error in errors %}
-              <p><font color="red">{{error}}</font></p>
-            {% endfor %}
-          {% endif %}
         <hr>
+        {% if errors %}
+          {% for error in errors %}
+            <p><font color="red">{{error}}</font></p>
+          {% endfor %}
+        {% endif %}
         {% else %}
           <h4>У Вас отсутствуют подключения к хостам.</h4><br>
         {% endif %}

@@ -1,7 +1,7 @@
 import libvirt
 import socket
 from django.shortcuts import render_to_response
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
 def index(request):
@@ -62,6 +62,6 @@ def index(request):
 				errors.append('Enter a KVM login')
 			if not errors:
 				add_host(name, ipaddr, login, passw)
-			return HttpResponseRedirect('/dashboard/')
+				return HttpResponseRedirect('/dashboard/')
 
 	return render_to_response('dashboard.html', locals())
