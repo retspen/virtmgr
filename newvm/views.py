@@ -240,7 +240,7 @@ def index(request, host):
 		cpus = request.POST.get('cpus','')
 		iso = request.POST.get('iso','')		
 		img = request.POST.get('img','')
-		bridge = request.POST.get('bridge','')
+		netbr = request.POST.get('bridge','')
 		arch = request.POST.get('arch','') 
 		mem = int(mem) * 1024
 		hdd = get_img_path(img)
@@ -252,7 +252,7 @@ def index(request, host):
 		if not name:
 			errors.append(u'Введите название виртуальной машины')
 		if not errors:
-			add_vm(name, mem, cpus, arch, machine, emul, hdd_frmt, hdd, cdrom, bridge)
+			add_vm(name, mem, cpus, arch, machine, emul, hdd_frmt, hdd, cdrom, netbr)
 			return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
 
 	return render_to_response('newvm.html', locals())

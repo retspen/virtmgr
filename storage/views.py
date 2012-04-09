@@ -213,6 +213,7 @@ def pool(request, host, pool):
 			img = request.POST['img']
 			size_max = request.POST['size_max']
 			size_aloc = request.POST['size_aloc']
+			format = request.POST['format']
 			errors = []
 			if not img:
 				errors.append(u'Введите имя образа')
@@ -223,10 +224,10 @@ def pool(request, host, pool):
 				if size_aloc != "0":
 					size_aloc = int(size_aloc) * 1048576
 				else:
-					size_aloc = "0"
-				format = request.POST['format']
+					size_aloc = "0"	
 				create_volume(img, size_max, size_aloc, format)
 				return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
+				
 	return render_to_response('storage.html', locals())
 
 def redir(request):
