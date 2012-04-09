@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import libvirt
 import re
 import virtinst.util as util
@@ -243,10 +244,16 @@ def index(request, host):
 		arch = request.POST.get('arch','') 
 		mem = int(mem) * 1024
 		hdd = get_img_path(img)
-		cdrom = get_img_path( iso)
-		hdd_frmt = get_img_format( img)
-		add_vm(name, mem, cpus, arch, machine, emul, hdd_frmt, hdd, cdrom, bridge)
-		return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
+		cdrom = get_img_path(iso)
+		hdd_frmt = get_img_format(img)
+		errors = []
+		if not img:
+			errors.append(u'Образы HDD для виртуальной машины отсутствуют')
+		if not name:
+			errors.append(u'Введите название виртуальной машины')
+		if not errors:
+			add_vm(name, mem, cpus, arch, machine, emul, hdd_frmt, hdd, cdrom, bridge)
+			return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
 
 	return render_to_response('newvm.html', locals())
 

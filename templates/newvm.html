@@ -36,6 +36,11 @@
             <div class="hero-unit">
           <h2>Новая виртуальная машина</h2>
           <hr>
+         {% if errors %}
+          {% for error in errors %}
+            <p><font color="red"><strong>{{error}}</strong></font></p>
+          {% endfor %}
+         {% endif %}
             <div class="row show-grid">
                 <div class="span3">
                     <p>Название:</p>
@@ -103,7 +108,7 @@
                             <option value="br0">br0 (если настроен)</option>
                             <option value="br1">br1 (если настроен)</option>
                         </select>
-                        <input class="btn btn-primary" type="submit" name="newvm" value="create">
+                        <input class="btn btn-primary" type="submit" name="create" value="Создать">
                     </form>
                 </div>
             </div>
