@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import libvirt
+import libvirt, re
 import socket
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
