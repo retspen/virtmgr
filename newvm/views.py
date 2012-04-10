@@ -35,89 +35,123 @@ def index(request, host):
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except:
+			return "error"
 			print "Not connected"
 
 	def get_all_vm():
-		vname = {}
-		for id in conn.listDomainsID():
-			id = int(id)
-			dom = conn.lookupByID(id)
-			vname[dom.name()] = dom.info()[0]
-		for id in conn.listDefinedDomains():
-			dom = conn.lookupByName(id)
-			vname[dom.name()] = dom.info()[0]
-		return vname
+		try:
+			vname = {}
+			for id in conn.listDomainsID():
+				id = int(id)
+				dom = conn.lookupByID(id)
+				vname[dom.name()] = dom.info()[0]
+			for id in conn.listDefinedDomains():
+				dom = conn.lookupByName(id)
+				vname[dom.name()] = dom.info()[0]
+			return vname
+		except:
+			return "error"
+			print "Get all vm failed"
 	
 	def get_all_stg():
-		storages = []
-		for name in conn.listStoragePools():
-			storages.append(name)
-		for name in conn.listDefinedStoragePools():
-			storages.append(name)
-		return storages
+		try:
+			storages = []
+			for name in conn.listStoragePools():
+				storages.append(name)
+			for name in conn.listDefinedStoragePools():
+				storages.append(name)
+			return storages
+		except:
+			return "error"
+			print "Get all images failed"
 
 	def get_all_net():
-		networks = []
-		for name in conn.listNetworks():
-			networks.append(name)
-		for name in conn.listDefinedNetworks():
-			networks.append(name)
-		# Not support all distro but Fedora!!!
-		#for ifcfg in conn.listInterfaces():
-		#	if ifcfg != 'lo' and not re.findall("eth", ifcfg):
-		#		networks.append(ifcfg)
-		#for ifcfg in conn.listDefinedInterfaces():
-		#	if ifcfg != 'lo' and not re.findall("eth", ifcfg):
-		#		networks.append(ifcfg)
-		return networks
+		try:
+			networks = []
+			for name in conn.listNetworks():
+				networks.append(name)
+			for name in conn.listDefinedNetworks():
+				networks.append(name)
+			# Not support all distro but Fedora!!!
+			#for ifcfg in conn.listInterfaces():
+			#	if ifcfg != 'lo' and not re.findall("eth", ifcfg):
+			#		networks.append(ifcfg)
+			#for ifcfg in conn.listDefinedInterfaces():
+			#	if ifcfg != 'lo' and not re.findall("eth", ifcfg):
+			#		networks.append(ifcfg)
+			return networks
+		except:
+			return "error"
+			print "Get all networks failed"
 	
 	def get_arch():
-		arch = conn.getInfo()[0]
-		return arch
+		try:
+			arch = conn.getInfo()[0]
+			return arch
+		except:
+			return "error"
+			print "Get arch failed"
 
 	def find_all_iso():
-		iso = []
-		for storage in storages:
-			stg = conn.storagePoolLookupByName(storage)
-			stg.refresh(0)
-			for img in stg.listVolumes():
-				if re.findall(".iso", img) or re.findall(".ISO", img):
-					iso.append(img)
-		return iso
+		try:
+			iso = []
+			for storage in storages:
+				stg = conn.storagePoolLookupByName(storage)
+				stg.refresh(0)
+				for img in stg.listVolumes():
+					if re.findall(".iso", img) or re.findall(".ISO", img):
+						iso.append(img)
+			return iso
+		except:
+			return "error"
+			print "Get all iso failed"
 
 	def find_all_img():
-		disk = []
-		for storage in storages:
-			stg = conn.storagePoolLookupByName(storage)
-			stg.refresh(0)
-			for img in stg.listVolumes():
-				if re.findall(".img", img) or re.findall(".IMG", img):
-					disk.append(img)
-		return disk
+		try:		
+			disk = []
+			for storage in storages:
+				stg = conn.storagePoolLookupByName(storage)
+				stg.refresh(0)
+				for img in stg.listVolumes():
+					if re.findall(".img", img) or re.findall(".IMG", img):
+						disk.append(img)
+			return disk
+		except:
+			return "error"
+			print "Get all images failed"
 	
 	def get_img_path(vol):
-		for storage in storages:
-			stg = conn.storagePoolLookupByName(storage)
-			for img in stg.listVolumes():
-				if vol == img:
-					vl = stg.storageVolLookupByName(vol)
-					return vl.path() 
+		try:
+			for storage in storages:
+				stg = conn.storagePoolLookupByName(storage)
+				for img in stg.listVolumes():
+					if vol == img:
+						vl = stg.storageVolLookupByName(vol)
+						return vl.path()
+		except:
+			return "error"
+			print "Get img path failed"
 
 	def get_img_format(vol):
-		for storage in storages:
-			stg = conn.storagePoolLookupByName(storage)
-			for img in stg.listVolumes():
-				if vol == img:
-					vl = stg.storageVolLookupByName(vol)
-					xml = vl.XMLDesc(0)
-					format = util.get_xml_path(xml, "/volume/target/format/@type")
-					return format 
+		try:
+			for storage in storages:
+				stg = conn.storagePoolLookupByName(storage)
+				for img in stg.listVolumes():
+					if vol == img:
+						vl = stg.storageVolLookupByName(vol)
+						xml = vl.XMLDesc(0)
+						format = util.get_xml_path(xml, "/volume/target/format/@type")
+						return format
+		except:
+			return "error"
+			print "Get img format failed"
 
 	def get_cpus():
 		try:
 			info = conn.getInfo()[2]
 			return info
 		except:
+			return "error"
 			print 'Get info failed'
 
 	def get_emulator():
@@ -132,6 +166,7 @@ def index(request, host):
 				emulator = util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name")
 			return emulator
 		except:
+			return "error"
 			print 'Get emulator failed'
 
 	def get_machine():
@@ -140,6 +175,7 @@ def index(request, host):
 			machine = util.get_xml_path(xml,"/capabilities/guest/arch/machine/@canonical")
 			return machine
 		except:
+			return "error"
 			print 'Get info failed'
 
 	
@@ -220,12 +256,21 @@ def index(request, host):
 	if conn == None:
 		return HttpResponseRedirect('/overview/' + host + '/')
 
+	errors = []
 	cores = get_cpus()
+	if cores == "error":
+		errors.append(u'Ошибка определения ядер')
 	all_vm = get_all_vm()
+	if all_vm == "error":
+		errors.append(u'Виртуальные машины на хосте не доступны')
 	storages = get_all_stg()
+	if storages == "error":
+		errors.append(u'Пулы хранения не доступны или не активны')
 	all_iso = find_all_iso()
 	all_img = find_all_img()
 	bridge = get_all_net()
+	if bridge == "error":
+		errors.append(u'Сетевые пулы не доступны или не активны')
 	arch = get_arch()
 	emul = get_emulator()
 	machine = get_machine()
