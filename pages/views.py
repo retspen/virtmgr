@@ -7,8 +7,8 @@ def index(request):
 	else:
 		return render_to_response('index.html', locals())
 
-def about(request):
-	return render_to_response('about.html', locals())
+def features(request):
+	return render_to_response('features.html', locals())
 
 def support(request):
 	return render_to_response('support.html', locals())

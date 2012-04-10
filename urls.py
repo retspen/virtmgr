@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
     # Static pages
     url(r'^$', 'virtmgr.pages.views.index'),
-    url(r'^about/', 'virtmgr.pages.views.about'),
+    url(r'^features/', 'virtmgr.pages.views.features'),
     url(r'^support/', 'virtmgr.pages.views.support'),
     url(r'^docs/$', 'virtmgr.pages.views.docs'),
     url(r'^docs/settings/', 'virtmgr.pages.views.settings'),

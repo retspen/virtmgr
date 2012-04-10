@@ -209,7 +209,7 @@ def pool(request, host, pool):
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
 				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
-					errors.append(u'Такой пул уже существует')
+					errors.append(u'Пул с таким именем уже существует')
 					return render_to_response('network_new.html', locals())
 					return HttpResponseRedirect('/network/' + host + '/new_net_pool /')
 				if not errors:
