@@ -63,7 +63,6 @@
                   <p>Память:</p>
                   <p>Статус:</p>
                   <p style="height:38px">Автозапуск:</p>
-                  <p>Boot Меню:</p>
                   {% if state = 1 %}<p>VNC порт:</p>{% endif %}
                   <p>HDD:</p>
                   <p>CDROM:</p>
@@ -80,7 +79,6 @@
                         <input class="btn btn-primary" type="submit" name="auto_on" value="Включить" onclick="return confirm('Вы уверены?')"> 
                       {% endif %}
                     </form></p>
-                  <p>{% if boot_menu == 'yes' %}<font color="green">включено</font>{% else %}<font color="red">выключено</font>{% endif %}</p>
                   {% if state = 1 %}<p><strong>{{ vnc_port }}</strong> - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
