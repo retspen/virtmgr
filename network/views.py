@@ -208,13 +208,16 @@ def pool(request, host, pool):
 				gw_ipaddr = ipaddr[1].strNormal()
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
-				create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp)
 				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
-					errors.append(u'Пул с таким названием уже существует')
-				net_set_autostart(name_pool)
-				net = get_conn_pool(name_pool)
-				pool_start()
-				return HttpResponseRedirect('/network/' + host + '/' + name_pool + '/')
+					errors.append(u'Такой пул уже существует')
+					return render_to_response('network_new.html', locals())
+					return HttpResponseRedirect('/network/' + host + '/new_net_pool /')
+				if not errors:
+					net_set_autostart(name_pool)
+					net = get_conn_pool(name_pool)
+					pool_start()
+					return render_to_response('network_new.html', locals())
+					return HttpResponseRedirect('/network/' + host + '/' + name_pool + '/')
 		return render_to_response('network_new.html', locals())
 
 	net = get_conn_pool(pool)
