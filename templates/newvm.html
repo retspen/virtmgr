@@ -90,7 +90,7 @@
                         {% endfor %}
                         </select>
                         <select name="iso">
-                        {% if all_iso not "error" %}
+                        {% if all_iso != "error" %}
                         {% for name in all_iso %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
@@ -98,7 +98,7 @@
                             <option value="">Без образа</option>
                         </select>
                         <select name="img">
-                        {% if all_iso not "error" %}
+                        {% if all_iso != "error" %}
                         {% for name in all_img %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
