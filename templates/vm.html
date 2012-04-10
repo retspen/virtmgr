@@ -73,8 +73,14 @@
                   <p>{{ cpu }}</p>
                   <p>{{ memory|filesizeformat }}</p>
                   <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
-                  <p>{% if autostart == 1 %}<font color="green">включен</font>{% else %}<font color="red">выключен</font>{% endif %}</p>
-                  <p>{% if boot_menu == 'yes' %}<font color="green">включен</font>{% else %}<font color="red">выключен</font>{% endif %}</p>
+                  <p><form action="/vm/{{host}}/{{vname}}/" method="post">
+                      {% if autostart == 1 %}
+                        <input class="btn btn-primary" type="submit" name="auto_off" value="Выключить" onclick="return confirm('Вы уверены?')">
+                      {% else %}
+                        <input class="btn btn-primary" type="submit" name="auto_on" value="Включить" onclick="return confirm('Вы уверены?')"> 
+                      {% endif %}
+                    </form></p>
+                  <p>{% if boot_menu == 'yes' %}<font color="green">включено</font>{% else %}<font color="red">выключено</font>{% endif %}</p>
                   {% if state = 1 %}<p><strong>{{ vnc_port }}</strong> - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
@@ -94,11 +100,6 @@
                 </div>
               </div>
               <form action="/vm/{{host}}/{{vname}}/" method="post">
-              {% if autostart == 1 %}
-                <input class="btn btn-primary" type="submit" name="auto_off" value="Выкл. Автостарт" onclick="return confirm('Вы уверены?')">
-              {% else %}
-                <input class="btn btn-primary" type="submit" name="auto_on" value="Вкл. Автостарт" onclick="return confirm('Вы уверены?')"> 
-              {% endif %}
               {% if state != 1 %}
                 <input class="btn btn-primary" type="submit" name="undefine" value="Удалить" onclick="return confirm('Вы уверены?')">
               {% endif %}
