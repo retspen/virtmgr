@@ -59,7 +59,7 @@ def index(request, host):
 	elif len(networks) == 0:
 		return HttpResponseRedirect('/network/' + host + '/new_net_pool')
 	else:
-		return HttpResponseRedirect('/network/' + host + '/' + networks[0] + '/')
+		return HttpResponseRedirect('/network/' + host + '/' + networks.keys()[0] + '/')
 
 def pool(request, host, pool):
 

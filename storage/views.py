@@ -7,11 +7,15 @@ from virtmgr.model.models import *
 
 def get_storages(conn):
 	try:
-		storages = []
+		storages = {}
 		for name in conn.listStoragePools():
-			storages.append(name)
+			stg = conn.storagePoolLookupByName(name)
+			status = stg.isActive()
+			storages[name] = status
 		for name in conn.listDefinedStoragePools():
-			storages.append(name)
+			stg = conn.storagePoolLookupByName(name)
+			status = stg.isActive()
+			storages[name] = status
 		return storages
 	except:
 		print "Get storage failed"
