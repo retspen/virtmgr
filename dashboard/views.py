@@ -37,6 +37,7 @@ def index(request):
 			print host, info
 
 	host_info = get_hosts_status()
+	errors = []
 
 	if request.method == 'POST':
 		if request.POST.get('delete',''):
@@ -50,7 +51,9 @@ def index(request):
 			passw = request.POST.get('passw','')
 			have_host = Host.objects.filter(user=request.user, hostname=name)
 			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
-			errors = []
+			simbol = re.search('[^a-zA-Z0-9]+', name)
+			if simbol.group():
+				errors.append('В названии хоста не должны быть символы')
 			if have_host or have_ip:
 				errors.append('Такой хост уже подключен')
 			if not name:
