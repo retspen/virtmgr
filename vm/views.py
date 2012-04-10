@@ -52,9 +52,7 @@ def index(request, host, vname):
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
 
-   usr_id = request.user.id
-   kvm_host = Host.objects.get(user=usr_id,hostname=host)
-   usr_name = request.user
+   kvm_host = Host.objects.get(user=request.user.id,hostname=host)
    host_ip = kvm_host.ipaddr
 
    def creds(credentials, user_data):

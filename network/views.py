@@ -8,11 +8,15 @@ from virtmgr.model.models import *
 
 def get_networks(conn):
 	try:
-		networks = []
+		networks = {}
 		for name in conn.listNetworks():
-			networks.append(name)
+			net.networkLookupByName(name)
+			status = net.isActive()
+			networks[name] = status
 		for name in conn.listDefinedNetworks():
-			networks.append(name)
+			net.networkLookupByName(name)
+			status = net.isActive()
+			networks[name] = status
 		return networks
 	except:
 		print "Get network failed"
@@ -32,9 +36,7 @@ def index(request, host):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 	
- 	usr_id = request.user.id
-	kvm_host = Host.objects.get(user=usr_id,hostname=host)
-	usr_name = request.user
+	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
@@ -64,9 +66,7 @@ def pool(request, host, pool):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
- 	usr_id = request.user.id
-	usr_name = request.user
-	kvm_host = Host.objects.get(user=usr_id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
