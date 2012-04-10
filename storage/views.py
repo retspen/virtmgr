@@ -35,9 +35,7 @@ def index(request, host):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
- 	usr_id = request.user.id
-	usr_name = request.user
-	kvm_host = Host.objects.get(user=usr_id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
@@ -60,16 +58,14 @@ def index(request, host):
 	elif len(storages) == 0:
 		return HttpResponseRedirect('/storage/' + host + '/new_stg_pool/')
 	else:
-		return HttpResponseRedirect('/storage/' + host + '/' + storages[0] + '/')
+		return HttpResponseRedirect('/storage/' + host + '/' + storages.keys()[0] + '/')
 
 def pool(request, host, pool):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
- 	usr_id = request.user.id
-	usr_name = request.user
-	kvm_host = Host.objects.get(user=usr_id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
