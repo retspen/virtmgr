@@ -19,7 +19,7 @@ def get_networks(conn):
 			networks[name] = status
 		return networks
 	except:
-		print "Get network failed"
+		return "error"
 
 def vm_conn(host_ip, creds):
    	try:
@@ -29,7 +29,7 @@ def vm_conn(host_ip, creds):
 	   	conn = libvirt.openAuth(uri, auth, 0)
 	   	return conn
 	except:
-		print "Not connected"
+		return "error"
 
 def index(request, host):
 	
@@ -82,21 +82,36 @@ def pool(request, host, pool):
 		return 0
 
 	def get_conn_pool(pool):
-		net = conn.networkLookupByName(pool)
-		return net
+		try:
+			net = conn.networkLookupByName(pool)
+			return net
+		except:
+			return "error"
 
 	def pool_start():
-		net.create()
+		try:
+			net.create()
+		except:
+			return "error"
 
 	def pool_stop():
-		net.destroy()
+		try:
+			net.destroy()
+		except:
+			return "error"
 
 	def pool_delete():
-		net.undefine()
+		try:
+			net.undefine()
+		except:
+			return "error"
 
 	def net_set_autostart(pool):
-		net = conn.networkLookupByName(pool)
-		net.setAutostart(1)
+		try:
+			net = conn.networkLookupByName(pool)
+			net.setAutostart(1)
+		except:
+			return "error"
 
 	def get_net_info(get):
 		try:
@@ -107,55 +122,67 @@ def pool(request, host, pool):
 			elif get == "start":
 				return net.autostart()
 		except:
-			print "Get network info failed"	
+			return "error"
 
 	def get_ipv4_net():
-		net = conn.networkLookupByName(pool)
-		xml = net.XMLDesc(0)
-		addrStr = util.get_xml_path(xml, "/network/ip/@address")
-		netmaskStr = util.get_xml_path(xml, "/network/ip/@netmask")
+		try:
+			net = conn.networkLookupByName(pool)
+			xml = net.XMLDesc(0)
+			addrStr = util.get_xml_path(xml, "/network/ip/@address")
+			netmaskStr = util.get_xml_path(xml, "/network/ip/@netmask")
 
-		netmask = IP(netmaskStr)
-		gateway = IP(addrStr)
+			netmask = IP(netmaskStr)
+			gateway = IP(addrStr)
 
-		network = IP(gateway.int() & netmask.int())
-		return IP(str(network) + "/" + netmaskStr)
+			network = IP(gateway.int() & netmask.int())
+			return IP(str(network) + "/" + netmaskStr)
+		except:
+			return "error"
 
 	def get_ipv4_dhcp_range():
-		net = conn.networkLookupByName(pool)
-		xml = net.XMLDesc(0)
-		dhcpstart = util.get_xml_path(xml, "/network/ip/dhcp/range[1]/@start")
-		dhcpend = util.get_xml_path(xml, "/network/ip/dhcp/range[1]/@end")
-		if not dhcpstart or not dhcpend:
-			return None
-		
-		return [IP(dhcpstart), IP(dhcpend)]
+		try:
+			net = conn.networkLookupByName(pool)
+			xml = net.XMLDesc(0)
+			dhcpstart = util.get_xml_path(xml, "/network/ip/dhcp/range[1]/@start")
+			dhcpend = util.get_xml_path(xml, "/network/ip/dhcp/range[1]/@end")
+			if not dhcpstart or not dhcpend:
+				return None
+			
+			return [IP(dhcpstart), IP(dhcpend)]
+		except:
+			return "error"
 
 	def get_ipv4_forward():
-		xml = net.XMLDesc(0)
-		fw = util.get_xml_path(xml, "/network/forward/@mode")
-		forwardDev = util.get_xml_path(xml, "/network/forward/@dev")
-		return [fw, forwardDev]
+		try:
+			xml = net.XMLDesc(0)
+			fw = util.get_xml_path(xml, "/network/forward/@mode")
+			forwardDev = util.get_xml_path(xml, "/network/forward/@dev")
+			return [fw, forwardDev]
+		except:
+			return "error"
 
 	def create_net_pool(name_pool, forward, ipaddr, netmask, dhcp, start_dhcp, end_dhcp):
-		xml = """
-			<network>
-				<name>%s</name>""" % (name_pool)
+		try:
+			xml = """
+				<network>
+					<name>%s</name>""" % (name_pool)
 
-		if forward == "nat" or "route":
-			xml += """<forward mode='%s'/>""" % (forward)
+			if forward == "nat" or "route":
+				xml += """<forward mode='%s'/>""" % (forward)
 
-		xml += """<bridge stp='on' delay='0' />
-					<ip address='%s' netmask='%s'>""" % (gw_ipaddr, netmask)
+			xml += """<bridge stp='on' delay='0' />
+						<ip address='%s' netmask='%s'>""" % (gw_ipaddr, netmask)
 
-		if dhcp == "yes":
-			xml += """<dhcp>
-						<range start='%s' end='%s' />
-					</dhcp>""" % (start_dhcp, end_dhcp)
-				
-		xml += """</ip>
-			</network>"""
-		conn.networkDefineXML(xml)
+			if dhcp == "yes":
+				xml += """<dhcp>
+							<range start='%s' end='%s' />
+						</dhcp>""" % (start_dhcp, end_dhcp)
+					
+			xml += """</ip>
+				</network>"""
+			conn.networkDefineXML(xml)
+		except:
+			return "error"
 
 	conn = vm_conn(host_ip, creds)
 
@@ -163,6 +190,7 @@ def pool(request, host, pool):
 		return HttpResponseRedirect('/overview/' + host + '/')
 
 	pools = get_networks(conn)
+	errors = []
 
 	if pool == "new_net_pool":
 		if request.method == 'POST':
@@ -170,7 +198,6 @@ def pool(request, host, pool):
 			net_addr = request.POST.get('net_addr','')
 			forward = request.POST.get('forward','')
 			dhcp = request.POST.get('dhcp','')
-			errors = []
 			if not name_pool:
 				errors.append(u'Введите имя пула')
 			if not net_addr:
@@ -182,6 +209,8 @@ def pool(request, host, pool):
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
 				create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp)
+				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
+					errors.append(u'Пул с таким названием уже существует')
 				net_set_autostart(name_pool)
 				net = get_conn_pool(name_pool)
 				pool_start()
@@ -200,8 +229,12 @@ def pool(request, host, pool):
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
 			pool_stop()
+			if pool_stop() is "error":
+				errors.append(u'Возможно пул уже остановлен')
 		if request.POST.get('start_pool',''):
 			pool_start()
+			if pool_start() is "error":
+				errors.append(u'Возможно пул уже запущен')
 		if request.POST.get('del_pool',''):
 			pool_delete()
 			return HttpResponseRedirect('/network/' + host + '/')
