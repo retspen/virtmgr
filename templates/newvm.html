@@ -90,18 +90,22 @@
                         {% endfor %}
                         </select>
                         <select name="iso">
+                        {% if all_iso not "error" %}
                         {% for name in all_iso %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
+                        {% endif %}
                             <option value="">Без образа</option>
                         </select>
                         <select name="img">
+                        {% if all_iso not "error" %}
                         {% if all_img %}
                         {% for name in all_img %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
                         {% else %}
                             <option value="">Отсутствует</option>
+                        {% endif %}
                         {% endif %}
                         </select>
                         <select name="bridge">
