@@ -62,7 +62,7 @@
                   <p>ЦПУ:</p>
                   <p>Память:</p>
                   <p>Статус:</p>
-                  <p>Автозапуск:</p>
+                  <p style="height:38px">Автозапуск:</p>
                   <p>Boot Меню:</p>
                   {% if state = 1 %}<p>VNC порт:</p>{% endif %}
                   <p>HDD:</p>
@@ -73,7 +73,7 @@
                   <p>{{ cpu }}</p>
                   <p>{{ memory|filesizeformat }}</p>
                   <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
-                  <p style="height:30px"><form action="/vm/{{host}}/{{vname}}/" method="post">
+                  <p><form action="/vm/{{host}}/{{vname}}/" method="post">
                       {% if autostart == 1 %}
                         <input class="btn btn-primary" type="submit" name="auto_off" value="Выключить" onclick="return confirm('Вы уверены?')">
                       {% else %}
