@@ -20,7 +20,11 @@
             <ul class="nav nav-list">
               <li class="nav-header">Сетвой пул</li>
               {% for name in pools %}
-              <li><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+              {% if pool == name %}
+                <li class="active"><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+                {% else %}
+                <li><a href=/network/{{host}}/{{name}}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% else %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% endif %}</a></li>
+                {% endif %}
               {% endfor %}
               <br>
               <form action="/network/{{host}}/{{pool}}/" method="post">
@@ -58,7 +62,8 @@
 					<form action="/network/{{host}}/new_net_pool/" method="post">
 						<input type="text" class="input-meddle" name="name_pool" placeholder="Name" value="">
 						<input type="text" class="input-meddle"  name="net_addr" value="192.168.100.0/24">
-						<input type="checkbox" name="dhcp" value="yes" style="height:30px">
+						<input type="checkbox" name="dhcp" value="yes" style="height:25px">
+            <p></p>
 						<select name="forward"> 
 						    <option value="nat">NAT</option>
 						    <option value="route">Route</option>

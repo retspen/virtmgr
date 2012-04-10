@@ -20,7 +20,11 @@
             <ul class="nav nav-list">
               <li class="nav-header">Пул хранилища</li>
               {% for name in pools %}
-  			  <li{% if pool == name %} class="active"{% endif %}><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+  			    {% if pool == name %}
+                <li class="active"><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+                {% else %}
+                <li><a href=/network/{{host}}/{{name}}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% else %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% endif %}</a></li>
+                {% endif %}
 			  {% endfor %}
 			  <br>
 			  <form action="/storage/{{host}}/{{pool}}/" method="post">
@@ -46,7 +50,7 @@
 						<p>Тип пула:</p>
 						<p>Путь:</p>
 						<p>Состояние:</p>
-						<p>Автостарт:</p>
+						<p>Автозапуск:</p>
 					</div>
 					<div class="span3">
 						<p>Занято {{info.2|filesizeformat}} из {{info.3|filesizeformat}}</p>
