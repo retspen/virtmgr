@@ -11,9 +11,7 @@ def index(request, host):
    	if not request.user.is_authenticated():
 	   	return HttpResponseRedirect('/login')
 
- 	usr_id = request.user.id
-	kvm_host = Host.objects.get(user=usr_id,hostname=host)
-	usr_name = request.user
+	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
 
 	def creds(credentials, user_data):
 		for credential in credentials:

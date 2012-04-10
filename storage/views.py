@@ -28,7 +28,7 @@ def vm_conn(host_ip, creds):
 	   	conn = libvirt.openAuth(uri, auth, 0)
 	   	return conn
 	except:
-		print "Not connected"
+		return "error"
 
 def index(request, host):
 
@@ -81,20 +81,35 @@ def pool(request, host, pool):
 		return 0
 
 	def get_conn_pool(pool):
-		stg = conn.storagePoolLookupByName(pool)
-		return stg
+		try:
+			stg = conn.storagePoolLookupByName(pool)
+			return stg
+		except:
+			return "error"
 
 	def pool_start():
-		stg.create(0)
+		try:
+			stg.create(0)
+		except:
+			return "error"
 
 	def pool_stop():
-		stg.destroy()
+		try:
+			stg.destroy()
+		except:
+			return "error"
 
 	def pool_delete():
-		stg.undefine()
-
+		try:
+			stg.undefine()
+		except:
+			return "error"
+			
 	def pool_refresh():
-		stg.refresh(0)
+		try:
+			stg.refresh(0)
+		except:
+			return "error"
 
 	def get_stg_info(get):
 		try:
@@ -107,59 +122,81 @@ def pool(request, host, pool):
 			elif get == "list":
 				return stg.listVolumes()
 		except:
-			print "Not get pool info"
+			return "error"
 
 	def get_type():
-		xml = stg.XMLDesc(0)
-		return util.get_xml_path(xml, "/pool/@type")
+		try:
+			xml = stg.XMLDesc(0)
+			return util.get_xml_path(xml, "/pool/@type")
+		except:
+			return "error"
 
 	def get_target_path():
-		xml = stg.XMLDesc(0)
-		return util.get_xml_path(xml, "/pool/target/path")
+		try:
+			xml = stg.XMLDesc(0)
+			return util.get_xml_path(xml, "/pool/target/path")
+		except:
+			return "error"
 
 	def delete_volume(img):
-		vol = stg.storageVolLookupByName(img)
-		vol.delete(0)
+		try:
+			vol = stg.storageVolLookupByName(img)
+			vol.delete(0)
+		except:
+			return "error"
 
 	def stg_set_autostart(pool):
-		stg = conn.storagePoolLookupByName(pool)
-		stg.setAutostart(1)
+		try:
+			stg = conn.storagePoolLookupByName(pool)
+			stg.setAutostart(1)
+		except:
+			return "error"
 
 	def create_volume(img, size_max, size_aloc, format):
-		xml = """
-			<volume>
-				<name>%s.img</name>
-				<capacity>%s</capacity>
-				<allocation>%s</allocation>
-				<target>
-					<format type='%s'/>
-				</target>
-			</volume>""" % (img, size_max, size_aloc, format)
-		stg.createXML(xml,0)
+		try:
+			xml = """
+				<volume>
+					<name>%s.img</name>
+					<capacity>%s</capacity>
+					<allocation>%s</allocation>
+					<target>
+						<format type='%s'/>
+					</target>
+				</volume>""" % (img, size_max, size_aloc, format)
+			stg.createXML(xml,0)
+		except:
+			return "error"
 
 	def create_stg_pool(type_pool, name_pool, path_pool):
-		xml = """
-			<pool type='%s'>
-				<name>%s</name>
-					<target>
-						<path>%s</path>
-					</target>
-			</pool>""" % (type_pool, name_pool, path_pool)
-		conn.storagePoolDefineXML(xml,0)
+		try:
+			xml = """
+				<pool type='%s'>
+					<name>%s</name>
+						<target>
+							<path>%s</path>
+						</target>
+				</pool>""" % (type_pool, name_pool, path_pool)
+			conn.storagePoolDefineXML(xml,0)
+		except:
+			return "error"
 
 	def get_vl_info(listvol):
-		volinfo = {}
-		if stg.isActive() != 0:
-			for name in listvol:
-				vol = stg.storageVolLookupByName(name)
-				xml = vol.XMLDesc(0)
+		try:
+			volinfo = {}
+			if stg.isActive() != 0:
+				for name in listvol:
+					vol = stg.storageVolLookupByName(name)
+					xml = vol.XMLDesc(0)
 
-				size = vol.info()[1]
-				format = util.get_xml_path(xml, "/volume/target/format/@type")
- 				volinfo[name] = size,format
-		return volinfo
+					size = vol.info()[1]
+					format = util.get_xml_path(xml, "/volume/target/format/@type")
+	 				volinfo[name] = size,format
+			return volinfo
+		except:
+			return "error"
 	
 	conn = vm_conn(host_ip, creds)
+	errors = []
 
 	if conn == None:
 		return HttpResponseRedirect('/overview/' + host + '/')
@@ -171,17 +208,21 @@ def pool(request, host, pool):
 			name_pool = request.POST.get('name_pool','')
 			path_pool = request.POST.get('path_pool','')
 			type_pool = request.POST.get('type_pool','')
-			errors = []
 			if not name_pool:
 				errors.append(u'Введите имя пула')
 			if not path_pool:
 				errors.append(u'Введите путь пула')
 			if not errors:
-				create_stg_pool(type_pool, name_pool, path_pool)
-				stg = get_conn_pool(name_pool)
-				pool_start()
-				stg_set_autostart(name_pool)
-				return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
+				if create_stg_pool(type_pool, name_pool, path_pool) is "error":
+					errors.append(u'Возможно пул с такими данными существует')
+					return render_to_response('storage_new.html', locals())
+					return HttpResponseRedirect('/storage/' + host + '/new_stg_pool/')
+				else:
+					stg = get_conn_pool(name_pool)
+					pool_start()
+					stg_set_autostart(name_pool)
+					return render_to_response('storage_new.html', locals())
+					return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
 		return render_to_response('storage_new.html', locals())
 
 	stg = get_conn_pool(pool)
@@ -205,7 +246,6 @@ def pool(request, host, pool):
 		if request.POST.get('del_pool',''):
 			pool_delete()
 			return HttpResponseRedirect('/storage/' + host + '/')
-
 		if request.POST.get('vol_del',''):
 			img = request.POST['img']
 			delete_volume(img)
