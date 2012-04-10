@@ -23,7 +23,7 @@
               {% if pool == name %}
                 <li class="active"><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
                 {% else %}
-                <li><a href=/network/{{host}}/{{name}}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% else %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% endif %}</a></li>
+                <li><a href=/network/{{host}}/{{name}}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{name}}</font>{% endif %}</a></li>
                 {% endif %}
               {% endfor %}
               <br>
