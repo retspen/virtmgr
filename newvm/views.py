@@ -258,19 +258,15 @@ def index(request, host):
 
 	errors = []
 	cores = get_cpus()
-	if cores == "error":
-		errors.append(u'Ошибка определения ядер')
 	all_vm = get_all_vm()
-	if all_vm == "error":
-		errors.append(u'Виртуальные машины на хосте не доступны')
 	storages = get_all_stg()
-	if storages == "error":
-		errors.append(u'Пулы хранения не доступны или не активны')
 	all_iso = find_all_iso()
 	all_img = find_all_img()
+	if all_iso is "error" or all_img is "error":
+		errors.append(u'Возможно пулы хранения не доступны или не активны')
 	bridge = get_all_net()
 	if bridge == "error":
-		errors.append(u'Сетевые пулы не доступны или не активны')
+		errors.append(u'Возможно сетевые пулы не доступны или не активны')
 	arch = get_arch()
 	emul = get_emulator()
 	machine = get_machine()
@@ -293,7 +289,6 @@ def index(request, host):
 		hdd = get_img_path(img)
 		cdrom = get_img_path(iso)
 		hdd_frmt = get_img_format(img)
-		errors = []
 		if not img:
 			errors.append(u'Образы HDD для виртуальной машины отсутствуют')
 		if not name:

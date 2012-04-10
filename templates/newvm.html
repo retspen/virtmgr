@@ -99,14 +99,11 @@
                         </select>
                         <select name="img">
                         {% if all_iso not "error" %}
-                        {% if all_img %}
                         {% for name in all_img %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
-                        {% else %}
+                        {% endif %}
                             <option value="">Отсутствует</option>
-                        {% endif %}
-                        {% endif %}
                         </select>
                         <select name="bridge">
                         {% for net in bridge %}
