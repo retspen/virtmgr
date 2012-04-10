@@ -10,11 +10,11 @@ def get_networks(conn):
 	try:
 		networks = {}
 		for name in conn.listNetworks():
-			net.networkLookupByName(name)
+			net = conn.networkLookupByName(name)
 			status = net.isActive()
 			networks[name] = status
 		for name in conn.listDefinedNetworks():
-			net.networkLookupByName(name)
+			net = conn.networkLookupByName(name)
 			status = net.isActive()
 			networks[name] = status
 		return networks
