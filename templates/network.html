@@ -49,8 +49,8 @@
         <div class="span3">
           <p>{{ pool }}</p>
           <p>{{ bridge }}</p>
-          <p>{% if status == 1 %} <font color="green">Активен</font> {% else %} <font color="red">Не Активен</font> {% endif %}</p>
-          <p>{% if start == 1 %} <font color="green">Включен</font> {% else %} <font color="red">Выключен</font> {% endif %}</p>
+          <p>{% if status == 1 %} <font color="green">активен</font> {% else %} <font color="red">не Активен</font> {% endif %}</p>
+          <p>{% if start == 1 %} <font color="green">включен</font> {% else %} <font color="red">выключен</font> {% endif %}</p>
         </div>
       </div>
       <hr>
@@ -69,7 +69,7 @@
           {% endfor %}
           <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
         </div>
-      </div>
+        </div>
            </div>
           </div>
         </div>

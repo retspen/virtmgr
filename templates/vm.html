@@ -43,16 +43,16 @@
               <hr>
               <form action="/vm/{{host}}/{{vname}}/" method="post">
               {% if state = 5 %}
-                <input class="btn btn-primary" type="submit" name="action" value="start">
+                <input class="btn btn-primary" type="submit" name="start" value="Запуск">
               {% endif %}
               {% if state = 3 %}
-                <input class="btn btn-primary" type="submit" name="action" value="resume">
+                <input class="btn btn-primary" type="submit" name="resume" value="Возобновить">
               {% endif %}
               {% if state = 1 %}
-                <input class="btn btn-primary" type="submit" name="action" value="suspend" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="action" value="shutdown" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="action" value="destroy" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="action" value="reboot" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="suspend" value="Сон" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="shutdown" value="Выключить" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="destroy" value="Выключить принудительно" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{host}}/{{vname}}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
@@ -72,22 +72,22 @@
                   <p><strong>{{ vname }}</strong></p>
                   <p>{{ cpu }}</p>
                   <p>{{ memory|filesizeformat }}</p>
-                  <p>{% if active == 1 %}<font color="green">Активно</font>{% else %}<font color="red">Не активно</font>{% endif %}</p>
-                  <p>{% if autostart == 1 %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
-                  <p>{% if boot_menu == 'yes' %}<font color="green">Включено</font>{% else %}<font color="red">Выключено</font>{% endif %}</p>
+                  <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
+                  <p>{% if autostart == 1 %}<font color="green">включено</font>{% else %}<font color="red">выключено</font>{% endif %}</p>
+                  <p>{% if boot_menu == 'yes' %}<font color="green">включено</font>{% else %}<font color="red">выключено</font>{% endif %}</p>
                   {% if state = 1 %}<p><strong>{{ vnc_port }}</strong> - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
                     <form action="/vm/{{host}}/{{vname}}/" method="post">
                       {% if cdrom %}
-                      <input class="btn btn-primary" type="submit" name="action" value="disconnect" onclick="return confirm('Вы уверены?')">
+                      <input class="btn btn-primary" type="submit" name="disconnect" value="Отключить" onclick="return confirm('Вы уверены?')">
                       {% else %}
                       <select name="iso_img">
                       {% for iso in isos %}
                           <option value="{{iso}}">{{iso}}</option>
                       {% endfor %} 
                       </select><br>
-                      <input class="btn btn-primary" type="submit" name="action" value="connect"> 
+                      <input class="btn btn-primary" type="submit" name="connect" value="Подключить"> 
                       {% endif %}
                     </form>
                   </p>
@@ -95,12 +95,12 @@
               </div>
               <form action="/vm/{{host}}/{{vname}}/" method="post">
               {% if autostart == 1 %}
-                <input class="btn btn-primary" type="submit" name="action" value="auto OFF" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="auto_off" value="Выключить Автостарт" onclick="return confirm('Вы уверены?')">
               {% else %}
-                <input class="btn btn-primary" type="submit" name="action" value="auto ON" onclick="return confirm('Вы уверены?')"> 
+                <input class="btn btn-primary" type="submit" name="auto_on" value="Включить Автостарт" onclick="return confirm('Вы уверены?')"> 
               {% endif %}
               {% if state != 1 %}
-                <input class="btn btn-primary" type="submit" name="action" value="undefine" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="undefine" value="Удалить" onclick="return confirm('Вы уверены?')">
               {% endif %}
               </form>
             </div>

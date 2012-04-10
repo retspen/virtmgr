@@ -198,53 +198,51 @@ def index(request, host, vname):
 
    # Post form html
    if request.method == 'POST':
-      action = request.POST.get('action','')
-      iso = request.POST.get('iso_img','')
-      
-      if action == 'suspend':
+      if request.POST.get('suspend',''):
          dom.suspend()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'resume':
+      elif request.POST.get('resume',''):
          dom.resume()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'start':
+      elif request.POST.get('start',''):
          dom.create()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'shutdown':
+      elif request.POST.get('shutdown',''):
          dom.shutdown()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'destroy':
+      elif request.POST.get('destroy',''):
          dom.destroy()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'save':
+      elif request.POST.get('save',''):
          dom.save(0)
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'reboot':
+      elif request.POST.get('reboot',''):
          dom.destroy()
          dom.create()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'auto ON':
+      elif request.POST.get('auto_on',''):
          dom.setAutostart(1)
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'auto OFF':
+      elif request.POST.get('auto_off',''):
          dom.setAutostart(0)
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'disconnect':
+      elif request.POST.get('disconnect',''):
+         iso = request.POST.get('iso_img','')
          if state == 1:
             umnt_iso_on()
          else:
             umnt_iso_off()
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'connect':
+      elif request.POST.get('connect',''):
+         iso = request.POST.get('iso_img','')     
          if state == 1:
             mnt_iso_on(iso)
          else:
             mnt_iso_off(iso)
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif action == 'undefine':
+      elif request.POST.get('undefine',''):
          dom.undefine()
          return HttpResponseRedirect('/overview/' + host + '/')
-
    return render_to_response('vm.html', locals())
 
 def redir_two(request, host):

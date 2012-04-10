@@ -52,8 +52,8 @@
 						<p>Занято {{info.2|filesizeformat}} из {{info.3|filesizeformat}}</p>
 						<p>{% if stype == "dir" %} Filesystem Directory {% else %} No know {% endif %}</p>
 						<p>{{spath}}</p>
-						<p>{% if status == 1 %} <font color="green">Активен</font> {% else %} <font color="red">Не Активен</font> {% endif %}</p>
-						<p>{% if start == 1 %} <font color="green">Включен</font> {% else %} <font color="red">Выключен</font> {% endif %}</p>
+						<p>{% if status == 1 %} <font color="green">активен</font> {% else %} <font color="red">не активен</font> {% endif %}</p>
+						<p>{% if start == 1 %} <font color="green">включен</font> {% else %} <font color="red">выключен</font> {% endif %}</p>
 					</div>
 				</div>
 				{% if volinfo %}
@@ -134,7 +134,7 @@
 					</div>
 				{% endif %}
 			{% else %}
-			<h3>Подключение отсутствуют!</h3>
+			<h3>Подключение отсутствует!</h3>
 			{% endif %}
            </div>
           </div>
