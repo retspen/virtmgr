@@ -304,6 +304,7 @@ def index(request, host, vname):
       if request.POST.get('undefine',''):
          try:
             dom.undefine()
+            return HttpResponseRedirect('/overview/%s/' % host)
          except:
             return "error"
       if not errors:
