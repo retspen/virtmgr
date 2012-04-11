@@ -164,8 +164,8 @@ def pool(request, host, pool):
 					</target>
 				</volume>""" % (img, size_max, size_aloc, format)
 			stg.createXML(xml,0)
-		except:
-			return "error"
+		except libvirt.libvirtError as e:
+			return e
 
 	def create_stg_pool(type_pool, name_pool, path_pool):
 		try:

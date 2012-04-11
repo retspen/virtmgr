@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import libvirt
-import re
+import libvirt, re 
 import virtinst.util as util
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -178,10 +177,16 @@ def index(request, host):
 
 	
 	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
+		hostcap = conn.getCapabilities()
+		iskvm = re.search('kvm', hostcap)
+		if iskvm:
+			domtype = 'kvm'
+		else:
+			domtype = 'qemu'
 		if not iso:
 			iso = ''
 		memaloc = mem
-		xml = """<domain type='kvm'>
+		xml = """<domain type='%s'>
 				  <name>%s</name>
 				  <memory>%s</memory>
 				  <currentMemory>%s</currentMemory>
@@ -201,7 +206,7 @@ def index(request, host):
 				  <on_poweroff>destroy</on_poweroff>
 				  <on_reboot>restart</on_reboot>
 				  <on_crash>restart</on_crash>
-				  <devices>""" % (name, mem, memaloc, cpus, arch, machine)
+				  <devices>""" % (domtype, name, mem, memaloc, cpus, arch, machine)
 			
 		if arch == 'x86_64':
 			xml += """<emulator>%s</emulator>""" % (emul[1])

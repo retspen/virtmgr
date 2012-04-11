@@ -102,8 +102,9 @@
                         {% for name in all_img %}
                             <option value="{{name}}">{{name}}</option>
                         {% endfor %}
-                        {% endif %}
+                        {% else %}
                             <option value="">Отсутствует</option>
+                        {% endif %}
                         </select>
                         <select name="bridge">
                         {% for net in bridge %}

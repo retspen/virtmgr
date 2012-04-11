@@ -52,20 +52,19 @@ def index(request):
 			have_host = Host.objects.filter(user=request.user, hostname=name)
 			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 			simbol = re.search('[^a-zA-Z0-9]+', name)
-			if simbol.group():
-				errors.append('В названии хоста не должны быть символы')
+			if simbol:
+				errors.append(u'В названии хоста не должны быть символы')
 			if have_host or have_ip:
-				errors.append('Такой хост уже подключен')
+				errors.append(u'Такой хост уже подключен')
 			if not name:
-				errors.append('Введите имя хоста')
+				errors.append(u'Не было введено имя хоста')
 			if not ipaddr:
-				errors.append('Введите IP адрес')
+				errors.append(u'Не был введен IP адрес')
 			if not login:
-				errors.append('Введите KVM логин')
+				errors.append(u'ННе был введен KVM логин')
 			if not passw:
-				errors.append('Введите KVM пароль')
+				errors.append(u'Не был введен KVM пароль')
 			if not errors:
 				add_host(name, ipaddr, login, passw)
 				return HttpResponseRedirect('/dashboard/')
-
 	return render_to_response('dashboard.html', locals())

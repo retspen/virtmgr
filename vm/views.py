@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 import libvirt
 import virtinst.util as util
@@ -17,7 +18,7 @@ def get_vms(conn):
          vname[dom.name()] = dom.info()[0]
       return vname
    except:
-      print "Get all vm failed"
+     return "error"
 
 def get_storages(conn):
    try:
@@ -28,7 +29,7 @@ def get_storages(conn):
          storages.append(name)
       return storages
    except:
-      print "Get storage failed"
+      return "error"
 
 def vm_conn(host_ip, creds):
    try:
@@ -38,14 +39,14 @@ def vm_conn(host_ip, creds):
       conn = libvirt.openAuth(uri, auth, 0)
       return conn
    except:
-      print "Not connected"
+      return "error"
 
 def get_dom(conn, vname):
    try:
       dom = conn.lookupByName(vname)
       return dom
    except:
-      print "Not connected"
+      return "error"
 
 def index(request, host, vname):
 
@@ -72,108 +73,154 @@ def index(request, host, vname):
          state = dom.isActive()
          return state
       except:
-         print "Get domain status failed"
+         return "error"
 
    def get_vm_uuid():
-      xml = dom.XMLDesc(0)
-      uuid = util.get_xml_path(xml, "/domain/uuid")
-      return uuid
+      try:
+         xml = dom.XMLDesc(0)
+         uuid = util.get_xml_path(xml, "/domain/uuid")
+         return uuid
+      except:
+         return "error"
 
    def get_vm_mem():
-      xml = dom.XMLDesc(0)
-      mem = util.get_xml_path(xml, "/domain/currentMemory")
-      return mem
+      try:
+         xml = dom.XMLDesc(0)
+         mem = util.get_xml_path(xml, "/domain/currentMemory")
+         return mem
+      except:
+         return "error"
 
    def get_vm_cpu():
-      xml = dom.XMLDesc(0)
-      cpu = util.get_xml_path(xml, "/domain/vcpu")
-      return cpu
+      try:
+         xml = dom.XMLDesc(0)
+         cpu = util.get_xml_path(xml, "/domain/vcpu")
+         return cpu
+      except:
+         return "error"
 
    def get_vm_vnc():
-      xml = dom.XMLDesc(0)
-      vnc = util.get_xml_path(xml, "/domain/devices/graphics/@port")
-      return vnc
+      try:
+         xml = dom.XMLDesc(0)
+         vnc = util.get_xml_path(xml, "/domain/devices/graphics/@port")
+         return vnc
+      except:
+         return "error"
 
    def get_vm_hdd():
-      xml = dom.XMLDesc(0)
-      hdd = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
-      #hdd = re.sub('\/.*\/','', hdd)
-      return hdd
+      try:
+         xml = dom.XMLDesc(0)
+         hdd = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
+         #hdd = re.sub('\/.*\/','', hdd)
+         return hdd
+      except:
+         return "error"
 
    def get_vm_cdrom():
-      xml = dom.XMLDesc(0)
-      cdrom = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
-      #cdrom = re.sub('\/.*\/','', cdrom)
-      return cdrom
+      try:
+         xml = dom.XMLDesc(0)
+         cdrom = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
+         #cdrom = re.sub('\/.*\/','', cdrom)
+         return cdrom
+      except:
+         return "error"
 
    def get_vm_boot_menu():
-      xml = dom.XMLDesc(0)
-      boot_menu = util.get_xml_path(xml, "/domain/os/bootmenu/@enable")
-      return boot_menu
-   
+      try:
+         xml = dom.XMLDesc(0)
+         boot_menu = util.get_xml_path(xml, "/domain/os/bootmenu/@enable")
+         return boot_menu
+      except:
+         return "error"
+      
    def mnt_iso_on(vol):
-      for storage in storages:
-         stg = conn.storagePoolLookupByName(storage)
-         for img in stg.listVolumes():
-            if vol == img:
-               vl = stg.storageVolLookupByName(vol)
-      xml = """<disk type='file' device='cdrom'>
-                  <driver name='qemu' type='raw'/>
-                  <target dev='hdc' bus='ide'/>
-                  <source file='%s'/>
-                  <readonly/>
-               </disk>""" % vl.path()
-      dom.attachDevice(xml)
-      xmldom = dom.XMLDesc(0)
-      conn.defineXML(xmldom)
+      try:
+         for storage in storages:
+            stg = conn.storagePoolLookupByName(storage)
+            for img in stg.listVolumes():
+               if vol == img:
+                  vl = stg.storageVolLookupByName(vol)
+         xml = """<disk type='file' device='cdrom'>
+                     <driver name='qemu' type='raw'/>
+                     <target dev='hdc' bus='ide'/>
+                     <source file='%s'/>
+                     <readonly/>
+                  </disk>""" % vl.path()
+         dom.attachDevice(xml)
+         xmldom = dom.XMLDesc(0)
+         conn.defineXML(xmldom)
+      except:
+         return "error"
 
    def mnt_iso_off(vol):
-      for storage in storages:
-         stg = conn.storagePoolLookupByName(storage)
-         for img in stg.listVolumes():
-            if vol == img:
-               vl = stg.storageVolLookupByName(vol)
-      xml = dom.XMLDesc(0)
-      iso = "<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>\n      <source file='%s'/>" % vl.path()
-      xmldom = xml.replace("<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>", iso)
-      conn.defineXML(xmldom)
+      try:
+         for storage in storages:
+            stg = conn.storagePoolLookupByName(storage)
+            for img in stg.listVolumes():
+               if vol == img:
+                  vl = stg.storageVolLookupByName(vol)
+         xml = dom.XMLDesc(0)
+         iso = "<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>\n      <source file='%s'/>" % vl.path()
+         xmldom = xml.replace("<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>", iso)
+         conn.defineXML(xmldom)
+      except:
+         return "error"
 
    def umnt_iso_on():
-      xml = """<disk type='file' device='cdrom'>
-                  <driver name="qemu" type='raw'/>
-                  <target dev='hdc' bus='ide'/>
-                  <readonly/>
-               </disk>"""
-      dom.attachDevice(xml)
-      xmldom = dom.XMLDesc(0)
-      conn.defineXML(xmldom)
+      try:
+         xml = """<disk type='file' device='cdrom'>
+                     <driver name="qemu" type='raw'/>
+                     <target dev='hdc' bus='ide'/>
+                     <readonly/>
+                  </disk>"""
+         dom.attachDevice(xml)
+         xmldom = dom.XMLDesc(0)
+         conn.defineXML(xmldom)
+      except:
+         return "error"
 
    def umnt_iso_off():
-      xml = dom.XMLDesc(0)
-      cdrom = get_vm_cdrom()
-      xmldom = xml.replace("<source file='%s'/>\n" % cdrom,"")
-      conn.defineXML(xmldom)
+      try:
+         xml = dom.XMLDesc(0)
+         cdrom = get_vm_cdrom()
+         xmldom = xml.replace("<source file='%s'/>\n" % cdrom,"")
+         conn.defineXML(xmldom)
+      except:
+         return "error"
 
    def find_all_iso():
-      iso = []
-      for storage in storages:
-         stg = conn.storagePoolLookupByName(storage)
-         stg.refresh(0)
-         for img in stg.listVolumes():
-            if re.findall(".iso", img) or re.findall(".ISO", img):
-               iso.append(img)
-      return iso
+      try:
+         iso = []
+         for storage in storages:
+            stg = conn.storagePoolLookupByName(storage)
+            stg.refresh(0)
+            for img in stg.listVolumes():
+               if re.findall(".iso", img) or re.findall(".ISO", img):
+                  iso.append(img)
+         return iso
+      except:
+         return "error"
    
    def get_vm_autostart():
-      return dom.autostart()
+      try:
+         return dom.autostart()
+      except:
+         return "error"
 
    def page_refresh():
-      return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
+      try:
+         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
+      except:
+         return "error"
 
    def get_vm_state():
-      return dom.info()[0]
+      try:
+         return dom.info()[0]
+      except:
+         return "error"
 
    conn = vm_conn(host_ip, creds)
+   errors = []
 
    if conn == None:
       return HttpResponseRedirect('/overview/' + host + '/')
@@ -197,32 +244,59 @@ def index(request, host, vname):
    # Post form html
    if request.method == 'POST':
       if request.POST.get('suspend',''):
-         dom.suspend()
+         try:
+            dom.suspend()
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('resume',''):
-         dom.resume()
+         try:
+            dom.resume()
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('start',''):
-         dom.create()
+         try:
+            dom.create()
+         except:
+            errors.append(u'Возникли проблемы при старте')
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('shutdown',''):
-         dom.shutdown()
+         try:
+            dom.shutdown()
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('destroy',''):
-         dom.destroy()
+         try:
+            dom.destroy()
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('save',''):
-         dom.save(0)
+         try:
+            dom.save(0)
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('reboot',''):
-         dom.destroy()
-         dom.create()
+         try:
+            dom.destroy()
+            dom.create()
+         except:
+            errors.append(u'Возникли проблемы при перезагрузке')
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('auto_on',''):
-         dom.setAutostart(1)
+         try:
+            dom.setAutostart(1)
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('auto_off',''):
-         dom.setAutostart(0)
+         try:
+            dom.setAutostart(0)
+         except:
+            return "error"
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('disconnect',''):
          iso = request.POST.get('iso_img','')
@@ -239,7 +313,10 @@ def index(request, host, vname):
             mnt_iso_off(iso)
          return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
       elif request.POST.get('undefine',''):
-         dom.undefine()
+         try:
+            dom.undefine()
+         except:
+            return "error"
          return HttpResponseRedirect('/overview/' + host + '/')
    return render_to_response('vm.html', locals())
 

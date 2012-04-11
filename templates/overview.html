@@ -43,6 +43,7 @@
 				<div class="span3">
 					<p>Имя хоста:</p>
 					<p>Подключение:</p>
+					<p>Поддержка KVM:</p>
 					<p>Архитектура:</p>
 					<p>Память:</p>
 					<p>Логицеские ЦПУ:</p>
@@ -50,6 +51,7 @@
 				<div class="span4">
 					<p>{{host}}</p>
 					<p>{{info.0}}</p>
+					<p>{% if iskvm == 1 %}<font color="green">yes</font>{% else %}<font color="red">no</font>{% endif %}</p>
 					<p>{{info.1}}</p>
 					<p>{{info.2}} Mb</p>
 					<p>{{info.3}} x {{info.4}} Mhz</p>

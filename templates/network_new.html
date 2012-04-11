@@ -28,10 +28,10 @@
               {% endfor %}
               <br>
               <form action="/network/{{host}}/{{pool}}/" method="post">
-                <input type="button" class="btn btn-primary" value="Создать" onclick="location.href='/network/{{host}}/new_net_pool/'" />
+                <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/network/{{host}}/new_net_pool/'" />
               {% if status = 0 %}
                 <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
-                <input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+                <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
               {% else %}
                 <input type="submit" class="btn btn-primary" name="stop_pool" value="Стоп" onclick="return confirm('Вы уверены?')">
               {% endif %}

@@ -1,4 +1,4 @@
-import libvirt
+import libvirt, re
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -8,9 +8,7 @@ def index(request, host):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
-	usr_id = request.user.id
-	kvm_host = Host.objects.get(user=usr_id,hostname=host)
-	usr_name = request.user
+	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -37,7 +35,7 @@ def index(request, host):
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except:
-			print "Not connected"
+			return "error"
 
 	def get_all_vm():
 		try:
@@ -53,7 +51,6 @@ def index(request, host):
 		except:
 			vname['000x'] = '000x'
 			return vname
-			print "Get vm failed"
 
 	def get_info():
 		info = []
@@ -65,11 +62,23 @@ def index(request, host):
 			info.append(conn.getInfo()[3])
 			return info
 		except:
-			print 'Get info failed'
+			return "error"
+
+	def get_capatib():
+		try:
+			hostcap = conn.getCapabilities()
+			iskvm = re.search('kvm', hostcap)
+			if iskvm:
+				return 1
+			else:
+				return 0
+		except:
+			return "error"
 		
 	conn = vm_conn()
 	all_vm = get_all_vm()
 	info = get_info()
+	iskvm = get_capatib()
 		
 	return render_to_response('overview.html', locals())
 
