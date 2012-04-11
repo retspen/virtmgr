@@ -247,77 +247,70 @@ def index(request, host, vname):
          try:
             dom.suspend()
          except:
-            return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('resume',''):
+            errors.append(u'Ошибка: возможно виртуальная машина уже приостаовлена')
+      if request.POST.get('resume',''):
          try:
             dom.resume()
          except:
-            return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('start',''):
+            errors.append(u'Ошибка: возможно виртуальная машина уже возобновлена')
+      if request.POST.get('start',''):
          try:
             dom.create()
          except:
-            errors.append(u'Возникли проблемы при старте')
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('shutdown',''):
+            errors.append(u'Ошибка: возможно виртуальная машина уже запущена')
+      if request.POST.get('shutdown',''):
          try:
             dom.shutdown()
          except:
-            return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('destroy',''):
+            errors.append(u'Ошибка: возможно виртуальная машина уже выключена')
+      if request.POST.get('destroy',''):
          try:
             dom.destroy()
          except:
-            return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('save',''):
+            errors.append(u'Ошибка: возможно виртуальная машина уже выключена')
+      if request.POST.get('save',''):
          try:
             dom.save(0)
          except:
-            return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('reboot',''):
+            errors.append(u'Ошибка: возможно виртуальная машина уже сохранена')
+      if request.POST.get('reboot',''):
          try:
             dom.destroy()
             dom.create()
          except:
-            errors.append(u'Возникли проблемы при перезагрузке')
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('auto_on',''):
+            errors.append(u'Ошибка: возникли проблемы при перезагрузке')
+      if request.POST.get('auto_on',''):
          try:
             dom.setAutostart(1)
          except:
             return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('auto_off',''):
+      if request.POST.get('auto_off',''):
          try:
             dom.setAutostart(0)
          except:
             return "error"
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('disconnect',''):
+      if request.POST.get('disconnect',''):
          iso = request.POST.get('iso_img','')
          if state == 1:
             umnt_iso_on()
          else:
             umnt_iso_off()
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('connect',''):
+      if request.POST.get('connect',''):
          iso = request.POST.get('iso_img','')     
          if state == 1:
             mnt_iso_on(iso)
          else:
             mnt_iso_off(iso)
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
-      elif request.POST.get('undefine',''):
+      if request.POST.get('undefine',''):
          try:
             dom.undefine()
          except:
             return "error"
-         return HttpResponseRedirect('/overview/' + host + '/')
+      if not errors:
+         return HttpResponseRedirect('/vm/' + host + '/' + vname +'/')
+      else:
+         return render_to_response('vm.html', locals())
+   
    return render_to_response('vm.html', locals())
 
 def redir_two(request, host):

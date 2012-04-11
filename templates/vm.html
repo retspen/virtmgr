@@ -42,7 +42,7 @@
               <hr>
               {% if errors %}
               {% for error in errors %}
-                <div class="alert alert-error" style="width:150px">
+                <div class="alert alert-error" style="width:380px">
                   <a class="close" data-dismiss="alert">&times;</a>
                   {{error}}
                 </div>
@@ -56,7 +56,7 @@
                 <input class="btn btn-primary" type="submit" name="resume" value="Возобновить">
               {% endif %}
               {% if state = 1 %}
-                <input class="btn btn-primary" type="submit" name="suspend" value="Сон" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="suspend" value="Приостановить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="shutdown" value="Выключить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="destroy" value="Выкл. принудительно" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">

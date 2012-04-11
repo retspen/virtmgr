@@ -53,7 +53,7 @@ def index(request):
 			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 			simbol = re.search('[^a-zA-Z0-9]+', name)
 			if simbol:
-				errors.append(u'В названии хоста не должны быть символы')
+				errors.append(u'Имя хоста не должно содержать символы')
 			if have_host or have_ip:
 				errors.append(u'Такой хост уже подключен')
 			if not name:
@@ -61,7 +61,7 @@ def index(request):
 			if not ipaddr:
 				errors.append(u'Не был введен IP адрес')
 			if not login:
-				errors.append(u'ННе был введен KVM логин')
+				errors.append(u'Не был введен KVM логин')
 			if not passw:
 				errors.append(u'Не был введен KVM пароль')
 			if not errors:

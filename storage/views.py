@@ -215,14 +215,15 @@ def pool(request, host, pool):
 			if not errors:
 				if create_stg_pool(type_pool, name_pool, path_pool) is "error":
 					errors.append(u'Возможно пул с такими данными существует')
-					return render_to_response('storage_new.html', locals())
-					return HttpResponseRedirect('/storage/' + host + '/new_stg_pool/')
 				else:
 					stg = get_conn_pool(name_pool)
-					pool_start()
 					stg_set_autostart(name_pool)
+					if pool_start() is "error":
+						errors.append(u'Пул создан, но при запуске пула возникла ошибка, возможно указан не существующий путь')
+					else:
+						return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
+				if errors:
 					return render_to_response('storage_new.html', locals())
-					return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
 		return render_to_response('storage_new.html', locals())
 
 	stg = get_conn_pool(pool)
