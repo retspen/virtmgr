@@ -1,8 +1,12 @@
+Version 2.2:
+- fix template
+- add exceptions for all operation
+- add support qemu without kvm
+
 Version 2.1:
 - fix bootstrap height (text input)
 
 Version 2.0:
-
 - new design build on bootstrap
 - delete interfaces for ubuntu support
 - optimized code
