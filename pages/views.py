@@ -13,6 +13,9 @@ def features(request):
 def support(request):
 	return render_to_response('support.html', locals())
 
+def screenshot(request):
+	return render_to_response('screenshot.html', locals())
+
 def docs(request):
 	return render_to_response('docs.html', locals())
 
