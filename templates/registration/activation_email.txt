@@ -1,12 +1,11 @@
-Thank you for registering at the Web Virtual Manager Machine. Before we can activate your account one last step must be taken to complete your registration.
+Здравствуйте, {{ user.username }}.
 
-Please note - you must complete this last step to become a registered member. You will only need to visit this URL once to activate your account.
-
-To complete your registration, please visit this URL:
+Для подтверждения регистрации в сервисе WebVirtMgr, пожалуйста, пройдите по указанной ссылке:
 http://{{ site }}/user/activate/{{ activation_key }}/
 
+После подтверждения регистрации вы получите полный доступ к сервису WebVirtMgr.
 
-If you are still having problems signing up please contact a member of our support staff at support@webvirtmgr.net
+Команда WebVirtMgr.
 
-All the best,
-Web Virtual Manager Machine
+
+Пожалуйста, не отвечайте на данное сообщение; оно было выслано автоматически. Если у вас есть вопросы или вам необходима помощь, вы всегда можете написать письмо в службу поддержки support@webvirtmgr.net.
