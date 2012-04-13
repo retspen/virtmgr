@@ -2,15 +2,15 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{host}}</h2>
+   		<h2>Хост: {{ host }}</h2>
    	</div>
    	<div class="span6">
 	{% if info %}
     	<ul class="nav nav-pills">
-			<li class="active"><a href=/overview/{{host}}/>Обзор</a></li>
-			<li><a href=/newvm/{{host}}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{host}}/>Хранилище</a></li>
-			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
+			<li class="active"><a href=/overview/{{ host }}/>Обзор</a></li>
+			<li><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
+			<li><a href=/storage/{{ host }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
 		</ul>
 	{% endif %}
 	</div>
@@ -22,13 +22,13 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-			   <li><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+			   <li><a href=/newvm/{{ host }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
 			  {% endif %}
 			  {% for name, state in all_vm.items %}
 				  {% if name == '000x' %}
 				  <li>Не подключено</li>
 				  {% else %}
-				  <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
+				  <li><a href=/vm/{{ host }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
 				  {% endif %}
 			  {% endfor %}
             </ul>
@@ -41,18 +41,37 @@
 			<hr>
 			<div class="row">
 				<div class="span3">
-					<p>Имя хоста:</p>
 					<p>Подключение:</p>
 					<p>Архитектура:</p>
 					<p>Память:</p>
 					<p>Логицеские ЦПУ:</p>
 				</div>
 				<div class="span4">
-					<p>{{host}}</p>
-					<p>{{info.0}}</p>
-					<p>{{info.1}}</p>
-					<p>{{info.2}} Mb</p>
-					<p>{{info.3}} x {{info.4}} Mhz</p>
+					<p>{{ info.0 }}</p>
+					<p>{{ info.1 }}</p>
+					<p>{{ info.2 }} MБ</p>
+					<p>{{ info.3 }} x {{ info.4 }} Mhz</p>
+				</div>
+			</div>
+			<hr>
+			<h2>Ресурсы</h2>
+			<hr>
+			<div class="row">
+				<div class="span3">
+					<p>Память:</p>
+					<p>Свободно:</p>
+					<p>ЦПУ:</p>
+					<p>Занят:</p>
+				</div>
+				<div class="span3">
+					<p>{{ mem_perc }}% ({{ freemem }} МБ)</p>
+					<div class="progress progress-striped">
+					  <div class="bar" style="width: {{ mem_perc }}%;"></div>
+					</div>
+					<p>{{ cpuse }}%</p>
+					<div class="progress {% if cpuse <= 25 %} progress-success {% endif %}">
+					  <div class="bar" style="width: {{ cpuse }}%;"></div>
+					</div>
 				</div>
 			</div>
 			{% else %}

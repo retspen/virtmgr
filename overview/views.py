@@ -1,4 +1,4 @@
-import libvirt, re
+import libvirt, re, time
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -53,8 +53,8 @@ def index(request, host):
 			return vname
 
 	def get_info():
-		info = []
 		try:
+			info = []
 			info.append(conn.getURI())
 			info.append(conn.getInfo()[0])
 			info.append(conn.getInfo()[1])
@@ -64,21 +64,46 @@ def index(request, host):
 		except:
 			return "error"
 
-	def get_capatib():
+	def get_freemem():
 		try:
-			hostcap = conn.getCapabilities()
-			iskvm = re.search('kvm', hostcap)
-			if iskvm:
-				return 1
-			else:
-				return 0
+			freemem = conn.getFreeMemory()
+			freemem /= 1048576
+			return freemem
+		except:
+			return "error"
+
+	def fremem_perc():
+		try:
+			allmem = conn.getInfo()[1]
+			freemem = get_freemem()
+			percent = (freemem * 100) / allmem
+			return percent
+		except:
+			return "error"
+
+	def cpu_usage():
+		try:
+			prev_idle = 0
+			prev_total = 0
+			for a in range(2):
+			        idle = conn.getCPUStats(-1,0).values()[1]
+			        total = sum(conn.getCPUStats(-1,0).values())
+			        diff_idle = idle - prev_idle
+			        diff_total = total - prev_total
+			        diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
+			        prev_total = total
+			        prev_idle = idle
+			        time.sleep(1)
+			return diff_usage
 		except:
 			return "error"
 		
 	conn = vm_conn()
 	all_vm = get_all_vm()
 	info = get_info()
-	iskvm = get_capatib()
+	freemem = get_freemem()
+	mem_perc = fremem_perc()
+	cpuse = cpu_usage()
 		
 	return render_to_response('overview.html', locals())
 

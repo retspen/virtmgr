@@ -2,14 +2,14 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{host}}</h2>
+   		<h2>Хост: {{ host }}</h2>
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{host}}/>Обзор</a></li>
-			<li><a href=/newvm/{{host}}/>Создать ВМ</a></li>
-			<li class="active"><a href=/storage/{{host}}/>Хранилище</a></li>
-			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
+			<li><a href=/overview/{{ host }}/>Обзор</a></li>
+			<li><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
+			<li class="active"><a href=/storage/{{ host }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
 		</ul>
 	</div>
    </div>
@@ -21,14 +21,14 @@
               <li class="nav-header">Пул хранилища</li>
               {% for name, status in pools.items %}
   			    {% if pool == name %}
-                <li class="active"><a href=/storage/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+                <li class="active"><a href=/storage/{{ host }}/{{ name }}/><i class="icon-folder-open"></i> {{ name }}</a></li>
                 {% else %}
-                <li><a href=/storage/{{host}}/{{name}}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{name}}</font>{% endif %}</a></li>
+                <li><a href=/storage/{{ host }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
                 {% endif %}
 			  {% endfor %}
 			  <br>
-			  <form action="/storage/{{host}}/{{pool}}/" method="post">
-			  <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/storage/{{host}}/new_stg_pool/'" />
+			  <form action="/storage/{{ host }}/{{ pool }}/" method="post">
+			  <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/storage/{{ host }}/new_stg_pool/'" />
 			  {% if status = 0 %}
 			  <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
 			  <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
@@ -53,9 +53,9 @@
 						<p>Автозапуск:</p>
 					</div>
 					<div class="span3">
-						<p>Занято {{info.2|filesizeformat}} из {{info.3|filesizeformat}}</p>
+						<p>Занято {{ info.2|filesizeformat }} из {{ info.3|filesizeformat }}</p>
 						<p>{% if stype == "dir" %} Filesystem Directory {% else %} No know {% endif %}</p>
-						<p>{{spath}}</p>
+						<p>{{ spath }}</p>
 						<p>{% if status == 1 %}<font color="green">активен</font>{% else %}<font color="red">не активен</font>{% endif %}</p>
 						<p>{% if start == 1 %}<font color="green">включен</font>{% else %}<font color="red">выключен</font>{% endif %}</p>
 					</div>
@@ -76,10 +76,10 @@
 		        <tbody>
 					{% for name, info in volinfo.items %}
 					<tr>
-						<td>{{name}}</td><td>{{info.0|filesizeformat}}</td><td>{{info.1}}</td>
+						<td>{{ name }}</td><td>{{ info.0|filesizeformat }}</td><td>{{ info.1 }}</td>
 						<td>
-						<form action="/storage/{{host}}/{{pool}}/" method="post">
-							<input type="hidden" name="img" value="{{name}}">
+						<form action="/storage/{{ host }}/{{ pool }}/" method="post">
+							<input type="hidden" name="img" value="{{ name }}">
 							<input type="submit" class="btn btn-primary" name="vol_del" value="Удалить" onclick="return confirm('Вы уверены?')">
 						</form>
 						</td>
@@ -97,7 +97,7 @@
 				    {% for error in errors %}
 				      <div class="alert alert-error">
 				      	<a class="close" data-dismiss="alert">&times;</a>
-				      	{{error}}
+				      	{{ error }}
 				      </div>
 				    {% endfor %}
 				    {% endif %}
@@ -126,7 +126,7 @@
 								<p>Формат образа:</p>
 							</div>
 							<div class="span3">
-								<form action="/storage/{{host}}/{{pool}}/" method="post">
+								<form action="/storage/{{ host }}/{{ pool }}/" method="post">
 									<input type="text" class="input-large" name="img" placeholder="Name" value="">
 									<input type="text" class="input-large" name="size_max" value="1024">
 									<input type="text" class="input-large" name="size_aloc" value="0">
