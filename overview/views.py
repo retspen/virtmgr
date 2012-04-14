@@ -57,7 +57,7 @@ def index(request, host):
 			info = []
 			info.append(conn.getURI())
 			info.append(conn.getInfo()[0])
-			info.append(conn.getInfo()[1])
+			info.append(conn.getInfo()[1] * 1048576)
 			info.append(conn.getInfo()[2])
 			info.append(conn.getInfo()[3])
 			return info
@@ -66,18 +66,12 @@ def index(request, host):
 
 	def get_freemem():
 		try:
+			allmem = conn.getInfo()[1] * 1048576
 			freemem = conn.getFreeMemory()
-			freemem /= 1048576
-			return freemem
-		except:
-			return "error"
-
-	def fremem_perc():
-		try:
-			allmem = conn.getInfo()[1]
-			freemem = get_freemem()
 			percent = (freemem * 100) / allmem
-			return percent
+			percent = 100 - percent
+			memusage = allmem - freemem
+			return memusage, percent
 		except:
 			return "error"
 
@@ -85,7 +79,7 @@ def index(request, host):
 		try:
 			prev_idle = 0
 			prev_total = 0
-			for a in range(2):
+			for num in range(2):
 			        idle = conn.getCPUStats(-1,0).values()[1]
 			        total = sum(conn.getCPUStats(-1,0).values())
 			        diff_idle = idle - prev_idle
@@ -93,7 +87,8 @@ def index(request, host):
 			        diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
 			        prev_total = total
 			        prev_idle = idle
-			        time.sleep(1)
+			        if num is 0: 
+		        		time.sleep(1)
 			return diff_usage
 		except:
 			return "error"
@@ -101,9 +96,8 @@ def index(request, host):
 	conn = vm_conn()
 	all_vm = get_all_vm()
 	info = get_info()
-	freemem = get_freemem()
-	mem_perc = fremem_perc()
-	cpuse = cpu_usage()
+	memusage = get_freemem()
+	cpusage = cpu_usage()
 		
 	return render_to_response('overview.html', locals())
 
