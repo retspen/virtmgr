@@ -300,6 +300,8 @@ def index(request, host):
 			add_vm(name, setmem, cpus, archvm, machine, emul, hdd_frmt, hdd, cdrom, netbr)
 			return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
 
+	conn.close()
+
 	return render_to_response('newvm.html', locals())
 
 def redir(request):

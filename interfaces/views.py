@@ -107,6 +107,7 @@ def ifcfg(request, host, face):
 	mac = get_mac()
 	ipaddr = get_ip()
 	bridge = get_eth()
+	conn.close()
 
 	return render_to_response('interfaces.html', locals())
 

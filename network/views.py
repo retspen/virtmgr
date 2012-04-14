@@ -244,6 +244,8 @@ def pool(request, host, pool):
 			return HttpResponseRedirect('/network/' + host + '/')
 		return HttpResponseRedirect('/network/' + host + '/' + pool + '/')
 
+	conn.close()
+
 	return render_to_response('network.html', locals())
 
 def redir(request):

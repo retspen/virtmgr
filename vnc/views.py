@@ -58,6 +58,7 @@ def index(request, host, vname):
       return HttpResponseRedirect('/overview/' + host + '/')
 
    vnc_port = get_vm_vnc()
+   conn.close()
 
    return render_to_response('vnc.html', locals())
 

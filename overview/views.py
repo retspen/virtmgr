@@ -98,6 +98,7 @@ def index(request, host):
 	info = get_info()
 	memusage = get_freemem()
 	cpusage = cpu_usage()
+	conn.close()
 		
 	return render_to_response('overview.html', locals())
 

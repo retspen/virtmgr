@@ -269,6 +269,8 @@ def pool(request, host, pool):
 					size_aloc = "0"	
 				create_volume(img, size_max, size_aloc, format)
 				return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
+
+	conn.close()
 				
 	return render_to_response('storage.html', locals())
 

@@ -311,6 +311,8 @@ def index(request, host, vname):
          return HttpResponseRedirect('/vm/' + host + '/' + vname +'/')
       else:
          return render_to_response('vm.html', locals())
+
+   conn.close()
    
    return render_to_response('vm.html', locals())
 
