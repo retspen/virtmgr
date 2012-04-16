@@ -33,7 +33,6 @@ def index(request, host):
 		   	return conn
 		except:
 			return "error"
-			print "Not connected"
 
 	def get_all_vm():
 		try:
@@ -48,7 +47,6 @@ def index(request, host):
 			return vname
 		except:
 			return "error"
-			print "Get all vm failed"
 	
 	def get_all_stg():
 		try:
@@ -60,7 +58,6 @@ def index(request, host):
 			return storages
 		except:
 			return "error"
-			print "Get all images failed"
 
 	def get_all_net():
 		try:
@@ -79,7 +76,6 @@ def index(request, host):
 			return networks
 		except:
 			return "error"
-			print "Get all networks failed"
 	
 	def get_arch():
 		try:
@@ -101,7 +97,6 @@ def index(request, host):
 			return iso
 		except:
 			return "error"
-			print "Get all iso failed"
 
 	def find_all_img():
 		try:		
@@ -115,7 +110,6 @@ def index(request, host):
 			return disk
 		except:
 			return "error"
-			print "Get all images failed"
 	
 	def get_img_path(vol):
 		try:
@@ -127,7 +121,6 @@ def index(request, host):
 						return vl.path()
 		except:
 			return "error"
-			print "Get img path failed"
 
 	def get_img_format(vol):
 		try:
@@ -141,7 +134,6 @@ def index(request, host):
 						return format
 		except:
 			return "error"
-			print "Get img format failed"
 
 	def get_cpus():
 		try:
@@ -149,7 +141,6 @@ def index(request, host):
 			return info
 		except:
 			return "error"
-			print 'Get info failed'
 
 	def get_emulator():
 		try:
@@ -164,7 +155,6 @@ def index(request, host):
 			return emulator
 		except:
 			return "error"
-			print 'Get emulator failed'
 
 	def get_machine():
 		try:
@@ -173,8 +163,6 @@ def index(request, host):
 			return machine
 		except:
 			return "error"
-			print 'Get info failed'
-
 	
 	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
 		hostcap = conn.getCapabilities()
@@ -275,7 +263,6 @@ def index(request, host):
 	machine = get_machine()
 	addmem = conn.getInfo()[1]
 
-	# Core CPUS
 	cpus = []
 	for cpu in range(1,cores+1):
 		cpus.append(cpu)

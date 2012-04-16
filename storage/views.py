@@ -152,20 +152,21 @@ def pool(request, host, pool):
 		except:
 			return "error"
 
-	def create_volume(img, size_max, size_aloc, format):
+	def create_volume(img, size_max, format):
 		try:
+			size_max = int(size_max) * 1073741824
 			xml = """
 				<volume>
 					<name>%s.img</name>
 					<capacity>%s</capacity>
-					<allocation>%s</allocation>
+					<allocation>0</allocation>
 					<target>
 						<format type='%s'/>
 					</target>
-				</volume>""" % (img, size_max, size_aloc, format)
+				</volume>""" % (img, size_max, format)
 			stg.createXML(xml,0)
-		except libvirt.libvirtError as e:
-			return e
+		except:
+			return "error"
 
 	def create_stg_pool(type_pool, name_pool, path_pool):
 		try:
@@ -187,7 +188,6 @@ def pool(request, host, pool):
 				for name in listvol:
 					vol = stg.storageVolLookupByName(name)
 					xml = vol.XMLDesc(0)
-
 					size = vol.info()[1]
 					format = util.get_xml_path(xml, "/volume/target/format/@type")
 	 				volinfo[name] = size,format
@@ -254,7 +254,6 @@ def pool(request, host, pool):
 		if request.POST.get('vol_add',''):
 			img = request.POST['img']
 			size_max = request.POST['size_max']
-			size_aloc = request.POST['size_aloc']
 			format = request.POST['format']
 			errors = []
 			if not img:
@@ -262,12 +261,7 @@ def pool(request, host, pool):
 			if not size_max:
 				errors.append(u'Введите размер образа')
 			if not errors:
-				size_max = int(size_max) * 1048576
-				if size_aloc != "0":
-					size_aloc = int(size_aloc) * 1048576
-				else:
-					size_aloc = "0"	
-				create_volume(img, size_max, size_aloc, format)
+				create_volume(img, size_max, format)
 				return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
 
 	conn.close()

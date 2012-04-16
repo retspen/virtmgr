@@ -120,17 +120,15 @@
 						<br>
 						<div class="row show-grid">
 							<div class="span3">
-								<p>Название:</p>
-								<p>Maкс. размер:</p>
-								<p>Выдел. размер:</p>
+								<p>Название образа:</p>
+								<p>Размер (ГБ):</p>
 								<p>Формат образа:</p>
 							</div>
 							<div class="span3">
 								<form action="/storage/{{ host }}/{{ pool }}/" method="post">
-									<input type="text" class="input-large" name="img" placeholder="Name" value="">
-									<input type="text" class="input-large" name="size_max" value="1024">
-									<input type="text" class="input-large" name="size_aloc" value="0">
-									<select name="format"> 
+									<input type="text" class="input-medium" name="img" placeholder="Name" value="">
+									<input type="text" class="input-medium" name="size_max" value="1">
+									<select name="format" style="width:160px"> 
 									    <option value="qcow2">qcow2</option>
 									    <option value="raw">raw</option>
 									</select>

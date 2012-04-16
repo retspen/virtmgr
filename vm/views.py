@@ -87,6 +87,7 @@ def index(request, host, vname):
       try:
          xml = dom.XMLDesc(0)
          mem = util.get_xml_path(xml, "/domain/currentMemory")
+         mem = int(mem) * 1024
          return mem
       except:
          return "error"
@@ -231,7 +232,6 @@ def index(request, host, vname):
    state = get_vm_state()
    uuid = get_vm_uuid()
    memory = get_vm_mem()
-   memory = int(memory) * 1024
    cpu =  get_vm_cpu()
    autostart = get_vm_autostart()
    vnc_port = get_vm_vnc()
