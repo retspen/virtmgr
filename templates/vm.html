@@ -2,14 +2,14 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{host}}</h2>
+   		<h2>Хост: {{ host }}</h2>
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{host}}/>Обзор</a></li>
-      <li><a href=/newvm/{{host}}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{host}}/>Хранилище</a></li>
-			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
+			<li><a href=/overview/{{ host }}/>Обзор</a></li>
+      <li><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
+			<li><a href=/storage/{{ host }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
 		</ul>
 	</div>
    </div>
@@ -20,16 +20,16 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-               <li><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+               <li><a href=/newvm/{{ host }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
               {% endif %}
               {% for name, state in all_vm.items %}
                	{% if name == '000x' %}
                 <li>Не подключено</li>
                 {% else %}
                   {% if vname == name %} 
-                  <li class="active"><a href=/vm/{{host}}/{{name}}/><i class="icon-th-large"></i>{{name}}</a></li>
+                  <li class="active"><a href=/vm/{{ host }}/{{ name }}/><i class="icon-th-large"></i>{{name}}</a></li>
                   {% else %}
-                  <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
+                  <li><a href=/vm/{{ host }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
                   {% endif %}
                 {% endif %}
                 {% endfor %}
@@ -44,11 +44,11 @@
               {% for error in errors %}
                 <div class="alert alert-error" style="width:380px">
                   <a class="close" data-dismiss="alert">&times;</a>
-                  {{error}}
+                  {{ error }}
                 </div>
               {% endfor %}
               {% endif %}
-              <form action="/vm/{{host}}/{{vname}}/" method="post">
+              <form action="/vm/{{ host }}/{{ vname }}/" method="post">
               {% if state = 5 %}
                 <input class="btn btn-primary" type="submit" name="start" value="Запуск">
               {% endif %}
@@ -60,7 +60,7 @@
                 <input class="btn btn-primary" type="submit" name="shutdown" value="Выключить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="destroy" value="Выкл. принудительно" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{host}}/{{vname}}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
+                <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{ host }}/{{ vname }}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
               <div class="row">
@@ -89,13 +89,13 @@
                   {% if state = 1 %}<p><strong>{{ vnc_port }}</strong> - для iSSH</p>{% endif %}
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
-                    <form action="/vm/{{host}}/{{vname}}/" method="post">
+                    <form action="/vm/{{ host }}/{{ vname }}/" method="post">
                       {% if cdrom %}
                       <input class="btn btn-primary" type="submit" name="disconnect" value="Отключить" onclick="return confirm('Вы уверены?')">
                       {% else %}
                       <select name="iso_img">
                       {% for iso in isos %}
-                          <option value="{{iso}}">{{iso}}</option>
+                          <option value="{{ iso }}">{{ iso }}</option>
                       {% endfor %} 
                       </select><br>
                       <input class="btn btn-primary" type="submit" name="connect" value="Подключить"> 
@@ -104,7 +104,7 @@
                   </p>
                 </div>
               </div>
-              <form action="/vm/{{host}}/{{vname}}/" method="post">
+              <form action="/vm/{{ host }}/{{ vname }}/" method="post">
               {% if state != 1 %}
                 <input class="btn btn-primary" type="submit" name="undefine" value="Удалить" onclick="return confirm('Вы уверены?')">
               {% endif %}

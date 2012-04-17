@@ -19,11 +19,11 @@
             <tbody>
                 {% for name, info in host_info.items %}
                 <tr>
-                  <td>{{name}}</td>
-                  <td>{{info.1}}</td>
-                  <td>{{info.2}}</td>
+                  <td>{{ name }}</td>
+                  <td>{{ info.1 }}</td>
+                  <td>{{ info.2 }}</td>
                   <td>{% if info.4 == 1 %}<font color="green">доступен</font>{% else %}<font color="red">не доступен</font>{% endif %}</td>
-                  <td>{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{name}}/'">Управление</button>{% else %}<a href="#" class="btn btn-primary disabled">Управление</a>{% endif %}
+                  <td>{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{ name }}/'">Управление</button>{% else %}<a href="#" class="btn btn-primary disabled">Управление</a>{% endif %}
                   </td>
                   <td>
                     <form action="/dashboard/" method="post">
@@ -40,7 +40,7 @@
           {% for error in errors %}
             <div class="alert alert-error" style="width:275px">
               <a class="close" data-dismiss="alert">&times;</a>
-              {{error}}
+              {{ error }}
             </div>
           {% endfor %}
         {% endif %}
@@ -83,5 +83,4 @@
             </div>
           </div>
    </div>
-
 {% endblock %}

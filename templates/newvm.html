@@ -2,14 +2,14 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{host}}</h2>
+   		<h2>Хост: {{ host }}</h2>
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{host}}/>Обзор</a></li>
-      <li class="active"><a href=/newvm/{{host}}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{host}}/>Хранилище</a></li>
-			<li><a href=/network/{{host}}/>Виртуальные сети</a></li>
+			<li><a href=/overview/{{ host }}/>Обзор</a></li>
+      <li class="active"><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
+			<li><a href=/storage/{{ host }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
 		</ul>
 	</div>
    </div>
@@ -20,13 +20,13 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-              <li class="active"><a href=/newvm/{{host}}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+              <li class="active"><a href=/newvm/{{ host }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
               {% endif %}
               {% for name, state in all_vm.items %}
                 {% if name == '000x' %}
                 <li>Не подключено</li>
                 {% else %}
-                <li><a href=/vm/{{host}}/{{name}}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{name}}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{name}}</font>{% endif %}</a></li>
+                <li><a href=/vm/{{ host }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
                 {% endif %}
               {% endfor %}
             </ul>
@@ -55,7 +55,7 @@
                     <p>Сетевой мост:</p>
                 </div>
                 <div class="span3">
-                    <form action="/newvm/{{host}}/" method="post">
+                    <form action="/newvm/{{ host }}/" method="post">
                         <input class="input-large" type="text" name="name" placeholder="Name" value="">
                         <select name="arch">
                             <option value="i686">i686</option>
@@ -86,13 +86,13 @@
                         </select>
                         <select name="cpus">
                         {% for cpu in cpus %}
-                            <option value="{{cpu}}">{{cpu}}</option>
+                            <option value="{{ cpu }}">{{ cpu }}</option>
                         {% endfor %}
                         </select>
                         <select name="iso">
                         {% if all_iso != "error" %}
                         {% for name in all_iso %}
-                            <option value="{{name}}">{{name}}</option>
+                            <option value="{{ name }}">{{ name }}</option>
                         {% endfor %}
                         {% endif %}
                             <option value="">Без образа</option>
@@ -100,7 +100,7 @@
                         <select name="img">
                         {% if all_iso != "error" %}
                         {% for name in all_img %}
-                            <option value="{{name}}">{{name}}</option>
+                            <option value="{{ name }}">{{ name }}</option>
                         {% endfor %}
                         {% else %}
                             <option value="">Отсутствует</option>
@@ -108,7 +108,7 @@
                         </select>
                         <select name="bridge">
                         {% for net in bridge %}
-                            <option value="{{net}}">{{net}}</option>
+                            <option value="{{ net }}">{{net}}</option>
                         {% endfor %}
                             <option value="br0">br0 (если настроен)</option>
                             <option value="br1">br1 (если настроен)</option>

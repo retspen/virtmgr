@@ -2,14 +2,14 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{host}}</h2>
+   		<h2>Хост: {{ host }}</h2>
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{host}}/>Обзор</a></li>
-      <li><a href=/newvm/{{host}}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{host}}/>Хранилище</a></li>
-			<li class="active"><a href=/network/{{host}}/>Виртуальные сети</a></li>
+			<li><a href=/overview/{{ host }}/>Обзор</a></li>
+      <li><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
+			<li><a href=/storage/{{ host }}/>Хранилище</a></li>
+			<li class="active"><a href=/network/{{ host }}/>Виртуальные сети</a></li>
 		</ul>
 	</div>
    </div>
@@ -21,14 +21,14 @@
               <li class="nav-header">Сетвой пул</li>
               {% for name, status in pools.items %}
               {% if pool == name %}
-                <li class="active"><a href=/network/{{host}}/{{name}}/><i class="icon-folder-open"></i> {{name}}</a></li>
+                <li class="active"><a href=/network/{{ host }}/{{ name }}/><i class="icon-folder-open"></i> {{name}}</a></li>
                 {% else %}
-                <li><a href=/network/{{host}}/{{name}}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{name}}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{name}}</font>{% endif %}</a></li>
+                <li><a href=/network/{{ host }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
                 {% endif %}
               {% endfor %}
               <br>
-              <form action="/network/{{host}}/{{pool}}/" method="post">
-                <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/network/{{host}}/new_net_pool/'" />
+              <form action="/network/{{ host }}/{{ pool }}/" method="post">
+                <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/network/{{ host }}/new_net_pool/'" />
               {% if status = 0 %}
                 <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
                 <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
@@ -62,19 +62,19 @@
         <div class="row">
         <div class="span3">
           <p>Сеть:</p>
+          <p>Тип:</p>
           <p>DHCP:</p>
           {% if dhcprange %}
           <p>Начало:</p>
           <p>Конец:</p> {% endif %}
-          <p>Тип:</p>
-        </div>
+        </div>e
         <div class="span3">
           <p>{{ network }}</p>
+          <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
           <p>{% if dhcprange %}<font color="green">включен</font>{% else %}<font color="red">не включен</font>{% endif %}</p>
           {% for dhcp in dhcprange %} 
-            <p>{{dhcp}}</p>
+            <p>{{ dhcp }}</p>
           {% endfor %}
-          <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
         </div>
         </div>
            </div>
