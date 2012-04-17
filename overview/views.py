@@ -85,6 +85,9 @@ def index(request, host):
 			        prev_idle = idle
 			        if num is 0: 
 		        		time.sleep(1)
+		        	else:
+		        		if diff_usage < 0:
+		        			diff_usage == 0
 			return diff_usage
 		except:
 			return "error"		
