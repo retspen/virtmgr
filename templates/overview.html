@@ -42,6 +42,14 @@
 			{% if info %}
 			<h2>Обзор</h2>
 			<hr>
+  		    {% if errors %}
+			    {% for error in errors %}
+			      <div class="alert alert-error">
+			      	<a class="close" data-dismiss="alert">&times;</a>
+			    	{{ error }}
+			      </div>
+			    {% endfor %}
+			{% endif %}
 			<div class="row">
 				<div class="span3">
 					<p>Подключение:</p>

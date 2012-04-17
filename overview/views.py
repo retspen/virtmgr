@@ -1,4 +1,5 @@
-import libvirt, re, time
+# -*- coding: utf-8 -*-
+import libvirt, re, time, socket
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -27,11 +28,6 @@ def index(request, host):
 	   	auth = [flags, creds, None]
 		uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
 	   	try:
-	   		import socket
-	   		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	   		s.settimeout(1)
-	   		s.connect((kvm_host.ipaddr, 16509))
-	   		s.close()
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except:
@@ -91,14 +87,16 @@ def index(request, host):
 		        		time.sleep(1)
 			return diff_usage
 		except:
-			return "error"
-		
+			return "error"		
+
+	error = []
 	conn = vm_conn()
 	all_vm = get_all_vm()
-	info = get_info()
-	memusage = get_freemem()
-	cpusage = cpu_usage()
-	conn.close()
+	if conn != "error":
+		info = get_info()
+		memusage = get_freemem()
+		cpusage = cpu_usage()
+		conn.close()
 		
 	return render_to_response('overview.html', locals())
 

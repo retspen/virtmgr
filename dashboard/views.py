@@ -9,6 +9,18 @@ def index(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login')
 
+	def creds(credentials, user_data):
+		for credential in credentials:
+			if credential[0] == libvirt.VIR_CRED_AUTHNAME:
+				credential[4] = kvm_host.login
+				if len(credential[4]) == 0:
+					credential[4] = credential[3]
+			elif credential[0] == libvirt.VIR_CRED_PASSPHRASE:
+				credential[4] = kvm_host.passwd
+			else:
+				return -1
+		return 0
+
 	def get_hosts_status():
 		kvm_host = Host.objects.filter(user=request.user.id)
 		name_ipddr = {}
@@ -18,6 +30,11 @@ def index(request):
 				s.settimeout(1)
 				s.connect((host.ipaddr, 16509))
 				s.close()
+				flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+				auth = [flags, creds, None]
+				uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+				conn = libvirt.openAuth(uri, auth, 0)
+				conn.getInfo()
 				status = 1
 			except:
 				status = 2
