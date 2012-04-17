@@ -61,16 +61,16 @@
       <h4>Конфигурация IPv4:</h4><br>
         <div class="row">
         <div class="span3">
-          <p>Сеть:</p>
           <p>Тип:</p>
+          <p>Сеть:</p>
           <p>DHCP:</p>
           {% if dhcprange %}
           <p>Начало:</p>
           <p>Конец:</p> {% endif %}
-        </div>e
+        </div>
         <div class="span3">
-          <p>{{ network }}</p>
           <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
+          <p>{{ network }}</p>
           <p>{% if dhcprange %}<font color="green">включен</font>{% else %}<font color="red">не включен</font>{% endif %}</p>
           {% for dhcp in dhcprange %} 
             <p>{{ dhcp }}</p>
