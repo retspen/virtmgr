@@ -63,10 +63,11 @@ def index(request, host):
 	def get_freemem():
 		try:
 			allmem = conn.getInfo()[1] * 1048576
-			freemem = conn.getFreeMemory()
+			freemem = conn.getMemoryStats(-1,0)
+			freemem = (freemem.values()[0] + freemem.values()[2] + freemem.values()[3]) * 1024
 			percent = (freemem * 100) / allmem
 			percent = 100 - percent
-			memusage = allmem - freemem
+			memusage = (allmem - freemem)
 			return memusage, percent
 		except:
 			return "error"
