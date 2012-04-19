@@ -48,13 +48,14 @@ def index(request):
 			ipaddr = request.POST.get('ipaddr','')
 			login = request.POST.get('sshusr','')
 			passw = request.POST.get('passw','')
-			have_host = Host.objects.filter(user=request.user, hostname=name)
-			have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 			simbol = re.search('[^a-zA-Z0-9]+', name)
 			if simbol:
-				errors.append(u'Имя хоста не должно содержать символы')
-			if have_host or have_ip:
-				errors.append(u'Такой хост уже подключен')
+				errors.append(u'Имя хоста не должно содержать символы и русские буквы')
+			else:
+				have_host = Host.objects.filter(user=request.user, hostname=name)
+				have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
+				if have_host or have_ip:
+					errors.append(u'Такой хост уже подключен')
 			if not name:
 				errors.append(u'Не было введено имя хоста')
 			if not ipaddr:

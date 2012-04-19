@@ -51,7 +51,7 @@ def index(request, host):
 	def get_info():
 		try:
 			info = []
-			info.append(conn.getURI())
+			info.append(conn.getHostname())
 			info.append(conn.getInfo()[0])
 			info.append(conn.getInfo()[1] * 1048576)
 			info.append(conn.getInfo()[2])
