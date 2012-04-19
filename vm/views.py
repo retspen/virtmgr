@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import libvirt
+import time
 import virtinst.util as util
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -92,7 +93,7 @@ def index(request, host, vname):
       except:
          return "error"
 
-   def get_vm_cpu():
+   def get_vm_core():
       try:
          xml = dom.XMLDesc(0)
          cpu = util.get_xml_path(xml, "/domain/vcpu")
@@ -220,6 +221,34 @@ def index(request, host, vname):
       except:
          return "error"
 
+   def vm_cpu_usage():
+      try:
+         nbcore = conn.getInfo()[2]
+         cpu_use_ago = dom.info()[4]
+         time.sleep(1) 
+         cpu_use_now = dom.info()[4]
+         diff_usage = cpu_use_now - cpu_use_ago
+         cpu_usage = 100 * diff_usage / (1 * nbcore * 10**9L)
+         return cpu_usage
+      except:
+         return "error"
+
+   def get_memusage():
+      try:
+         allmem = conn.getInfo()[1] * 1048576
+         dom_mem = dom.info()[1] * 1024
+         percent = (dom_mem * 100) / allmem
+         return allmem, percent
+      except:
+         return "error"
+
+   def get_all_core():
+      try:
+         allcore = conn.getInfo()[2]
+         return allcore
+      except:
+         return "error"
+
    conn = vm_conn(host_ip, creds)
    errors = []
 
@@ -232,7 +261,7 @@ def index(request, host, vname):
    state = get_vm_state()
    uuid = get_vm_uuid()
    memory = get_vm_mem()
-   cpu =  get_vm_cpu()
+   core =  get_vm_core()
    autostart = get_vm_autostart()
    vnc_port = get_vm_vnc()
    hdd = get_vm_hdd()
@@ -240,6 +269,9 @@ def index(request, host, vname):
    cdrom = get_vm_cdrom()
    storages = get_storages(conn)
    isos = find_all_iso()
+   all_core = get_all_core()
+   cpu_usage = vm_cpu_usage()
+   mem_usage = get_memusage()
 
    # Post form html
    if request.method == 'POST':
