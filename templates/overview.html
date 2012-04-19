@@ -29,7 +29,7 @@
 			  {% endif %}
 			  {% for name, state in all_vm.items %}
 				  {% if name == '000x' %}
-				  <li>Не подключено</li>
+				  <li>Ошибка подключения</li>
 				  {% else %}
 				  <li><a href=/vm/{{ host }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
 				  {% endif %}
@@ -86,7 +86,9 @@
 				</div>
 			</div>
 			{% else %}
-			<h3>Невозможно подключиться!</h3>
+			<h3>Ошибка подключения к гипервизору</h3>
+			<br>
+			<h4><font color="red">Проверьте правильно ли Вы ввели KVM логин или KVM пароль.</font></h4>
 			{% endif %}
            </div>
           </div>
