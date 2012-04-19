@@ -66,56 +66,35 @@
               <div class="row">
                 <div class="span2">
                   <p>Название:</p>
+                  <p>Статус:</p>
                   <p>Ядра:</p>
                   <p style="height:34px">Загрузка ЦПУ:</p>
                   <p>Память:</p>
-                  <p style="height:38px">Используется:</p>
-                  <p>Статус:</p>
+                  <p style="height:36px">Используется:</p>
                   <p style="height:36px">Автозапуск:</p>
                   <p>HDD:</p>
                   <p>CDROM:</p>
                 </div>
-                <div class="span5">
+                <div class="span4">
                   <p><strong>{{ vname }}</strong></p>
-                  <p>выделено {{ core }} из {{ all_core }}</p>
+                  <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
+                  <p style="height:30px">выделено {{ core }} из {{ all_core }}</p>
                   <p>
-                    <div class="row">
-                      <div class="span3">
-                        <div class="progress progress-danger progress-striped active">
-                          <div class="bar" style="width: {{ cpu_usage }}%;"></div>
-                        </div>
-                      </div>
-                      <div class="span1">
-                        {{ cpu_usage }}%
-                      </div>
+                    <div class="progress progress-danger progress-striped active">
+                      <div class="bar" style="width: {{ cpu_usage }}%;"><font color="black">{{ cpu_usage }}%</font></div>
                     </div>
                   </p>
-                  <p>выделено {{ memory|filesizeformat }} из {{ mem_usage.0|filesizeformat }}</p>
+                  <p style="height:38px">выделено {{ memory|filesizeformat }} из {{ mem_usage.0|filesizeformat }}</p>
                   <p>{% if active == 1 %}
-                    <div class="row">
-                      <div class="span3">
                         <div class="progress progress-warning progress-striped active">
-                          <div class="bar" style="width: {{ mem_usage.1 }}%;"></div> 
-                      </div>
-                    </div>
-                      <div class="span1">
-                        {{ mem_usage.1 }}%
-                      </div>
-                    </div>
-                    {% else %}
-                    <div class="row">
-                      <div class="span3">
-                        <div class="progress progress-warning progress-striped active">
-                          <div class="bar" style="width: 0%;"></div>
+                          <div class="bar" style="width: {{ mem_usage.1 }}%;"><font color="black">{{ mem_usage.1 }}%</font></div> 
                         </div>
-                      </div>
-                      <div class="span1">
-                        0%
-                      </div>
-                    </div>
+                    {% else %}
+                        <div class="progress progress-warning progress-striped active">
+                          <div class="bar" style="width: 0%;"><font color="black">0%</font></div>
+                        </div>
                     {% endif %}
                   </p>
-                  <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
                   <p><form action="/vm/{{host}}/{{vname}}/" method="post">
                       {% if autostart == 1 %}
                         <input class="btn btn-primary" type="submit" name="auto_off" value="Выключить" onclick="return confirm('Вы уверены?')">

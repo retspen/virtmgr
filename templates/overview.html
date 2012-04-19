@@ -55,20 +55,20 @@
 					<p>Имя хоста:</p>
 					<p>Архитектура:</p>
 					<p>Память:</p>
-					<p>Занято:</p>
+					<p>Используется:</p>
 					<p>Ядра:</p>
 					<p>Загрузка ЦПУ:</p>
 				</div>
 				<div class="span4">
 					<p><strong>{{ info.0 }}</strong></p>
 					<p>{{ info.1 }}</p>
-					<p style="height:32px">{{ memusage.1 }}% ({{ memusage.0|filesizeformat }} из {{ info.2|filesizeformat }})</p>
+					<p style="height:32px">{{ info.2|filesizeformat }} / {{ memusage.0|filesizeformat }} (используется)</p>
 					<div class="progress progress-warning progress-striped active">
-					  <div class="bar" style="width: {{ memusage.1 }}%;"></div>
+					  <div class="bar" style="width: {{ memusage.1 }}%;"><font color="black">{{ memusage.1 }}%</font></div>
 					</div>
-					<p>{{ cpusage }}% ({{ info.3 }} x {{ info.4 }} Mhz)</p>
+					<p>{{ info.3 }} х {{ info.4 }} Mhz (частота)</p>
 					<div class="progress progress-danger progress-striped active">
-					  <div class="bar" style="width: {{ cpusage }}%;"></div>
+					  <div class="bar" style="width: {{ cpusage }}%;"><font color="black">{{ cpusage }}%</font></div>
 					</div>
 				</div>
 			</div>
