@@ -60,7 +60,7 @@
                 <input class="btn btn-primary" type="submit" name="shutdown" value="Выключить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="destroy" value="Выкл. принудительно" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="button" value="VNC" onclick="window.open('/vnc/{{ host }}/{{ vname }}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
+                <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host }}/{{ vname }}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
               <div class="row">
@@ -69,10 +69,9 @@
                   <p>Ядра:</p>
                   <p style="height:34px">Загрузка ЦПУ:</p>
                   <p>Память:</p>
-                  <p style="height:40px">Используется:</p>
+                  <p style="height:38px">Используется:</p>
                   <p>Статус:</p>
                   <p style="height:36px">Автозапуск:</p>
-                  {% if state = 1 %}<p>VNC порт:</p>{% endif %}
                   <p>HDD:</p>
                   <p>CDROM:</p>
                 </div>
@@ -82,7 +81,7 @@
                   <p>
                     <div class="row">
                       <div class="span3">
-                        <div style="width:230px" class="progress progress-danger progress-striped active">
+                        <div class="progress progress-danger progress-striped active">
                           <div class="bar" style="width: {{ cpu_usage }}%;"></div>
                         </div>
                       </div>
@@ -95,7 +94,7 @@
                   <p>{% if active == 1 %}
                     <div class="row">
                       <div class="span3">
-                        <div style="width:230px" class="progress progress-warning progress-striped active">
+                        <div class="progress progress-warning progress-striped active">
                           <div class="bar" style="width: {{ mem_usage.1 }}%;"></div> 
                       </div>
                     </div>
@@ -106,7 +105,7 @@
                     {% else %}
                     <div class="row">
                       <div class="span3">
-                        <div style="width:230px" class="progress progress-warning progress-striped active">
+                        <div class="progress progress-warning progress-striped active">
                           <div class="bar" style="width: 0%;"></div>
                         </div>
                       </div>
@@ -123,8 +122,8 @@
                       {% else %}
                         <input class="btn btn-primary" type="submit" name="auto_on" value="Включить" onclick="return confirm('Вы уверены?')"> 
                       {% endif %}
-                    </form></p>
-                  {% if state = 1 %}<p><strong>{{ vnc_port }}</strong> - для iSSH</p>{% endif %}
+                    </form>
+                  </p>
                   <p>{{ hdd }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom }} {% endif %}
                     <form action="/vm/{{ host }}/{{ vname }}/" method="post">

@@ -279,6 +279,9 @@ def index(request, host):
 		hdd = get_img_path(img)
 		cdrom = get_img_path(iso)
 		hdd_frmt = get_img_format(img)
+		simbol = re.search('[^a-zA-Z0-9]+', name)
+		if simbol:
+			errors.append(u'Название виртуальной машины не должно содержать символы и русские буквы')
 		if not img:
 			errors.append(u'Образы HDD для виртуальной машины отсутствуют')
 		if not name:
