@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block meta %}
+  {% if state = 1 %}
     <meta http-equiv="refresh" content="20">
+  {% endif %}
 {% endblock %}
 {% block content %}
   <div class="row well" style="height:33px">
