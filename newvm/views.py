@@ -5,12 +5,12 @@ from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
 
-def index(request, host):
+def index(request, host_id):
 
    	if not request.user.is_authenticated():
 	   	return HttpResponseRedirect('/login')
 
-	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -279,7 +279,9 @@ def index(request, host):
 		hdd = get_img_path(img)
 		cdrom = get_img_path(iso)
 		hdd_frmt = get_img_format(img)
-		simbol = re.search('[^a-zA-Z0-9]+', name)
+		simbol = re.search('[^a-zA-Z0-9\_]+', name)
+		if len(name) > 20:
+				errors.append(u'Название виртуальной машины не должно превышать 20 символов')
 		if simbol:
 			errors.append(u'Название виртуальной машины не должно содержать символы и русские буквы')
 		if not img:
@@ -288,7 +290,7 @@ def index(request, host):
 			errors.append(u'Введите название виртуальной машины')
 		if not errors:
 			add_vm(name, setmem, cpus, archvm, machine, emul, hdd_frmt, hdd, cdrom, netbr)
-			return HttpResponseRedirect('/vm/' + host + '/' + name + '/')
+			return HttpResponseRedirect('/vm/%s/%s/' % (host_id, name))
 
 	conn.close()
 

@@ -49,12 +49,12 @@ def get_dom(conn, vname):
    except:
       return "error"
 
-def index(request, host, vname):
+def index(request, host_id, vname):
 
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
 
-   kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+   kvm_host = Host.objects.get(user=request.user.id, id=host_id)
    host_ip = kvm_host.ipaddr
 
    def creds(credentials, user_data):
@@ -112,18 +112,23 @@ def index(request, host, vname):
    def get_vm_hdd():
       try:
          xml = dom.XMLDesc(0)
-         hdd = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
-         #hdd = re.sub('\/.*\/','', hdd)
-         return hdd
+         hdd_path = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
+         image = re.sub('\/.*\/','', hdd_path)
+         size = dom.blockInfo(hdd_path, 0)[0]
+         return image, size
       except:
          return "error"
 
    def get_vm_cdrom():
       try:
          xml = dom.XMLDesc(0)
-         cdrom = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
-         #cdrom = re.sub('\/.*\/','', cdrom)
-         return cdrom
+         cdr_path = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
+         if cdr_path:
+            image = re.sub('\/.*\/','', cdr_path)
+            size = dom.blockInfo(cdr_path, 0)[0]
+            return image, cdr_path, size
+         else:
+            return cdr_path
       except:
          return "error"
 
@@ -184,7 +189,7 @@ def index(request, host, vname):
    def umnt_iso_off():
       try:
          xml = dom.XMLDesc(0)
-         cdrom = get_vm_cdrom()
+         cdrom = get_vm_cdrom()[1]
          xmldom = xml.replace("<source file='%s'/>\n" % cdrom,"")
          conn.defineXML(xmldom)
       except:
@@ -211,7 +216,7 @@ def index(request, host, vname):
 
    def page_refresh():
       try:
-         return HttpResponseRedirect('/vm/' + host + '/' + vname + '/' )
+         return HttpResponseRedirect('/vm/' + host_id + '/' + vname + '/' )
       except:
          return "error"
 
@@ -336,11 +341,11 @@ def index(request, host, vname):
       if request.POST.get('undefine',''):
          try:
             dom.undefine()
-            return HttpResponseRedirect('/overview/%s/' % host)
+            return HttpResponseRedirect('/overview/%s/' % (host_id))
          except:
             return "error"
       if not errors:
-         return HttpResponseRedirect('/vm/' + host + '/' + vname +'/')
+         return HttpResponseRedirect('/vm/%s/%s/' % (host_id, vname))
       else:
          return render_to_response('vm.html', locals())
 
@@ -348,7 +353,7 @@ def index(request, host, vname):
    
    return render_to_response('vm.html', locals())
 
-def redir_two(request, host):
+def redir_two(request, host_id):
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
    else:

@@ -48,7 +48,9 @@ def index(request):
 			ipaddr = request.POST.get('ipaddr','')
 			login = request.POST.get('sshusr','')
 			passw = request.POST.get('passw','')
-			simbol = re.search('[^a-zA-Z0-9]+', name)
+			simbol = re.search('[^a-zA-Z0-9\_]+', name)
+			if len(name) > 20:
+				errors.append(u'Имя хоста не должно быть больше чем 20 символов')
 			if simbol:
 				errors.append(u'Имя хоста не должно содержать символы и русские буквы')
 			else:

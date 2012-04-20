@@ -4,12 +4,12 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
-def index(request, host):
+def index(request, host_id):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
-	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def creds(credentials, user_data):
 		for credential in credentials:

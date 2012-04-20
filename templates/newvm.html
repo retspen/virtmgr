@@ -2,14 +2,14 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{ host }}</h2>
+   		<h2>Хост: {{ kvm_host.hostname }}</h2>
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host }}/>Обзор</a></li>
-      <li class="active"><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
+			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
+      <li class="active"><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
+			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
 		</ul>
 	</div>
    </div>
@@ -20,13 +20,13 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-              <li class="active"><a href=/newvm/{{ host }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+              <li class="active"><a href=/newvm/{{ host_id }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
               {% endif %}
               {% for name, state in all_vm.items %}
                 {% if name == '000x' %}
                 <li>Не подключено</li>
                 {% else %}
-                <li><a href=/vm/{{ host }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
+                <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
                 {% endif %}
               {% endfor %}
             </ul>
@@ -55,7 +55,7 @@
                     <p>Сетевой мост:</p>
                 </div>
                 <div class="span3">
-                    <form action="/newvm/{{ host }}/" method="post">
+                    <form action="/newvm/{{ host_id }}/" method="post">
                         <input class="input-large" type="text" name="name" placeholder="Name" value="">
                         <select name="arch">
                             <option value="i686">i686</option>

@@ -2,14 +2,14 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{ host }}</h2>
+   		<h2>Хост: {{ kvm_host.hostname }}</h2>
    	</div>
    	<div class="span6">
     	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host }}/>Обзор</a></li>
-			<li><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
-			<li class="active"><a href=/storage/{{ host }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
+			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
+			<li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
+			<li class="active"><a href=/storage/{{ host_id }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
 		</ul>
 	</div>
    </div>
@@ -21,14 +21,14 @@
               <li class="nav-header">Пул хранилища</li>
               {% for name, status in pools.items %}
               {% if pool == name %}
-                <li class="active"><a href=/storage/{{ host }}/{{ name }}/><i class="icon-folder-open"></i> {{ name }}</a></li>
+                <li class="active"><a href=/storage/{{ host_id }}/{{ name }}/><i class="icon-folder-open"></i> {{ name }}</a></li>
                 {% else %}
-                <li><a href=/storage/{{ host }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
+                <li><a href=/storage/{{ host_id }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
                 {% endif %}
 			  {% endfor %}
 			  <br>
-			  <form action="/storage/{{ host }}/{{ pool }}/" method="post">
-			  <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/storage/{{ host }}/new_stg_pool/'" />
+			  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+			  <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/storage/{{ host_id }}/new_stg_pool/'" />
 			  {% if status = 0 %}
 			  <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
 			  <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
@@ -58,7 +58,7 @@
 					<p>Тип пула:</p>
 				</div>
 				<div class="span3">
-					<form action="/storage/{{ host }}/{{ pool }}/" method="post">
+					<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 						<input type="text" class="input-meddle" name="name_pool" value="">
 						<input type="text" class="input-meddle" name="path_pool" value="/var/lib/libvirt/images/">
 						<select name="type_pool"> 

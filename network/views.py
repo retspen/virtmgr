@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import libvirt
+import libvirt, re
 import virtinst.util as util
 from virtmgr.network.IPy import IP
 from django.shortcuts import render_to_response
@@ -31,12 +31,12 @@ def vm_conn(host_ip, creds):
 	except:
 		return "error"
 
-def index(request, host):
+def index(request, host_id):
 	
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 	
-	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
@@ -55,18 +55,18 @@ def index(request, host):
 	networks = get_networks(conn)
 
 	if networks == None:
-		return HttpResponseRedirect('/overview/' + host + '/')
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
 	elif len(networks) == 0:
-		return HttpResponseRedirect('/network/' + host + '/new_net_pool')
+		return HttpResponseRedirect('/network/%s/new_net_pool/' % (host_id))
 	else:
-		return HttpResponseRedirect('/network/' + host + '/' + networks.keys()[0] + '/')
+		return HttpResponseRedirect('/network/%s/%s/' % (host_id, networks.keys()[0]))
 
-def pool(request, host, pool):
+def pool(request, host_id, pool):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
-	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
@@ -187,7 +187,7 @@ def pool(request, host, pool):
 	conn = vm_conn(host_ip, creds)
 
 	if conn == None:
-		return HttpResponseRedirect('/overview/' + host + '/')
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
 	pools = get_networks(conn)
 	errors = []
@@ -198,6 +198,11 @@ def pool(request, host, pool):
 			net_addr = request.POST.get('net_addr','')
 			forward = request.POST.get('forward','')
 			dhcp = request.POST.get('dhcp','')
+			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
+			if len(name_pool) > 20:
+				errors.append(u'Название пула не должно быть больше чем 20 символов')
+			if simbol:
+				errors.append(u'Название пула не должно содержать символы и русские буквы')
 			if not name_pool:
 				errors.append(u'Введите имя пула')
 			if not net_addr:
@@ -216,7 +221,7 @@ def pool(request, host, pool):
 					if pool_start() is "error":
 						errors.append(u'Пул создан, но при запуске пула возникла ошибка, возможно указана существующая сеть')
 					else:
-						return HttpResponseRedirect('/network/' + host + '/' + name_pool + '/')
+						return HttpResponseRedirect('/network/%s/%s/' % (host_id, name_pool))
 					if errors:
 						return render_to_response('network_new.html', locals())
 		return render_to_response('network_new.html', locals())
@@ -241,8 +246,8 @@ def pool(request, host, pool):
 				errors.append(u'Возможно пул уже запущен')
 		if request.POST.get('del_pool',''):
 			pool_delete()
-			return HttpResponseRedirect('/network/' + host + '/')
-		return HttpResponseRedirect('/network/' + host + '/' + pool + '/')
+			return HttpResponseRedirect('/network/%s/' % (host_id))
+		return HttpResponseRedirect('/network/%s/%s/' % (host_id, pool))
 
 	conn.close()
 

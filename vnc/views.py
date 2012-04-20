@@ -14,14 +14,13 @@ def vm_conn(host_ip, creds):
    except:
       print "Not connected"
 
-def index(request, host, vname):
+def index(request, host_id, vname):
 
    if not request.user.is_authenticated():
       return HttpResponseRedirect('/')
 
    usr_id = request.user.id
-   kvm_host = Host.objects.get(user=usr_id,hostname=host)
-   usr_name = request.user
+   kvm_host = Host.objects.get(user=usr_id, id=host_id)
    host_ip = kvm_host.ipaddr
 
    def creds(credentials, user_data):
@@ -55,21 +54,21 @@ def index(request, host, vname):
    dom = get_dom(vname)
 
    if conn == None:
-      return HttpResponseRedirect('/overview/' + host + '/')
+      return HttpResponseRedirect('/overview/%s/' % (host_id))
 
    vnc_port = get_vm_vnc()
    conn.close()
 
    return render_to_response('vnc.html', locals())
 
-def redir_two(request, host):
+def redir_two(request, host_id):
    if not request.user.is_authenticated():
-      return HttpResponseRedirect('/')
+      return HttpResponseRedirect('/user/login/')
    else:
       return HttpResponseRedirect('/dashboard/')
 
 def redir_one(request):
    if not request.user.is_authenticated():
-      return HttpResponseRedirect('/')
+      return HttpResponseRedirect('/user/login/')
    else:
       return HttpResponseRedirect('/dashboard/')

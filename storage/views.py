@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import libvirt
+import libvirt, re
 import virtinst.util as util
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -30,12 +30,12 @@ def vm_conn(host_ip, creds):
 	except:
 		return "error"
 
-def index(request, host):
+def index(request, host_id):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
-	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
@@ -54,18 +54,18 @@ def index(request, host):
 	storages = get_storages(conn)
 
 	if storages == None:
-		return HttpResponseRedirect('/overview/' + host + '/')
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
 	elif len(storages) == 0:
-		return HttpResponseRedirect('/storage/' + host + '/new_stg_pool/')
+		return HttpResponseRedirect('/storage/%s/new_stg_pool/' % (host_id))
 	else:
-		return HttpResponseRedirect('/storage/' + host + '/' + storages.keys()[0] + '/')
+		return HttpResponseRedirect('/storage/%s/%s/' % (host_id, storages.keys()[0]))
 
-def pool(request, host, pool):
+def pool(request, host_id, pool):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
-	kvm_host = Host.objects.get(user=request.user.id,hostname=host)
+	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
@@ -199,7 +199,7 @@ def pool(request, host, pool):
 	errors = []
 
 	if conn == None:
-		return HttpResponseRedirect('/overview/' + host + '/')
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
 	pools = get_storages(conn)
 
@@ -208,6 +208,11 @@ def pool(request, host, pool):
 			name_pool = request.POST.get('name_pool','')
 			path_pool = request.POST.get('path_pool','')
 			type_pool = request.POST.get('type_pool','')
+			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
+			if len(name_pool) > 20:
+				errors.append(u'Название пула не должно быть больше чем 20 символов')
+			if simbol:
+				errors.append(u'Название пула не должно содержать символы и русские буквы')
 			if not name_pool:
 				errors.append(u'Введите имя пула')
 			if not path_pool:
@@ -221,7 +226,7 @@ def pool(request, host, pool):
 					if pool_start() is "error":
 						errors.append(u'Пул создан, но при запуске пула возникла ошибка, возможно указан не существующий путь')
 					else:
-						return HttpResponseRedirect('/storage/' + host + '/' + name_pool + '/')
+						return HttpResponseRedirect('/storage/%s/%s/' % (host_id, name_pool))
 				if errors:
 					return render_to_response('storage_new.html', locals())
 		return render_to_response('storage_new.html', locals())
@@ -240,17 +245,17 @@ def pool(request, host, pool):
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
 			pool_stop()
-			return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
+			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('start_pool',''):
 			pool_start()
-			return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
+			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('del_pool',''):
 			pool_delete()
-			return HttpResponseRedirect('/storage/' + host + '/')
+			return HttpResponseRedirect('/storage/%s/' % (host_id))
 		if request.POST.get('vol_del',''):
 			img = request.POST['img']
 			delete_volume(img)
-			return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
+			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('vol_add',''):
 			img = request.POST['img']
 			size_max = request.POST['size_max']
@@ -262,7 +267,7 @@ def pool(request, host, pool):
 				errors.append(u'Введите размер образа')
 			if not errors:
 				create_volume(img, size_max, format)
-				return HttpResponseRedirect('/storage/' + host + '/' + pool + '/')
+				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 
 	conn.close()
 				

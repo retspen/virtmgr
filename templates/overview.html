@@ -5,15 +5,15 @@
 {% block content %}
   <div class="row well" style="height:33px">
    	<div class="span4">
-   		<h2>Хост: {{ host }}</h2>
+   		<h2>Хост: {{ kvm_host.hostname }}</h2>
    	</div>
    	<div class="span6">
 	{% if info %}
     	<ul class="nav nav-pills">
-			<li class="active"><a href=/overview/{{ host }}/>Обзор</a></li>
-			<li><a href=/newvm/{{ host }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host }}/>Виртуальные сети</a></li>
+			<li class="active"><a href=/overview/{{ host_id }}/>Обзор</a></li>
+			<li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
+			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
+			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
 		</ul>
 	{% endif %}
 	</div>
@@ -25,13 +25,13 @@
             <ul class="nav nav-list">
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-			   <li><a href=/newvm/{{ host }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+			   <li><a href=/newvm/{{ host_id }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
 			  {% endif %}
 			  {% for name, state in all_vm.items %}
 				  {% if name == '000x' %}
 				  <li>Ошибка подключения</li>
 				  {% else %}
-				  <li><a href=/vm/{{ host }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
+				  <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
 				  {% endif %}
 			  {% endfor %}
             </ul>
