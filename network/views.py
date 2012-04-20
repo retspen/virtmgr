@@ -200,7 +200,7 @@ def pool(request, host_id, pool):
 			dhcp = request.POST.get('dhcp','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
-				errors.append(u'Название пула не должно быть больше чем 20 символов')
+				errors.append(u'Название пула не должно превышать 20 символов')
 			if simbol:
 				errors.append(u'Название пула не должно содержать символы и русские буквы')
 			if not name_pool:
