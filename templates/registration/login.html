@@ -11,20 +11,12 @@
         <div class="row show-grid">
           <div class="span4 offset4">
             <h2>Войти</h2><br>
-            <form class="well" action="/user/login/" method="post">
-             {% for field in form %}
-             {% if field.errors %}
-             <font color="red">{{ field.errors }}</font>
-             {% endif %}
-             {% endfor %}
-              <label><strong>Логин</strong></label>
-              <input type="text" class="input-large" name="username" id="Username" placeholder="Логин">
-              <label><strong>Пароль</strong></label>
-              <input type="password" class="input-large" name="password" id="Passwd" placeholder="Пароль">
+            <form class="well" action="/user/login/" method="post"> 
+              {{ form }}
               <br><br>
               <p class="pull-right"><a href="/user/password/reset">Забыли пароль?</a></p>
               <input name="next" id="next" type="hidden" value="/dashboard/">
-              <input type="submit" class="btn btn-primary" name="signin" id="signin" value="Войти">
+              <input type="submit" class="btn btn-primary" value="Войти">
             </form>
           </div>
         </div>

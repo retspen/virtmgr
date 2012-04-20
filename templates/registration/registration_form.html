@@ -12,21 +12,9 @@
           <div class="span4 offset4">
             <h2>Регистрация</h2><br>
             <form class="well" id="gaia_loginform" action="" method="post">
-             {% for field in form %}
-             {% if field.errors %}
-             <font color="red">{{ field.errors }}</font>
-             {% endif %}
-             {% endfor %}
-              <label><strong>Логин</strong></label>
-              <input class="input-large" name="username" id="Username" type="text"  placeholder="Логин">
-              <label><strong>Email</strong></label>
-              <input class="input-large" name="email" id="Email" type="text" placeholder="Почта">
-              <label><strong>Пароль</strong></label>
-              <input type="password" class="input-large" name="password1" id="Passwd" placeholder="Пароль">
-              <label><strong>Подтвердить пароль</strong></label>
-              <input type="password" class="input-large" name="password2" id="Passwd" placeholder="Пароль">
+              {{ form }}
               <br><br>
-              <input type="submit" class="btn btn-primary" name="signin" id="signin" value="Регистрация">
+              <input type="submit" class="btn btn-primary" value="Регистрация">
             </form>
           </div>
         </div>

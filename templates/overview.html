@@ -40,7 +40,7 @@
 		<div class="span9">
 			<div class="hero-unit">
 			{% if info %}
-			<h2>Обзор</h2>
+   			<h2>Обзор</h2>
 			<hr>
   		    {% if errors %}
 			    {% for error in errors %}
@@ -62,7 +62,7 @@
 				<div class="span4">
 					<p><strong>{{ info.0 }}</strong></p>
 					<p>{{ info.1 }}</p>
-					<p style="height:32px">{{ info.2|filesizeformat }} / {{ memusage.0|filesizeformat }} (используется)</p>
+					<p style="height:32px">{{ info.2|filesizeformat }} / {{ memusage.0|filesizeformat }} (занято)</p>
 					<div class="progress progress-warning progress-striped active">
 					  <div class="bar" style="width: {{ memusage.1 }}%;"><font color="black">{{ memusage.1 }}%</font></div>
 					</div>
