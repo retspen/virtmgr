@@ -53,7 +53,7 @@ def index(request):
 			if len(name) > 20:
 				errors.append(u'Имя хоста не должно превышать 20 символов')
 			if ipsimbol:
-				errors.append(u'IP адрес должне содержать только цифры разделенные "."')
+				errors.append(u'IP адрес должен содержать только цифры разделенные "."')
 			if simbol:
 				errors.append(u'Имя хоста не должно содержать символы и русские буквы')
 			else:

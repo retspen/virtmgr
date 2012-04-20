@@ -60,7 +60,7 @@
             {% else %}
               <a class="btn btn-primary pull-right" href="/user/login/"><strong>Войти</strong></a>
             {% endif %}
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
@@ -87,6 +87,7 @@
     <script src="/media/js/bootstrap-collapse.js"></script>
     <script src="/media/js/bootstrap-carousel.js"></script>
     <script src="/media/js/bootstrap-typeahead.js"></script>
+    {% block javascript %}{% endblock %}
     <!-- Yandex.Metrika counter -->
   	<script type="text/javascript">
   	(function (d, w, c) {
