@@ -55,7 +55,6 @@ def index(request, host_id, vname):
       return HttpResponseRedirect('/')
 
    kvm_host = Host.objects.get(user=request.user.id, id=host_id)
-   host_ip = kvm_host.ipaddr
 
    def creds(credentials, user_data):
       for credential in credentials:
@@ -253,8 +252,27 @@ def index(request, host_id, vname):
          return allcore
       except:
          return "error"
+   
+   def vm_create_snapshot():
+      try:
+         xml = """<domainsnapshot>\n
+                     <name>%d</name>\n
+                     <state>shutoff</state>\n
+                     <creationTime>%d</creationTime>\n""" % (time.time(), time.time())
+         xml += dom.XMLDesc(0)
+         xml += """<active>0</active>\n
+                  </domainsnapshot>"""
+         dom.snapshotCreateXML(xml,0)
+      except:
+         return "error"
 
-   conn = vm_conn(host_ip, creds)
+   def get_snapshot_num():
+      try:
+         return dom.snapshotNum(0)
+      except:
+         return "error"
+
+   conn = vm_conn(kvm_host.ipaddr, creds)
    errors = []
 
    if conn == None:
@@ -277,6 +295,7 @@ def index(request, host_id, vname):
    all_core = get_all_core()
    cpu_usage = vm_cpu_usage()
    mem_usage = get_memusage()
+   num_snapshot = get_snapshot_num()
 
    # Post form html
    if request.method == 'POST':
@@ -316,6 +335,11 @@ def index(request, host_id, vname):
             dom.create()
          except:
             errors.append(u'Ошибка: возникли проблемы при перезагрузке')
+      if request.POST.get('snapshot',''):
+         try:
+            vm_create_snapshot()
+         except:
+            errors.append(u'Ошибка: при создании снапшота')
       if request.POST.get('auto_on',''):
          try:
             dom.setAutostart(1)
@@ -355,12 +379,12 @@ def index(request, host_id, vname):
 
 def redir_two(request, host_id):
    if not request.user.is_authenticated():
-      return HttpResponseRedirect('/')
+      return HttpResponseRedirect('/user/login')
    else:
       return HttpResponseRedirect('/dashboard')
 
 def redir_one(request):
    if not request.user.is_authenticated():
-      return HttpResponseRedirect('/')
+      return HttpResponseRedirect('/user/login')
    else:
       return HttpResponseRedirect('/dashboard/')

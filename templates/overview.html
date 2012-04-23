@@ -1,47 +1,34 @@
 {% extends "base.html" %}
-{% block meta %}
-    <meta http-equiv="refresh" content="10">
-{% endblock %}
 {% block content %}
-  <div class="row well" style="height:33px">
-   	<div class="span4">
-   		<h2>Хост: {{ kvm_host.hostname }}</h2>
-   	</div>
-   	<div class="span6">
-	{% if info %}
-    	<ul class="nav nav-pills">
-			<li class="active"><a href=/overview/{{ host_id }}/>Обзор</a></li>
-			<li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
-		</ul>
-	{% endif %}
-	</div>
-  </div>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
+              <li class="nav-header">Главное меню</li>
+              	<li><a href=/dashboard/><i class="icon-home"></i>Центр управления</a></li>
+              	<li class="active"><a href=/overview/{{ host_id }}/><i class="icon-info-sign icon-white"></i>Cервер {{ kvm_host.hostname }}</a></li>
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-			   <li><a href=/newvm/{{ host_id }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+			   <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
 			  {% endif %}
 			  {% for name, state in all_vm.items %}
-				  {% if name == '000x' %}
-				  <li>Ошибка подключения</li>
-				  {% else %}
 				  <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
-				  {% endif %}
 			  {% endfor %}
+			  <li class="nav-header"></i>Настройки сервера</li>
+			  	<li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
+			  	<li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>Хранилище</a></li>
+			  	<li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>Виртуальные сети</a></li>
+			  	<li><a href=/snapshot/{{ host_id }}/><i class="icon-download-alt"></i>Снапшоты</a></li>
+			  <li class="nav-header">Настройки сервера</li>
+			  	<li><a href=/logs/{{ host_id }}/><i class="icon-pencil"></i>Логи</a></li>
             </ul>
           </div>
         </div>
-		<div class="span9">
-			{% if info %}
-			<div class="well row show-grid">
-   			<h2>Обзор</h2>
-			<hr>
+		<div class="span8 well">
+			<div class="page-header">
+   				<h2>Обзор сервера</h2>
+   			</div>
   		    {% if errors %}
 			    {% for error in errors %}
 			      <div class="alert alert-error">
@@ -50,34 +37,29 @@
 			      </div>
 			    {% endfor %}
 			{% endif %}
-			<div class="row">
+			<div class="row" style="height:180px">
 				<div class="span3">
-					<p>Имя хоста:</p>
-					<p>Архитектура:</p>
-					<p>Память:</p>
-					<p>Используется:</p>
-					<p>Ядра:</p>
-					<p>Загрузка ЦПУ:</p>
+					<p>Название серера</p>
+					<p>Процессор(ы)</p>
+					<p>Загрузка процессора</p>
+					<p>Память ({{ mem_usage.0|filesizeformat }} / {{ mem_usage.1|filesizeformat }})</p>
+					<p>Тип подключения</p>
+					<p>Версия libvirt</p>
 				</div>
 				<div class="span4">
-					<p><strong>{{ info.0 }}</strong></p>
-					<p>{{ info.1 }}</p>
-					<p style="height:32px">{{ info.2|filesizeformat }} / {{ memusage.0|filesizeformat }} (занято)</p>
-					<div class="progress progress-warning progress-striped active">
-					  <div class="bar" style="width: {{ memusage.1 }}%;"><font color="black">{{ memusage.1 }}%</font></div>
-					</div>
-					<p>{{ info.3 }} х {{ info.4 }} Mhz (частота)</p>
-					<div class="progress progress-danger progress-striped active">
-					  <div class="bar" style="width: {{ cpusage }}%;"><font color="black">{{ cpusage }}%</font></div>
-					</div>
+					<p><strong>{{ host_info.0 }}</strong></p>
+					<p>{{ host_info.2 }} x {{ host_info.3 }}</p>
+					<div class="progress progress-danger progress-striped active" style="margin-bottom: 9px;">
+        				<div class="bar" style="width: {{ cpu_usage }}%"><font color="black">{{ cpu_usage }}%</font></div>
+      				</div>
+					<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">
+        				<div class="bar" style="width: {{ mem_usage.2 }}%"><font color="black">{{ mem_usage.2 }}%</font></div>
+      				</div>
+					<p>{{ conn_type }}</p>
+					<p>{{ lib_virt_ver }}</p>
+					<p>{{ sys_info }}</p> 				
 				</div>
 			</div>
-			{% else %}
-			<h3>Ошибка подключения к гипервизору</h3>
-			<br>
-			<h4><font color="red">Проверьте правильно ли Вы ввели KVM логин или KVM пароль.</font></h4>
-			{% endif %}
            </div>
           </div>
-  </div>
 {% endblock %}

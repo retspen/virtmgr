@@ -37,7 +37,6 @@ def index(request, host_id):
 		return HttpResponseRedirect('/')
 	
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
-	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -51,7 +50,7 @@ def index(request, host_id):
 				return -1
 		return 0
 
-	conn = vm_conn(host_ip, creds)
+	conn = vm_conn(kvm_host.ipaddr, creds)
 	networks = get_networks(conn)
 
 	if networks == None:
@@ -67,7 +66,6 @@ def pool(request, host_id, pool):
 		return HttpResponseRedirect('/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
-	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -184,7 +182,7 @@ def pool(request, host_id, pool):
 		except:
 			return "error"
 
-	conn = vm_conn(host_ip, creds)
+	conn = vm_conn(kvm_host.ipaddr, creds)
 
 	if conn == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))

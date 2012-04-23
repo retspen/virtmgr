@@ -1,147 +1,139 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="row well" style="height:33px">
-   	<div class="span4">
-   		<h2>Хост: {{ kvm_host.hostname }}</h2>
-   	</div>
-   	<div class="span6">
-    	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
-			<li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
-			<li class="active"><a href=/storage/{{ host_id }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
-		</ul>
-	</div>
-   </div>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Пул хранилища</li>
-              {% for name, status in pools.items %}
-  			    {% if pool == name %}
-                <li class="active"><a href=/storage/{{ host_id }}/{{ name }}/><i class="icon-folder-open"></i> {{ name }}</a></li>
-                {% else %}
-                <li><a href=/storage/{{ host_id }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
-                {% endif %}
-			  {% endfor %}
-			  <br>
-			  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-			  <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/storage/{{ host_id }}/new_stg_pool/'" />
-			  {% if status = 0 %}
-			  <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
-			  <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
-			  {% else %}
-			  <input type="submit" class="btn btn-primary" name="stop_pool" value="Стоп" onclick="return confirm('Вы уверены?')">
-			  {% endif %}
-			  </form>
+              <li class="nav-header">Главное меню</li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Обзор сервера</a></li>
+                <li class="nav-header">Пул хранилища</li>
+                	<li><a href="/storage/{{ host_id }}/new_stg_pool/"><i class="icon-plus"></i>Создать пул</a></li>
+	              {% for name, status in pools.items %}
+	  			    {% if pool == name %}
+	                <li class="active"><a href="/storage/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
+	                {% else %}
+	                <li><a href="/storage/{{ host_id }}/{{ name }}/">{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
+	                {% endif %}
+				  {% endfor %}
+                <li class="nav-header"></i>Настройки сервера</li>
+                  <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+                  <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
+                  <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
+                <li class="nav-header">Настройки сервера</li>
+                  <li><a href="/logs/{{ host_id }}/"><i class="icon-pencil"></i>Логи</a></li>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-		<div class="span9">
-			<div class="hero-unit">
-			{% if info %}
-				<h2>Хранилище</h2>
-				<hr>
-				<div class="row">
-					<div class="span3">
-						<p><strong>{{ pool }}</strong>:</p>
-						<p>Тип пула:</p>
-						<p>Путь:</p>
-						<p>Состояние:</p>
-						<p>Автозапуск:</p>
-					</div>
-					<div class="span3">
-						<p>Занято {{ info.2|filesizeformat }} из {{ info.3|filesizeformat }}</p>
-						<p>{% if stype == "dir" %} Filesystem Directory {% else %} No know {% endif %}</p>
-						<p>{{ spath }}</p>
-						<p>{% if status == 1 %}<font color="green">активен</font>{% else %}<font color="red">не активен</font>{% endif %}</p>
-						<p>{% if start == 1 %}<font color="green">включен</font>{% else %}<font color="red">выключен</font>{% endif %}</p>
-					</div>
-				</div>
-				{% if volinfo %}
-				<hr>
-				<h2>Образы:</h2>
-				<hr>
-				<table class="table table-condensed">
-		        <thead>
-		          <tr>
-		            <th>Название</th>
-		            <th>Размер</th>
-		            <th>Формат</th>
-		            <th>Действие</th>
-		          </tr>
-		        </thead>
-		        <tbody>
-					{% for name, info in volinfo.items %}
-					<tr>
-						<td>{{ name }}</td><td>{{ info.0|filesizeformat }}</td><td>{{ info.1 }}</td>
-						<td>
-						<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-							<input type="hidden" name="img" value="{{ name }}">
-							<input type="submit" class="btn btn-primary" name="vol_del" value="Удалить" onclick="return confirm('Вы уверены?')">
-						</form>
-						</td>
-					</tr>
-					{% endfor %}
-		        </tbody>
-		        </table>
-		        <hr>
-		        {% else %}
-			        <hr>
-			        <h4>Какие либо образы отсутствуют</h4><br>
-				{% endif %}
-				{% if status = 1 %}
-				    {% if errors %}
-				    {% for error in errors %}
-				      <div class="alert alert-error">
-				      	<a class="close" data-dismiss="alert">&times;</a>
-				      	{{ error }}
-				      </div>
-				    {% endfor %}
-				    {% endif %}
-					<script type="text/javascript">
-					function toggleview(itm) 
-					{ 
-					   var itmx = document.getElementById(itm); 
-					   if (itmx.style.display == "none") 
-					   { 
-					      itmx.style.display = "block"; 
-					   } 
-					   else 
-					   { 
-					      itmx.style.display = "none"; 
-					   } 
-					} 
-					</script>
-					<button class="btn btn-primary" onclick="toggleview('q1')">Создать</button>
-					<div id='q1' style="display:none">
-						<br>
-						<div class="row show-grid">
-							<div class="span3">
-								<p>Название образа:</p>
-								<p>Размер (ГБ):</p>
-								<p>Формат образа:</p>
-							</div>
-							<div class="span3">
-								<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-									<input type="text" class="input-medium" name="img" placeholder="Name" value="">
-									<input type="text" class="input-medium" name="size_max" value="8">
-									<select name="format" style="width:160px"> 
-									    <option value="qcow2">qcow2</option>
-									    <option value="raw">raw</option>
-									</select>
-									<input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
-								</form>
-							</div>
-						</div>
-					</div>
-				{% endif %}
-			{% else %}
-			<h3>Подключение отсутствует!</h3>
-			{% endif %}
-           </div>
           </div>
         </div>
+    <div class="span8 well">
+      <div class="page-header">
+          <h2>Хранилище</h2>
+        </div>
+ 		<div class="row">
+			<div class="span3">
+				<p>Название пула</p>
+				<p>Размер ({{ info.3|filesizeformat }} / {{ info.2|filesizeformat }})</p>
+				<p>Путь пула</p>
+				<p>Состояние</p>
+			</div>
+			<div class="span3">
+				<p><strong>{{ pool }}</strong></p>
+				<div class="progress progress-success progress-striped active" style="margin-bottom: 9px; width:200px;">
+        				<div class="bar" style="width: {{ info.4 }}%"><font color="black">{{ info.4 }}%</font></div>
+        		</div
+				<p>{{ spath }}</p>
+				<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+					{% if status = 0 %}
+					<input type="submit" class="btn btn-primary" name="start_pool" value="Включить">
+					{% else %}
+					<input type="submit" class="btn btn-primary" name="stop_pool" value="Выключить" onclick="return confirm('Вы уверены?')">
+					{% endif %}
+				</form>
+			</div>
+		</div>
+		{% if status = 0 %}
+        <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+		</form>
+		{% endif %}
+	  {% if volinfo %}
+	  <hr>
+      <div class="page-header">
+          <h2>Образы</h2>
+        </div>
+	  <table class="table table-condensed">
+		  <thead>
+	    	<tr>
+	    		<th>Название</th>
+		    	<th>Размер</th>
+		    	<th>Формат</th>
+		    	<th>Действие</th>
+		    </tr>
+		   </thead>
+		   <tbody>
+			   {% for name, info in volinfo.items %}
+				<tr>
+				  <td>{{ name }}</td><td>{{ info.0|filesizeformat }}</td><td>{{ info.1 }}</td>
+				  <td>
+					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+					  	<input type="hidden" name="img" value="{{ name }}">
+						<input type="submit" class="btn btn-primary" name="vol_del" value="Удалить" onclick="return confirm('Вы уверены?')">
+					  </form>
+				  </td>
+				</tr>
+				{% endfor %}
+		    </tbody>
+      </table>
+      {% else %}
+       <hr>
+       <h4>Какие либо образы отсутствуют или пул не активен</h4><br>
+       	</div>
+   	   </div>
+       {% endif %}
+	   {% if status = 1 %}
+	   {% if errors %}
+		{% for error in errors %}
+	     <div class="alert alert-error">
+		   	<a class="close" data-dismiss="alert">&times;</a>
+		   	{{ error }}
+		 </div>
+		{% endfor %}
+		{% endif %}
+		<script type="text/javascript">
+			function toggleview(itm) { 
+				var itmx = document.getElementById(itm); 
+				if (itmx.style.display == "none") { 
+					itmx.style.display = "block"; 
+				} else { 
+					itmx.style.display = "none"; 
+				} 
+			} 
+		</script>
+	  <button class="btn btn-primary" onclick="toggleview('q1')">Новый образ</button>
+	  <div id='q1' style="display:none">
+		  <br>
+	      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+	        <fieldset>
+	          <div class="control-group">
+	          <label class="control-label">Название образа</label>
+	            <div class="controls">
+	            	<input type="text" class="input-medium" name="img" placeholder="Name" value="">
+	            </div>
+	           </div>
+	          <div class="control-group">
+	          <label class="control-label">Размер (ГБ)</label>
+	            <div class="controls">
+	            	<input type="text" class="input-medium" name="size_max" value="8">
+	            </div>
+	          </div>
+	          <div class="controls">
+	          	<input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
+			  </div>
+			</fieldset>
+		  </form>
+	   </div>
+	 </div>
+   </div>
+{% endif %}
 {% endblock %}

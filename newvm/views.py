@@ -8,7 +8,7 @@ from virtmgr.model.models import *
 def index(request, host_id):
 
    	if not request.user.is_authenticated():
-	   	return HttpResponseRedirect('/login')
+	   	return HttpResponseRedirect('/user/login')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 

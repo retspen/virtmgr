@@ -1,123 +1,141 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="row well" style="height:33px">
-   	<div class="span4">
-   		<h2>Хост: {{ kvm_host.hostname }}</h2>
-   	</div>
-   	<div class="span6">
-    	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
-      <li class="active"><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
-		</ul>
-	</div>
-   </div>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Виртуальные машины</li>
-              {% if not all_vm %}
-              <li class="active"><a href=/newvm/{{ host_id }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
-              {% endif %}
-              {% for name, state in all_vm.items %}
-                {% if name == '000x' %}
-                <li>Не подключено</li>
-                {% else %}
-                <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
+              <li class="nav-header">Главное меню</li>
+                <li><a href=/dashboard/><i class="icon-home"></i>Центр управления</a></li>
+                <li><a href=/overview/{{ host_id }}/><i class="icon-info-sign"></i>Обзор сервера</a></li>
+                <li class="nav-header">Виртуальные машины</li>
+                {% if not all_vm %}
+                  <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
                 {% endif %}
-              {% endfor %}
+                {% for name, state in all_vm.items %}
+                  <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
+                {% endfor %}
+                <li class="nav-header"></i>Настройки сервера</li>
+                  <li class="active"><a href=/newvm/{{ host_id }}/><i class="icon-plus icon-white"></i>Создать ВМ</a></li>
+                  <li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>Хранилище</a></li>
+                  <li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>Виртуальные сети</a></li>
+                <li class="nav-header">Настройки сервера</li>
+                  <li><a href=/logs/{{ host_id }}/><i class="icon-pencil"></i>Логи</a></li>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-            <div class="hero-unit">
-          <h2>Новая виртуальная машина</h2>
-          <hr>
-         {% if errors %}
-          {% for error in errors %}
-            <div class="alert alert-error" style="width:410px">
-              <a class="close" data-dismiss="alert">&times;</a>
-              {{error}}
-            </div>
-          {% endfor %}
-         {% endif %}
-            <div class="row show-grid">
-                <div class="span3">
-                    <p>Название:</p>
-                    <p>Архитектура:</p>
-                    <p>Память:</p>
-                    <p>ЦПУ ядра:</p>
-                    <p>ISO образ:</p>
-                    <p>HDD образ:</p>
-                    <p>Сетевой мост:</p>
-                </div>
-                <div class="span3">
-                    <form action="/newvm/{{ host_id }}/" method="post">
-                        <input class="input-large" type="text" name="name" placeholder="Name" value="">
-                        <select name="arch">
-                            <option value="i686">i686</option>
-                            {% if arch == 'x86_64' %}
-                            <option value="x86_64">x86_64</option>
-                            {% endif %}
-                        </select>
-                        <select name="memory">
-                            <option value="256">256 Mb</option>
-                        {% if addmem > 512 %}
-                            <option value="512">512 Mb</option>
-                        {% endif %}
-                        {% if addmem > 768 %}
-                            <option value="768">768 Mb</option>
-                        {% endif %}
-                        {% if addmem > 1024 %}
-                            <option value="1024">1024 Mb</option>
-                        {% endif %}
-                        {% if addmem > 2048 %}
-                            <option value="2048">2048 Mb</option>
-                        {% endif %}
-                        {% if addmem > 4096 %}
-                            <option value="4096">4096 Mb</option>
-                        {% endif %}
-                        {% if addmem > 8192 %}
-                            <option value="8192">8192 Mb</option>
-                        {% endif %}
-                        </select>
-                        <select name="cpus">
-                        {% for cpu in cpus %}
-                            <option value="{{ cpu }}">{{ cpu }}</option>
-                        {% endfor %}
-                        </select>
-                        <select name="iso">
-                        {% if all_iso != "error" %}
-                        {% for name in all_iso %}
-                            <option value="{{ name }}">{{ name }}</option>
-                        {% endfor %}
-                        {% endif %}
-                            <option value="">Без образа</option>
-                        </select>
-                        <select name="img">
-                        {% if all_iso != "error" %}
-                        {% for name in all_img %}
-                            <option value="{{ name }}">{{ name }}</option>
-                        {% endfor %}
-                        {% else %}
-                            <option value="">Отсутствует</option>
-                        {% endif %}
-                        </select>
-                        <select name="bridge">
-                        {% for net in bridge %}
-                            <option value="{{ net }}">{{net}}</option>
-                        {% endfor %}
-                            <option value="br0">br0 (если настроен)</option>
-                            <option value="br1">br1 (если настроен)</option>
-                        </select>
-                        <input class="btn btn-primary" type="submit" name="create" value="Создать">
-                    </form>
-                </div>
-            </div>
-           </div>
           </div>
         </div>
+    <div class="span8 well">
+      <div class="page-header">
+          <h2>Новая виртуальная машина</h2>
+        </div>
+          {% if errors %}
+          {% for error in errors %}
+            <div class="alert alert-error">
+              <a class="close" data-dismiss="alert">&times;</a>
+            {{ error }}
+            </div>
+          {% endfor %}
+      {% endif %}
+      <form class="form-horizontal" action="/newvm/{{ host_id }}/" method="post">
+        <fieldset>
+          <div class="control-group">
+          <label class="control-label">Название</label>
+            <div class="controls">
+              <input class="input-large focused" type="text" name="name" placeholder="Name" value="">
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Архитектура</label>
+            <div class="controls">
+              <select name="arch">
+                  <option value="i686">i686</option>
+                  {% if arch == 'x86_64' %}
+                    <option value="x86_64">x86_64</option>
+                  {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Память</label>
+            <div class="controls">
+              <select name="memory">
+                <option value="256">256 Mb</option>
+              {% if addmem > 512 %}
+                <option value="512">512 Mb</option>
+              {% endif %}
+              {% if addmem > 768 %}
+                <option value="768">768 Mb</option>
+              {% endif %}
+              {% if addmem > 1024 %}
+                <option value="1024">1024 Mb</option>
+              {% endif %}
+              {% if addmem > 2048 %}
+                <option value="2048">2048 Mb</option>
+              {% endif %}
+              {% if addmem > 4096 %}
+                <option value="4096">4096 Mb</option>
+              {% endif %}
+              {% if addmem > 8192 %}
+                <option value="8192">8192 Mb</option>
+              {% endif %}
+              </select>
+            </div>
+          </div>     
+          <div class="control-group">
+          <label class="control-label">Ядра процессора</label>
+            <div class="controls">
+              <select name="cpus">
+              {% for cpu in cpus %}
+                <option value="{{ cpu }}">{{ cpu }}</option>
+              {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Образ СD</label>
+            <div class="controls">
+              <select name="iso">
+              {% if all_iso != "error" %}
+              {% for name in all_iso %}
+                <option value="{{ name }}">{{ name }}</option>
+              {% endfor %}
+              {% endif %}
+                <option value="">Без образа</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Образ HDD</label>
+            <div class="controls">
+              <select name="img">
+              {% if all_iso != "error" %}
+              {% for name in all_img %}
+                <option value="{{ name }}">{{ name }}</option>
+              {% endfor %}
+              {% else %}
+                <option value="">Отсутствует</option>
+              {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Образ HDD</label>
+            <div class="controls">
+              <select name="bridge">
+              {% for net in bridge %}
+                <option value="{{ net }}">{{net}}</option>
+              {% endfor %}
+                <option value="br0">br0 (если настроен)</option>
+                <option value="br1">br1 (если настроен)</option>
+              </select>
+            </div>
+          </div>
+          <div class="controls">
+            <input class="btn btn-primary" type="submit" name="create" value="Создать">
+          </div>
+          </fieldset>
+        </form>
+        </div>
+      </div>
+    </div>
 {% endblock %}

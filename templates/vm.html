@@ -1,115 +1,95 @@
 {% extends "base.html" %}
-{% block meta %}
-  {% if state = 1 %}
-    <meta http-equiv="refresh" content="20">
-  {% endif %}
-{% endblock %}
 {% block content %}
-  <div class="row well" style="height:33px">
-   	<div class="span4">
-   		<h2>Хост: {{ kvm_host.hostname }}</h2>
-   	</div>
-   	<div class="span6">
-    	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
-      <li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
-			<li><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
-		</ul>
-	</div>
-   </div>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
+              <li class="nav-header">Главное меню</li>
+                <li><a href=/dashboard/><i class="icon-home"></i>Центр управления</a></li>
+                <li><a href=/overview/{{ host_id }}/><i class="icon-info-sign"></i>Обзор сервера</a></li>
               <li class="nav-header">Виртуальные машины</li>
               {% if not all_vm %}
-               <li><a href=/newvm/{{ host_id }}/><i class="icon-th-large"></i>Создать ВМ</a></li>
+               <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
               {% endif %}
               {% for name, state in all_vm.items %}
-               	{% if name == '000x' %}
-                <li>Не подключено</li>
+              {% if vname == name %} 
+                <li class="active"><a href=/vm/{{ host_id }}/{{ name }}/><i class="icon-th-large icon-white"></i>{{name}}</a></li>
                 {% else %}
-                  {% if vname == name %} 
-                  <li class="active"><a href=/vm/{{ host_id }}/{{ name }}/><i class="icon-th-large"></i>{{name}}</a></li>
-                  {% else %}
-                  <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
-                  {% endif %}
+                <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
                 {% endif %}
-                {% endfor %}
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-            <div class="hero-unit">
-              <h2>Управление виртуальной машиной</h2>
-              <hr>
-              {% if errors %}
-              {% for error in errors %}
-                <div class="alert alert-error" style="width:380px">
-                  <a class="close" data-dismiss="alert">&times;</a>
-                  {{ error }}
-                </div>
               {% endfor %}
-              {% endif %}
+            <li class="nav-header"></i>Настройки сервера</li>
+              <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
+              <li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>Хранилище</a></li>
+              <li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>Виртуальные сети</a></li>
+            <li class="nav-header">Настройки сервера</li>
+              <li><a href=/logs/{{ host_id }}/><i class="icon-pencil"></i>Логи</a></li>
+            </ul>
+          </div>
+        </div>
+    <div class="span8 well">
+      <div class="page-header">
+          <h2>Управление виртуальной машиной</h2>
+        </div>
+          {% if errors %}
+          {% for error in errors %}
+            <div class="alert alert-error">
+              <a class="close" data-dismiss="alert">&times;</a>
+            {{ error }}
+            </div>
+          {% endfor %}
+      {% endif %}
+      <div class="row">
+      	<div class="span8">
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
               {% if state = 5 %}
                 <input class="btn btn-primary" type="submit" name="start" value="Запуск">
+                <input class="btn btn-primary" type="submit" name="snapshot" value="Снапшот">
               {% endif %}
               {% if state = 3 %}
                 <input class="btn btn-primary" type="submit" name="resume" value="Возобновить">
               {% endif %}
               {% if state = 1 %}
                 <input class="btn btn-primary" type="submit" name="suspend" value="Приостановить" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="shutdown" value="Выключить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="submit" name="destroy" value="Выкл. принудительно" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">
                 <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
-              <div class="row">
+              </div>
                 <div class="span2">
-                  <p>Название:</p>
-                  <p>Статус:</p>
-                  <p>Ядра:</p>
-                  <p style="height:34px">Загрузка ЦПУ:</p>
-                  <p>Память:</p>
-                  <p style="height:36px">Используется:</p>
-                  <p style="height:36px">Автозапуск:</p>
-                  <p>Образ HDD:</p>
-                  <p>Образ CD:</p>
+                  <p>Название</p>
+                  <p>Статус</p>
+                  <p>Ядра</p>
+                  <p>Загрузка ЦПУ</p>
+                  <p>Память</p>
+                  <p style="height:22px">Используется</p>
+                  <p style="height:34px">Автозапуск</p>
+                  <p>Образ HDD</p>
+                  <p>Образ CD</p>
                 </div>
                 <div class="span4">
                   <p><strong>{{ vname }}</strong></p>
                   <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
-                  <p style="height:30px">выделено {{ core }} из {{ all_core }}</p>
-                  <p>
-                    <div class="progress progress-danger progress-striped active">
+                  <p>выделено {{ core }} из {{ all_core }}</p>
+                    <div class="progress progress-danger progress-striped active" style="margin-bottom: 9px; width:220px;">
                       <div class="bar" style="width: {{ cpu_usage }}%;"><font color="black">{{ cpu_usage }}%</font></div>
                     </div>
-                  </p>
-                  <p style="height:38px">выделено {{ memory|filesizeformat }} из {{ mem_usage.0|filesizeformat }}</p>
-                  <p>{% if active == 1 %}
-                        <div class="progress progress-warning progress-striped active">
-                          <div class="bar" style="width: {{ mem_usage.1 }}%;"><font color="black">{{ mem_usage.1 }}%</font></div> 
-                        </div>
-                    {% else %}
-                        <div class="progress progress-warning progress-striped active">
-                          <div class="bar" style="width: 0%;"><font color="black">0%</font></div>
-                        </div>
-                    {% endif %}
-                  </p>
-                  <p><form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
+                  <p>выделено {{ memory|filesizeformat }} из {{ mem_usage.0|filesizeformat }}</p>
+                    <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:220px;">
+                        <div class="bar" style="width: {% if state == 1 %} {{ mem_usage.1 }}%; {% else %} 0%; {% endif %}"><font color="black">{% if state == 1 %} {{ mem_usage.1 }}% {% else %} 0% {% endif %}</font></div> 
+                    </div>
+                    <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                       {% if autostart == 1 %}
                         <input class="btn btn-primary" type="submit" name="auto_off" value="Выключить" onclick="return confirm('Вы уверены?')">
                       {% else %}
                         <input class="btn btn-primary" type="submit" name="auto_on" value="Включить" onclick="return confirm('Вы уверены?')"> 
                       {% endif %}
                     </form>
-                  </p>
                   <p>{{ hdd.0 }} | {{ hdd.1|filesizeformat }}</p>
-                  <p>{% if cdrom == None %} {% else %} {{ cdrom.0 }} | {{ cdrom.2|filesizeformat }} {% endif %}
+                  <p>{% if cdrom == None %} {% else %} {{ cdrom.0 }} | {{ cdrom.2|filesizeformat }} {% endif %}</p>
                     <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                       {% if cdrom %}
                       <input class="btn btn-primary" type="submit" name="disconnect" value="Отключить" onclick="return confirm('Вы уверены?')">
@@ -125,12 +105,15 @@
                   </p>
                 </div>
               </div>
-              <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
+            {% if num_snapshot = 0 %}
               {% if state = 5 %}
+              <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                 <input class="btn btn-primary" type="submit" name="undefine" value="Удалить" onclick="return confirm('Вы уверены?')">
-              {% endif %}
               </form>
+              {% endif %}
+            {% else %}
+            <p><strong>Для того чтобы удалить виртуальную машину, удалите ее снапшоты</strong></p>
+            {% endif %}
             </div>
           </div>
-        </div>
 {% endblock %}

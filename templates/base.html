@@ -9,7 +9,7 @@
     <meta name="description" content="Web Virtual Manager Machine" />
     <meta name="keywords" content="web kvm, web libvirt, web virt-manager, web virt manager, kvm, libvirt, libvirt web interface, libvirt web frontend, libvirt web admin, libvirt web management, virt-manager, kvm web interface, kvm web panel, kvm web panel, kvm web manager, kvm web console" />
     <meta name="author" content="Anatoliy Guskov">
-    {% block meta %}{% endblock %}
+
     <link href="/media/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -47,8 +47,6 @@
             </ul>
             {% if request.user.is_authenticated %}
               <ul class="nav pull-right">
-                <li><a href="/dashboard/">Dashboard</a></li>
-                <li class="divider-vertical"></li>
                 <li class="navbar-text"><i class="icon-user icon-white"></i></li>
                 <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown">{{ request.user }}<b class="caret"></b></a>

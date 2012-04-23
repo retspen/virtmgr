@@ -1,8 +1,19 @@
 # -*- coding: utf-8 -*-
 import libvirt, re, time, socket
+import virtinst.util as util
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
+
+def vm_conn(host_ip, creds):
+	flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+  	auth = [flags, creds, None]
+	uri = 'qemu+tcp://' + host_ip + '/system'
+	try:
+	   	conn = libvirt.openAuth(uri, auth, 0)
+	   	return conn
+	except:
+		return "error"
 
 def index(request, host_id):
 
@@ -23,16 +34,6 @@ def index(request, host_id):
 				return -1
 		return 0
 
-  	def vm_conn():
-  		flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
-	   	auth = [flags, creds, None]
-		uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
-	   	try:
-		   	conn = libvirt.openAuth(uri, auth, 0)
-		   	return conn
-		except:
-			return "error"
-
 	def get_all_vm():
 		try:
 			vname = {}
@@ -45,22 +46,22 @@ def index(request, host_id):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except:
-			vname['000x'] = '000x'
-			return vname
+			return "error"
 
 	def get_info():
 		try:
 			info = []
+			xml_cap = conn.getCapabilities()
+			xml_inf = conn.getSysinfo(0)
 			info.append(conn.getHostname())
 			info.append(conn.getInfo()[0])
-			info.append(conn.getInfo()[1] * 1048576)
 			info.append(conn.getInfo()[2])
-			info.append(conn.getInfo()[3])
+			info.append(util.get_xml_path(xml_inf, "/sysinfo/processor/entry[6]"))
 			return info
 		except:
 			return "error"
 
-	def get_freemem():
+	def get_mem_usage():
 		try:
 			allmem = conn.getInfo()[1] * 1048576
 			freemem = conn.getMemoryStats(-1,0)
@@ -68,11 +69,11 @@ def index(request, host_id):
 			percent = (freemem * 100) / allmem
 			percent = 100 - percent
 			memusage = (allmem - freemem)
-			return memusage, percent
+			return allmem, memusage, percent
 		except:
 			return "error"
 
-	def cpu_usage():
+	def get_cpu_usage():
 		try:
 			prev_idle = 0
 			prev_total = 0
@@ -94,12 +95,15 @@ def index(request, host_id):
 			return "error"		
 
 	error = []
-	conn = vm_conn()
-	all_vm = get_all_vm()
+	conn = vm_conn(kvm_host.ipaddr, creds)
 	if conn != "error":
-		info = get_info()
-		memusage = get_freemem()
-		cpusage = cpu_usage()
+		all_vm = get_all_vm()
+		host_info = get_info()
+		mem_usage = get_mem_usage()
+		cpu_usage = get_cpu_usage()
+		lib_virt_ver = conn.getLibVersion()
+		conn_type = conn.getURI()
+
 		conn.close()
 		
 	return render_to_response('overview.html', locals())

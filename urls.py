@@ -40,6 +40,11 @@ urlpatterns = patterns('',
     url(r'^network/(\w+)/(\w+)/$', 'virtmgr.network.views.pool'),
     url(r'^network/', 'virtmgr.network.views.redir'),
 
+    # Snapshot
+    url(r'^snapshot/(\w+)/$', 'virtmgr.snapshot.views.index'),
+    url(r'^snapshot/(\w+)/(\w+)/$', 'virtmgr.snapshot.views.pool'),
+    url(r'^snapshot/', 'virtmgr.snapshot.views.redir'),
+
     # Interfaces
     #url(r'^interfaces/(\w+)/$', 'virtmgr.interfaces.views.index'),
     #url(r'^interfaces/(\w+)/(\w+)/$', 'virtmgr.interfaces.views.ifcfg'),

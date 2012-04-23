@@ -36,7 +36,6 @@ def index(request, host_id):
 		return HttpResponseRedirect('/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
-	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -50,7 +49,7 @@ def index(request, host_id):
 				return -1
 		return 0
 
-	conn = vm_conn(host_ip, creds)
+	conn = vm_conn(kvm_host.ipaddr, creds)
 	storages = get_storages(conn)
 
 	if storages == None:
@@ -66,7 +65,6 @@ def pool(request, host_id, pool):
 		return HttpResponseRedirect('/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
-	host_ip = kvm_host.ipaddr
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -114,7 +112,10 @@ def pool(request, host_id, pool):
 	def get_stg_info(get):
 		try:
 			if get == "info":
-				return stg.info()
+				percent = (stg.info()[2] * 100) / stg.info()[3]
+				stg_info = stg.info()
+				stg_info.append(percent)
+				return stg_info
 			elif get == "status":
 				return stg.isActive()
 			elif get == "start":
@@ -152,7 +153,7 @@ def pool(request, host_id, pool):
 		except:
 			return "error"
 
-	def create_volume(img, size_max, format):
+	def create_volume(img, size_max):
 		try:
 			size_max = int(size_max) * 1073741824
 			xml = """
@@ -161,22 +162,22 @@ def pool(request, host_id, pool):
 					<capacity>%s</capacity>
 					<allocation>0</allocation>
 					<target>
-						<format type='%s'/>
+						<format type='qcow2'/>
 					</target>
-				</volume>""" % (img, size_max, format)
+				</volume>""" % (img, size_max)
 			stg.createXML(xml,0)
 		except:
 			return "error"
 
-	def create_stg_pool(type_pool, name_pool, path_pool):
+	def create_stg_pool(name_pool, path_pool):
 		try:
 			xml = """
-				<pool type='%s'>
+				<pool type='dir'>
 					<name>%s</name>
 						<target>
 							<path>%s</path>
 						</target>
-				</pool>""" % (type_pool, name_pool, path_pool)
+				</pool>""" % (name_pool, path_pool)
 			conn.storagePoolDefineXML(xml,0)
 		except:
 			return "error"
@@ -195,7 +196,7 @@ def pool(request, host_id, pool):
 		except:
 			return "error"
 	
-	conn = vm_conn(host_ip, creds)
+	conn = vm_conn(kvm_host.ipaddr, creds)
 	errors = []
 
 	if conn == None:
@@ -207,7 +208,6 @@ def pool(request, host_id, pool):
 		if request.method == 'POST':
 			name_pool = request.POST.get('name_pool','')
 			path_pool = request.POST.get('path_pool','')
-			type_pool = request.POST.get('type_pool','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
 				errors.append(u'Название пула не должно превышать 20 символов')
@@ -218,7 +218,7 @@ def pool(request, host_id, pool):
 			if not path_pool:
 				errors.append(u'Введите путь пула')
 			if not errors:
-				if create_stg_pool(type_pool, name_pool, path_pool) is "error":
+				if create_stg_pool(name_pool, path_pool) is "error":
 					errors.append(u'Возможно пул с такими данными существует')
 				else:
 					stg = get_conn_pool(name_pool)
@@ -259,14 +259,13 @@ def pool(request, host_id, pool):
 		if request.POST.get('vol_add',''):
 			img = request.POST['img']
 			size_max = request.POST['size_max']
-			format = request.POST['format']
 			errors = []
 			if not img:
 				errors.append(u'Введите имя образа')
 			if not size_max:
 				errors.append(u'Введите размер образа')
 			if not errors:
-				create_volume(img, size_max, format)
+				create_volume(img, size_max)
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 
 	conn.close()

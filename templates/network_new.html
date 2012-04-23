@@ -1,79 +1,78 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="row well" style="height:33px">
-   	<div class="span4">
-   		<h2>Хост: {{ kvm_host.hostname }}</h2>
-   	</div>
-   	<div class="span6">
-    	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
-			<li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
-			<li class="active"><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
-		</ul>
-	</div>
-   </div>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Сетвой пул</li>
-              {% for name, status in pools.items %}
-              {% if pool == name %}
-                <li class="active"><a href=/network/{{ host_id }}/{{ name }}/><i class="icon-folder-open"></i> {{name}}</a></li>
-                {% else %}
-                <li><a href=/network/{{ host_id }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
-                {% endif %}
-              {% endfor %}
-              <br>
-              <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
-                <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/network/{{ host_id }}/new_net_pool/'" />
-              {% if status = 0 %}
-                <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
-                <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
-              {% else %}
-                <input type="submit" class="btn btn-primary" name="stop_pool" value="Стоп" onclick="return confirm('Вы уверены?')">
-              {% endif %}
-              </form>
+              <li class="nav-header">Главное меню</li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Обзор сервера</a></li>
+                <li class="nav-header">Сетевой пул</li>
+                  <li class="active"><a href="/network/{{ host_id }}/new_net_pool/"><i class="icon-plus icon-white"></i>Создать пул</a></li>
+                {% for name, status in pools.items %}
+                {% if pool == name %}
+                  <li class="active"><a href="/network/{{ host_id }}/{{ name }}/"><i class="icon-folder-open"></i> {{ name }}</a></li>
+                  {% else %}
+                  <li><a href="/network/{{ host_id }}/{{ name }}/">{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
+                  {% endif %}
+                {% endfor %}
+                <li class="nav-header"></i>Настройки сервера</li>
+                  <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+                  <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
+                  <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
+                <li class="nav-header">Настройки сервера</li>
+                  <li><a href="/logs/{{ host_id }}/"><i class="icon-pencil"></i>Логи</a></li>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-		<div class="span9">
-			<div class="hero-unit">
-			<h2>Новый пул</h2>
-			<hr>
-    {% if errors %}
-    {% for error in errors %}
-      <div class="alert alert-error">
-        <a class="close" data-dismiss="alert">&times;</a>
-        {{error}}
-      </div>
-    {% endfor %}
-    {% endif %}
-			<div class="row show-grid">
-				<div class="span3">
-					<p>Название пула:</p>
-					<p>IP подсеть:</p>
-					<p>Использовать DHCP:</p>
-					<p>Тип Forward:</p>
-				</div>
-				<div class="span3">
-					<form action="/network/{{ host_id }}/new_net_pool/" method="post">
-						<input type="text" class="input-meddle" name="name_pool" placeholder="Name" value="">
-						<input type="text" class="input-meddle"  name="net_addr" value="192.168.100.0/24">
-						<input type="checkbox" name="dhcp" value="yes" style="height:25px">
-            <p></p>
-						<select name="forward"> 
-						    <option value="nat">NAT</option>
-						    <option value="route">Route</option>
-						    <option value="none">Isolate</option>
-						</select>
-						<input class="btn btn-primary" type="submit" name="create" value="Создать">
-					</form>
-				</div>
-			</div>
-           </div>
           </div>
         </div>
+    <div class="span8 well">
+      <div class="page-header">
+          <h2>Новый пул</h2>
+        </div>
+      {% if errors %}
+      {% for error in errors %}
+        <div class="alert alert-error">
+          <a class="close" data-dismiss="alert">&times;</a>
+          {{error}}
+        </div>
+      {% endfor %}
+      {% endif %}
+      <form class="form-horizontal" action="/network/{{ host_id }}/new_net_pool/" method="post">
+        <fieldset>
+          <div class="control-group">
+          <label class="control-label">Название пула</label>
+            <div class="controls">
+              <input type="text" class="input-medium" name="name_pool" placeholder="Name" value="">
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">IP подсеть</label>
+            <div class="controls">
+              <input type="text" class="input-medium"  name="net_addr" value="192.168.100.0/24">
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Использовать DHCP</label>
+            <div class="controls">
+              <input type="checkbox" name="dhcp" value="yes">
+            </div>
+          </div>
+          <div class="control-group">
+          <label class="control-label">Тип Forward</label>
+            <div class="controls">
+              <select class="input-medium" name="forward"> 
+                <option value="nat">NAT</option>
+                <option value="route">Route</option>
+                <option value="none">Isolate</option>
+              </select>
+            </div>
+          </div>
+          <div class="controls">
+						<input class="btn btn-primary" type="submit" name="create" value="Создать">
+          </div>
+        </fieldset>
+			</form>
+		</div>
+	</div>
 {% endblock %}

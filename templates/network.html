@@ -1,72 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="row well" style="height:33px">
-   	<div class="span4">
-   		<h2>Хост: {{ kvm_host.hostname }}</h2>
-   	</div>
-   	<div class="span6">
-    	<ul class="nav nav-pills">
-			<li><a href=/overview/{{ host_id }}/>Обзор</a></li>
-      <li><a href=/newvm/{{ host_id }}/>Создать ВМ</a></li>
-			<li><a href=/storage/{{ host_id }}/>Хранилище</a></li>
-			<li class="active"><a href=/network/{{ host_id }}/>Виртуальные сети</a></li>
-		</ul>
-	</div>
-   </div>
-    <div class="container-fluid">
+     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Сетвой пул</li>
-              {% for name, status in pools.items %}
-              {% if pool == name %}
-                <li class="active"><a href=/network/{{ host_id }}/{{ name }}/><i class="icon-folder-open"></i> {{name}}</a></li>
-                {% else %}
-                <li><a href=/network/{{ host_id }}/{{ name }}/>{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
-                {% endif %}
-              {% endfor %}
-              <br>
-              <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
-                <input type="button" class="btn btn-primary" value="Созд." onclick="location.href='/network/{{ host_id }}/new_net_pool/'" />
-              {% if status = 0 %}
-                <input type="submit" class="btn btn-primary" name="start_pool" value="Старт">
-                <input type="submit" class="btn btn-primary" name="del_pool" value="Удал." onclick="return confirm('Вы уверены?')">
-              {% else %}
-                <input type="submit" class="btn btn-primary" name="stop_pool" value="Стоп" onclick="return confirm('Вы уверены?')">
-              {% endif %}
-              </form>
+              <li class="nav-header">Главное меню</li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Обзор сервера</a></li>
+                <li class="nav-header">Сетевой пул</li>
+                  <li><a href="/network/{{ host_id }}/new_net_pool/"><i class="icon-plus"></i>Создать пул</a></li>
+                {% for name, status in pools.items %}
+                {% if pool == name %}
+                  <li class="active"><a href="/network/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
+                  {% else %}
+                  <li><a href="/network/{{ host_id }}/{{ name }}/">{% if status == 1 %}<font color="green"><i class="icon-folder-open"></i> {{ name }}</font>{% else %}<font color="red"><i class="icon-folder-open"></i> {{ name }}</font>{% endif %}</a></li>
+                  {% endif %}
+                {% endfor %}
+                <li class="nav-header"></i>Настройки сервера</li>
+                  <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+                  <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
+                  <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
+                <li class="nav-header">Настройки сервера</li>
+                  <li><a href="/logs/{{ host_id }}/"><i class="icon-pencil"></i>Логи</a></li>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-    <div class="span9">
-      <div class="hero-unit">
-      <h2>Виртуальные сети</h2>
-      <hr>
+          </div>
+        </div>
+    <div class="span8 well">
+      <div class="page-header">
+          <h2>Виртуальные сети</h2>
+        </div>
       <div class="row">
-        <div class="span3">
-          <p>Название:</p>
-          <p>Устройство:</p>
-          <p>Состояние:</p>
-          <p>Автозапуск:</p>
+        <div class="span2">
+          <p>Название</p>
+          <p>Устройство</p>
+          <p>Состояние</p>
         </div>
         <div class="span3">
-          <p>{{ pool }}</p>
+          <p><strong>{{ pool }}</strong></p>
           <p>{{ bridge }}</p>
-          <p>{% if status == 1 %}<font color="green">активен</font>{% else %}<font color="red">не активен</font>{% endif %}</p>
-          <p>{% if start == 1 %}<font color="green">включен</font>{% else %}<font color="red">выключен</font>{% endif %}</p>
-        </div>
-      </div>
+          <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
+			{% if status = 0 %}
+			<input type="submit" class="btn btn-primary" name="start_pool" value="Включить">
+			{% else %}
+			<input type="submit" class="btn btn-primary" name="stop_pool" value="Выключить" onclick="return confirm('Вы уверены?')">
+			{% endif %}
+		  </form>
+		</div>
+	   </div>
+		{% if status = 0 %}
+        <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
+			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+		</form>
+		{% endif %}
       <hr>
       <h4>Конфигурация IPv4:</h4><br>
         <div class="row">
-        <div class="span3">
-          <p>Тип:</p>
-          <p>Сеть:</p>
-          <p>DHCP:</p>
+        <div class="span2">
+          <p>Тип</p>
+          <p>Сеть</p>
+          <p>DHCP</p>
           {% if dhcprange %}
-          <p>Начало:</p>
-          <p>Конец:</p> {% endif %}
+          <p>Начало</p>
+          <p>Конец</p> {% endif %}
         </div>
         <div class="span3">
           <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
@@ -76,8 +72,7 @@
             <p>{{ dhcp }}</p>
           {% endfor %}
         </div>
-        </div>
-           </div>
-          </div>
-        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
