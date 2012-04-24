@@ -47,9 +47,8 @@
             </ul>
             {% if request.user.is_authenticated %}
               <ul class="nav pull-right">
-                <li class="navbar-text"><i class="icon-user icon-white"></i></li>
                 <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown">{{ request.user }}<b class="caret"></b></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{ request.user }}<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="/user/logout">Выход</a></li>
                   </ul>

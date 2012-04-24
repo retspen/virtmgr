@@ -30,6 +30,20 @@ def vm_conn(host_ip, creds):
 	except:
 		return "error"
 
+def get_vms(conn):
+   try:
+      vname = {}
+      for id in conn.listDomainsID():
+         id = int(id)
+         dom = conn.lookupByID(id)
+         vname[dom.name()] = dom.info()[0]
+      for id in conn.listDefinedDomains():
+         dom = conn.lookupByName(id)
+         vname[dom.name()] = dom.info()[0]
+      return vname
+   except:
+     return "error"
+
 def index(request, host_id):
 
 	if not request.user.is_authenticated():
@@ -51,6 +65,7 @@ def index(request, host_id):
 
 	conn = vm_conn(kvm_host.ipaddr, creds)
 	storages = get_storages(conn)
+	all_vm = get_vms(conn)
 
 	if storages == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
@@ -203,6 +218,7 @@ def pool(request, host_id, pool):
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
 	pools = get_storages(conn)
+	all_vm = get_vms(conn)
 
 	if pool == "new_stg_pool":
 		if request.method == 'POST':
@@ -241,6 +257,7 @@ def pool(request, host_id, pool):
 	start = get_stg_info('start')
 	listvol = get_stg_info('list')
 	volinfo = get_vl_info(listvol)
+	hdd_size = range(1,101)
 
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):

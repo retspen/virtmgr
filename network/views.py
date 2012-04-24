@@ -6,6 +6,20 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
+def get_vms(conn):
+   try:
+      vname = {}
+      for id in conn.listDomainsID():
+         id = int(id)
+         dom = conn.lookupByID(id)
+         vname[dom.name()] = dom.info()[0]
+      for id in conn.listDefinedDomains():
+         dom = conn.lookupByName(id)
+         vname[dom.name()] = dom.info()[0]
+      return vname
+   except:
+     return "error"
+
 def get_networks(conn):
 	try:
 		networks = {}
@@ -52,6 +66,7 @@ def index(request, host_id):
 
 	conn = vm_conn(kvm_host.ipaddr, creds)
 	networks = get_networks(conn)
+	all_vm = get_vms(conn)
 
 	if networks == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
@@ -188,6 +203,7 @@ def pool(request, host_id, pool):
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
 	pools = get_networks(conn)
+	all_vm = get_vms(conn)
 	errors = []
 
 	if pool == "new_net_pool":

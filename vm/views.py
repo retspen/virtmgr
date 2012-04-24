@@ -338,6 +338,8 @@ def index(request, host_id, vname):
       if request.POST.get('snapshot',''):
          try:
             vm_create_snapshot()
+            message = u'Снапшот для виртуальной машины %s успешно создан' % (vname)
+            return render_to_response('vm.html', locals())
          except:
             errors.append(u'Ошибка: при создании снапшота')
       if request.POST.get('auto_on',''):

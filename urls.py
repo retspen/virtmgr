@@ -42,7 +42,7 @@ urlpatterns = patterns('',
 
     # Snapshot
     url(r'^snapshot/(\w+)/$', 'virtmgr.snapshot.views.index'),
-    url(r'^snapshot/(\w+)/(\w+)/$', 'virtmgr.snapshot.views.pool'),
+    url(r'^snapshot/(\w+)/(\w+)/$', 'virtmgr.snapshot.views.snapshot'),
     url(r'^snapshot/', 'virtmgr.snapshot.views.redir'),
 
     # Interfaces

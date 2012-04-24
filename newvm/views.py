@@ -280,8 +280,10 @@ def index(request, host_id):
 		cdrom = get_img_path(iso)
 		hdd_frmt = get_img_format(img)
 		simbol = re.search('[^a-zA-Z0-9\_]+', name)
+		if name in all_vm:
+			errors.append(u'Такое название виртуальной машины уже существует')
 		if len(name) > 20:
-				errors.append(u'Название виртуальной машины не должно превышать 20 символов')
+			errors.append(u'Название виртуальной машины не должно превышать 20 символов')
 		if simbol:
 			errors.append(u'Название виртуальной машины не должно содержать символы и русские буквы')
 		if not img:

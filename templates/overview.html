@@ -6,28 +6,26 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Главное меню</li>
-              	<li><a href=/dashboard/><i class="icon-home"></i>Центр управления</a></li>
-              	<li class="active"><a href=/overview/{{ host_id }}/><i class="icon-info-sign icon-white"></i>Cервер {{ kvm_host.hostname }}</a></li>
-              <li class="nav-header">Виртуальные машины</li>
-              {% if not all_vm %}
-			   <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
-			  {% endif %}
-			  {% for name, state in all_vm.items %}
-				  <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
-			  {% endfor %}
+              	<li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
+              	<li class="active"><a href="/overview/{{ host_id }}/"><i class="icon-info-sign icon-white"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
 			  <li class="nav-header"></i>Настройки сервера</li>
-			  	<li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
-			  	<li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>Хранилище</a></li>
-			  	<li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>Виртуальные сети</a></li>
-			  	<li><a href=/snapshot/{{ host_id }}/><i class="icon-download-alt"></i>Снапшоты</a></li>
-			  <li class="nav-header">Настройки сервера</li>
-			  	<li><a href=/logs/{{ host_id }}/><i class="icon-pencil"></i>Логи</a></li>
+			  	<li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+			  	<li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
+			  	<li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
+			  	<li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
+              <li class="nav-header">Виртуальные машины</li>
+	           {% if not all_vm %}
+			   <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+	   	       {% endif %}
+			   {% for name, state in all_vm.items %}
+			   <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% else %}red{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+			   {% endfor %}
             </ul>
           </div>
         </div>
 		<div class="span8 well">
 			<div class="page-header">
-   				<h2>Обзор сервера</h2>
+   				<h2>Обзор сервера {{ kvm_host.hostname }}</h2>
    			</div>
   		    {% if errors %}
 			    {% for error in errors %}
@@ -37,9 +35,9 @@
 			      </div>
 			    {% endfor %}
 			{% endif %}
-			<div class="row" style="height:180px">
+			<div class="row">
 				<div class="span3">
-					<p>Название серера</p>
+					<p>Имя сервера</p>
 					<p>Процессор(ы)</p>
 					<p>Загрузка процессора</p>
 					<p>Память ({{ mem_usage.0|filesizeformat }} / {{ mem_usage.1|filesizeformat }})</p>
@@ -49,17 +47,17 @@
 				<div class="span4">
 					<p><strong>{{ host_info.0 }}</strong></p>
 					<p>{{ host_info.2 }} x {{ host_info.3 }}</p>
-					<div class="progress progress-danger progress-striped active" style="margin-bottom: 9px;">
+					<div class="progress progress-danger progress-striped active" style="margin-bottom: 9px; width:270px;">
         				<div class="bar" style="width: {{ cpu_usage }}%"><font color="black">{{ cpu_usage }}%</font></div>
       				</div>
-					<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">
+					<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:270px;">
         				<div class="bar" style="width: {{ mem_usage.2 }}%"><font color="black">{{ mem_usage.2 }}%</font></div>
       				</div>
 					<p>{{ conn_type }}</p>
 					<p>{{ lib_virt_ver }}</p>
-					<p>{{ sys_info }}</p> 				
+					<p>{{ sys_info }}</p>
 				</div>
 			</div>
-           </div>
-          </div>
+        </div>
+    </div>
 {% endblock %}

@@ -6,25 +6,24 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Главное меню</li>
-                <li><a href=/dashboard/><i class="icon-home"></i>Центр управления</a></li>
-                <li><a href=/overview/{{ host_id }}/><i class="icon-info-sign"></i>Обзор сервера</a></li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
+              <li class="nav-header"></i>Настройки сервера</li>
+                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
+                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
+                <li><a href="/snapshot/{{ host_id }}/{{ vname }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
               <li class="nav-header">Виртуальные машины</li>
-              {% if not all_vm %}
-               <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
-              {% endif %}
-              {% for name, state in all_vm.items %}
-              {% if vname == name %} 
-                <li class="active"><a href=/vm/{{ host_id }}/{{ name }}/><i class="icon-th-large icon-white"></i>{{name}}</a></li>
-                {% else %}
-                <li><a href=/vm/{{ host_id }}/{{ name }}/>{% if state == 1 %}<font color="green"><i class="icon-th-large"></i>{{ name }}</font>{% else %}<font color="red"><i class="icon-th-large"></i>{{ name }}</font>{% endif %}</a></li>
+                {% if not all_vm %}
+                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
                 {% endif %}
-              {% endfor %}
-            <li class="nav-header"></i>Настройки сервера</li>
-              <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
-              <li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>Хранилище</a></li>
-              <li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>Виртуальные сети</a></li>
-            <li class="nav-header">Настройки сервера</li>
-              <li><a href=/logs/{{ host_id }}/><i class="icon-pencil"></i>Логи</a></li>
+                {% for name, state in all_vm.items %}
+                {% if vname == name %} 
+                <li class="active"><a href="/vm/{{ host_id }}/{{ name }}/"><i class="icon-th-large icon-white"></i>{{name}}</a></li>
+                {% else %}
+                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% else %}red{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+                {% endif %}
+                {% endfor %}
             </ul>
           </div>
         </div>
@@ -32,6 +31,12 @@
       <div class="page-header">
           <h2>Управление виртуальной машиной</h2>
         </div>
+          {% if message %}
+            <div class="alert alert-info">
+              <a class="close" data-dismiss="alert">&times;</a>
+            {{ message }}
+            </div>
+          {% endif %}
           {% if errors %}
           {% for error in errors %}
             <div class="alert alert-error">
@@ -39,13 +44,12 @@
             {{ error }}
             </div>
           {% endfor %}
-      {% endif %}
+          {% endif %}
       <div class="row">
       	<div class="span8">
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
               {% if state = 5 %}
                 <input class="btn btn-primary" type="submit" name="start" value="Запуск">
-                <input class="btn btn-primary" type="submit" name="snapshot" value="Снапшот">
               {% endif %}
               {% if state = 3 %}
                 <input class="btn btn-primary" type="submit" name="resume" value="Возобновить">
@@ -105,13 +109,17 @@
                   </p>
                 </div>
               </div>
-            {% if num_snapshot = 0 %}
-              {% if state = 5 %}
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
+                {% if state != 3 %}
+                <input class="btn btn-primary" type="submit" name="snapshot" value="Создать снапшот">
+                {% endif %}
+                {% if num_snapshot > 0 or state = 1 %}
+                <input class="btn btn-primary disabled" type="button" value="Удалить">
+                {% else %}
                 <input class="btn btn-primary" type="submit" name="undefine" value="Удалить" onclick="return confirm('Вы уверены?')">
+                {% endif %}
               </form>
-              {% endif %}
-            {% else %}
+            {% if num_snapshot > 0 %}
             <p><strong>Для того чтобы удалить виртуальную машину, удалите ее снапшоты</strong></p>
             {% endif %}
             </div>
