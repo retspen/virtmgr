@@ -94,8 +94,6 @@
       {% else %}
        <hr>
        <h4>Какие либо образы отсутствуют или пул не активен</h4><br>
-       	</div>
-   	   </div>
        {% endif %}
 	   {% if status = 1 %}
 	   {% if errors %}
@@ -117,6 +115,9 @@
 			} 
 		</script>
 	  <button class="btn btn-primary" onclick="toggleview('q1')">Новый образ</button>
+	  {% if volinfo.items %}
+	  <button class="btn btn-primary" onclick="toggleview('q2')">Клонировать образ</button>
+	  {% endif %}
 	  <div id='q1' style="display:none">
 		  <br>
 	      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
@@ -143,7 +144,37 @@
 			</fieldset>
 		  </form>
 	   </div>
+	  <div id='q2' style="display:none">
+		  <br>
+	      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+	        <fieldset>
+	          <div class="control-group">
+	          <label class="control-label">Название образа</label>
+	            <div class="controls">
+	            	<input type="text" class="input-large" name="new_img" placeholder="Name" value="">
+	            </div>
+	           </div>
+	          <div class="control-group">
+	          <label class="control-label">Исходный образ</label>
+	            <div class="controls">
+	              <select name="img">
+	              	{% for name, info in volinfo.items %}
+	                <option value="{{ name }}">{{ name }}</option>
+	                {% endfor %}
+	              </select>
+	            </div>
+	          </div>
+	          <div class="controls">
+	          	<input type="submit" class="btn btn-primary" name="vol_clone" value="Клонировать">
+			  </div>
+			</fieldset>
+		  </form>
+	   </div>
 	 </div>
    </div>
+{% else %}
+	</div>
+</div>
 {% endif %}
+
 {% endblock %}
