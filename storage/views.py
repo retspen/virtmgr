@@ -308,6 +308,8 @@ def pool(request, host_id, pool):
 				errors.append(u'Введите имя образа')
 			if new_img in listvol:
 				errors.append(u'Образ с таким именем уже существует')
+			if re.search('.ISO', img) or re.search('.iso', img):
+				errors.append(u'Клонировать можно только образы виртуальных машин')
 			if not errors:
 				clone_volume(img, new_img)
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
