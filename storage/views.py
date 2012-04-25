@@ -197,6 +197,22 @@ def pool(request, host_id, pool):
 		except:
 			return "error"
 
+	def clone_volume(img, new_img):
+		try:
+			vol = stg.storageVolLookupByName(img)
+			xml = """
+				<volume>
+					<name>%s</name>
+					<capacity>0</capacity>
+					<allocation>0</allocation>
+					<target>
+						<format type='qcow2'/>
+					</target>
+				</volume>""" % (new_img)
+			stg.createXMLFrom(xml, vol, 0)
+		except:
+			return "error"
+
 	def get_vl_info(listvol):
 		try:
 			volinfo = {}
@@ -258,6 +274,7 @@ def pool(request, host_id, pool):
 	listvol = get_stg_info('list')
 	volinfo = get_vl_info(listvol)
 	hdd_size = range(1,101)
+	errors = []
 
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
@@ -274,15 +291,25 @@ def pool(request, host_id, pool):
 			delete_volume(img)
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('vol_add',''):
-			img = request.POST['img']
-			size_max = request.POST['size_max']
-			errors = []
+			img = request.POST.get('img','')
+			size_max = request.POST.get('size_max','')
 			if not img:
 				errors.append(u'Введите имя образа')
 			if not size_max:
 				errors.append(u'Введите размер образа')
 			if not errors:
 				create_volume(img, size_max)
+				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
+		if request.POST.get('vol_clone',''):
+			img = request.POST.get('img','')
+			new_img = request.POST.get('new_img','')
+			new_img = new_img + '.img'
+			if new_img == '.img':
+				errors.append(u'Введите имя образа')
+			if new_img in listvol:
+				errors.append(u'Образ с таким именем уже существует')
+			if not errors:
+				clone_volume(img, new_img)
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 
 	conn.close()
