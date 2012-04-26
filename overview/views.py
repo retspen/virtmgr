@@ -94,7 +94,7 @@ def index(request, host_id):
 		except:
 			return "error"		
 
-	error = []
+	errors = []
 	conn = vm_conn(kvm_host.ipaddr, creds)
 	if conn != "error":
 		all_vm = get_all_vm()
@@ -103,8 +103,9 @@ def index(request, host_id):
 		cpu_usage = get_cpu_usage()
 		lib_virt_ver = conn.getLibVersion()
 		conn_type = conn.getURI()
-
 		conn.close()
+	else:
+		errors.append(u'Ошибка подключения: проверьте KVM логин и KVM пароль')
 		
 	return render_to_response('overview.html', locals())
 

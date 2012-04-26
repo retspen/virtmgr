@@ -14,44 +14,25 @@ function toggleview(itm) {
 <div class="container">
 <h1>Настройка</h1>
 <br>
-<a href=# onclick="toggleview('q1')"><h2>Установка и настройка libvirt и KVM на Fedora/CentOS</h2></a>
+<a href=# onclick="toggleview('q1')"><h2>Установка и настройка Fedora (12 и выше), CentOS (6.0 и выше)</h2></a>
 <div id='q1' style="display:none">
+<br>
+<p><font color="red">Внимание</font>: все операции необходимо выполнить под супер-пользователем root набрав в консоле команду <code>su -l</code></p>
 <p>Утилитой yum устанавливаем пакеты libvirt и KVM:</p>
 <pre>
 # yum -y install kvm libvirt
 </pre>
 
-<p>Раскомментируем следующие строки в файле <code>/etc/sysconfig/libvirtd</code></p>
+<p>Раскомментируем строки в файле <code>/etc/sysconfig/libvirtd</code>:</p>
 <pre>
 # Listen for TCP/IP connections
 # NB. must setup TLS/SSL keys prior to using this
 LIBVIRTD_ARGS="--listen"
 </pre>
 
-<p>А так же раскомментируем следующие строки в файле <code>/etc/libvirt/libvirtd.conf</code></p>
+<p>В файле <code>/etc/libvirt/libvirtd.conf</code> раскомментируем строки:</p>
 <pre>
-# Network connectivity controls
-#
-
-# Flag listening for secure TLS connections on the public TCP/IP port.
-# NB, must pass the --listen flag to the libvirtd process for this to
-# have any effect.
-#
-# It is necessary to setup a CA and issue server certificates before
-# using this capability.
-#
-# This is enabled by default, uncomment this to disable it
 listen_tls = 0
-
-# Listen for unencrypted TCP connections on the public TCP/IP port.
-# NB, must pass the --listen flag to the libvirtd process for this to
-# have any effect.
-#
-# Using the TCP socket requires SASL authentication by default. Only
-# SASL mechanisms which support data encryption are allowed. This is
-# DIGEST_MD5 and GSSAPI (Kerberos5)
-#
-# This is disabled by default, uncomment this to enable it.
 listen_tcp = 1
 </pre>
 
@@ -60,26 +41,18 @@ listen_tcp = 1
 # service libvirtd start
 </pre>
 
-<p>Создаем файл <code>/etc/polkit-1/localauthority/50-local.d/libvirtd.pkla</code>. Пример: разрешаем пользователю по имени <code>fred</code> полный доступ управления демоном libvirt:</p>
-<pre>[Allow fred libvirt management permissions]
-Identity=unix-user:fred
-Action=org.libvirt.unix.manage
-ResultAny=yes
-ResultInactive=yes
-ResultActive=yes
-</pre>
-
-<p>По умолчанию пользовательские аккаунты не имеют возможность авторизироваться с помощью TCP сокета. Добавления пароля и назначение ему привелегий осуществляется с помощью команды <code>saslpasswd2</code>. При запуске команды необходимо указать приложение <code>libvirt</code>. Пример: добавить пользователя <code>fred</code> и назначить ему пароль, запускаем команду</p>
+<p>По умолчанию пользовательские аккаунты не имеют возможность авторизироваться с помощью TCP сокета. Добавления пароля и назначение ему привелегий осуществляется с помощью команды <code>saslpasswd2</code>. При запуске команды необходимо указать приложение <code>libvirt</code>, а вместо <code>fred</code> имя вашего пользователя</p>
 <pre>
 # saslpasswd2 -a libvirt fred
 Password: xxxxxx
 Again (for verification): xxxxxx
 </pre>
+<p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
 
-<p>Для просмотра все аккаунтов тоже можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
+<p>Для просмотра все аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
 <pre>
 # sasldblistusers2 -f /etc/libvirt/passwd.db
-fred@x-sys.com.ua: userPassword
+fred@webvirtmgr.net: userPassword
 </pre>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
@@ -89,7 +62,7 @@ fred@x-sys.com.ua: userPassword
 <br />
 <p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
-<p>Перед тем как добавить ip адреса ваших серверов в подключениях выполните следующий тест:</p>
+<p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 # virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
 Please enter your authentication name: fred
@@ -99,88 +72,79 @@ Please enter your password:
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
 </div>
 
-<a href=# onclick="toggleview('q2')"><h2>Установка и настройка libvirt и KVM на Ubuntu</h2></a>
+<a href=# onclick="toggleview('q2')"><h2>Установка и настройка Ubuntu (10.04 и выше)</h2></a>
 <div id='q2' style="display:none">
-<p>Утилитой apt-get устанавливаем пакеты libvirt, KVM и sasl:</p>
+<br>
+<p>Для версии Ubuntu-Server устанавливаемую с нуля необходимо во время установки в окне "Выбор программного обеспечения" отметить ПО <code>Virtual Machine host</code> для дополнительной установки. После успешной установки утилитой apt-get установите следующий пакеты:</p>
 <pre>
-# apt-get install kvm libvirt-bin sasl2-bin
+$ sudo apt-get install sasl2-bin
+</pre>
+<p>Если же Ubuntu-Server уже установлен, тогда необходимо просто установить следующие пакеты:</p>
+<pre>
+$ sudo apt-get install kvm libvirt-bin sasl2-bin
 </pre>
 
-<p>Добавляем параметр <code>-l</code> в файле <code>/etc/default/libvirtd</code></p>
+<p>Для Ubuntu-Desktop с помощью утилиты apt-get устанавливаем пакеты libvirt, KVM и sasl:</p>
 <pre>
-# options passed to libvirtd, add "-l" to listen on tcp
+$ sudo apt-get install kvm libvirt-bin sasl2-bin
+</pre>
+
+<p>Добавляем параметр <code>-l</code> в файле <code>/etc/default/libvirt-bin</code></p>
+<pre>
+$ options passed to libvirtd, add "-l" to listen on tcp
 libvirtd_opts="-d -l"
 </pre>
 
-<p>А так же раскомментируем следующие строки в файле <code>/etc/libvirt/libvirtd.conf</code></p>
+<p>В файле <code>/etc/libvirt/libvirtd.conf</code> раскомментируем следующие строки:</p>
 <pre>
-# Network connectivity controls
-#
-
-# Flag listening for secure TLS connections on the public TCP/IP port.
-# NB, must pass the --listen flag to the libvirtd process for this to
-# have any effect.
-#
-# It is necessary to setup a CA and issue server certificates before
-# using this capability.
-#
-# This is enabled by default, uncomment this to disable it
 listen_tls = 0
-
-# Listen for unencrypted TCP connections on the public TCP/IP port.
-# NB, must pass the --listen flag to the libvirtd process for this to
-# have any effect.
-#
-# Using the TCP socket requires SASL authentication by default. Only
-# SASL mechanisms which support data encryption are allowed. This is
-# DIGEST_MD5 and GSSAPI (Kerberos5)
-#
-# This is disabled by default, uncomment this to enable it.
 listen_tcp = 1
 </pre>
 
-<p>Запускаем демон libvirt-bin:</p>
+<p>Перезапускаем демон libvirtd, так как после установки он уже запущен:</p>
 <pre>
-# killalll libvirtd
-# service libvirt-bin restart
+$ sudo service libvirt-bin restart
 </pre>
 
-<p>Создаем файл <code>/etc/polkit-1/localauthority/50-local.d/libvirtd.pkla</code>. Пример: разрешаем пользователю по имени <code>fred</code> полный доступ управления демоном libvirt:</p>
-<pre>[Allow fred libvirt management permissions]
-Identity=unix-user:fred
-Action=org.libvirt.unix.manage
-ResultAny=yes
-ResultInactive=yes
-ResultActive=yes
-</pre>
-
-<p>По умолчанию пользовательские аккаунты не имеют возможность авторизироваться с помощью TCP сокета. Добавления пароля и назначение ему привелегий осуществляется с помощью команды <code>saslpasswd2</code>. При запуске команды необходимо указать приложение <code>libvirt</code>. Пример: добавить пользователя <code>fred</code> и назначить ему пароль, запускаем команду</p>
+<p>По умолчанию пользовательские аккаунты не имеют возможность авторизироваться с помощью TCP сокета. Добавления пароля и назначение ему привелегий осуществляется с помощью команды <code>saslpasswd2</code>. При запуске команды необходимо указать приложение <code>libvirt</code>, а вместо <code>fred</code> имя вашего пользователя</p>
 <pre>
-# saslpasswd2 -a libvirt fred
+$ sudo saslpasswd2 -a libvirt fred
 Password: xxxxxx
 Again (for verification): xxxxxx
 </pre>
+<p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
 
-<p>Для просмотра все аккаунтов тоже можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
+<p>Для просмотра все аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
 <pre>
-# sasldblistusers2 -f /etc/libvirt/passwd.db
-fred@x-sys.com.ua: userPassword
+$ sudo sasldblistusers2 -f /etc/libvirt/passwd.db
+fred@webvirtmgr.net: userPassword
 </pre>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
-# saslpasswd2 -a libvirt -d fred
+$ sudo saslpasswd2 -a libvirt -d fred
 </pre>
 <br />
 <p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
-<p>Перед тем как добавить ip адреса ваших серверов в подключениях выполните следующий тест:</p>
+<p>Если у Вас влючен фаирвол (ufw) необходимо добавить исключение для libvirt, так как по умолчанию доступ к портам libvirt запрещен для этого необходимо создать фаил <code>/etc/ufw/applications.d/libvirtd</code> и в него добавить следующие строки:</p>
 <pre>
-# virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
+[Libvirt]
+title=Virtualization library
+description=Open port for WebVirtMgr.
+ports=16509/tcp
+</pre>
+<p>Добавте правило в цепочку фаирвола</p>
+<pre>
+$ sudo ufw allow from any to any app Libvirt
+</pre>
+<p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
+<pre>
+$ virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
 Please enter your authentication name: fred
 Please enter your password: 
 </pre>
-<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили и отключили ufw.</p>
+<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
 </div>
 <br>
