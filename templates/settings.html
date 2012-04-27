@@ -61,7 +61,7 @@ fred@webvirtmgr.net: userPassword
 # saslpasswd2 -a libvirt -d fred
 </pre>
 <br />
-<p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
+<p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
 <p>Если у Вас влючен фаирвол (iptables) необходимо добавить правило для libvirt, так как по умолчанию доступ к портам libvirt запрещен</p>
 <pre>
@@ -70,8 +70,16 @@ fred@webvirtmgr.net: userPassword
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 # virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
-Please enter your authentication name: fred@webvirtmgr.net
-Please enter your password: 
+Please enter your authentication name: fred@webvirtmgr.netjvh
+Please enter your password:
+CPU model:           x86_64
+CPU(s):              2
+CPU frequency:       2611 MHz
+CPU socket(s):       1
+Core(s) per socket:  2
+Thread(s) per core:  1
+NUMA cell(s):        1
+Memory size:         2019260 kB
 </pre>
 <p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
@@ -84,12 +92,7 @@ Please enter your password:
 <pre>
 $ sudo apt-get install sasl2-bin
 </pre>
-<p>Если же Ubuntu-Server уже установлен, тогда необходимо просто установить следующие пакеты:</p>
-<pre>
-$ sudo apt-get install kvm libvirt-bin sasl2-bin
-</pre>
-
-<p>Для Ubuntu-Desktop с помощью утилиты apt-get устанавливаем пакеты libvirt, KVM и sasl:</p>
+<p>Если же Ubuntu-Server (Ubuntu-Desktop) уже установлен, тогда необходимо просто установить следующие пакеты:</p>
 <pre>
 $ sudo apt-get install kvm libvirt-bin sasl2-bin
 </pre>
@@ -131,7 +134,7 @@ fred@webvirtmgr.net: userPassword
 $ sudo saslpasswd2 -a libvirt -d fred
 </pre>
 <br />
-<p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
+<p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
 <p>Если у Вас влючен фаирвол (ufw) необходимо добавить исключение для libvirt, так как по умолчанию доступ к портам libvirt запрещен для этого необходимо создать фаил <code>/etc/ufw/applications.d/libvirtd</code> и в него добавить следующие строки:</p>
 <pre>
@@ -148,7 +151,15 @@ $ sudo ufw allow from any to any app Libvirt
 <pre>
 $ virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
 Please enter your authentication name: fred@webvirtmgr.net
-Please enter your password: 
+Please enter your password:
+CPU model:           x86_64
+CPU(s):              2
+CPU frequency:       2611 MHz
+CPU socket(s):       1
+Core(s) per socket:  2
+Thread(s) per core:  1
+NUMA cell(s):        1
+Memory size:         2019260 kB
 </pre>
 <p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
