@@ -293,6 +293,11 @@ def pool(request, host_id, pool):
 		if request.POST.get('vol_add',''):
 			img = request.POST.get('img','')
 			size_max = request.POST.get('size_max','')
+			simbol = re.search('[^a-zA-Z0-9\_]+', img)
+			if len(img) > 20:
+				errors.append(u'Название пула не должно превышать 20 символов')
+			if simbol:
+				errors.append(u'Название пула не должно содержать символы и русские буквы')
 			if not img:
 				errors.append(u'Введите имя образа')
 			if not size_max:
@@ -303,9 +308,14 @@ def pool(request, host_id, pool):
 		if request.POST.get('vol_clone',''):
 			img = request.POST.get('img','')
 			new_img = request.POST.get('new_img','')
+			simbol = re.search('[^a-zA-Z0-9\_]+', new_img)
 			new_img = new_img + '.img'
 			if new_img == '.img':
 				errors.append(u'Введите имя образа')
+			if len(new_img) > 20:
+				errors.append(u'Название пула не должно превышать 20 символов')
+			if simbol:
+				errors.append(u'Название пула не должно содержать символы и русские буквы')
 			if new_img in listvol:
 				errors.append(u'Образ с таким именем уже существует')
 			if re.search('.ISO', img) or re.search('.iso', img):

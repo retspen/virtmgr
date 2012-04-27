@@ -39,16 +39,16 @@
  		<div class="row">
 			<div class="span3">
 				<p>Название пула</p>
-				<p>Размер ({{ info.3|filesizeformat }} / {{ info.2|filesizeformat }})</p>
 				<p>Путь пула</p>
+				<p>Размер ({{ info.3|filesizeformat }} / {{ info.2|filesizeformat }})</p>
 				<p>Состояние</p>
 			</div>
 			<div class="span3">
 				<p><strong>{{ pool }}</strong></p>
+				<p>{{ spath }}</p>
 				<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:200px;">
         				<div class="bar" style="width: {{ info.4 }}%"><font color="black">{{ info.4 }}%</font></div>
         		</div
-				<p>{{ spath }}</p>
 				<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 					{% if status = 0 %}
 					<input type="submit" class="btn btn-primary" name="start_pool" value="Включить">
@@ -74,7 +74,8 @@
 	    		<th>Название</th>
 		    	<th>Размер</th>
 		    	<th>Формат</th>
-		    	<th>Действие</th>
+		    	<th>Удалить</th>
+		    	<th>Клонировать</th>
 		    </tr>
 		   </thead>
 		   <tbody>
@@ -87,6 +88,32 @@
 						<input type="submit" class="btn btn-primary" name="vol_del" value="Удалить" onclick="return confirm('Вы уверены?')">
 					  </form>
 				  </td>
+				  <td>
+					<div id="myModalclone" class="modal hide fade">
+		            <div class="modal-header">
+		              <button class="close" data-dismiss="modal">&times;</button>
+		              <h3>Клонирование образа <font color="red">{{ name }}</font></h3>
+		            </div>
+		            <div class="modal-body">
+				      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+				        <fieldset>
+				          <div class="control-group">
+				          <label class="control-label">Название образа</label>
+				            <div class="controls">
+				            	<input type="text" class="input-large" name="new_img" placeholder="Name" value="">
+				            	<input type="hidden" class="input-large" name="img" value="{{ name }}">
+				            </div>
+				           </div>
+						</fieldset>
+		            </div>
+		            <div class="modal-footer">
+		              <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+		              <input type="submit" class="btn btn-primary" name="vol_clone" value="Клонировать">
+		              </form>
+		            </div>
+		         	</div>				  	
+		          	<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">Клонировать</a>
+				  </td>	
 				</tr>
 				{% endfor %}
 		    </tbody>
@@ -104,22 +131,12 @@
 		 </div>
 		{% endfor %}
 		{% endif %}
-		<script type="text/javascript">
-			function toggleview(itm) { 
-				var itmx = document.getElementById(itm); 
-				if (itmx.style.display == "none") { 
-					itmx.style.display = "block"; 
-				} else { 
-					itmx.style.display = "none"; 
-				} 
-			} 
-		</script>
-	  <button class="btn btn-primary" onclick="toggleview('q1')">Новый образ</button>
-	  {% if volinfo.items %}
-	  <button class="btn btn-primary" onclick="toggleview('q2')">Клонировать образ</button>
-	  {% endif %}
-	  <div id='q1' style="display:none">
-		  <br>
+		<div id="myModaladd" class="modal hide fade">
+		    <div class="modal-header">
+			    <button class="close" data-dismiss="modal">&times;</button>
+		        <h3>Новый образ</h3>
+		    </div>
+		 <div class="modal-body">
 	      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 	        <fieldset>
 	          <div class="control-group">
@@ -129,7 +146,7 @@
 	            </div>
 	           </div>
 	          <div class="control-group">
-	          <label class="control-label">Размер (ГБ)</label>
+	          <label class="control-label">Размер образа</label>
 	            <div class="controls">
 	              <select name="size_max">
 	              	{% for num in hdd_size %}
@@ -138,43 +155,19 @@
 	              </select>
 	            </div>
 	          </div>
-	          <div class="controls">
-	          	<input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
-			  </div>
-			</fieldset>
-		  </form>
-	   </div>
-	  <div id='q2' style="display:none">
-		  <br>
-	      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-	        <fieldset>
-	          <div class="control-group">
-	          <label class="control-label">Название образа</label>
-	            <div class="controls">
-	            	<input type="text" class="input-large" name="new_img" placeholder="Name" value="">
-	            </div>
-	           </div>
-	          <div class="control-group">
-	          <label class="control-label">Исходный образ</label>
-	            <div class="controls">
-	              <select name="img">
-	              	{% for name, info in volinfo.items %}
-	                <option value="{{ name }}">{{ name }}</option>
-	                {% endfor %}
-	              </select>
-	            </div>
-	          </div>
-	          <div class="controls">
-	          	<input type="submit" class="btn btn-primary" name="vol_clone" value="Клонировать">
-			  </div>
-			</fieldset>
-		  </form>
-	   </div>
+	          </fieldset>
+		            </div>
+		            <div class="modal-footer">
+		              <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+		              <input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
+		              </form>
+		            </div>
+		         	</div>				  	
+		 <a data-toggle="modal" href="#myModaladd" class="btn btn-primary">Новый образ</a>
 	 </div>
    </div>
 {% else %}
 	</div>
 </div>
 {% endif %}
-
 {% endblock %}
