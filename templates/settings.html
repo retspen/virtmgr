@@ -49,11 +49,12 @@ Again (for verification): xxxxxx
 </pre>
 <p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
 
-<p>Для просмотра все аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
+<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
 <pre>
 # sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
+<p><font color="red">Внимание</font>: будьте внимательны в нашем случае имя пользователя будет <code>fred@webvirtmgr.net</code>, а не <code>fred</code></p>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
@@ -72,7 +73,7 @@ fred@webvirtmgr.net: userPassword
 Please enter your authentication name: fred
 Please enter your password: 
 </pre>
-<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили и отключили iptables.</p>
+<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
 </div>
 
@@ -118,11 +119,12 @@ Again (for verification): xxxxxx
 </pre>
 <p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
 
-<p>Для просмотра все аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
+<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
 <pre>
 $ sudo sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
+<p><font color="red">Внимание</font>: будьте внимательны в нашем случае имя пользователя будет <code>fred@webvirtmgr.net</code>, а не <code>fred</code></p>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
