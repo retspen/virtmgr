@@ -17,7 +17,7 @@ function toggleview(itm) {
 <a href=# onclick="toggleview('q1')"><h2>Установка и настройка Fedora (12 и выше), CentOS (6.0 и выше)</h2></a>
 <div id='q1' style="display:none">
 <br>
-<p><font color="red">Внимание</font>: все операции необходимо выполнить под супер-пользователем root набрав в консоле команду <code>su -l</code></p>
+<p><font color="red">Внимание</font>: все операции необходимо выполнить под супер-пользователем <code>root</code></p>
 <p>Утилитой yum устанавливаем пакеты libvirt и KVM:</p>
 <pre>
 # yum -y install kvm libvirt
@@ -62,6 +62,10 @@ fred@webvirtmgr.net: userPassword
 <br />
 <p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
+<p>Если у Вас влючен фаирвол (iptables) необходимо добавить правило для libvirt, так как по умолчанию доступ к портам libvirt запрещен</p>
+<pre>
+# iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 16509 -j ACCEPT
+</pre>
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 # virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
