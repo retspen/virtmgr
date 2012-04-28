@@ -17,7 +17,7 @@ function toggleview(itm) {
 <a href=# onclick="toggleview('q1')"><h2>Установка и настройка Fedora (12 и выше), CentOS (6.0 и выше)</h2></a>
 <div id='q1' style="display:none">
 <br>
-<p><font color="red">Внимание</font>: все операции необходимо выполнить под супер-пользователем root набрав в консоле команду <code>su -l</code></p>
+<p><font color="red">Внимание</font>: все операции необходимо выполнить под супер-пользователем <code>root</code></p>
 <p>Утилитой yum устанавливаем пакеты libvirt и KVM:</p>
 <pre>
 # yum -y install kvm libvirt
@@ -49,26 +49,39 @@ Again (for verification): xxxxxx
 </pre>
 <p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
 
-<p>Для просмотра все аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
+<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
 <pre>
 # sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
+<p><font color="red">Внимание</font>: будьте внимательны в нашем случае имя пользователя будет <code>fred@webvirtmgr.net</code>, а не <code>fred</code></p>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
 # saslpasswd2 -a libvirt -d fred
 </pre>
 <br />
-<p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
+<p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
+<p>Если у Вас влючен фаирвол (iptables) необходимо добавить правило для libvirt, так как по умолчанию доступ к портам libvirt запрещен</p>
+<pre>
+# iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 16509 -j ACCEPT
+</pre>
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 # virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
-Please enter your authentication name: fred
-Please enter your password: 
+Please enter your authentication name: fred@webvirtmgr.net
+Please enter your password:
+CPU model:           x86_64
+CPU(s):              2
+CPU frequency:       2611 MHz
+CPU socket(s):       1
+Core(s) per socket:  2
+Thread(s) per core:  1
+NUMA cell(s):        1
+Memory size:         2019260 kB
 </pre>
-<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили и отключили iptables.</p>
+<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
 </div>
 
@@ -79,12 +92,7 @@ Please enter your password:
 <pre>
 $ sudo apt-get install sasl2-bin
 </pre>
-<p>Если же Ubuntu-Server уже установлен, тогда необходимо просто установить следующие пакеты:</p>
-<pre>
-$ sudo apt-get install kvm libvirt-bin sasl2-bin
-</pre>
-
-<p>Для Ubuntu-Desktop с помощью утилиты apt-get устанавливаем пакеты libvirt, KVM и sasl:</p>
+<p>Если же Ubuntu-Server (Ubuntu-Desktop) уже установлен, тогда необходимо просто установить следующие пакеты:</p>
 <pre>
 $ sudo apt-get install kvm libvirt-bin sasl2-bin
 </pre>
@@ -114,18 +122,19 @@ Again (for verification): xxxxxx
 </pre>
 <p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
 
-<p>Для просмотра все аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться <code>/etc/libvirt/passwd.db</code></p>
+<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
 <pre>
 $ sudo sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
+<p><font color="red">Внимание</font>: будьте внимательны в нашем случае имя пользователя будет <code>fred@webvirtmgr.net</code>, а не <code>fred</code></p>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
 $ sudo saslpasswd2 -a libvirt -d fred
 </pre>
 <br />
-<p>О настройке бриджа (br0) на сетевом интерфейсе можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
+<p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
 <p>Если у Вас влючен фаирвол (ufw) необходимо добавить исключение для libvirt, так как по умолчанию доступ к портам libvirt запрещен для этого необходимо создать фаил <code>/etc/ufw/applications.d/libvirtd</code> и в него добавить следующие строки:</p>
 <pre>
@@ -134,15 +143,23 @@ title=Virtualization library
 description=Open port for WebVirtMgr.
 ports=16509/tcp
 </pre>
-<p>Добавте правило в цепочку фаирвола</p>
+<p>Применить правило в цепочку фаирвола</p>
 <pre>
 $ sudo ufw allow from any to any app Libvirt
 </pre>
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 $ virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
-Please enter your authentication name: fred
-Please enter your password: 
+Please enter your authentication name: fred@webvirtmgr.net
+Please enter your password:
+CPU model:           x86_64
+CPU(s):              2
+CPU frequency:       2611 MHz
+CPU socket(s):       1
+Core(s) per socket:  2
+Thread(s) per core:  1
+NUMA cell(s):        1
+Memory size:         2019260 kB
 </pre>
 <p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
