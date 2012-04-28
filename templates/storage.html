@@ -107,12 +107,12 @@
 						</fieldset>
 		            </div>
 		            <div class="modal-footer">
-		              <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+		              <a href="#" class="btn" data-dismiss="modal">Отмена</a>
 		              <input type="submit" class="btn btn-primary" name="vol_clone" value="Клонировать">
 		              </form>
 		            </div>
 		         	</div>				  	
-		          	<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">Клонировать</a>
+		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">Клонировать</a>{% else %}<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">Клонировать</a>{% endif %}
 				  </td>	
 				</tr>
 				{% endfor %}
@@ -156,13 +156,13 @@
 	            </div>
 	          </div>
 	          </fieldset>
-		            </div>
-		            <div class="modal-footer">
-		              <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
-		              <input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
-		              </form>
-		            </div>
-		         	</div>				  	
+		    </div>
+		    <div class="modal-footer">
+		    	<a href="#" class="btn" data-dismiss="modal">Отмена</a>
+		        <input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
+		     </form>
+		    </div>
+		  </div>				  	
 		 <a data-toggle="modal" href="#myModaladd" class="btn btn-primary">Новый образ</a>
 	 </div>
    </div>
