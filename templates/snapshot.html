@@ -22,7 +22,7 @@
                 {% if name == vname %}
                 <li class="active"><a href="/snapshot/{{ host_id }}/{{ name }}/"><i class="icon-th icon-white"></i> {{ name }}</a></li>
                 {% else %}
-                <li><a href="/snapshot/{{ host_id }}/{{ name }}/"><font color="{% if status == 1 %}green{% else %}red{% endif %}"><i class="icon-th"></i> {{ name }}</font></a></li>
+                <li><a href="/snapshot/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th"></i> {{ name }}</font></a></li>
                 {% endif %}
                 {% endfor %}
               <li class="nav-header">Виртуальные машины</li>
@@ -30,14 +30,14 @@
                 <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
                 {% endif %}
                 {% for name, state in all_vm.items %}
-                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% else %}red{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
                 {% endfor %}
             </ul>
           </div>
         </div>
     <div class="span8 well">
       <div class="page-header">
-          <h2>Снапшоты</h2>
+          <h2>Снапшоты сервера {{ kvm_host.hostname }}</h2>
         </div>
         {% if message %}
             <div class="alert alert-info">

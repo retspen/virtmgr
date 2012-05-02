@@ -28,7 +28,7 @@
                 <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
                 {% endif %}
                 {% for name, state in all_vm.items %}
-                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% else %}red{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
                 {% endfor %}
             </ul>
           </div>

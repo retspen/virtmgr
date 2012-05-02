@@ -22,7 +22,7 @@
                 {% if vname == name %} 
                 <li class="active"><a href="/vm/{{ host_id }}/{{ name }}/"><i class="icon-th-large icon-white"></i>{{name}}</a></li>
                 {% else %}
-                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% else %}red{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
                 {% endif %}
                 {% endfor %}
             </ul>
