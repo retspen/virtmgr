@@ -13,6 +13,7 @@
                 <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
                 <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
                 <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
+                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>Логи</a></li>
               <li class="nav-header">Сетевой пул</li>
                 <li><a href="/network/{{ host_id }}/new_net_pool/"><i class="icon-plus"></i>Создать пул</a></li>
                 {% for name, status in pools.items %}
@@ -58,7 +59,7 @@
         <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
 			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
 		</form>
-		{% endif %}
+		{% else %}
       <hr>
       <h4>Конфигурация IPv4:</h4><br>
         <div class="row">
@@ -79,6 +80,7 @@
           {% endfor %}
         </div>
       </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

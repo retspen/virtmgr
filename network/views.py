@@ -6,51 +6,58 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
-def get_vms(conn):
-   try:
-      vname = {}
-      for id in conn.listDomainsID():
-         id = int(id)
-         dom = conn.lookupByID(id)
-         vname[dom.name()] = dom.info()[0]
-      for id in conn.listDefinedDomains():
-         dom = conn.lookupByName(id)
-         vname[dom.name()] = dom.info()[0]
-      return vname
-   except:
-     return "error"
-
-def get_networks(conn):
-	try:
-		networks = {}
-		for name in conn.listNetworks():
-			net = conn.networkLookupByName(name)
-			status = net.isActive()
-			networks[name] = status
-		for name in conn.listDefinedNetworks():
-			net = conn.networkLookupByName(name)
-			status = net.isActive()
-			networks[name] = status
-		return networks
-	except:
-		return "error"
-
-def vm_conn(host_ip, creds):
-   	try:
-		flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
-  		auth = [flags, creds, None]
-		uri = 'qemu+tcp://' + host_ip + '/system'
-	   	conn = libvirt.openAuth(uri, auth, 0)
-	   	return conn
-	except:
-		return "error"
-
 def index(request, host_id):
 	
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 	
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
+
+	def add_error(msg):
+		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg.save()
+
+	def get_vms():
+		try:
+			vname = {}
+			for id in conn.listDomainsID():
+				id = int(id)
+				dom = conn.lookupByID(id)
+				vname[dom.name()] = dom.info()[0]
+			for id in conn.listDefinedDomains():
+				dom = conn.lookupByName(id)
+				vname[dom.name()] = dom.info()[0]
+			return vname
+		except libvirt.libvirtError as e:
+			add_error(msg)
+			return "error"
+
+	def get_networks():
+		try:
+			networks = {}
+			for name in conn.listNetworks():
+				net = conn.networkLookupByName(name)
+				status = net.isActive()
+				networks[name] = status
+			for name in conn.listDefinedNetworks():
+				net = conn.networkLookupByName(name)
+				status = net.isActive()
+				networks[name] = status
+			return networks
+		except libvirt.libvirtError as e:
+			add_error(msg)
+			return "error"
+
+	def vm_conn():
+		try:
+			flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+			auth = [flags, creds, None]
+			uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+			conn = libvirt.openAuth(uri, auth, 0)
+			return conn
+		except libvirt.libvirtError as e:
+			add_error(msg)
+			return "error"
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -64,9 +71,9 @@ def index(request, host_id):
 				return -1
 		return 0
 
-	conn = vm_conn(kvm_host.ipaddr, creds)
-	networks = get_networks(conn)
-	all_vm = get_vms(conn)
+	conn = vm_conn()
+	networks = get_networks()
+	all_vm = get_vms()
 
 	if networks == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
@@ -81,6 +88,52 @@ def pool(request, host_id, pool):
 		return HttpResponseRedirect('/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
+
+	def add_error(msg, type_err):
+		error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+		error_msg.save()
+
+	def get_vms():
+		try:
+			vname = {}
+			for id in conn.listDomainsID():
+				id = int(id)
+				dom = conn.lookupByID(id)
+				vname[dom.name()] = dom.info()[0]
+			for id in conn.listDefinedDomains():
+				dom = conn.lookupByName(id)
+				vname[dom.name()] = dom.info()[0]
+			return vname
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
+			return "error"
+
+	def get_networks():
+		try:
+			networks = {}
+			for name in conn.listNetworks():
+				net = conn.networkLookupByName(name)
+				status = net.isActive()
+				networks[name] = status
+			for name in conn.listDefinedNetworks():
+				net = conn.networkLookupByName(name)
+				status = net.isActive()
+				networks[name] = status
+			return networks
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
+			return "error"
+
+	def vm_conn():
+		try:
+			flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+			auth = [flags, creds, None]
+			uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+			conn = libvirt.openAuth(uri, auth, 0)
+			return conn
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
+			return "error"
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -98,32 +151,37 @@ def pool(request, host_id, pool):
 		try:
 			net = conn.networkLookupByName(pool)
 			return net
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def pool_start():
 		try:
 			net.create()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def pool_stop():
 		try:
 			net.destroy()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def pool_delete():
 		try:
 			net.undefine()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def net_set_autostart(pool):
 		try:
 			net = conn.networkLookupByName(pool)
 			net.setAutostart(1)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def get_net_info(get):
@@ -134,7 +192,8 @@ def pool(request, host_id, pool):
 				return net.isActive()
 			elif get == "start":
 				return net.autostart()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def get_ipv4_net():
@@ -149,7 +208,8 @@ def pool(request, host_id, pool):
 
 			network = IP(gateway.int() & netmask.int())
 			return IP(str(network) + "/" + netmaskStr)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def get_ipv4_dhcp_range():
@@ -162,7 +222,8 @@ def pool(request, host_id, pool):
 				return None
 			
 			return [IP(dhcpstart), IP(dhcpend)]
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def get_ipv4_forward():
@@ -171,7 +232,8 @@ def pool(request, host_id, pool):
 			fw = util.get_xml_path(xml, "/network/forward/@mode")
 			forwardDev = util.get_xml_path(xml, "/network/forward/@dev")
 			return [fw, forwardDev]
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
 	def create_net_pool(name_pool, forward, ipaddr, netmask, dhcp, start_dhcp, end_dhcp):
@@ -194,16 +256,17 @@ def pool(request, host_id, pool):
 			xml += """</ip>
 				</network>"""
 			conn.networkDefineXML(xml)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(msg, 'libvirt')
 			return "error"
 
-	conn = vm_conn(kvm_host.ipaddr, creds)
+	conn = vm_conn()
 
 	if conn == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
-	pools = get_networks(conn)
-	all_vm = get_vms(conn)
+	pools = get_networks()
+	all_vm = get_vms()
 	errors = []
 
 	if pool == "new_net_pool":
@@ -214,13 +277,17 @@ def pool(request, host_id, pool):
 			dhcp = request.POST.get('dhcp','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
-				errors.append(u'Название пула не должно превышать 20 символов')
+				msg = u'Название пула не должно превышать 20 символов'
+				errors.append(msg)
 			if simbol:
-				errors.append(u'Название пула не должно содержать символы и русские буквы')
+				msg = u'Название пула не должно содержать символы и русские буквы'
+				errors.append(msg)
 			if not name_pool:
-				errors.append(u'Введите имя пула')
+				msg = u'Введите имя пула'
+				errors.append(msg)
 			if not net_addr:
-				errors.append(u'Введите IP подсеть')
+				msg = u'Введите IP подсеть'
+				errors.append(msg)
 			if not errors:
 				netmask = IP(net_addr).strNetmask()
 				ipaddr = IP(net_addr)
@@ -228,13 +295,17 @@ def pool(request, host_id, pool):
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
 				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
-					errors.append(u'Возможно пул с такими данными существует')
+					msg = u'Возможно пул с такими данными существует'
+					errors.append(msg)
 				if not errors:
 					net_set_autostart(name_pool)
 					net = get_conn_pool(name_pool)
 					if pool_start() is "error":
-						errors.append(u'Пул создан, но при запуске пула возникла ошибка, возможно указана существующая сеть')
+						msg = u'Пул создан, но при запуске пула возникла ошибка, возможно указана существующая сеть'
+						errors.append(msg)
 					else:
+						msg = u'Создание сетевого пула: %s' % (name_pool)
+						add_error(msg, 'user')
 						return HttpResponseRedirect('/network/%s/%s/' % (host_id, name_pool))
 					if errors:
 						return render_to_response('network_new.html', locals())
@@ -243,23 +314,25 @@ def pool(request, host_id, pool):
 	net = get_conn_pool(pool)
 	bridge = get_net_info('bridge')
 	status = get_net_info('status')
-	start = get_net_info('start')
-
-	network = get_ipv4_net()
-	dhcprange = get_ipv4_dhcp_range()
-	netmode = get_ipv4_forward()
+	if status == 1:
+		start = get_net_info('start')
+		network = get_ipv4_net()
+		dhcprange = get_ipv4_dhcp_range()
+		netmode = get_ipv4_forward()
 
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
+			msg = u'Остановка сетевого пула: %s' % (pool)
 			pool_stop()
-			if pool_stop() is "error":
-				errors.append(u'Возможно пул уже остановлен')
+			add_error(msg, 'user')
 		if request.POST.get('start_pool',''):
+			msg = u'Запуск сетевого пула: %s' % (pool)
 			pool_start()
-			if pool_start() is "error":
-				errors.append(u'Возможно пул уже запущен')
+			add_error(msg, 'user')
 		if request.POST.get('del_pool',''):
+			msg = u'Удаление сетевого пула: %s' % (pool)
 			pool_delete()
+			add_error(msg, 'user')
 			return HttpResponseRedirect('/network/%s/' % (host_id))
 		return HttpResponseRedirect('/network/%s/%s/' % (host_id, pool))
 

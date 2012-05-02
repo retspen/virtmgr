@@ -30,6 +30,10 @@ def index(request):
 	def add_host(host, ip, usr, passw):
 		hosts = Host(user_id=request.user.id, hostname=host, ipaddr=ip, login=usr, passwd=passw)
 		hosts.save()
+		kvm_host = Host.objects.get(user=request.user.id, hostname=host)
+		msg = u'Добавление сервера %s' % (host)
+		error_msg = Log(host_id=kvm_host.id, type='user', message=msg, user_id=request.user.id)
+		error_msg.save()
 
 	def get_host_status(hosts):
 		for host, info in hosts.items():
@@ -51,24 +55,32 @@ def index(request):
 			simbol = re.search('[^a-zA-Z0-9\_]+', name)
 			ipsimbol = re.search('[^0-9\.]+', ipaddr)
 			if len(name) > 20:
-				errors.append(u'Имя хоста не должно превышать 20 символов')
+				msg = u'Имя хоста не должно превышать 20 символов'
+				errors.append(msg)
 			if ipsimbol:
-				errors.append(u'IP адрес должен содержать только цифры разделенные "."')
+				msg = u'IP адрес должен содержать только цифры разделенные "."'
+				errors.append(msg)
 			if simbol:
-				errors.append(u'Имя хоста не должно содержать символы и русские буквы')
+				msg = u'Имя хоста не должно содержать символы и русские буквы'
+				errors.append(msg)
 			else:
 				have_host = Host.objects.filter(user=request.user, hostname=name)
 				have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 				if have_host or have_ip:
-					errors.append(u'Такой хост уже подключен')
+					msg = u'Такой хост уже подключен'
+					errors.append(msg)
 			if not name:
-				errors.append(u'Не было введено имя хоста')
+				msg = u'Не было введено имя хоста'
+				errors.append(msg)
 			if not ipaddr:
-				errors.append(u'Не был введен IP адрес')
+				msg = u'Не был введен IP адрес'
+				errors.append(msg)
 			if not login:
-				errors.append(u'Не был введен KVM логин')
+				msg = u'Не был введен KVM логин'
+				errors.append(msg)
 			if not passw:
-				errors.append(u'Не был введен KVM пароль')
+				msg = u'Не был введен KVM пароль'
+				errors.append(msg)
 			if not errors:
 				add_host(name, ipaddr, login, passw)
 				return HttpResponseRedirect('/dashboard/')

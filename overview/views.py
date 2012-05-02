@@ -5,22 +5,24 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
-def vm_conn(host_ip, creds):
-	flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
-  	auth = [flags, creds, None]
-	uri = 'qemu+tcp://' + host_ip + '/system'
-	try:
-	   	conn = libvirt.openAuth(uri, auth, 0)
-	   	return conn
-	except:
-		return "error"
-
 def index(request, host_id):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
+
+	def vm_conn():
+		flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+	  	auth = [flags, creds, None]
+		uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+		try:
+		   	conn = libvirt.openAuth(uri, auth, 0)
+		   	return conn
+		except libvirt.libvirtError as e:
+			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
+			error_msg.save()
+			return "error"
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -45,7 +47,9 @@ def index(request, host_id):
 				dom = conn.lookupByName(id)
 				vname[dom.name()] = dom.info()[0]
 			return vname
-		except:
+		except libvirt.libvirtError as e:
+			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
+			error_msg.save()
 			return "error"
 
 	def get_info():
@@ -58,7 +62,9 @@ def index(request, host_id):
 			info.append(conn.getInfo()[2])
 			info.append(util.get_xml_path(xml_inf, "/sysinfo/processor/entry[6]"))
 			return info
-		except:
+		except libvirt.libvirtError as e:
+			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
+			error_msg.save()
 			return "error"
 
 	def get_mem_usage():
@@ -70,7 +76,9 @@ def index(request, host_id):
 			percent = 100 - percent
 			memusage = (allmem - freemem)
 			return allmem, memusage, percent
-		except:
+		except libvirt.libvirtError as e:
+			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
+			error_msg.save()
 			return "error"
 
 	def get_cpu_usage():
@@ -91,11 +99,13 @@ def index(request, host_id):
 		        		if diff_usage < 0:
 		        			diff_usage == 0
 			return diff_usage
-		except:
+		except libvirt.libvirtError as e:
+			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
+			error_msg.save()
 			return "error"		
 
 	errors = []
-	conn = vm_conn(kvm_host.ipaddr, creds)
+	conn = vm_conn()
 	if conn != "error":
 		all_vm = get_all_vm()
 		host_info = get_info()

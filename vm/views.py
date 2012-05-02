@@ -7,47 +7,6 @@ from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
 
-def get_vms(conn):
-   try:
-      vname = {}
-      for id in conn.listDomainsID():
-         id = int(id)
-         dom = conn.lookupByID(id)
-         vname[dom.name()] = dom.info()[0]
-      for id in conn.listDefinedDomains():
-         dom = conn.lookupByName(id)
-         vname[dom.name()] = dom.info()[0]
-      return vname
-   except:
-     return "error"
-
-def get_storages(conn):
-   try:
-      storages = []
-      for name in conn.listStoragePools():
-         storages.append(name)
-      for name in conn.listDefinedStoragePools():
-         storages.append(name)
-      return storages
-   except:
-      return "error"
-
-def vm_conn(host_ip, creds):
-   try:
-      flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
-      auth = [flags, creds, None]
-      uri = 'qemu+tcp://' + host_ip + '/system'
-      conn = libvirt.openAuth(uri, auth, 0)
-      return conn
-   except:
-      return "error"
-
-def get_dom(conn, vname):
-   try:
-      dom = conn.lookupByName(vname)
-      return dom
-   except:
-      return "error"
 
 def index(request, host_id, vname):
 
@@ -55,6 +14,56 @@ def index(request, host_id, vname):
       return HttpResponseRedirect('/')
 
    kvm_host = Host.objects.get(user=request.user.id, id=host_id)
+
+   def add_error(msg, type_err):
+      error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+      error_msg.save()
+
+   def get_vms():
+      try:
+         vname = {}
+         for id in conn.listDomainsID():
+            id = int(id)
+            dom = conn.lookupByID(id)
+            vname[dom.name()] = dom.info()[0]
+         for id in conn.listDefinedDomains():
+            dom = conn.lookupByName(id)
+            vname[dom.name()] = dom.info()[0]
+         return vname
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
+         return "error"
+
+   def get_storages():
+      try:
+         storages = []
+         for name in conn.listStoragePools():
+            storages.append(name)
+         for name in conn.listDefinedStoragePools():
+            storages.append(name)
+         return storages
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
+         return "error"
+
+   def vm_conn():
+      try:
+         flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+         auth = [flags, creds, None]
+         uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+         conn = libvirt.openAuth(uri, auth, 0)
+         return conn
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
+         return "error"
+
+   def get_dom(vname):
+      try:
+         dom = conn.lookupByName(vname)
+         return dom
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
+         return "error"
 
    def creds(credentials, user_data):
       for credential in credentials:
@@ -72,7 +81,8 @@ def index(request, host_id, vname):
       try:
          state = dom.isActive()
          return state
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_uuid():
@@ -80,7 +90,8 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          uuid = util.get_xml_path(xml, "/domain/uuid")
          return uuid
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_mem():
@@ -89,7 +100,8 @@ def index(request, host_id, vname):
          mem = util.get_xml_path(xml, "/domain/currentMemory")
          mem = int(mem) * 1024
          return mem
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_core():
@@ -97,7 +109,8 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          cpu = util.get_xml_path(xml, "/domain/vcpu")
          return cpu
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_vnc():
@@ -105,7 +118,8 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          vnc = util.get_xml_path(xml, "/domain/devices/graphics/@port")
          return vnc
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_hdd():
@@ -115,7 +129,8 @@ def index(request, host_id, vname):
          image = re.sub('\/.*\/','', hdd_path)
          size = dom.blockInfo(hdd_path, 0)[0]
          return image, size
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_cdrom():
@@ -128,7 +143,8 @@ def index(request, host_id, vname):
             return image, cdr_path, size
          else:
             return cdr_path
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_boot_menu():
@@ -136,7 +152,8 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          boot_menu = util.get_xml_path(xml, "/domain/os/bootmenu/@enable")
          return boot_menu
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
       
    def mnt_iso_on(vol):
@@ -155,7 +172,8 @@ def index(request, host_id, vname):
          dom.attachDevice(xml)
          xmldom = dom.XMLDesc(0)
          conn.defineXML(xmldom)
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def mnt_iso_off(vol):
@@ -169,7 +187,8 @@ def index(request, host_id, vname):
          iso = "<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>\n      <source file='%s'/>" % vl.path()
          xmldom = xml.replace("<disk type='file' device='cdrom'>\n      <driver name='qemu' type='raw'/>", iso)
          conn.defineXML(xmldom)
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def umnt_iso_on():
@@ -182,7 +201,8 @@ def index(request, host_id, vname):
          dom.attachDevice(xml)
          xmldom = dom.XMLDesc(0)
          conn.defineXML(xmldom)
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def umnt_iso_off():
@@ -191,7 +211,8 @@ def index(request, host_id, vname):
          cdrom = get_vm_cdrom()[1]
          xmldom = xml.replace("<source file='%s'/>\n" % cdrom,"")
          conn.defineXML(xmldom)
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def find_all_iso():
@@ -204,25 +225,29 @@ def index(request, host_id, vname):
                if re.findall(".iso", img) or re.findall(".ISO", img):
                   iso.append(img)
          return iso
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
    
    def get_vm_autostart():
       try:
          return dom.autostart()
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def page_refresh():
       try:
          return HttpResponseRedirect('/vm/' + host_id + '/' + vname + '/' )
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_vm_state():
       try:
          return dom.info()[0]
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def vm_cpu_usage():
@@ -234,7 +259,8 @@ def index(request, host_id, vname):
          diff_usage = cpu_use_now - cpu_use_ago
          cpu_usage = 100 * diff_usage / (1 * nbcore * 10**9L)
          return cpu_usage
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_memusage():
@@ -243,14 +269,16 @@ def index(request, host_id, vname):
          dom_mem = dom.info()[1] * 1024
          percent = (dom_mem * 100) / allmem
          return allmem, percent
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_all_core():
       try:
          allcore = conn.getInfo()[2]
          return allcore
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
    
    def vm_create_snapshot():
@@ -263,23 +291,25 @@ def index(request, host_id, vname):
          xml += """<active>0</active>\n
                   </domainsnapshot>"""
          dom.snapshotCreateXML(xml,0)
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
    def get_snapshot_num():
       try:
          return dom.snapshotNum(0)
-      except:
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
          return "error"
 
-   conn = vm_conn(kvm_host.ipaddr, creds)
+   conn = vm_conn()
    errors = []
 
    if conn == None:
       return HttpResponseRedirect('/overview/' + host + '/')
 
-   all_vm = get_vms(conn)
-   dom = get_dom(conn, vname)
+   all_vm = get_vms()
+   dom = get_dom(vname)
    active = get_vm_active()
    state = get_vm_state()
    uuid = get_vm_uuid()
@@ -290,7 +320,7 @@ def index(request, host_id, vname):
    hdd = get_vm_hdd()
    boot_menu = get_vm_boot_menu()
    cdrom = get_vm_cdrom()
-   storages = get_storages(conn)
+   storages = get_storages()
    isos = find_all_iso()
    all_core = get_all_core()
    cpu_usage = vm_cpu_usage()
@@ -302,55 +332,85 @@ def index(request, host_id, vname):
       if request.POST.get('suspend',''):
          try:
             dom.suspend()
-         except:
+            msg = u'Приостановка виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возможно виртуальная машина уже приостаовлена')
       if request.POST.get('resume',''):
          try:
             dom.resume()
-         except:
+            msg = u'Восстановление виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возможно виртуальная машина уже возобновлена')
       if request.POST.get('start',''):
          try:
             dom.create()
-         except:
+            msg = u'Запуск виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возможно виртуальная машина уже запущена')
       if request.POST.get('shutdown',''):
          try:
             dom.shutdown()
-         except:
+            msg = u'Выключение виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возможно виртуальная машина уже выключена')
       if request.POST.get('destroy',''):
          try:
             dom.destroy()
-         except:
+            msg = u'Принудительное выключение виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возможно виртуальная машина уже выключена')
       if request.POST.get('save',''):
          try:
             dom.save(0)
-         except:
+            msg = u'Сохранение состояния виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возможно виртуальная машина уже сохранена')
       if request.POST.get('reboot',''):
          try:
             dom.destroy()
             dom.create()
-         except:
+            msg = u'Перезагрузка виртуальной машниы: %s' % (vname)
+            add_error(msg, 'user')
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: возникли проблемы при перезагрузке')
       if request.POST.get('snapshot',''):
          try:
             vm_create_snapshot()
+            msg = u'Создание снапшота для виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
             message = u'Снапшот для виртуальной машины %s успешно создан' % (vname)
             return render_to_response('vm.html', locals())
-         except:
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             errors.append(u'Ошибка: при создании снапшота')
       if request.POST.get('auto_on',''):
          try:
+            msg = u'Включение автозапуска виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
             dom.setAutostart(1)
-         except:
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             return "error"
       if request.POST.get('auto_off',''):
          try:
+            msg = u'Выключение автозапуска виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
             dom.setAutostart(0)
-         except:
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             return "error"
       if request.POST.get('disconnect',''):
          iso = request.POST.get('iso_img','')
@@ -367,8 +427,11 @@ def index(request, host_id, vname):
       if request.POST.get('undefine',''):
          try:
             dom.undefine()
+            msg = u'Удаление виртуальной машины: %s' % (vname)
+            add_error(msg, 'user')
             return HttpResponseRedirect('/overview/%s/' % (host_id))
-         except:
+         except libvirt.libvirtError as e:
+            add_error(e, 'libvirt')
             return "error"
       if not errors:
          return HttpResponseRedirect('/vm/%s/%s/' % (host_id, vname))

@@ -10,3 +10,13 @@ class Host(models.Model):
 
     def __unicode__(self):
         return self.hostname
+        
+class Log(models.Model):
+    host = models.ForeignKey(Host)
+    type = models.CharField(max_length=20)
+    message = models.CharField(max_length=255)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    user = models.ForeignKey(User)
+
+    def __unicode__(self):
+        return self.message

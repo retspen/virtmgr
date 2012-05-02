@@ -10,8 +10,12 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'is_staff','is_active',)
     list_filter = ('is_staff', 'is_superuser', 'is_active',)    
 
-class Hostadmin(admin.ModelAdmin):
+class HostAdmin(admin.ModelAdmin):
     list_display = ('hostname', 'ipaddr', 'login', 'user')
+    
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('type', 'message', 'date', 'user')
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Host, Hostadmin)
+admin.site.register(Host, HostAdmin)
+admin.site.register(Log, LogAdmin)

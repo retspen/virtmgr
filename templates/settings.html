@@ -54,7 +54,6 @@ Again (for verification): xxxxxx
 # sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
-<p><font color="red">Внимание</font>: будьте внимательны в нашем случае имя пользователя будет <code>fred@webvirtmgr.net</code>, а не <code>fred</code></p>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
@@ -70,8 +69,8 @@ fred@webvirtmgr.net: userPassword
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 # virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
-Please enter your authentication name: fred@webvirtmgr.net
-Please enter your password:
+Please enter your authentication name: fred
+Please enter your password: xxxxxx
 CPU model:           x86_64
 CPU(s):              2
 CPU frequency:       2611 MHz
@@ -127,7 +126,6 @@ Again (for verification): xxxxxx
 $ sudo sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
-<p><font color="red">Внимание</font>: будьте внимательны в нашем случае имя пользователя будет <code>fred@webvirtmgr.net</code>, а не <code>fred</code></p>
 
 <p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
 <pre>
@@ -150,8 +148,8 @@ $ sudo ufw allow from any to any app Libvirt
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 $ virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
-Please enter your authentication name: fred@webvirtmgr.net
-Please enter your password:
+Please enter your authentication name: fred
+Please enter your password: xxxxxx
 CPU model:           x86_64
 CPU(s):              2
 CPU frequency:       2611 MHz
@@ -162,6 +160,7 @@ NUMA cell(s):        1
 Memory size:         2019260 kB
 </pre>
 <p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
+<p><font color="red">Ubuntu-Server</font>: если Вы все настроили правильно, но все равно не проходит тест попробуйте добавить домен в имя пользователя который можно посмотреть командой <code>sasldblistusers2</code> описанной выше. Например: <strong>fred@webvirtmgr.net</strong></p>
 <p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
 </div>
 <br>

@@ -23,27 +23,31 @@ urlpatterns = patterns('',
     url(r'^dashboard/$', 'virtmgr.dashboard.views.index'),
 
     # NewVM
-    url(r'^newvm/(\w+)/$', 'virtmgr.newvm.views.index'),
+    url(r'^newvm/(\d+)/$', 'virtmgr.newvm.views.index'),
     url(r'^newvm/', 'virtmgr.newvm.views.redir'),
 
     # Overview
-    url(r'^overview/(\w+)/$', 'virtmgr.overview.views.index'),
+    url(r'^overview/(\d+)/$', 'virtmgr.overview.views.index'),
     url(r'^overview/', 'virtmgr.overview.views.redir'),
 
     # Storage
-    url(r'^storage/(\w+)/$', 'virtmgr.storage.views.index'),
-    url(r'^storage/(\w+)/(\w+)/$', 'virtmgr.storage.views.pool'),
+    url(r'^storage/(\d+)/$', 'virtmgr.storage.views.index'),
+    url(r'^storage/(\d+)/(\w+)/$', 'virtmgr.storage.views.pool'),
     url(r'^storage/', 'virtmgr.storage.views.redir'),
 
     # Network
-    url(r'^network/(\w+)/$', 'virtmgr.network.views.index'),
-    url(r'^network/(\w+)/(\w+)/$', 'virtmgr.network.views.pool'),
+    url(r'^network/(\d+)/$', 'virtmgr.network.views.index'),
+    url(r'^network/(\d+)/(\w+)/$', 'virtmgr.network.views.pool'),
     url(r'^network/', 'virtmgr.network.views.redir'),
 
     # Snapshot
-    url(r'^snapshot/(\w+)/$', 'virtmgr.snapshot.views.index'),
-    url(r'^snapshot/(\w+)/(\w+)/$', 'virtmgr.snapshot.views.snapshot'),
+    url(r'^snapshot/(\d+)/$', 'virtmgr.snapshot.views.index'),
+    url(r'^snapshot/(\d+)/(\w+)/$', 'virtmgr.snapshot.views.snapshot'),
     url(r'^snapshot/', 'virtmgr.snapshot.views.redir'),
+    
+    # Logs
+    url(r'^logs/(\d+)/$', 'virtmgr.logs.views.logs'),
+    url(r'^logs/', 'virtmgr.logs.views.redir'),
 
     # Interfaces
     #url(r'^interfaces/(\w+)/$', 'virtmgr.interfaces.views.index'),
@@ -51,13 +55,13 @@ urlpatterns = patterns('',
     #url(r'^interfaces/', 'virtmgr.interfaces.views.redir'),
 
     # VM
-    url(r'^vm/(\w+)/(\w+)/$', 'virtmgr.vm.views.index'),
-    url(r'^vm/(\w+)/$', 'virtmgr.vm.views.redir_two'),
+    url(r'^vm/(\d+)/(\w+)/$', 'virtmgr.vm.views.index'),
+    url(r'^vm/(\d+)/$', 'virtmgr.vm.views.redir_two'),
     url(r'^vm/', 'virtmgr.vm.views.redir_one'),
 
     # VNC
-    url(r'^vnc/(\w+)/(\w+)/$', 'virtmgr.vnc.views.index'),
-    url(r'^vnc/(\w+)/$', 'virtmgr.vnc.views.redir_two'),
+    url(r'^vnc/(\d+)/(\w+)/$', 'virtmgr.vnc.views.index'),
+    url(r'^vnc/(\d+)/$', 'virtmgr.vnc.views.redir_two'),
     url(r'^vnc/', 'virtmgr.vnc.views.redir_one'),
     
     # Media

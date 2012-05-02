@@ -5,51 +5,58 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
-def get_storages(conn):
-	try:
-		storages = {}
-		for name in conn.listStoragePools():
-			stg = conn.storagePoolLookupByName(name)
-			status = stg.isActive()
-			storages[name] = status
-		for name in conn.listDefinedStoragePools():
-			stg = conn.storagePoolLookupByName(name)
-			status = stg.isActive()
-			storages[name] = status
-		return storages
-	except:
-		print "Get storage failed"
-
-def vm_conn(host_ip, creds):
-   	try:
-		flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
-  		auth = [flags, creds, None]
-		uri = 'qemu+tcp://' + host_ip + '/system'
-	   	conn = libvirt.openAuth(uri, auth, 0)
-	   	return conn
-	except:
-		return "error"
-
-def get_vms(conn):
-   try:
-      vname = {}
-      for id in conn.listDomainsID():
-         id = int(id)
-         dom = conn.lookupByID(id)
-         vname[dom.name()] = dom.info()[0]
-      for id in conn.listDefinedDomains():
-         dom = conn.lookupByName(id)
-         vname[dom.name()] = dom.info()[0]
-      return vname
-   except:
-     return "error"
-
 def index(request, host_id):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
+
+	def add_error(msg):
+		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg.save()
+
+	def get_storages():
+		try:
+			storages = {}
+			for name in conn.listStoragePools():
+				stg = conn.storagePoolLookupByName(name)
+				status = stg.isActive()
+				storages[name] = status
+			for name in conn.listDefinedStoragePools():
+				stg = conn.storagePoolLookupByName(name)
+				status = stg.isActive()
+				storages[name] = status
+			return storages
+		except libvirt.libvirtError as e:
+			add_error(e)
+			return "error"
+
+	def vm_conn():
+	   	try:
+			flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+	  		auth = [flags, creds, None]
+			uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+		   	conn = libvirt.openAuth(uri, auth, 0)
+		   	return conn
+		except libvirt.libvirtError as e:
+			add_error(e)
+			return "error"
+
+	def get_vms():
+		try:
+			vname = {}
+			for id in conn.listDomainsID():
+				id = int(id)
+				dom = conn.lookupByID(id)
+				vname[dom.name()] = dom.info()[0]
+			for id in conn.listDefinedDomains():
+				dom = conn.lookupByName(id)
+				vname[dom.name()] = dom.info()[0]
+			return vname
+		except libvirt.libvirtError as e:
+			add_error(e)
+			return "error"
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -63,9 +70,9 @@ def index(request, host_id):
 				return -1
 		return 0
 
-	conn = vm_conn(kvm_host.ipaddr, creds)
-	storages = get_storages(conn)
-	all_vm = get_vms(conn)
+	conn = vm_conn()
+	storages = get_storages()
+	all_vm = get_vms()
 
 	if storages == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
@@ -80,6 +87,52 @@ def pool(request, host_id, pool):
 		return HttpResponseRedirect('/')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
+
+	def add_error(msg, type_err):
+		error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+		error_msg.save()
+
+	def get_storages():
+		try:
+			storages = {}
+			for name in conn.listStoragePools():
+				stg = conn.storagePoolLookupByName(name)
+				status = stg.isActive()
+				storages[name] = status
+			for name in conn.listDefinedStoragePools():
+				stg = conn.storagePoolLookupByName(name)
+				status = stg.isActive()
+				storages[name] = status
+			return storages
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
+			return "error"
+
+	def vm_conn():
+	   	try:
+			flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
+	  		auth = [flags, creds, None]
+			uri = 'qemu+tcp://' + kvm_host.ipaddr + '/system'
+		   	conn = libvirt.openAuth(uri, auth, 0)
+		   	return conn
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
+			return "error"
+
+	def get_vms():
+		try:
+			vname = {}
+			for id in conn.listDomainsID():
+				id = int(id)
+				dom = conn.lookupByID(id)
+				vname[dom.name()] = dom.info()[0]
+			for id in conn.listDefinedDomains():
+				dom = conn.lookupByName(id)
+				vname[dom.name()] = dom.info()[0]
+			return vname
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
+			return "error"
 
 	def creds(credentials, user_data):
 		for credential in credentials:
@@ -97,31 +150,36 @@ def pool(request, host_id, pool):
 		try:
 			stg = conn.storagePoolLookupByName(pool)
 			return stg
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def pool_start():
 		try:
 			stg.create(0)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def pool_stop():
 		try:
 			stg.destroy()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def pool_delete():
 		try:
 			stg.undefine()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 			
 	def pool_refresh():
 		try:
 			stg.refresh(0)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def get_stg_info(get):
@@ -137,35 +195,40 @@ def pool(request, host_id, pool):
 				return stg.autostart()
 			elif get == "list":
 				return stg.listVolumes()
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def get_type():
 		try:
 			xml = stg.XMLDesc(0)
 			return util.get_xml_path(xml, "/pool/@type")
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def get_target_path():
 		try:
 			xml = stg.XMLDesc(0)
 			return util.get_xml_path(xml, "/pool/target/path")
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def delete_volume(img):
 		try:
 			vol = stg.storageVolLookupByName(img)
 			vol.delete(0)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def stg_set_autostart(pool):
 		try:
 			stg = conn.storagePoolLookupByName(pool)
 			stg.setAutostart(1)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def create_volume(img, size_max):
@@ -181,7 +244,8 @@ def pool(request, host_id, pool):
 					</target>
 				</volume>""" % (img, size_max)
 			stg.createXML(xml,0)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def create_stg_pool(name_pool, path_pool):
@@ -194,7 +258,8 @@ def pool(request, host_id, pool):
 						</target>
 				</pool>""" % (name_pool, path_pool)
 			conn.storagePoolDefineXML(xml,0)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def clone_volume(img, new_img):
@@ -210,7 +275,8 @@ def pool(request, host_id, pool):
 					</target>
 				</volume>""" % (new_img)
 			stg.createXMLFrom(xml, vol, 0)
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 
 	def get_vl_info(listvol):
@@ -224,17 +290,18 @@ def pool(request, host_id, pool):
 					format = util.get_xml_path(xml, "/volume/target/format/@type")
 	 				volinfo[name] = size,format
 			return volinfo
-		except:
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
 			return "error"
 	
-	conn = vm_conn(kvm_host.ipaddr, creds)
+	conn = vm_conn()
 	errors = []
 
 	if conn == None:
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
-	pools = get_storages(conn)
-	all_vm = get_vms(conn)
+	pools = get_storages()
+	all_vm = get_vms()
 
 	if pool == "new_stg_pool":
 		if request.method == 'POST':
@@ -242,22 +309,31 @@ def pool(request, host_id, pool):
 			path_pool = request.POST.get('path_pool','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
-				errors.append(u'Название пула не должно превышать 20 символов')
+				msg = u'Название пула не должно превышать 20 символов'
+				errors.append(msg)
 			if simbol:
-				errors.append(u'Название пула не должно содержать символы и русские буквы')
+				msg = u'Название пула не должно содержать символы и русские буквы'
+				errors.append(msg)
 			if not name_pool:
-				errors.append(u'Введите имя пула')
+				msg = u'Введите имя пула'
+				errors.append(msg)
 			if not path_pool:
-				errors.append(u'Введите путь пула')
+				msg = u'Введите путь пула'
+				errors.append(msg)
 			if not errors:
 				if create_stg_pool(name_pool, path_pool) is "error":
-					errors.append(u'Возможно пул с такими данными существует')
+					msg = u'Возможно пул с такими данными существует'
+					errors.append(msg)
 				else:
 					stg = get_conn_pool(name_pool)
 					stg_set_autostart(name_pool)
 					if pool_start() is "error":
-						errors.append(u'Пул создан, но при запуске пула возникла ошибка, возможно указан не существующий путь')
+						msg = u'Пул создан, но при запуске пула возникла ошибка, возможно указан не существующий путь'
+						errors.append(msg)
+						return HttpResponseRedirect('/storage/%s/%s/' % (host_id, name_pool))
 					else:
+						msg = u'Создание пула хранилища: %s' % (name_pool)
+						add_error(msg,'user')
 						return HttpResponseRedirect('/storage/%s/%s/' % (host_id, name_pool))
 				if errors:
 					return render_to_response('storage_new.html', locals())
@@ -267,43 +343,57 @@ def pool(request, host_id, pool):
 	status = get_stg_info('status')
 	if status == 1:
 		pool_refresh()
-	info = get_stg_info('info')
-	stype = get_type()
-	spath = get_target_path()
-	start = get_stg_info('start')
-	listvol = get_stg_info('list')
-	volinfo = get_vl_info(listvol)
-	hdd_size = range(1,101)
+		info = get_stg_info('info')
+		stype = get_type()
+		spath = get_target_path()
+		start = get_stg_info('start')
+		listvol = get_stg_info('list')
+		volinfo = get_vl_info(listvol)
+		hdd_size = range(1,101)
 	errors = []
 
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
 			pool_stop()
+			msg = u'Остановка пула хранилища: %s' % (pool)
+			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('start_pool',''):
 			pool_start()
+			msg = u'Запуск пула хранилища: %s' % (pool)
+			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('del_pool',''):
 			pool_delete()
+			msg = u'Удаление пула хранилища: %s' % (pool)
+			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/' % (host_id))
 		if request.POST.get('vol_del',''):
 			img = request.POST['img']
 			delete_volume(img)
+			msg = u'Удаление образа: %s' % (img)
+			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('vol_add',''):
 			img = request.POST.get('img','')
 			size_max = request.POST.get('size_max','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', img)
 			if len(img) > 20:
-				errors.append(u'Название пула не должно превышать 20 символов')
+				msg = u'Название пула не должно превышать 20 символов'
+				errors.append(msg)
 			if simbol:
-				errors.append(u'Название пула не должно содержать символы и русские буквы')
+				msg = u'Название пула не должно содержать символы и русские буквы'
+				errors.append(msg)
 			if not img:
-				errors.append(u'Введите имя образа')
+				msg = u'Введите имя образа'
+				errors.append(msg)
 			if not size_max:
-				errors.append(u'Введите размер образа')
+				msg = u'Введите размер образа'
+				errors.append(msg)
 			if not errors:
 				create_volume(img, size_max)
+				msg = u'Создание образа %s.img' % (img)
+				add_error(msg,'user')
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('vol_clone',''):
 			img = request.POST.get('img','')
@@ -311,17 +401,24 @@ def pool(request, host_id, pool):
 			simbol = re.search('[^a-zA-Z0-9\_]+', new_img)
 			new_img = new_img + '.img'
 			if new_img == '.img':
-				errors.append(u'Введите имя образа')
+				msg = u'Введите имя образа'
+				errors.append(msg)
 			if len(new_img) > 20:
-				errors.append(u'Название пула не должно превышать 20 символов')
+				msg = u'Название пула не должно превышать 20 символов'
+				errors.append(msg)
 			if simbol:
-				errors.append(u'Название пула не должно содержать символы и русские буквы')
+				msg = u'Название пула не должно содержать символы и русские буквы'
+				errors.append(msg)
 			if new_img in listvol:
-				errors.append(u'Образ с таким именем уже существует')
+				msg = u'Образ с таким именем уже существует'
+				errors.append(msg)
 			if re.search('.ISO', img) or re.search('.iso', img):
-				errors.append(u'Клонировать можно только образы виртуальных машин')
+				msg = u'Клонировать можно только образы виртуальных машин'
+				errors.append(msg)
 			if not errors:
 				clone_volume(img, new_img)
+				msg = u'Клонирование образа: %s в %s' % (img, new_img)
+				add_error(msg,'user')
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 
 	conn.close()
