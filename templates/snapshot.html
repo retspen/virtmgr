@@ -22,7 +22,7 @@
                 {% if name == vname %}
                 <li class="active"><a href="/snapshot/{{ host_id }}/{{ name }}/"><i class="icon-th icon-white"></i> {{ name }}</a></li>
                 {% else %}
-                <li><a href="/snapshot/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th"></i> {{ name }}</font></a></li>
+                <li><a href="/snapshot/{{ host_id }}/{{ name }}/"><font color="{% if status == 1 %}green{% endif %}{% if status == 5 %}red{% endif %}{% if status == 3 %}orange{% endif %}"><i class="icon-th"></i> {{ name }}</font></a></li>
                 {% endif %}
                 {% endfor %}
               <li class="nav-header">Виртуальные машины</li>
