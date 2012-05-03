@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+     <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Главное меню</li>
+              	<li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
+              	<li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
+			  <li class="nav-header"></i>Настройки сервера</li>
+			  	<li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+			  	<li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
+			  	<li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
+			  	<li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
+			  	<li class="active"><a href="/logs/{{ host_id }}/"><i class="icon-list-alt icon-white"></i>Логи</a></li>
+              <li class="nav-header">Виртуальные машины</li>
+	           {% if not all_vm %}
+			   <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+	   	       {% endif %}
+			   {% for name, state in all_vm.items %}
+			   <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+			   {% endfor %}
+            </ul>
+          </div>
+        </div>
+		<div class="span8 well">
+			<div class="page-header">
+   				<h2>Логи сервера {{ kvm_host.hostname }}</h2>
+   			</div>
+  		    {% if errors %}
+			    {% for error in errors %}
+			      <div class="alert alert-error">
+			      	<a class="close" data-dismiss="alert">&times;</a>
+			    	{{ error }}
+			      </div>
+			    {% endfor %}
+			{% endif %}
+			{% if all_logs %}
+			<table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>№:</th>
+                <th>Тип</th>
+                <th>Сообщение</th>
+                <th>Дата</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for name in all_logs %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td><font color="{% if name.type == "user"%}green{% else %}red{% endif %}">{{ name.type }}</font></td>
+                  <td>{{ name.message }}</td>
+                  <td>{{ name.date|date:"M d H:i:s" }}</td>
+                </tr>
+                {% endfor %}
+          </tbody>
+          </table>
+          {% else %}
+          <h4>У Вас отсутствуют какие либо логи</h4>
+          {% endif %}
+        </div>
+    </div>
+{% endblock %}
