@@ -340,7 +340,7 @@ def index(request, host_id, vname):
       if request.POST.get('resume',''):
          try:
             dom.resume()
-            msg = u'Восстановление виртуальной машины: %s' % (vname)
+            msg = u'Возобновление виртуальной машины: %s' % (vname)
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')

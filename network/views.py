@@ -29,7 +29,7 @@ def index(request, host_id):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except libvirt.libvirtError as e:
-			add_error(msg)
+			add_error(e)
 			return "error"
 
 	def get_networks():
@@ -45,7 +45,7 @@ def index(request, host_id):
 				networks[name] = status
 			return networks
 		except libvirt.libvirtError as e:
-			add_error(msg)
+			add_error(e)
 			return "error"
 
 	def vm_conn():
@@ -56,7 +56,7 @@ def index(request, host_id):
 			conn = libvirt.openAuth(uri, auth, 0)
 			return conn
 		except libvirt.libvirtError as e:
-			add_error(msg)
+			add_error(e)
 			return "error"
 
 	def creds(credentials, user_data):
@@ -72,6 +72,10 @@ def index(request, host_id):
 		return 0
 
 	conn = vm_conn()
+
+	if conn == "error":
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
+
 	networks = get_networks()
 	all_vm = get_vms()
 

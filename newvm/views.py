@@ -36,7 +36,7 @@ def index(request, host_id):
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_all_vm():
@@ -51,7 +51,7 @@ def index(request, host_id):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 	
 	def get_all_stg():
@@ -63,7 +63,7 @@ def index(request, host_id):
 				storages.append(name)
 			return storages
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_all_net():
@@ -82,7 +82,7 @@ def index(request, host_id):
 			#		networks.append(ifcfg)
 			return networks
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 	
 	def get_arch():
@@ -90,7 +90,7 @@ def index(request, host_id):
 			arch = conn.getInfo()[0]
 			return arch
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def find_all_iso():
@@ -104,7 +104,7 @@ def index(request, host_id):
 						iso.append(img)
 			return iso
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def find_all_img():
@@ -118,7 +118,7 @@ def index(request, host_id):
 						disk.append(img)
 			return disk
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 	
 	def get_img_path(vol):
@@ -130,7 +130,7 @@ def index(request, host_id):
 						vl = stg.storageVolLookupByName(vol)
 						return vl.path()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_img_format(vol):
@@ -144,21 +144,21 @@ def index(request, host_id):
 						format = util.get_xml_path(xml, "/volume/target/format/@type")
 						return format
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_cpus():
 		try:
 			return conn.getInfo()[2]
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 	
 	def get_mem():
 		try:
 			return conn.getInfo()[1]
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_emulator():
@@ -173,7 +173,7 @@ def index(request, host_id):
 				emulator = util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name")
 			return emulator
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_machine():
@@ -182,7 +182,7 @@ def index(request, host_id):
 			machine = util.get_xml_path(xml,"/capabilities/guest/arch/machine/@canonical")
 			return machine
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 	
 	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
@@ -264,13 +264,15 @@ def index(request, host_id):
 					</domain>"""
 			conn.defineXML(xml)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	conn = vm_conn()
 
-	if conn == None:
-		return HttpResponseRedirect('/overview/' + host + '/')
+	print conn
+
+	if conn == "error":
+		return HttpResponseRedirect('/overview/' + host_id + '/')
 
 	errors = []
 	cores = get_cpus()

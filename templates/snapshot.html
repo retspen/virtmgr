@@ -64,7 +64,7 @@
                 {% for name, time in vm_snapshot.items %}
                 <tr>
                   <td><strong>{{ name }}<strong></td>
-                  <td>{{ time.0 }}</td>
+                  <td>{{ time.0|date:"M d H:i:s" }}</td>
                   <td>
                     <form action="/snapshot/{{ host_id }}/{{ vname }}/" method="post">
                       <input type="hidden" name="name" value="{{ name }}">

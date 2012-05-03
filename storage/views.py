@@ -71,6 +71,10 @@ def index(request, host_id):
 		return 0
 
 	conn = vm_conn()
+
+	if conn == "error":
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
+
 	storages = get_storages()
 	all_vm = get_vms()
 
@@ -297,7 +301,7 @@ def pool(request, host_id, pool):
 	conn = vm_conn()
 	errors = []
 
-	if conn == None:
+	if conn == "error":
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
 	pools = get_storages()

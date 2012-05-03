@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 import libvirt, re, time
 import virtinst.util as util
 from virtmgr.network.IPy import IP
@@ -73,6 +74,10 @@ def index(request, host_id):
 		return 0
 
 	conn = vm_conn()
+
+	if conn == "error":
+		return HttpResponseRedirect('/overview/%s/' % (host_id))
+
 	all_vm_snapshots = get_vm_snapshots()
 	all_vm = get_vms()
 
@@ -160,7 +165,7 @@ def snapshot(request, host_id, vname):
 			snapshots = {}
 			all_snapshot = dom.snapshotListNames(0)
 			for snapshot in all_snapshot:
-				snapshots[snapshot] = (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(snapshot))), dom.info()[0])
+				snapshots[snapshot] = (datetime.fromtimestamp(int(snapshot)), dom.info()[0])
 			return snapshots
 		except libvirt.libvirtError as e:
 			add_error(e)
