@@ -14,7 +14,7 @@
                 <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
                 <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
                 <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>Логи</a></li>
-              <li class="nav-header">Список снапшотов</li>
+              <li class="nav-header">Снапшоты вм</li>
                 {% if not all_vm_snapshots %}
                 <li><i class="icon-remove"></i><strong>Отсутствуют</strong></li>
                 {% endif %}
@@ -35,9 +35,9 @@
             </ul>
           </div>
         </div>
-    <div class="span8 well">
+    <div class="span8">
       <div class="page-header">
-          <h2>Снапшоты сервера {{ kvm_host.hostname }}</h2>
+          <h2>Снапшоты виртуальной машины <a href="/vm/{{ host_id }}/{{ vname }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}">{{ vname }}</font></a></h2>
         </div>
         {% if message %}
             <div class="alert alert-info">
@@ -49,8 +49,6 @@
         <br>
         <h4>У Вас отсутствуют какие либо снапшоты</h4>
         {% else %}
-        <h3>{{ vname }}</h3>
-        <br>
           <table class="table table-condensed">
             <thead>
               <tr>
