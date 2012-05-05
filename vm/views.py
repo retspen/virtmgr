@@ -155,6 +155,27 @@ def index(request, host_id, vname):
       except libvirt.libvirtError as e:
          add_error(msg, 'libvirt')
          return "error"
+   
+   def get_vm_arch():
+      try:
+         xml = dom.XMLDesc(0)
+         arch = util.get_xml_path(xml, "/domain/os/type/@arch")
+         return arch
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
+         return "error"
+
+   def get_vm_nic():
+      try:
+         xml = dom.XMLDesc(0)
+         mac = util.get_xml_path(xml, "/domain/devices/interface/mac/@address")
+         nic = util.get_xml_path(xml, "/domain/devices/interface/source/@network")
+         if nic is None:
+         	nic = util.get_xml_path(xml, "/domain/devices/interface/source/@bridge")
+         return mac, nic
+      except libvirt.libvirtError as e:
+         add_error(msg, 'libvirt')
+         return "error"
       
    def mnt_iso_on(vol):
       try:
@@ -280,7 +301,7 @@ def index(request, host_id, vname):
       except libvirt.libvirtError as e:
          add_error(msg, 'libvirt')
          return "error"
-   
+
    def vm_create_snapshot():
       try:
          xml = """<domainsnapshot>\n
@@ -319,6 +340,8 @@ def index(request, host_id, vname):
    vnc_port = get_vm_vnc()
    hdd = get_vm_hdd()
    boot_menu = get_vm_boot_menu()
+   vm_arch = get_vm_arch()
+   vm_nic = get_vm_nic()
    cdrom = get_vm_cdrom()
    storages = get_storages()
    isos = find_all_iso()
