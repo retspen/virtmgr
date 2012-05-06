@@ -1,0 +1,217 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Anatoliy Guskov <anatoliy.guskov@gmail.com>, 2012.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-06 16:15+0300\n"
+"PO-Revision-Date: 2012-05-06 14:41+0300\n"
+"Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
+"Language-Team: RU <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: templates/base.html:43
+msgid "Features"
+msgstr "Особенности"
+
+#: templates/base.html:44
+msgid "Screenshots"
+msgstr "Скриншоты"
+
+#: templates/base.html:45
+msgid "Docs"
+msgstr "Документация"
+
+#: templates/base.html:46
+msgid "Support"
+msgstr "Поддержка"
+
+#: templates/base.html:53
+msgid "Sign out"
+msgstr "Выйти"
+
+#: templates/base.html:58 templates/index.html:16
+#: templates/registration/login.html:14 templates/registration/login.html:20
+msgid "Sign in"
+msgstr "Войти"
+
+#: templates/dashboard.html:6
+msgid "Dashboard"
+msgstr "Центр управления"
+
+#: templates/dashboard.html:12 templates/dashboard.html.py:58
+msgid "Hostname"
+msgstr "Имя хоста"
+
+#: templates/dashboard.html:13 templates/dashboard.html.py:64
+msgid "IP address"
+msgstr "IP адрес"
+
+#: templates/dashboard.html:14 templates/dashboard.html.py:70
+msgid "KVM login"
+msgstr "KVM логин"
+
+#: templates/dashboard.html:15
+msgid "Status"
+msgstr "Статус"
+
+#: templates/dashboard.html:16
+msgid "Action"
+msgstr "Действие"
+
+#: templates/dashboard.html:25
+msgid "available"
+msgstr "доступен"
+
+#: templates/dashboard.html:25
+msgid "not available"
+msgstr "не доступен"
+
+#: templates/dashboard.html:26
+msgid "Manage"
+msgstr "Управление"
+
+#: templates/dashboard.html:31
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/dashboard.html:47
+msgid "You have no connection to the host"
+msgstr "У Вас отсутствуют подключения к хостам"
+
+#: templates/dashboard.html:52
+#, fuzzy
+msgid "Add new host"
+msgstr "Подключить новый хост"
+
+#: templates/dashboard.html:76
+#, fuzzy
+msgid "KVM password"
+msgstr "Забыли пароль?"
+
+#: templates/dashboard.html:84
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/dashboard.html:85
+msgid "Add"
+msgstr "Добавить"
+
+#: templates/dashboard.html:89
+msgid "Add connect"
+msgstr "Подключить"
+
+#: templates/index.html:7
+msgid ""
+"<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web "
+"interface for managing virtual machines. It allows you to create and "
+"configure new domains, and adjust a domain's resource allocation. A VNC "
+"viewer over a SSH tunnel presents a full graphical console to the guest "
+"domain. <strong>KVM</strong> is currently the only hypervisor supported"
+msgstr ""
+"<strong>WebVirtMgr</strong> сервис централизованного управления виртуальными "
+"машинами. В качестве основных технологий используются: гипервизор "
+"<strong>KVM</strong> и библиотека управления виртуализацией <strong>libvirt</"
+"strong>. Создание, установка, резервное копирование, настройка и запуск "
+"виртуальных машин реализованы в виде простого для освоения web-интерфейса. "
+"Для организации проброса экрана виртуальных машин в окно браузера "
+"используется VNC-клиент через SSH-туннель"
+
+#: templates/index.html:8 templates/index.html.py:14
+msgid "Sign up"
+msgstr "Зарегистрироваться"
+
+#: templates/index.html:12
+msgid "Where to start?"
+msgstr "С чего начать?"
+
+#: templates/index.html:14
+msgid "and to confirm registration"
+msgstr "и подтвердить регистрацию"
+
+#: templates/index.html:15
+msgid "Install and"
+msgstr "Установить и"
+
+#: templates/index.html:15
+msgid "configure"
+msgstr "настроить"
+
+#: templates/index.html:15
+msgid "libvirt and KVM on your server"
+msgstr "libvirt и KVM на вашем сервере"
+
+#: templates/index.html:16
+msgid "and add your server to its management"
+msgstr "и добавить ваш сервер для его управления"
+
+#: templates/index.html:19
+msgid "Having problems?"
+msgstr "Возникли проблемы?"
+
+#: templates/index.html:21
+msgid ""
+"If you have any problems working with the service we are always ready to "
+"help you"
+msgstr ""
+"Если у вас возникли проблемы по работе с сервисом мы всегда готовы Вам помочь"
+
+#: templates/index.html:22
+msgid "Contact us by email"
+msgstr "Напишите нам на email"
+
+#: templates/registration/activate.html:7
+#: templates/registration/activation_complete.html:7
+msgid "Your account has been successfully activated"
+msgstr "Ваш аккаунт уже был успешно активирован"
+
+#: templates/registration/activation_complete.html:8
+msgid "You can"
+msgstr "Теперь Вы можете выполнить"
+
+#: templates/registration/activation_complete.html:8
+msgid "sing in"
+msgstr "вход"
+
+#: templates/registration/login.html:8
+#: templates/registration/password_reset_form.html:8
+#: templates/registration/registration_form.html:8
+msgid "You have already sign in!"
+msgstr "Вы уже вошли!"
+
+#: templates/registration/login.html:18
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: templates/registration/logout.html:7
+msgid "Logout"
+msgstr "Выход"
+
+#: templates/registration/password_reset_form.html:14
+msgid "Password recovery"
+msgstr "Восстановление пароля"
+
+#: templates/registration/password_reset_form.html:18
+msgid "Rocevery"
+msgstr "Восстановить"
+
+#: templates/registration/registration_complete.html:7
+msgid "Thank you for registering on our website."
+msgstr "Спасибо за регистрацию на нашем сайте."
+
+#: templates/registration/registration_complete.html:7
+msgid "In your email send link to activate your account."
+msgstr "На Ваш email отправлена ссылка для активации учетной записи."
+
+#: templates/registration/registration_form.html:14
+msgid "Registration"
+msgstr "Регистрация"

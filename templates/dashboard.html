@@ -1,19 +1,19 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
    <div class="container">
       <div class="hero-unit">
-        <h2>Центр управления</h2>
+        <h2>{% trans "Dashboard" %}</h2>
         <hr>  
         {% if host_info %}
         <table class="table table-condensed">
             <thead>
               <tr>
-                <th>Имя хоста:</th>
-                <th>IP address:</th>
-                <th>KVM логин:</th>
-                <th>Статус:</th>
-                <th>Управление</th>
-                <th>Действие</th>
+                <th>{% trans "Hostname" %}</th>
+                <th>{% trans "IP address" %}</th>
+                <th>{% trans "KVM login" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th colspan="2">{% trans "Action" %}</th>
               </tr>
             </thead>
             <tbody>
@@ -22,13 +22,13 @@
                   <td>{{ name }}</td>
                   <td>{{ info.1 }}</td>
                   <td>{{ info.2 }}</td>
-                  <td>{% if info.4 == 1 %}<font color="green">доступен</font>{% else %}<font color="red">не доступен</font>{% endif %}</td>
-                  <td>{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{ info.0 }}/'">Управление</button>{% else %}<a href="#" class="btn btn-primary disabled">Управление</a>{% endif %}
+                  <td>{% if info.4 == 1 %}<font color="green">{% trans "available" %}</font>{% else %}<font color="red">{% trans "not available" %}</font>{% endif %}</td>
+                  <td style="width:60px;">{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{ info.0 }}/'">{% trans "Manage" %}</button>{% else %}<a href="#" class="btn btn-primary disabled">{% trans "Manage" %}</a>{% endif %}
                   </td>
                   <td>
                     <form action="/dashboard/" method="post">
                       <input type="hidden" name="host" value="{{name}}">
-                      <input type="submit" class="btn btn-primary" name="delete" value="Удалить" onclick="return confirm('Вы уверены?')">
+                      <input type="submit" class="btn btn-primary" name="delete" value="{% trans "Delete" %}" onclick="return confirm('Вы уверены?')">
                     </form>
                   </td>
                 </tr>
@@ -44,36 +44,36 @@
           {% endfor %}
         {% endif %}
         {% else %}
-          <h4>У Вас отсутствуют подключения к хостам.</h4><br>
+          <h4>{% trans "You have no connection to the host" %}</h4><br>
         {% endif %}
         <div id="myModal" class="modal hide fade">
             <div class="modal-header">
               <button class="close" data-dismiss="modal">&times;</button>
-                <h3>Подключить новый хост</h3>
+                <h3>{% trans "Add new host" %}</h3>
             </div>
          <div class="modal-body">
             <form class="form-horizontal" action="/dashboard/" method="post">
               <fieldset>
                 <div class="control-group">
-                <label class="control-label">Имя хоста</label>
+                <label class="control-label">{% trans "Hostname" %}</label>
                   <div class="controls">
                     <input type="text" name="name" class="input-large focused" placeholder="Name">
                   </div>
                  </div>
                 <div class="control-group">
-                <label class="control-label">IP адрес</label>
+                <label class="control-label">{% trans "IP address" %}</label>
                   <div class="controls">
                     <input type="text" name="ipaddr" class="input-large" placeholder="192.168.1.1">
                   </div>
                 </div>
                 <div class="control-group">
-                <label class="control-label">KVM Логин</label>
+                <label class="control-label">{% trans "KVM login" %}</label>
                   <div class="controls">
                     <input type="text" name="sshusr" class="input-large" placeholder="Name">
                   </div>
                 </div>
                 <div class="control-group">
-                <label class="control-label">KVM Пароль</label>
+                <label class="control-label">{% trans "KVM password" %}</label>
                   <div class="controls">
                     <input type="password" name="passw" class="input-large" placeholder="Password">
                   </div>
@@ -81,11 +81,11 @@
                 </fieldset>
             </div>
             <div class="modal-footer">
-              <a href="#" class="btn" data-dismiss="modal">Отмена</a>
-                <input type="submit" class="btn btn-primary" name="add" value="Добавить">
+              <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+                <input type="submit" class="btn btn-primary" name="add" value="{% trans "Add" %}">
              </form>
             </div>
           </div>            
-         <a data-toggle="modal" href="#myModal" class="btn btn-primary">Подключить</a>
+         <a data-toggle="modal" href="#myModal" class="btn btn-primary">{% trans "Add connect" %}</a>
    </div>
 {% endblock %}

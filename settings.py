@@ -37,8 +37,7 @@ TIME_ZONE = 'Europe/Zaporozhye'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'ru-RU'
-#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 SITE_ID = 1
 
@@ -72,6 +71,11 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+LANGUAGES = (
+   ('ru', 'Russian'),
+   ('en', 'English'),
 )
 
 MIDDLEWARE_CLASSES = (

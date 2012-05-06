@@ -1,24 +1,25 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
    <div class="container">
       <div class="hero-unit">
         <h1>Web Virtual Manager</h1><br>
-        <p><strong>WebVirtMgr</strong> сервис централизованного управления виртуальными машинами. В качестве основных технологий используются: гипервизор <strong>KVM</strong> и библиотека управления виртуализацией <strong>libvirt</strong>. Создание, установка, резервное копирование, настройка и запуск виртуальных машин реализованы в виде простого для освоения web-интерфейса. Для организации проброса экрана виртуальных машин в окно браузера используется VNC-клиент через SSH-туннель.</p><br>
-        <p><a class="btn btn-success btn-large" href="/user/register"><strong>Зарегистрироваться</strong></a></p>
+         <p>{% trans "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web interface for managing virtual machines. It allows you to create and configure new domains, and adjust a domain's resource allocation. A VNC viewer over a SSH tunnel presents a full graphical console to the guest domain. <strong>KVM</strong> is currently the only hypervisor supported" %}</p><br> 
+        <p><a class="btn btn-success btn-large" href="/user/register"><strong>{% trans "Sign up" %}</strong></a></p>
       </div>
       <div class="row">
         <div class="well span6">
-          <h2>С чего начать?</h2>
+          <h2>{% trans "Where to start?" %}</h2>
           <br>
-          <p>1. <a href=/user/register/>Зарегистрироваться</a> и подтвердить регистрацию.</p>
-          <p>2. Установить и <a href=/docs/settings/>настроить</a> libvirt и KVM на вашем сервере.</p>
-          <p>3. <a href=/user/login/>Войти</a> и добавить ваш сервер для его управления.</p>
+          <p>1. <a href=/user/register/>{% trans "Sign up" %}</a> {% trans "and to confirm registration" %}</p>
+          <p>2. {% trans "Install and" %} <a href=/docs/settings/>{% trans "configure" %}</a> {% trans "libvirt and KVM on your server" %}</p>
+          <p>3. <a href=/user/login/>{% trans "Sign in" %}</a> {% trans "and add your server to its management" %}</p>
         </div>
         <div class="well span5">
-          <h2>Возникли проблемы?</h2>
+          <h2>{% trans "Having problems?" %}</h2>
           <br>
-          <p>Если у вас возникли проблемы по работе с сервисом мы всегда готовы Вам помочь.</p>
-          <p>Напишите нам на email <a href="mailto:support@webvirtmgr.net">support@webvirtmgr.net</a></p>
+          <p>{% trans "If you have any problems working with the service we are always ready to help you" %}</p>
+          <p>{% trans "Contact us by email" %} <a href="mailto:support@webvirtmgr.net">support@webvirtmgr.net</a></p>
         </div>
       </div>
 {% endblock %}

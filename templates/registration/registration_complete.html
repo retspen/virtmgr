@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
    <div class="container">
       <div class="hero-unit">
         <h1>Web Virtual Manager</h1><br>
-        <p>Спасибо за регистрацию на нашем сайте. <br>На Ваш email отправлена ссылка для активации учетной записи.</p>
+        <p>{% trans "Thank you for registering on our website." %} <br>{% trans "In your email send link to activate your account." %}</p>
       </div>
 {% endblock %}

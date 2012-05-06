@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
  {% if user.is_authenticated %}
       <div class="container">
       <div class="hero-unit">
         <h1>Web Virtual Manager</h1><br>
-        <p>Вы уже вошли!</p>
+        <p>{% trans "You have already sign in!" %}</p>
       </div>
   {% else %}
     <div class="container">
         <div class="row show-grid">
           <div class="span4 offset4" style="width:265px;">
-            <h2>Регистрация</h2><br>
+            <h2>{% trans "Registration" %}</h2><br>
             <form class="well" id="gaia_loginform" action="" method="post">
               {{ form }}
               <br><br>
