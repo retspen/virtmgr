@@ -66,7 +66,6 @@
               </div>
                 <div class="span2">
                   <p>Название</p>
-                  <p>Архитектура</p>
                   <p>Статус</p>
                   <p>Сеть</p>
                   <p>Ядра</p>
@@ -78,8 +77,7 @@
                   <p>Образ CD</p>
                 </div>
                 <div class="span4">
-                  <p><strong>{{ vname }}</strong></p>
-                  <p>{{ vm_arch }}</p>
+                  <p><strong>{{ vname }}</strong> ({{ vm_arch }})</p>
                   <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
                   <p>{{ vm_nic.0 }} ({{ vm_nic.1 }})</p>
                   <p>выделено {{ core }} из {{ all_core }}</p>
