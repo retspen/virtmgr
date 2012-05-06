@@ -269,8 +269,6 @@ def index(request, host_id):
 
 	conn = vm_conn()
 
-	print conn
-
 	if conn == "error":
 		return HttpResponseRedirect('/overview/' + host_id + '/')
 

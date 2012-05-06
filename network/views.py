@@ -109,7 +109,7 @@ def pool(request, host_id, pool):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_networks():
@@ -125,7 +125,7 @@ def pool(request, host_id, pool):
 				networks[name] = status
 			return networks
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def vm_conn():
@@ -136,7 +136,7 @@ def pool(request, host_id, pool):
 			conn = libvirt.openAuth(uri, auth, 0)
 			return conn
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def creds(credentials, user_data):
@@ -156,28 +156,28 @@ def pool(request, host_id, pool):
 			net = conn.networkLookupByName(pool)
 			return net
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def pool_start():
 		try:
 			net.create()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def pool_stop():
 		try:
 			net.destroy()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def pool_delete():
 		try:
 			net.undefine()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def net_set_autostart(pool):
@@ -185,7 +185,7 @@ def pool(request, host_id, pool):
 			net = conn.networkLookupByName(pool)
 			net.setAutostart(1)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_net_info(get):
@@ -197,7 +197,7 @@ def pool(request, host_id, pool):
 			elif get == "start":
 				return net.autostart()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_ipv4_net():
@@ -213,7 +213,7 @@ def pool(request, host_id, pool):
 			network = IP(gateway.int() & netmask.int())
 			return IP(str(network) + "/" + netmaskStr)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_ipv4_dhcp_range():
@@ -227,7 +227,7 @@ def pool(request, host_id, pool):
 			
 			return [IP(dhcpstart), IP(dhcpend)]
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_ipv4_forward():
@@ -237,7 +237,7 @@ def pool(request, host_id, pool):
 			forwardDev = util.get_xml_path(xml, "/network/forward/@dev")
 			return [fw, forwardDev]
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def create_net_pool(name_pool, forward, ipaddr, netmask, dhcp, start_dhcp, end_dhcp):
@@ -261,7 +261,7 @@ def pool(request, host_id, pool):
 				</network>"""
 			conn.networkDefineXML(xml)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	conn = vm_conn()
