@@ -39,6 +39,11 @@ TIME_ZONE = 'Europe/Zaporozhye'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'ru'
 
+LANGUAGES = (
+	('ru', 'Russian'),
+	('en', 'English'),
+)
+
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -71,11 +76,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
-)
-
-LANGUAGES = (
-   ('ru', 'Russian'),
-   ('en', 'English'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -119,5 +119,5 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'Web Virtual Manager Machine <noreply@x-sys.com.ua>'
+DEFAULT_FROM_EMAIL = 'Web Virtual Manager <noreply@x-sys.com.ua>'
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import libvirt, re
 import virtinst.util as util
+from django.utils.translation import ugettext_lazy as _
 from virtmgr.network.IPy import IP
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -281,16 +282,16 @@ def pool(request, host_id, pool):
 			dhcp = request.POST.get('dhcp','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
-				msg = u'Название пула не должно превышать 20 символов'
+				msg = _('The name of the network pool must not exceed 20 characters')
 				errors.append(msg)
 			if simbol:
-				msg = u'Название пула не должно содержать символы и русские буквы'
+				msg = _('The name of the network pool must not contain any characters and Russian characters')
 				errors.append(msg)
 			if not name_pool:
-				msg = u'Введите имя пула'
+				msg = _('Enter the name of the pool')
 				errors.append(msg)
 			if not net_addr:
-				msg = u'Введите IP подсеть'
+				msg = _('Enter the IP subnet')
 				errors.append(msg)
 			if not errors:
 				netmask = IP(net_addr).strNetmask()
@@ -299,16 +300,17 @@ def pool(request, host_id, pool):
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
 				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
-					msg = u'Возможно пул с такими данными существует'
+					msg = _('Such a pool already exists')
 					errors.append(msg)
 				if not errors:
 					net_set_autostart(name_pool)
 					net = get_conn_pool(name_pool)
 					if pool_start() is "error":
-						msg = u'Пул создан, но при запуске пула возникла ошибка, возможно указана существующая сеть'
+						msg = _('Pool is created, but when I run the pool fails, you may specify an existing network')
 						errors.append(msg)
 					else:
-						msg = u'Создание сетевого пула: %s' % (name_pool)
+						msg = _('Creating a network pool: ') 
+						msg = msg + name_pool
 						add_error(msg, 'user')
 						return HttpResponseRedirect('/network/%s/%s/' % (host_id, name_pool))
 					if errors:
@@ -326,15 +328,18 @@ def pool(request, host_id, pool):
 
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
-			msg = u'Остановка сетевого пула: %s' % (pool)
+			msg = _('Stop network pool: ')
+			msg = msg + pool
 			pool_stop()
 			add_error(msg, 'user')
 		if request.POST.get('start_pool',''):
-			msg = u'Запуск сетевого пула: %s' % (pool)
+			msg = _('Start network pool: ')
+			msg = msg + pool
 			pool_start()
 			add_error(msg, 'user')
 		if request.POST.get('del_pool',''):
-			msg = u'Удаление сетевого пула: %s' % (pool)
+			msg = _('Delete network pool: ')
+			msg = msg + pool
 			pool_delete()
 			add_error(msg, 'user')
 			return HttpResponseRedirect('/network/%s/' % (host_id))

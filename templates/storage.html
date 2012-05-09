@@ -55,14 +55,14 @@
 					{% if status = 0 %}
 					<input type="submit" class="btn btn-primary" name="start_pool" value="{% trans "Enable" %}">
 					{% else %}
-					<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('Вы уверены?')">
+					<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 					{% endif %}
 				</form>
 			</div>
 		</div>
 		{% if status = 0 %}
         <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+			<input type="submit" class="btn btn-primary" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 		</form>
 		{% endif %}
 	  {% if volinfo %}
@@ -86,7 +86,7 @@
 				  <td style="width:60px;">
 					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 					  	<input type="hidden" name="img" value="{{ name }}">
-						<input type="submit" class="btn btn-primary" name="vol_del" value="{% trans "Delete" %}" onclick="return confirm('Вы уверены?')">
+						<input type="submit" class="btn btn-primary" name="vol_del" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 					  </form>
 				  </td>
 				  <td>
@@ -109,7 +109,7 @@
 		            </div>
 		            <div class="modal-footer">
 		              <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
-		              <input type="submit" class="btn btn-primary" name="vol_clone" value="Клонировать">
+		              <input type="submit" class="btn btn-primary" name="vol_clone" value="{% trans "Clone" %}">
 		              </form>
 		            </div>
 		         	</div>				  	
@@ -121,7 +121,7 @@
       </table>
       {% else %}
        <hr>
-       <h4>Какие либо образы отсутствуют или пул не активен</h4><br>
+       <h4>{% trans "No images or pool is not active" %}</h4><br>
        {% endif %}
 	   {% if status = 1 %}
 	   {% if errors %}
@@ -151,7 +151,7 @@
 	            <div class="controls">
 	              <select name="size_max">
 	              	{% for num in hdd_size %}
-	                <option value="{{ num }}" {% if num == 8 %}selected{% endif %}>{{ num }} ГБ</option>
+	                <option value="{{ num }}" {% if num == 8 %}selected{% endif %}>{{ num }} {% trans "Gb" %}</option>
 	                {% endfor %}
 	              </select>
 	            </div>

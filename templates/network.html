@@ -51,14 +51,14 @@
 			{% if status = 0 %}
 			<input type="submit" class="btn btn-primary" name="start_pool" value="{% trans "Enable" %}">
 			{% else %}
-			<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('Вы уверены?')">
+			<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 			{% endif %}
 		  </form>
 		</div>
 	   </div>
 		{% if status = 0 %}
         <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
-			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+			<input type="submit" class="btn btn-primary" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 		</form>
 		{% else %}
       <hr>

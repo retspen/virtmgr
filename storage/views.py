@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import libvirt, re
 import virtinst.util as util
+from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -313,30 +314,31 @@ def pool(request, host_id, pool):
 			path_pool = request.POST.get('path_pool','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
-				msg = u'Название пула не должно превышать 20 символов'
+				msg = _('The name of the storage pool must not exceed 20 characters')
 				errors.append(msg)
 			if simbol:
-				msg = u'Название пула не должно содержать символы и русские буквы'
+				msg = _('The name of the storage pool must not contain any characters and Russian characters')
 				errors.append(msg)
 			if not name_pool:
-				msg = u'Введите имя пула'
+				msg = _('Enter the name of the pool')
 				errors.append(msg)
 			if not path_pool:
-				msg = u'Введите путь пула'
+				msg = _('Enter the path of the pool')
 				errors.append(msg)
 			if not errors:
 				if create_stg_pool(name_pool, path_pool) is "error":
-					msg = u'Возможно пул с такими данными существует'
+					msg = _('Such a pool already exists')
 					errors.append(msg)
 				else:
 					stg = get_conn_pool(name_pool)
 					stg_set_autostart(name_pool)
 					if pool_start() is "error":
-						msg = u'Пул создан, но при запуске пула возникла ошибка, возможно указан не существующий путь'
+						msg = _('Pool is created, but when I run the pool fails, you may specify the path does not exist')
 						errors.append(msg)
 						return HttpResponseRedirect('/storage/%s/%s/' % (host_id, name_pool))
 					else:
-						msg = u'Создание пула хранилища: %s' % (name_pool)
+						msg = _('Creating a storage pool: ')
+						msg = msg + name_pool
 						add_error(msg,'user')
 						return HttpResponseRedirect('/storage/%s/%s/' % (host_id, name_pool))
 				if errors:
@@ -359,23 +361,27 @@ def pool(request, host_id, pool):
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
 			pool_stop()
-			msg = u'Остановка пула хранилища: %s' % (pool)
+			msg = _('Stop storage pool: ')
+			msg = msg + pool
 			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('start_pool',''):
 			pool_start()
-			msg = u'Запуск пула хранилища: %s' % (pool)
+			msg = _('Start storage pool: ')
+			msg = msg + pool
 			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('del_pool',''):
 			pool_delete()
-			msg = u'Удаление пула хранилища: %s' % (pool)
+			msg = _('Delete storage pool: ')
+			msg = msg + pool
 			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/' % (host_id))
 		if request.POST.get('vol_del',''):
 			img = request.POST['img']
 			delete_volume(img)
-			msg = u'Удаление образа: %s' % (img)
+			msg = _('Delete image: ')
+			msg = msg + img
 			add_error(msg,'user')
 			return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('vol_add',''):
@@ -383,20 +389,21 @@ def pool(request, host_id, pool):
 			size_max = request.POST.get('size_max','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', img)
 			if len(img) > 20:
-				msg = u'Название пула не должно превышать 20 символов'
+				msg = _('The name of the images must not exceed 20 characters')
 				errors.append(msg)
 			if simbol:
-				msg = u'Название пула не должно содержать символы и русские буквы'
+				msg = _('The name of the image must not contain any characters and Russian characters')
 				errors.append(msg)
 			if not img:
-				msg = u'Введите имя образа'
+				msg = _('Enter image name')
 				errors.append(msg)
 			if not size_max:
-				msg = u'Введите размер образа'
+				msg = _('Enter image size')
 				errors.append(msg)
 			if not errors:
 				create_volume(img, size_max)
-				msg = u'Создание образа %s.img' % (img)
+				msg = _('Create image: ')
+				msg = msg + img + '.img'
 				add_error(msg,'user')
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 		if request.POST.get('vol_clone',''):
@@ -405,23 +412,24 @@ def pool(request, host_id, pool):
 			simbol = re.search('[^a-zA-Z0-9\_]+', new_img)
 			new_img = new_img + '.img'
 			if new_img == '.img':
-				msg = u'Введите имя образа'
+				msg = _('Enter image name')
 				errors.append(msg)
 			if len(new_img) > 20:
-				msg = u'Название пула не должно превышать 20 символов'
+				msg = _('The name of the images must not exceed 20 characters')
 				errors.append(msg)
 			if simbol:
-				msg = u'Название пула не должно содержать символы и русские буквы'
+				msg = _('The name of the image must not contain any characters and Russian characters')
 				errors.append(msg)
 			if new_img in listvol:
-				msg = u'Образ с таким именем уже существует'
+				msg = _('The image of the same name already exists')
 				errors.append(msg)
 			if re.search('.ISO', img) or re.search('.iso', img):
-				msg = u'Клонировать можно только образы виртуальных машин'
+				msg = _('You can only clone a virtual machine images')
 				errors.append(msg)
 			if not errors:
 				clone_volume(img, new_img)
-				msg = u'Клонирование образа: %s в %s' % (img, new_img)
+				msg = _('Cloning image: ')
+				msg = msg + img + ' => ' + new_img
 				add_error(msg,'user')
 				return HttpResponseRedirect('/storage/%s/%s/' % (host_id, pool))
 

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
    <div class="container">
-	<h1>Документация</h1>
+	<h1>{% trans "Docs" %}</h1>
 	<br>
-	<p><a href=/docs/settings/><h2>Настройка сервера для работы с сервисом</h2></a></p>
-	<p><a href=/docs/faq/><h2>Часто Задаваемые Вопросы</h2></a></p>
+	<p><a href=/docs/settings/><h2>{% trans "Setting up the server to work with the service" %}</h2></a></p>
+	<p><a href=/docs/faq/><h2>{% trans "Frequently Asked Questions" %}</h2></a></p>
 	<br>
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
    <div class="container">
-<h1>Часто Задаваемые Вопросы</h1>
+<h1>{% trans "Frequently Asked Questions" %}</h1>
 <br>
 <p>В: Как добавить iso образ для установки виртуальной машины?</p>
 <p>О: Все образы должны находиться в директории которые определын в пуле хранилища. Пример: <strong>/var/lib/libvirt/images/cdrom.iso</strong></p>

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import re
-import libvirt
-import time
+import libvirt, re, time
 import virtinst.util as util
 from django.shortcuts import render_to_response
+from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
 
@@ -355,73 +354,90 @@ def index(request, host_id, vname):
       if request.POST.get('suspend',''):
          try:
             dom.suspend()
-            msg = u'Приостановка виртуальной машины: %s' % (vname)
+            msg = _('Suspend VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возможно виртуальная машина уже приостаовлена')
+            msg = _('Error: VM alredy suspended')
+            errors.append(msg)
       if request.POST.get('resume',''):
          try:
             dom.resume()
-            msg = u'Возобновление виртуальной машины: %s' % (vname)
+            msg = _('Resume VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возможно виртуальная машина уже возобновлена')
+            msg = _('Error: VM alredy resume')
+            errors.append(msg)
       if request.POST.get('start',''):
          try:
             dom.create()
-            msg = u'Запуск виртуальной машины: %s' % (vname)
+            msg = _('Start VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возможно виртуальная машина уже запущена')
+            msg = _('Error: VM alredy start')
+            errors.append(msg)
       if request.POST.get('shutdown',''):
          try:
             dom.shutdown()
-            msg = u'Выключение виртуальной машины: %s' % (vname)
+            msg = _('Shutdown VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возможно виртуальная машина уже выключена')
+            msg = _('Error: VM alredy shutdown')
+            errors.append(msg)
       if request.POST.get('destroy',''):
          try:
             dom.destroy()
-            msg = u'Принудительное выключение виртуальной машины: %s' % (vname)
+            msg = _('Force shutdown VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возможно виртуальная машина уже выключена')
+            msg = _('Error: VM alredy shutdown')
+            errors.append(msg)
       if request.POST.get('save',''):
          try:
             dom.save(0)
-            msg = u'Сохранение состояния виртуальной машины: %s' % (vname)
+            msg = _('Save state VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возможно виртуальная машина уже сохранена')
+            msg = _('Error: VM state alredy saved')
+            errors.append(msg)
       if request.POST.get('reboot',''):
          try:
             dom.destroy()
             dom.create()
-            msg = u'Перезагрузка виртуальной машниы: %s' % (vname)
+            msg = _('Reboot VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: возникли проблемы при перезагрузке')
+            msg = _('Error: VM reboot')
+            errors.append(msg)
       if request.POST.get('snapshot',''):
          try:
             vm_create_snapshot()
-            msg = u'Создание снапшота для виртуальной машины: %s' % (vname)
+            msg = _('Create snapshot for VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
-            message = u'Снапшот для виртуальной машины %s успешно создан' % (vname)
+            message = _('Successful create snapshot for VM: ')
+
             return render_to_response('vm.html', locals())
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
             errors.append(u'Ошибка: при создании снапшота')
       if request.POST.get('auto_on',''):
          try:
-            msg = u'Включение автозапуска виртуальной машины: %s' % (vname)
+            msg = _('Enable autostart for VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
             dom.setAutostart(1)
          except libvirt.libvirtError as e:
@@ -429,7 +445,8 @@ def index(request, host_id, vname):
             return "error"
       if request.POST.get('auto_off',''):
          try:
-            msg = u'Выключение автозапуска виртуальной машины: %s' % (vname)
+            msg = _('Disable autostart for VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
             dom.setAutostart(0)
          except libvirt.libvirtError as e:
@@ -450,7 +467,8 @@ def index(request, host_id, vname):
       if request.POST.get('undefine',''):
          try:
             dom.undefine()
-            msg = u'Удаление виртуальной машины: %s' % (vname)
+            msg = _('Undefine VM: ')
+            msg = msg + vname
             add_error(msg, 'user')
             return HttpResponseRedirect('/overview/%s/' % (host_id))
          except libvirt.libvirtError as e:

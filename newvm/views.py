@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import libvirt, re 
 import virtinst.util as util
+from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from virtmgr.model.models import *
@@ -279,11 +280,11 @@ def index(request, host_id):
 	all_iso = find_all_iso()
 	all_img = find_all_img()
 	if all_iso is "error" or all_img is "error":
-		msg = u'Возможно пулы хранения не доступны или не активны'
+		msg = _('Storage pools are not available or are not active')
 		errors.append(msg)	
 	bridge = get_all_net()
 	if bridge == "error":
-		msg = u'Возможно сетевые пулы не доступны или не активны'
+		msg = _('Network pools are not available or are not active')
 		errors.append(msg)			
 	arch = get_arch()
 	emul = get_emulator()
@@ -308,23 +309,24 @@ def index(request, host_id):
 		hdd_frmt = get_img_format(img)
 		simbol = re.search('[^a-zA-Z0-9\_]+', name)
 		if name in all_vm:
-			msg = u'Такое название виртуальной машины уже существует'
+			msg = _('This is the name of the virtual machine already exists')
 			errors.append(msg)
 		if len(name) > 20:
-			msg = u'Название виртуальной машины не должно превышать 20 символов'
+			msg = _('The name of the virtual machine must not exceed 20 characters')
 			errors.append(msg)
 		if simbol:
-			msg = u'Название виртуальной машины не должно содержать символы и русские буквы'
+			msg = _('The name of the virtual machine must not contain any characters and Russian characters')
 			errors.append(msg)
 		if not img:
-			msg = u'Образы HDD для виртуальной машины отсутствуют'
+			msg = _('Images of the HDD to a virtual machine not available. You need to create an HDD image')
 			errors.append(msg)
 		if not name:
-			msg = u'Введите название виртуальной машины'
+			msg = _('Enter the name of the virtual machine')
 			errors.append(msg)
 		if not errors:
 			add_vm(name, setmem, cpus, archvm, machine, emul, hdd_frmt, hdd, cdrom, netbr)
-			msg = u'Создание виртуальной машины: %s' % (name)
+			msg = _('Creating a virtual machine: ')
+			msg = msg + name
 			add_error(msg,'user')
 			return HttpResponseRedirect('/vm/%s/%s/' % (host_id, name))
 

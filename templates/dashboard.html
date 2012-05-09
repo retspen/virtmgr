@@ -28,7 +28,7 @@
                   <td>
                     <form action="/dashboard/" method="post">
                       <input type="hidden" name="host" value="{{name}}">
-                      <input type="submit" class="btn btn-primary" name="delete" value="{% trans "Delete" %}" onclick="return confirm('Вы уверены?')">
+                      <input type="submit" class="btn btn-primary" name="delete" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                     </form>
                   </td>
                 </tr>
