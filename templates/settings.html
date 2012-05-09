@@ -1,139 +1,102 @@
 {% extends "base.html" %}
 {% block content %}
-<script type="text/javascript">
-function toggleview(itm) { 
-	var itmx = document.getElementById(itm); 
-    if (itmx.style.display == "none") 
-    { 
-        itmx.style.display = "block"; 
-    } else { 
-        itmx.style.display = "none"; 
-    } 
-}
-</script>
 <div class="container">
 <h1>Настройка</h1>
 <br>
-<a href=# onclick="toggleview('q1')"><h2>Установка и настройка Fedora (12 и выше), CentOS (6.0 и выше)</h2></a>
-<div id='q1' style="display:none">
-<br>
-<p><font color="red">Внимание</font>: все операции необходимо выполнить под супер-пользователем <code>root</code></p>
-<p>Утилитой yum устанавливаем пакеты libvirt и KVM:</p>
+<h4>ContOS, Fedora, RedHat</h4>
+<p>Устанавливаем пакеты libvirt и KVM</p>
 <pre>
 # yum -y install kvm libvirt
 </pre>
-
-<p>Раскомментируем строки в файле <code>/etc/sysconfig/libvirtd</code>:</p>
+<br>
+<h4>Ubuntu, Debian</h4>
+<p>Устанавливаем пакеты libvirt-bin, KVM, sasl2-bin</p>
 <pre>
-# Listen for TCP/IP connections
-# NB. must setup TLS/SSL keys prior to using this
+$ sudo apt-get install kvm libvirt-bin sasl2-bin
+</pre>
+<br>
+<h4>ContOS, Fedora, RedHat</h4>
+<p>Раскомментируем строку в файле <code>/etc/sysconfig/libvirtd</code></p>
+<pre>
 LIBVIRTD_ARGS="--listen"
 </pre>
-
-<p>В файле <code>/etc/libvirt/libvirtd.conf</code> раскомментируем строки:</p>
+<br>
+<h4>Ubuntu, Debian</h4>
+<p>Добавляем параметр <code>-l</code> в файле <code>/etc/default/libvirt-bin</code></p>
+<pre>
+libvirtd_opts="-d -l"
+</pre>
+<br>
+<h4>Ubuntu, Debian, Fedora, CentOS, RedHat</h4>
+<p>В файле <code>/etc/libvirt/libvirtd.conf</code> раскомментируем строки</p>
 <pre>
 listen_tls = 0
 listen_tcp = 1
 </pre>
-
+<br>
+<h4>ContOS, Fedora, RedHat</h4>
 <p>Запускаем демон libvirtd:</p>
 <pre>
 # service libvirtd start
 </pre>
-
-<p>По умолчанию пользовательские аккаунты не имеют возможность авторизироваться с помощью TCP сокета. Добавления пароля и назначение ему привелегий осуществляется с помощью команды <code>saslpasswd2</code>. При запуске команды необходимо указать приложение <code>libvirt</code>, а вместо <code>fred</code> имя вашего пользователя</p>
+<br>
+<h4>Ubuntu, Debian</h4>
+<p>Перезапускаем демон libvirtd, так как после установки он запускается автоматический</p>
+<pre>
+$ sudo service libvirt-bin restart
+</pre>
+<br>
+<p>Командой <code>saslpasswd2</code> создаем пользователя, который получит доступ к libvirt. При запуске команды с помощью ключа <code>-a</code> необходимо указать приложение <code>libvirt</code> и имя пользователя через побел, в нашем случае это <code>fred</code></p>
+<br>
+<h4>ContOS, Fedora, RedHat</h4>
 <pre>
 # saslpasswd2 -a libvirt fred
 Password: xxxxxx
 Again (for verification): xxxxxx
 </pre>
-<p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
-
-<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
-<pre>
-# sasldblistusers2 -f /etc/libvirt/passwd.db
-fred@webvirtmgr.net: userPassword
-</pre>
-
-<p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
-<pre>
-# saslpasswd2 -a libvirt -d fred
-</pre>
-<br />
-<p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
-<br />
-<p>Если у Вас влючен фаирвол (iptables) необходимо добавить правило для libvirt, так как по умолчанию доступ к портам libvirt запрещен</p>
-<pre>
-# iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 16509 -j ACCEPT
-</pre>
-<p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
-<pre>
-# virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
-Please enter your authentication name: fred
-Please enter your password: xxxxxx
-CPU model:           x86_64
-CPU(s):              2
-CPU frequency:       2611 MHz
-CPU socket(s):       1
-Core(s) per socket:  2
-Thread(s) per core:  1
-NUMA cell(s):        1
-Memory size:         2019260 kB
-</pre>
-<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
-<p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
-</div>
-
-<a href=# onclick="toggleview('q2')"><h2>Установка и настройка Ubuntu (10.04 и выше)</h2></a>
-<div id='q2' style="display:none">
 <br>
-<p>Для версии Ubuntu-Server устанавливаемую с нуля необходимо во время установки в окне "Выбор программного обеспечения" отметить ПО <code>Virtual Machine host</code> для дополнительной установки. После успешной установки утилитой apt-get установите следующий пакеты:</p>
-<pre>
-$ sudo apt-get install sasl2-bin
-</pre>
-<p>Если же Ubuntu-Server (Ubuntu-Desktop) уже установлен, тогда необходимо просто установить следующие пакеты:</p>
-<pre>
-$ sudo apt-get install kvm libvirt-bin sasl2-bin
-</pre>
-
-<p>Добавляем параметр <code>-l</code> в файле <code>/etc/default/libvirt-bin</code></p>
-<pre>
-$ options passed to libvirtd, add "-l" to listen on tcp
-libvirtd_opts="-d -l"
-</pre>
-
-<p>В файле <code>/etc/libvirt/libvirtd.conf</code> раскомментируем следующие строки:</p>
-<pre>
-listen_tls = 0
-listen_tcp = 1
-</pre>
-
-<p>Перезапускаем демон libvirtd, так как после установки он уже запущен:</p>
-<pre>
-$ sudo service libvirt-bin restart
-</pre>
-
-<p>По умолчанию пользовательские аккаунты не имеют возможность авторизироваться с помощью TCP сокета. Добавления пароля и назначение ему привелегий осуществляется с помощью команды <code>saslpasswd2</code>. При запуске команды необходимо указать приложение <code>libvirt</code>, а вместо <code>fred</code> имя вашего пользователя</p>
+<h4>Ubuntu, Debian</h4>
 <pre>
 $ sudo saslpasswd2 -a libvirt fred
 Password: xxxxxx
 Again (for verification): xxxxxx
 </pre>
-<p><i>Описание</i>: добавить пользователя <code>fred</code> и назначить ему пароль</p>
-
-<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
+<br>
+<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого с помощью ключа <code>-f</code> необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
+<br>
+<h4>ContOS, Fedora, RedHat</h4>
+<pre>
+# sasldblistusers2 -f /etc/libvirt/passwd.db
+fred@webvirtmgr.net: userPassword
+</pre>
+<br>
+<h4>Ubuntu, Debian</h4>
 <pre>
 $ sudo sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
-
-<p>Для выключения доступа используем команду <code>saslpasswd2</code> следующим образом:</p>
+<br>
+<p>Для выключения доступа используйте команду <code>saslpasswd2</code> как при добавлении, только еще необходимо добавить ключ <code>-d</code> перед именем пользователя</p>
+<br>
+<h4>ContOS, Fedora, RedHat</h4>
+<pre>
+# saslpasswd2 -a libvirt -d fred
+</pre>
+<br>
+<h4>Ubuntu, Debian</h4>
 <pre>
 $ sudo saslpasswd2 -a libvirt -d fred
 </pre>
-<br />
+<br>
 <p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
 <br />
+<h4>ContOS, Fedora, RedHat</h4>
+<p>Если у Вас влючен фаирвол (iptables) необходимо добавить правило для libvirt, так как по умолчанию доступ к портам libvirt запрещен</p>
+<pre>
+# iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 16509 -j ACCEPT
+</pre>
+<br>
+<h4>Ubuntu, Debian</h4>
 <p>Если у Вас влючен фаирвол (ufw) необходимо добавить исключение для libvirt, так как по умолчанию доступ к портам libvirt запрещен для этого необходимо создать фаил <code>/etc/ufw/applications.d/libvirtd</code> и в него добавить следующие строки:</p>
 <pre>
 [Libvirt]
@@ -141,10 +104,12 @@ title=Virtualization library
 description=Open port for WebVirtMgr.
 ports=16509/tcp
 </pre>
-<p>Применить правило в цепочку фаирвола</p>
+<p>Добавляем правило в цепочку фаирвола</p>
 <pre>
 $ sudo ufw allow from any to any app Libvirt
 </pre>
+<br>
+<h4>Тестирование настроек</h4>
 <p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест:</p>
 <pre>
 $ virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
@@ -160,8 +125,6 @@ NUMA cell(s):        1
 Memory size:         2019260 kB
 </pre>
 <p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
-<p><font color="red">Ubuntu-Server</font>: если Вы все настроили правильно, но все равно не проходит тест попробуйте добавить домен в имя пользователя который можно посмотреть командой <code>sasldblistusers2</code> описанной выше. Например: <strong>fred@webvirtmgr.net</strong></p>
-<p>Если тест выполнен успешно, теперь можете добавить сервер виртуализации (хост).</p>
-</div>
+<p><font color="red">Ubuntu-Server</font>: если Вы все настроили правильно, но все равно выдает ошибку <strong>authentication failed</strong> тогда попробуйте добавить домен в имя пользователя при авторизации, который можно посмотреть командой <code>sasldblistusers2</code> описанной выше. Например: <strong>fred@webvirtmgr.net</strong></p>
 <br>
 {% endblock %}
