@@ -4,22 +4,24 @@
    <div class="container">
       <div class="hero-unit">
         <h1>Web Virtual Manager</h1><br>
-         <p>{% trans "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web interface for managing virtual machines. It allows you to create and configure new domains, and adjust a domain's resource allocation. A VNC viewer over a SSH tunnel presents a full graphical console to the guest domain. <strong>KVM</strong> is currently the only hypervisor supported" %}</p><br> 
+         <p>{% trans "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web interface for managing virtual machines. It allows you to create and configure new domains, and adjust a domain's resource allocation. A VNC viewer over a SSH tunnel presents a full graphical console to the guest domain. <strong>KVM</strong> is currently the only hypervisor supported" %}</p><br>
         <p><a class="btn btn-success btn-large" href="/user/register"><strong>{% trans "Sign up" %}</strong></a></p>
         </div>
-      <div class="row">
-        <div class="well span6">
-          <h2>{% trans "Where to start?" %}</h2>
-          <br>
-          <p>1. <a href=/user/register/>{% trans "Sign up" %}</a> {% trans "and to confirm registration" %}</p>
-          <p>2. {% trans "Install and" %} <a href=/docs/settings/>{% trans "configure" %}</a> {% trans "libvirt and KVM on your server" %}</p>
-          <p>3. <a href=/user/login/>{% trans "Sign in" %}</a> {% trans "and add your server to its management" %}</p>
+      <div class="row show-grid">
+        <div class="prettyprint span4">
+        <h3>Доступная виртуализация</h3>
+        <br>
+        <p>С помощью <strong>WebVirtMgr</strong> вы можете развернуть виртуализацию уровня предприятия. Для управления виртуализацией вам понадобиться: сервер, любой дистрибутив линукса и любой веб-браузер с предустановленным java плагином.</p>
         </div>
-        <div class="well span5">
-          <h2>{% trans "Having problems?" %}</h2>
+        <div class="span4">
+          <h3>Удобство использования</h3>
           <br>
-          <p>{% trans "If you have any problems working with the service we are always ready to help you" %}</p>
-          <p>{% trans "Contact us by email" %} <a href="mailto:support@webvirtmgr.net">support@webvirtmgr.net</a></p>
+          <p></p>
+        </div>
+        <div class="span4">
+          <h3>Безопасность данных</h3>
+          <br>
+          <p>Все данные находяться исключительно на вашем сервере.</p>
         </div>
       </div>
 {% endblock %}

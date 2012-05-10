@@ -424,12 +424,11 @@ def index(request, host_id, vname):
             errors.append(msg)
       if request.POST.get('snapshot',''):
          try:
-            vm_create_snapshot()
             msg = _('Create snapshot for VM: ')
             msg = msg + vname
             add_error(msg, 'user')
+            vm_create_snapshot()
             message = _('Successful create snapshot for VM: ')
-
             return render_to_response('vm.html', locals())
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')

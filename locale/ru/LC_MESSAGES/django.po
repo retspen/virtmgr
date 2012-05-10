@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-08 15:19+0300\n"
+"POT-Creation-Date: 2012-05-10 10:56+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -144,12 +144,12 @@ msgid "Error connecting: Check the KVM login and KVM password"
 msgstr "Ошибка подключения: проверьте KVM логин и KVM пароль"
 
 #: snapshot/views.py:203
-msgid "Delete snapshot: "
-msgstr "Удаление снапшота: "
+msgid "Delete snapshot VM: "
+msgstr "Удаление снапшота ВМ: "
 
 #: snapshot/views.py:210
-msgid "Revert snapshot: "
-msgstr "Восстановление снапшота: "
+msgid "Revert snapshot VM: "
+msgstr "Восстановление снапшота ВМ: "
 
 #: snapshot/views.py:214
 msgid "Successful revert snapshot: "
@@ -242,7 +242,7 @@ msgstr "Скриншоты"
 msgid "Docs"
 msgstr "Документация"
 
-#: templates/base.html:46 templates/support.html:5
+#: templates/base.html:46 templates/support.html:12
 msgid "Support"
 msgstr "Поддержка"
 
@@ -250,8 +250,8 @@ msgstr "Поддержка"
 msgid "Sign out"
 msgstr "Выйти"
 
-#: templates/base.html:58 templates/index.html:44
-#: templates/registration/login.html:14 templates/registration/login.html:20
+#: templates/base.html:58 templates/registration/login.html:14
+#: templates/registration/login.html:20
 msgid "Sign in"
 msgstr "Войти"
 
@@ -325,8 +325,8 @@ msgstr "Подключить новый хост"
 msgid "KVM password"
 msgstr "KVM пароль"
 
-#: templates/dashboard.html:84 templates/index.html:31
-#: templates/storage.html:111 templates/storage.html.py:162
+#: templates/dashboard.html:84 templates/storage.html:111
+#: templates/storage.html.py:162
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -342,9 +342,55 @@ msgstr "Подключить"
 msgid "Setting up the server to work with the service"
 msgstr "Настройка сервера для работы с сервисом"
 
-#: templates/docs.html:8 templates/faq.html:5
-msgid "Frequently Asked Questions"
-msgstr "Часто Задаваемые Вопросы"
+#: templates/docs.html:9
+msgid "Install packages libvirt-bin, KVM"
+msgstr ""
+
+#: templates/docs.html:15
+msgid "Install packages libvirt-bin, KVM, sasl2-bin"
+msgstr ""
+
+#: templates/docs.html:21
+msgid "Uncomment the line in the file <code>/etc/sysconfig/libvirtd</code>"
+msgstr ""
+
+#: templates/docs.html:27
+msgid ""
+"Add the option <code>-l</code> in the file <code>/etc/default/libvirt-bin</"
+"code>"
+msgstr ""
+
+#: templates/docs.html:33
+msgid "The file <code>/etc/libvirt/libvirtd.conf</code> uncomment the line"
+msgstr ""
+
+#: templates/docs.html:40
+msgid "Start the daemon libvirtd"
+msgstr ""
+
+#: templates/docs.html:46
+msgid ""
+"Restart the daemon libvirtd, because after installation it runs automatically"
+msgstr ""
+
+#: templates/docs.html:51
+msgid ""
+"<code>saslpasswd2</code> command create a user who has access to the "
+"libvirt. When you run the command with the key <code>-a</code> to specify "
+"the application <code>libvirt</code> and the name of the user through the "
+"whitewashed, in this case <code>fred</code>"
+msgstr ""
+
+#: templates/docs.html:115
+#, fuzzy
+msgid "Test connection"
+msgstr "Тип подключения"
+
+#: templates/docs.html:116
+msgid ""
+"Before you add the ip address of your server in the control center, perform "
+"the following test"
+msgstr ""
 
 #: templates/index.html:7
 msgid ""
@@ -362,60 +408,9 @@ msgstr ""
 "Для организации проброса экрана виртуальных машин в окно браузера "
 "используется VNC-клиент через SSH-туннель"
 
-#: templates/index.html:8 templates/index.html.py:42
+#: templates/index.html:8
 msgid "Sign up"
 msgstr "Зарегистрироваться"
-
-#: templates/index.html:12 templates/index.html.py:36
-msgid "Change language"
-msgstr "Изменить язык"
-
-#: templates/index.html:18
-msgid "Language"
-msgstr "Язык"
-
-#: templates/index.html:32
-msgid "Change"
-msgstr "Изменить"
-
-#: templates/index.html:40
-msgid "Where to start?"
-msgstr "С чего начать?"
-
-#: templates/index.html:42
-msgid "and to confirm registration"
-msgstr "и подтвердить регистрацию"
-
-#: templates/index.html:43
-msgid "Install and"
-msgstr "Установить и"
-
-#: templates/index.html:43
-msgid "configure"
-msgstr "настроить"
-
-#: templates/index.html:43
-msgid "libvirt and KVM on your server"
-msgstr "libvirt и KVM на вашем сервере"
-
-#: templates/index.html:44
-msgid "and add your server to its management"
-msgstr "и добавить ваш сервер для его управления"
-
-#: templates/index.html:47
-msgid "Having problems?"
-msgstr "Возникли проблемы?"
-
-#: templates/index.html:49
-msgid ""
-"If you have any problems working with the service we are always ready to "
-"help you"
-msgstr ""
-"Если у вас возникли проблемы по работе с сервисом мы всегда готовы Вам помочь"
-
-#: templates/index.html:50
-msgid "Contact us by email"
-msgstr "Напишите нам на email"
 
 #: templates/logs.html:9 templates/network.html:9 templates/network_new.html:9
 #: templates/newvm.html:9 templates/overview.html:9 templates/snapshot.html:9
@@ -484,7 +479,7 @@ msgid "Logs"
 msgstr "Логи"
 
 #: templates/logs.html:18 templates/network.html:27
-#: templates/network_new.html:27 template /newvm.html:18
+#: templates/network_new.html:27 templates/newvm.html:18
 #: templates/overview.html:18 templates/snapshot.html:29
 #: templates/storage.html:27 templates/storage_new.html:27
 #: templates/vm.html:18
@@ -705,6 +700,20 @@ msgstr "ГБ"
 msgid "New storage pool"
 msgstr "Новый пул хранилища"
 
+#: templates/support.html:14
+msgid "Contact us"
+msgstr "Контакты"
+
+#: templates/support.html:15
+msgid "If you have additional questions you can send us an e-mail."
+msgstr ""
+"Если у вас возникли дополнительные вопросы вы всегда можете отправить нам e-"
+"mail."
+
+#: templates/support.html:19
+msgid "FAQ"
+msgstr "FAQ"
+
 #: templates/vm.html:34
 msgid "Managing a virtual machine"
 msgstr "Управление виртуальной машиной"
@@ -914,3 +923,43 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:470
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
+
+#~ msgid "Frequently Asked Questions"
+#~ msgstr "Часто Задаваемые Вопросы"
+
+#~ msgid "Change language"
+#~ msgstr "Изменить язык"
+
+#~ msgid "Language"
+#~ msgstr "Язык"
+
+#~ msgid "Change"
+#~ msgstr "Изменить"
+
+#~ msgid "Where to start?"
+#~ msgstr "С чего начать?"
+
+#~ msgid "and to confirm registration"
+#~ msgstr "и подтвердить регистрацию"
+
+#~ msgid "Install and"
+#~ msgstr "Установить и"
+
+#~ msgid "configure"
+#~ msgstr "настроить"
+
+#~ msgid "libvirt and KVM on your server"
+#~ msgstr "libvirt и KVM на вашем сервере"
+
+#~ msgid "and add your server to its management"
+#~ msgstr "и добавить ваш сервер для его управления"
+
+#~ msgid "Having problems?"
+#~ msgstr "Возникли проблемы?"
+
+#~ msgid ""
+#~ "If you have any problems working with the service we are always ready to "
+#~ "help you"
+#~ msgstr ""
+#~ "Если у вас возникли проблемы по работе с сервисом мы всегда готовы Вам "
+#~ "помочь"

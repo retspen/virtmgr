@@ -18,8 +18,6 @@ urlpatterns = patterns('',
     url(r'^support/', 'virtmgr.pages.views.support'),
     url(r'^screenshot/', 'virtmgr.pages.views.screenshot'),
     url(r'^docs/$', 'virtmgr.pages.views.docs'),
-    url(r'^docs/settings/', 'virtmgr.pages.views.settings'),
-    url(r'^docs/faq/', 'virtmgr.pages.views.faq'),
     
     # Host
     url(r'^dashboard/$', 'virtmgr.dashboard.views.index'),

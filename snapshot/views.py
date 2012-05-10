@@ -200,15 +200,15 @@ def snapshot(request, host_id, vname):
 	if request.method == 'POST':
 		if request.POST.get('delete',''):
 			name = request.POST.get('name','')
-			msg = _('Delete snapshot: ')
-			msg = msg + name
+			msg = _('Delete snapshot VM: ')
+			msg = msg + vname + ' => ' + name
 			add_error(msg,'user')
 			del_snapshot(name)
 			return HttpResponseRedirect('/snapshot/%s/%s/' % (host_id, vname))
 		if request.POST.get('revert',''):
 			name = request.POST.get('name','')
-			msg = _('Revert snapshot: ')
-			msg = msg + name
+			msg = _('Revert snapshot VM: ')
+			msg = msg + vname + ' => ' + name
 			add_error(msg,'user')
         	revert_snapshot(name)
         	message = _('Successful revert snapshot: ')

@@ -1,9 +1,125 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block javascript %}
+    <script type="text/javascript">
+	$('.collapse').collapse({
+    	toggle: true
+	});
+    </script>
+{% endblock %}
 {% block content %}
    <div class="container">
 	<h1>{% trans "Support" %}</h1>
 	<br>
-	<p>Если у вас возникли проблемы или есть предложения по работе с сервисом, пожалуйста свяжитесь с нами через email.</p><h2>Email</h2><p><a href="mailto:support@webvirtmgr.net">support@webvirtmgr.net</a></p>
+	<h2>{% trans "Contact us" %}</h2>
+	<p>{% trans "If you have additional questions you can send us an e-mail." %}</p>
+	<h4>WebVirtMgr</h4>
+	<p><a href="mailto:support@webvirtmgr.net">support@webvirtmgr.net</a></p>
 	<br>
+	<h2>{% trans "FAQ" %}</h2>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+					Как добавить iso образ для установки виртуальной машины?
+				</a>
+			</div>
+			<div id="collapseOne" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Все образы должны находиться в директории которые определын в пуле хранилища. Пример: <strong>/var/lib/libvirt/images/cdrom.iso</strong>
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+					Почему отсутствует HDD образ при создании виртуальной машины?
+				</a>
+			</div>
+			<div id="collapseTwo" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Перед созданием виртуальной машины необходимо создать образ HDD во вкладке хранилище.
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+					Как происходит подключение по VNC к виртуальной машине?
+				</a>
+			</div>
+			<div id="collapseThree" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Подключение по VNC происходит через SSH туннель (необходимо создать пользователя с ssh доступом).
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+					Все сделал по интсрукции но не получается подключиться к хосту, что может быть?
+				</a>
+			</div>
+			<div id="collapseFour" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Проверьте настройки фаирвола. В Fedora - это iptables, a в Ubuntu - ufw.
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+					У сервиса отсутствует функционал которой меня интересует, что делать?
+				</a>
+			</div>
+			<div id="collapseFive" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Пишите все свои пожелания нам на почту и мы попытаемся их реализовать.
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
+					Каким образом можно изменить кол-во логических ЦПУ или памяти на виртуальной машине?
+				</a>
+			</div>
+			<div id="collapseSix" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Если вы хотите добавить память или изменить кол-во логических ЦПУ, Вы всегда можете <strong>удалить</strong> виртуальную машину и создать новую с улучшеными характеристиками при этом образ HDD не удаляется.
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">
+					Почему отсутствует возможность конфигурирования виртуальных машин (удаление и добавление оборудования)?
+				</a>
+			</div>
+			<div id="collapseSeven" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Добавим эту возможность позже (правда только для сетевых устройств и жестких дисков).
+				</div>
+			</div>
+		</div>
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">
+					Почему не полностью поддерживаются виртуальные машины которые созданы не через сервис WebVirtMgr?
+				</a>
+			</div>
+			<div id="collapseEight" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					При создании виртуальной машины создается xml фаил с ее настройками и для бысрого и легкого управления были удалены некоторые элементы, которые создаются локальным менеджером (например: virt-manager).
+				</div>
+			</div>
+		</div>
+		<br>
 {% endblock %}
