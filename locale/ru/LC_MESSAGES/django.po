@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-10 10:56+0300\n"
+"POT-Creation-Date: 2012-05-10 15:10+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -307,9 +307,8 @@ msgstr "Удалить"
 #: templates/network.html.py:61 templates/snapshot.html:70
 #: templates/snapshot.html.py:79 templates/storage.html:58
 #: templates/storage.html.py:65 templates/storage.html:89 templates/vm.html:60
-#: templates/vm.html.py:61 templates/vm.html.py:62 templates/vm.html:63
-#: templates/vm.html.py:94 templates/vm.html.py:96 templates/vm.html:103
-#: templates/vm.html.py:123
+#: templates/vm.html.py:93 templates/vm.html.py:95 templates/vm.html:102
+#: templates/vm.html.py:122
 msgid "Are you sure?"
 msgstr "Вы уверены?"
 
@@ -344,34 +343,39 @@ msgstr "Настройка сервера для работы с сервисо�
 
 #: templates/docs.html:9
 msgid "Install packages libvirt-bin, KVM"
-msgstr ""
+msgstr "Установите пакеты libvirt-bin и KVM"
 
 #: templates/docs.html:15
 msgid "Install packages libvirt-bin, KVM, sasl2-bin"
-msgstr ""
+msgstr "Установите пакеты libvirt-bin, KVM и sasl2-bin"
 
 #: templates/docs.html:21
 msgid "Uncomment the line in the file <code>/etc/sysconfig/libvirtd</code>"
-msgstr ""
+msgstr "Раскоментируйте строчку в файле <code>/etc/sysconfig/libvirtd</code>"
 
 #: templates/docs.html:27
 msgid ""
 "Add the option <code>-l</code> in the file <code>/etc/default/libvirt-bin</"
 "code>"
 msgstr ""
+"Добавьте параметр <code>-l</code> в фаил <code>/etc/default/libvirt-bin</"
+"code>"
 
 #: templates/docs.html:33
 msgid "The file <code>/etc/libvirt/libvirtd.conf</code> uncomment the line"
 msgstr ""
+"В файле <code>/etc/libvirt/libvirtd.conf</code> раскоментируйте строчку"
 
 #: templates/docs.html:40
 msgid "Start the daemon libvirtd"
-msgstr ""
+msgstr "Запускаем деном libvirtd"
 
 #: templates/docs.html:46
 msgid ""
 "Restart the daemon libvirtd, because after installation it runs automatically"
 msgstr ""
+"Перезапустите демон libvirtd, потому что после установке он запускается "
+"автоматичкский"
 
 #: templates/docs.html:51
 msgid ""
@@ -382,14 +386,18 @@ msgid ""
 msgstr ""
 
 #: templates/docs.html:115
-#, fuzzy
 msgid "Test connection"
-msgstr "Тип подключения"
+msgstr "Тест подключения"
 
 #: templates/docs.html:116
 msgid ""
-"Before you add the ip address of your server in the control center, perform "
+"Before you add the ip address of your server in the control center perform "
 "the following test"
+msgstr ""
+"Перед тем как добавить IP адрес в ценр управления выполните следующий тест"
+
+#: templates/docs.html:118
+msgid "<strong>IP_address</strong>"
 msgstr ""
 
 #: templates/index.html:7
@@ -524,15 +532,15 @@ msgstr "Название пула"
 msgid "Device pool"
 msgstr "Устройство пула"
 
-#: templates/network.html:45 templates/storage.html:46 templates/vm.html:70
+#: templates/network.html:45 templates/storage.html:46 templates/vm.html:69
 msgid "State"
 msgstr "Состояние"
 
-#: templates/network.html:52 templates/storage.html:56 templates/vm.html:96
+#: templates/network.html:52 templates/storage.html:56 templates/vm.html:95
 msgid "Enable"
 msgstr "Включить"
 
-#: templates/network.html:54 templates/storage.html:58 templates/vm.html:94
+#: templates/network.html:54 templates/storage.html:58 templates/vm.html:93
 msgid "Disable"
 msgstr "Выключить"
 
@@ -579,7 +587,7 @@ msgstr "Новая виртуальная машина"
 
 #: templates/newvm.html:43 templates/snapshot.html:56
 #: templates/storage.html:76 templates/storage.html.py:102
-#: templates/storage.html:144 templates/vm.html:69
+#: templates/storage.html:144 templates/vm.html:68
 msgid "Name"
 msgstr "Название"
 
@@ -587,15 +595,15 @@ msgstr "Название"
 msgid "Arch"
 msgstr "Архитектура"
 
-#: templates/newvm.html:60 templates/overview.html:45 templates/vm.html:74
+#: templates/newvm.html:60 templates/overview.html:45 templates/vm.html:73
 msgid "Memory"
 msgstr "Память"
 
-#: templates/newvm.html:86 templates/vm.html:72
+#: templates/newvm.html:86 templates/vm.html:71
 msgid "Core"
 msgstr "Ядра процессора"
 
-#: templates/newvm.html:96 templates/vm.html:78
+#: templates/newvm.html:96 templates/vm.html:77
 msgid "CD image"
 msgstr "Образ СD"
 
@@ -603,7 +611,7 @@ msgstr "Образ СD"
 msgid "Without image"
 msgstr "Без образа"
 
-#: templates/newvm.html:109 templates/vm.html:77
+#: templates/newvm.html:109 templates/vm.html:76
 msgid "HDD image"
 msgstr "Образ HDD"
 
@@ -611,7 +619,7 @@ msgstr "Образ HDD"
 msgid "None"
 msgstr "Отсутствует"
 
-#: templates/newvm.html:123 templates/vm.html:71
+#: templates/newvm.html:123 templates/vm.html:70
 msgid "Network"
 msgstr "Сетевой мост"
 
@@ -627,7 +635,7 @@ msgstr "Обзор сервера"
 msgid "Processor(s)"
 msgstr "Процессор(ы)"
 
-#: templates/overview.html:44 templates/vm.html:73
+#: templates/overview.html:44 templates/vm.html:72
 msgid "CPU utilization"
 msgstr "Загрузка процессора"
 
@@ -731,58 +739,62 @@ msgid "Suspend"
 msgstr "Приостановить"
 
 #: templates/vm.html:61
-msgid "Reboot"
-msgstr "Перезагрузить"
-
-#: templates/vm.html:62
 msgid "Shutdown"
 msgstr "Выключить"
 
-#: templates/vm.html:63
-msgid "Force shutdown"
-msgstr "Выкл. принудительно"
+#: templates/vm.html:61
+msgid "Send shutdown signal?"
+msgstr "Послать сигнал выключения?"
 
-#: templates/vm.html:75
+#: templates/vm.html:62
+msgid "Force shutdown"
+msgstr "Завершить"
+
+#: templates/vm.html:62
+msgid "Force shutdown?"
+msgstr "Выключить принудительно?"
+
+#: templates/vm.html:74
 msgid "Memory use"
 msgstr "Используется"
 
-#: templates/vm.html:76
+#: templates/vm.html:75
 msgid "Autostart"
 msgstr "Автозапуск"
 
-#: templates/vm.html:82
+#: templates/vm.html:81
 msgid "power on"
 msgstr "вкючено"
 
-#: templates/vm.html:82
+#: templates/vm.html:81
 msgid "power off"
 msgstr "выключено"
 
-#: templates/vm.html:82
+#: templates/vm.html:81
 msgid "suspend"
 msgstr "приостановлено"
 
-#: templates/vm.html:84 templates/vm.html.py:88
+#: templates/vm.html:83 templates/vm.html.py:87
 msgid "allocated"
 msgstr "выделено"
 
-#: templates/vm.html:84 templates/vm.html.py:88
+#: templates/vm.html:83 templates/vm.html.py:87
 msgid "of"
 msgstr "из"
 
-#: templates/vm.html:103
+#: templates/vm.html:102
 msgid "Disconnect"
 msgstr "Отключить"
 
-#: templates/vm.html:110
+#: templates/vm.html:109
 msgid "Connect"
 msgstr "Подключить"
 
-#: templates/vm.html:118
+#: templates/vm.html:117
 msgid "Create snapshot"
 msgstr "Создать снапшот"
 
-#: templates/vm.html:118
+#: templates/vm.html:117
 msgid ""
 "Attention: When enabled, the virtual machine snapshot will be created on a "
 "lot longer. The virtual machine before creating the snapshot automatically "
@@ -793,15 +805,15 @@ msgstr ""
 "перейдет в режим Приостановлена и будет заблокирована пока не создаст его. "
 "Продолжить?"
 
-#: templates/vm.html:121 templates/vm.html.py:123
+#: templates/vm.html:120 templates/vm.html.py:122
 msgid "Undefine"
 msgstr "Удалить"
 
-#: templates/vm.html:127
+#: templates/vm.html:126
 msgid "To cancel the definition of a virtual machine, delete images"
 msgstr "Для того чтобы удалить виртуальную машину удалите ее"
 
-#: templates/vm.html:127
+#: templates/vm.html:126
 msgid "snapshots"
 msgstr "снапшоты"
 
@@ -896,33 +908,36 @@ msgstr "Сохранение состояния ВМ: "
 msgid "Error: VM state alredy saved"
 msgstr "Ошибка: возможно виртуальная машина уже сохранена"
 
-#: vm/views.py:418
+#: vm/views.py:417
 msgid "Reboot VM: "
 msgstr "Перезагрузка ВМ: "
 
-#: vm/views.py:423
+#: vm/views.py:422
 msgid "Error: VM reboot"
 msgstr "Ошибка: возникли проблемы при перезагрузке"
 
-#: vm/views.py:428
+#: vm/views.py:426
 msgid "Create snapshot for VM: "
 msgstr "Создание снапшота для ВМ: "
 
-#: vm/views.py:431
+#: vm/views.py:430
 msgid "Successful create snapshot for VM: "
 msgstr "Снапшот успешно создан для ВМ: "
 
-#: vm/views.py:439
+#: vm/views.py:437
 msgid "Enable autostart for VM: "
 msgstr "Включение автозапуска для ВМ: "
 
-#: vm/views.py:448
+#: vm/views.py:446
 msgid "Disable autostart for VM: "
 msgstr "Выключение автозапуска для ВМ: "
 
-#: vm/views.py:470
+#: vm/views.py:468
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
+
+#~ msgid "Reboot"
+#~ msgstr "Перезагрузить"
 
 #~ msgid "Frequently Asked Questions"
 #~ msgstr "Часто Задаваемые Вопросы"

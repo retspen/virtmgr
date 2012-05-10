@@ -113,10 +113,9 @@ $ sudo ufw allow from any to any app Libvirt
 </pre>
 <br>
 <h4>{% trans "Test connection" %}</h4>
-<p>{% trans "Before you add the ip address of your server in the control center, perform the following test" %}</p>
-<p>Перед тем как добавить ip адреса ваших серверов в центре управления, выполните следующий тест</p>
+<p>{% trans "Before you add the ip address of your server in the control center perform the following test" %}</p>
 <pre>
-$ virsh -c qemu+tcp://IP_вашего_сервера/system nodeinfo
+$ virsh -c qemu+tcp://{% trans "<strong>IP_address</strong>" %}/system nodeinfo
 Please enter your authentication name: fred
 Please enter your password: xxxxxx
 CPU model:           x86_64
@@ -128,7 +127,4 @@ Thread(s) per core:  1
 NUMA cell(s):        1
 Memory size:         2019260 kB
 </pre>
-<p><font color="red">Внимание</font>: если Вы не увидели информацию о вашей хост системе, проверьте правильно ли Вы все настроили.</p>
-<p><font color="red">Ubuntu-Server</font>: если Вы все настроили правильно, но все равно выдает ошибку <strong>authentication failed</strong> тогда попробуйте добавить домен в имя пользователя при авторизации, который можно посмотреть командой <code>sasldblistusers2</code> описанной выше. Например: <strong>fred@webvirtmgr.net</strong></p>
-<br>
 {% endblock %}

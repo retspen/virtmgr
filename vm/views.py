@@ -413,8 +413,7 @@ def index(request, host_id, vname):
             errors.append(msg)
       if request.POST.get('reboot',''):
          try:
-            dom.destroy()
-            dom.create()
+            dom.reboot()
             msg = _('Reboot VM: ')
             msg = msg + vname
             add_error(msg, 'user')

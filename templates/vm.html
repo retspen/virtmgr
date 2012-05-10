@@ -58,9 +58,8 @@
               {% endif %}
               {% if state = 1 %}
                 <input class="btn btn-primary" type="submit" name="suspend" value="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-                <input class="btn btn-primary" type="submit" name="reboot" value="{% trans "Reboot" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-                <input class="btn btn-primary" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-                <input class="btn btn-primary" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+                <input class="btn btn-primary" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
+                <input class="btn btn-primary" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
                 <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', 'child','width=800,height=600,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
@@ -78,15 +77,15 @@
                   <p>{% trans "CD image" %}</p>
                 </div>
                 <div class="span4">
-                  <p><strong>{{ vname }}</strong> ({{ vm_arch }})</p>
+                  <p><strong>{{ vname }}</strong> [ {{ vm_arch }} ]</p>
                   <p>{% if state == 1 %}<font color="green">{% trans "power on" %}</font>{% endif %}{% if state == 5 %}<font color="red">{% trans "power off" %}</font>{% endif %}{% if state == 3 %}<font color="orange">{% trans "suspend" %}</font>{% endif %}</p>
-                  <p>{{ vm_nic.0 }} ({{ vm_nic.1 }})</p>
+                  <p>{{ vm_nic.0 }} ( {{ vm_nic.1 }} )</p>
                   <p>{% trans "allocated" %} {{ core }} {% trans "of" %} {{ all_core }}</p>
-                    <div class="progress progress-danger progress-striped active" style="margin-bottom: 9px; width:220px;">
+                    <div class="progress progress-danger progress-striped active" style="margin-bottom: 9px; width:205px;">
                       <div class="bar" style="width: {{ cpu_usage }}%;"><font color="black">{{ cpu_usage }}%</font></div>
                     </div>
                   <p>{% trans "allocated" %} {{ memory|filesizeformat }} {% trans "of" %} {{ mem_usage.0|filesizeformat }}</p>
-                    <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:220px;">
+                    <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:205px;">
                         <div class="bar" style="width: {% if state == 1 %} {{ mem_usage.1 }}%; {% else %} 0%; {% endif %}"><font color="black">{% if state == 1 %} {{ mem_usage.1 }}% {% else %} 0% {% endif %}</font></div> 
                     </div>
                     <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
