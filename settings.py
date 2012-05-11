@@ -119,5 +119,5 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'Web Virtual Manager <noreply@x-sys.com.ua>'
+DEFAULT_FROM_EMAIL = 'WebVirtMgr <noreply@webvirtmgr.net>'
 
