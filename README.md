@@ -1,3 +1,13 @@
+Version 2.4:
+- bugfix
+- add gettext (russian)
+- change template
+
+Version 2.3:
+- bugfix
+- add logs
+- change templates
+
 Version 2.2:
 - fix template
 - add exceptions for all operation
