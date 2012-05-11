@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-11 09:13+0300\n"
+"POT-Creation-Date: 2012-05-11 10:33+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -896,9 +896,26 @@ msgstr "Забыли пароль?"
 msgid "Logout"
 msgstr "Выход"
 
+#: templates/registration/password_reset_complete.html:7
+msgid "Your password was successfully changed."
+msgstr "Ваш пароль успешно изменен."
+
+#: templates/registration/password_reset_confirm.html:6
 #: templates/registration/password_reset_form.html:14
 msgid "Password recovery"
 msgstr "Восстановление пароля"
+
+#: templates/registration/password_reset_confirm.html:8
+msgid "New password"
+msgstr "Новый пароль"
+
+#: templates/registration/password_reset_confirm.html:10
+msgid "Confirm password"
+msgstr "Подтвердить пароль"
+
+#: templates/registration/password_reset_done.html:7
+msgid "We have sent instructions on how to reset your password on the email."
+msgstr "Мы отправлены инструкции о том, как изменить пароль на email."
 
 #: templates/registration/password_reset_form.html:18
 msgid "Rocevery"
