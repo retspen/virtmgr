@@ -37,8 +37,12 @@ TIME_ZONE = 'Europe/Zaporozhye'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'ru-RU'
-#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
+
+LANGUAGES = (
+	('ru', 'Russian'),
+	('en', 'English'),
+)
 
 SITE_ID = 1
 
@@ -115,5 +119,5 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'Web Virtual Manager Machine <noreply@x-sys.com.ua>'
+DEFAULT_FROM_EMAIL = 'Web Virtual Manager <noreply@x-sys.com.ua>'
 

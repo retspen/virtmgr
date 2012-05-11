@@ -1,22 +1,23 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
      <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="sidebar-nav well">
             <ul class="nav nav-list">
-              <li class="nav-header">Главное меню</li>
-                <li><a href=/dashboard/><i class="icon-home"></i>Центр управления</a></li>
-                <li><a href=/overview/{{ host_id }}/><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
-              <li class="nav-header"></i>Настройки сервера</li>
-                <li class="active"><a href=/newvm/{{ host_id }}/><i class="icon-plus icon-white"></i>Создать ВМ</a></li>
-                <li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>Хранилище</a></li>
-                <li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>Виртуальные сети</a></li>
-                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
-                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>Логи</a></li>
-              <li class="nav-header">Виртуальные машины</li>
+              <li class="nav-header">{% trans "Main Menu" %}</li>
+                <li><a href=/dashboard/><i class="icon-home"></i>{% trans "Dashboard" %}</a></li>
+                <li><a href=/overview/{{ host_id }}/><i class="icon-info-sign"></i>{% trans "Server" %} <strong>{{ kvm_host.hostname }}</strong></a></li>
+              <li class="nav-header"></i>{% trans "Server settings" %}</li>
+                <li class="active"><a href=/newvm/{{ host_id }}/><i class="icon-plus icon-white"></i>{% trans "New VM" %}</a></li>
+                <li><a href=/storage/{{ host_id }}/><i class="icon-folder-open"></i>{% trans "Storage" %}</a></li>
+                <li><a href=/network/{{ host_id }}/><i class="icon-signal"></i>{% trans "Virtual networks" %}</a></li>
+                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
+                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>{% trans "Logs" %}</a></li>
+              <li class="nav-header">{% trans "Virtual Machines" %}</li>
                 {% if not all_vm %}
-                <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>Создать ВМ</a></li>
+                <li><a href=/newvm/{{ host_id }}/><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
                 {% endif %}
                 {% for name, state in all_vm.items %}
                 <li><a href=/vm/{{ host_id }}/{{ name }}/><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
@@ -26,7 +27,7 @@
         </div>
     <div class="span8">
       <div class="page-header">
-          <h2>Новая виртуальная машина</h2>
+          <h2>{% trans "New virtual machine" %}</h2>
         </div>
           {% if errors %}
           {% for error in errors %}
@@ -39,13 +40,13 @@
       <form class="form-horizontal" action="/newvm/{{ host_id }}/" method="post">
         <fieldset>
           <div class="control-group">
-          <label class="control-label">Название</label>
+          <label class="control-label">{% trans "Name" %}</label>
             <div class="controls">
               <input class="input-large focused" type="text" name="name" placeholder="Name" value="">
             </div>
           </div>
           <div class="control-group">
-          <label class="control-label">Архитектура</label>
+          <label class="control-label">{% trans "Arch" %}</label>
             <div class="controls">
               <select name="arch">
                   <option value="i686">i686</option>
@@ -56,7 +57,7 @@
             </div>
           </div>
           <div class="control-group">
-          <label class="control-label">Память</label>
+          <label class="control-label">{% trans "Memory" %}</label>
             <div class="controls">
               <select name="memory">
                 <option value="256">256 Mb</option>
@@ -82,7 +83,7 @@
             </div>
           </div>     
           <div class="control-group">
-          <label class="control-label">Ядра процессора</label>
+          <label class="control-label">{% trans "Core" %}</label>
             <div class="controls">
               <select name="cpus">
               {% for cpu in cpus %}
@@ -92,7 +93,7 @@
             </div>
           </div>
           <div class="control-group">
-          <label class="control-label">Образ СD</label>
+          <label class="control-label">{% trans "CD image" %}</label>
             <div class="controls">
               <select name="iso">
               {% if all_iso != "error" %}
@@ -100,12 +101,12 @@
                 <option value="{{ name }}">{{ name }}</option>
               {% endfor %}
               {% endif %}
-                <option value="">Без образа</option>
+                <option value="">{% trans "Without image" %}</option>
               </select>
             </div>
           </div>
           <div class="control-group">
-          <label class="control-label">Образ HDD</label>
+          <label class="control-label">{% trans "HDD image" %}</label>
             <div class="controls">
               <select name="img">
               {% if all_iso != "error" %}
@@ -113,25 +114,25 @@
                 <option value="{{ name }}">{{ name }}</option>
               {% endfor %}
               {% else %}
-                <option value="">Отсутствует</option>
+                <option value="">{% trans "None" %}</option>
               {% endif %}
               </select>
             </div>
           </div>
           <div class="control-group">
-          <label class="control-label">Сетевой мост</label>
+          <label class="control-label">{% trans "Network" %}</label>
             <div class="controls">
               <select name="bridge">
               {% for net in bridge %}
                 <option value="{{ net }}">{{net}}</option>
               {% endfor %}
-                <option value="br0">br0 (если настроен)</option>
-                <option value="br1">br1 (если настроен)</option>
+                <option value="br0">br0 ({% trans "set up?" %})</option>
+                <option value="br1">br1 ({% trans "set up?" %})</option>
               </select>
             </div>
           </div>
           <div class="controls">
-            <input class="btn btn-primary" type="submit" name="create" value="Создать">
+            <input class="btn btn-primary" type="submit" name="create" value="{% trans "Create" %}">
           </div>
           </fieldset>
         </form>

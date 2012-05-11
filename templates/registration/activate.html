@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
    <div class="container">
       <div class="hero-unit">
         <h1>Web Virtual Manager</h1><br>
-        <p>Ваш аккаунт уже был успешно активирован.</p>
+        <p>{% trans "Your account has been successfully activated" %}</p>
       </div>
 {% endblock %}

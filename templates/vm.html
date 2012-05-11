@@ -1,22 +1,23 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
      <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="sidebar-nav well">
             <ul class="nav nav-list">
-              <li class="nav-header">Главное меню</li>
-                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
-                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
-              <li class="nav-header"></i>Настройки сервера</li>
-                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
-                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
-                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
-                <li><a href="/snapshot/{{ host_id }}/{{ vname }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
-                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>Логи</a></li>
-              <li class="nav-header">Виртуальные машины</li>
+              <li class="nav-header">{% trans "Main Menu" %}</li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>{% trans "Dashboard" %}</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>{% trans "Server" %} <strong>{{ kvm_host.hostname }}</strong></a></li>
+              <li class="nav-header"></i>{% trans "Server settings" %}</li>
+                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
+                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>{% trans "Storage" %}</a></li>
+                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>{% trans "Virtual networks" %}</a></li>
+                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
+                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>{% trans "Logs" %}</a></li>
+              <li class="nav-header">{% trans "Virtual Machines" %}</li>
                 {% if not all_vm %}
-                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
                 {% endif %}
                 {% for name, state in all_vm.items %}
                 {% if vname == name %} 
@@ -30,7 +31,7 @@
         </div>
     <div class="span8">
       <div class="page-header">
-          <h2>Управление виртуальной машиной</h2>
+          <h2>{% trans "Managing a virtual machine" %}</h2>
         </div>
           {% if message %}
             <div class="alert alert-info">
@@ -50,65 +51,62 @@
       	<div class="span8">
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
               {% if state = 5 %}
-                <input class="btn btn-primary" type="submit" name="start" value="Запуск">
+                <input class="btn btn-primary" type="submit" name="start" value="{% trans "Start VM" %}">
               {% endif %}
               {% if state = 3 %}
-                <input class="btn btn-primary" type="submit" name="resume" value="Возобновить">
+                <input class="btn btn-primary" type="submit" name="resume" value="{% trans "Resume" %}">
               {% endif %}
               {% if state = 1 %}
-                <input class="btn btn-primary" type="submit" name="suspend" value="Приостановить" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="reboot" value="Перезагрузить" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="shutdown" value="Выключить" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="submit" name="destroy" value="Выкл. принудительно" onclick="return confirm('Вы уверены?')">
-                <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', '_blank','width=830,height=648,status=no,location=no,toolbar=no,menubar=no')">
+                <input class="btn btn-primary" type="submit" name="suspend" value="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+                <input class="btn btn-primary" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
+                <input class="btn btn-primary" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
+                <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', 'child','width=800,height=600,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
               </div>
                 <div class="span2">
-                  <p>Название</p>
-                  <p>Архитектура</p>
-                  <p>Статус</p>
-                  <p>Сеть</p>
-                  <p>Ядра</p>
-                  <p>Загрузка ЦПУ</p>
-                  <p>Память</p>
-                  <p style="height:22px">Используется</p>
-                  <p style="height:34px">Автозапуск</p>
-                  <p>Образ HDD</p>
-                  <p>Образ CD</p>
+                  <p>{% trans "Name" %}</p>
+                  <p>{% trans "State" %}</p>
+                  <p>{% trans "Network" %}</p>
+                  <p>{% trans "Core" %}</p>
+                  <p>{% trans "CPU utilization" %}</p>
+                  <p>{% trans "Memory" %}</p>
+                  <p style="height:22px">{% trans "Memory use" %}</p>
+                  <p style="height:34px">{% trans "Autostart" %}</p>
+                  <p>{% trans "HDD image" %}</p>
+                  <p>{% trans "CD image" %}</p>
                 </div>
                 <div class="span4">
-                  <p><strong>{{ vname }}</strong></p>
-                  <p>{{ vm_arch }}</p>
-                  <p>{% if active == 1 %}<font color="green">активно</font>{% else %}<font color="red">не активно</font>{% endif %}</p>
-                  <p>{{ vm_nic.0 }} ({{ vm_nic.1 }})</p>
-                  <p>выделено {{ core }} из {{ all_core }}</p>
-                    <div class="progress progress-danger progress-striped active" style="margin-bottom: 9px; width:220px;">
+                  <p><strong>{{ vname }}</strong> [ {{ vm_arch }} ]</p>
+                  <p>{% if state == 1 %}<font color="green">{% trans "power on" %}</font>{% endif %}{% if state == 5 %}<font color="red">{% trans "power off" %}</font>{% endif %}{% if state == 3 %}<font color="orange">{% trans "suspend" %}</font>{% endif %}</p>
+                  <p>{{ vm_nic.0 }} ( {{ vm_nic.1 }} )</p>
+                  <p>{% trans "allocated" %} {{ core }} {% trans "of" %} {{ all_core }}</p>
+                    <div class="progress progress-danger progress-striped active" style="margin-bottom: 9px; width:205px;">
                       <div class="bar" style="width: {{ cpu_usage }}%;"><font color="black">{{ cpu_usage }}%</font></div>
                     </div>
-                  <p>выделено {{ memory|filesizeformat }} из {{ mem_usage.0|filesizeformat }}</p>
-                    <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:220px;">
+                  <p>{% trans "allocated" %} {{ memory|filesizeformat }} {% trans "of" %} {{ mem_usage.0|filesizeformat }}</p>
+                    <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:205px;">
                         <div class="bar" style="width: {% if state == 1 %} {{ mem_usage.1 }}%; {% else %} 0%; {% endif %}"><font color="black">{% if state == 1 %} {{ mem_usage.1 }}% {% else %} 0% {% endif %}</font></div> 
                     </div>
                     <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                       {% if autostart == 1 %}
-                        <input class="btn btn-primary" type="submit" name="auto_off" value="Выключить" onclick="return confirm('Вы уверены?')">
+                        <input class="btn btn-primary" type="submit" name="auto_off" value="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                       {% else %}
-                        <input class="btn btn-primary" type="submit" name="auto_on" value="Включить" onclick="return confirm('Вы уверены?')"> 
+                        <input class="btn btn-primary" type="submit" name="auto_on" value="{% trans "Enable" %}" onclick="return confirm('{% trans "Are you sure?" %}')"> 
                       {% endif %}
                     </form>
                   <p>{{ hdd.0 }} | {{ hdd.1|filesizeformat }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom.0 }} | {{ cdrom.2|filesizeformat }} {% endif %}</p>
                     <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                       {% if cdrom %}
-                      <input class="btn btn-primary" type="submit" name="disconnect" value="Отключить" onclick="return confirm('Вы уверены?')">
+                      <input class="btn btn-primary" type="submit" name="disconnect" value="{% trans "Disconnect" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                       {% else %}
                       <select name="iso_img">
                       {% for iso in isos %}
                           <option value="{{ iso }}">{{ iso }}</option>
                       {% endfor %} 
                       </select><br>
-                      <input class="btn btn-primary" type="submit" name="connect" value="Подключить"> 
+                      <input class="btn btn-primary" type="submit" name="connect" value="{% trans "Connect" %}"> 
                       {% endif %}
                     </form>
                   </p>
@@ -116,16 +114,16 @@
               </div>
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                 {% if state != 3 %}
-                <input class="btn btn-primary" type="submit" name="snapshot" value="Создать снапшот">
+                <input class="btn btn-primary" type="submit" name="snapshot" value="{% trans "Create snapshot" %}" {% if state == 1 %}onclick="return confirm('{% trans "Attention: When enabled, the virtual machine snapshot will be created on a lot longer. The virtual machine before creating the snapshot automatically switches to Paused and will be locked until you create it. Continue?" %}')"{% endif %}>
                 {% endif %}
                 {% if num_snapshot > 0 or state = 1 %}
-                <input class="btn btn-primary disabled" type="button" value="Удалить">
+                <input class="btn btn-primary disabled" type="button" value="{% trans "Undefine" %}">
                 {% else %}
-                <input class="btn btn-primary" type="submit" name="undefine" value="Удалить" onclick="return confirm('Вы уверены?')">
+                <input class="btn btn-primary" type="submit" name="undefine" value="{% trans "Undefine" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                 {% endif %}
               </form>
             {% if num_snapshot > 0 %}
-            <p><strong>Для того чтобы <a href="/snapshot/{{ host_id }}/{{ vname }}/">удалить</a> виртуальную машину, удалите ее снапшоты</strong></p>
+            <p><strong>{% trans "To cancel the definition of a virtual machine, delete images" %} <a href="/snapshot/{{ host_id }}/{{ vname }}/">{% trans "snapshots" %}</a></strong></p>
             {% endif %}
             </div>
           </div>

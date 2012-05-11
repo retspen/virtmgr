@@ -5,6 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+    
     # Users
     url(r'^user/register/$', 'registration.views.register', {'form_class': RegistrationFormUniqueEmail, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
     url(r'^user/', include('registration.urls')),
@@ -16,8 +18,6 @@ urlpatterns = patterns('',
     url(r'^support/', 'virtmgr.pages.views.support'),
     url(r'^screenshot/', 'virtmgr.pages.views.screenshot'),
     url(r'^docs/$', 'virtmgr.pages.views.docs'),
-    url(r'^docs/settings/', 'virtmgr.pages.views.settings'),
-    url(r'^docs/faq/', 'virtmgr.pages.views.faq'),
     
     # Host
     url(r'^dashboard/$', 'virtmgr.dashboard.views.index'),

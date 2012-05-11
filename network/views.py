@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import libvirt, re
 import virtinst.util as util
+from django.utils.translation import ugettext_lazy as _
 from virtmgr.network.IPy import IP
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -109,7 +110,7 @@ def pool(request, host_id, pool):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_networks():
@@ -125,7 +126,7 @@ def pool(request, host_id, pool):
 				networks[name] = status
 			return networks
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def vm_conn():
@@ -136,7 +137,7 @@ def pool(request, host_id, pool):
 			conn = libvirt.openAuth(uri, auth, 0)
 			return conn
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def creds(credentials, user_data):
@@ -156,28 +157,28 @@ def pool(request, host_id, pool):
 			net = conn.networkLookupByName(pool)
 			return net
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def pool_start():
 		try:
 			net.create()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def pool_stop():
 		try:
 			net.destroy()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def pool_delete():
 		try:
 			net.undefine()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def net_set_autostart(pool):
@@ -185,7 +186,7 @@ def pool(request, host_id, pool):
 			net = conn.networkLookupByName(pool)
 			net.setAutostart(1)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_net_info(get):
@@ -197,7 +198,7 @@ def pool(request, host_id, pool):
 			elif get == "start":
 				return net.autostart()
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_ipv4_net():
@@ -213,7 +214,7 @@ def pool(request, host_id, pool):
 			network = IP(gateway.int() & netmask.int())
 			return IP(str(network) + "/" + netmaskStr)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_ipv4_dhcp_range():
@@ -227,7 +228,7 @@ def pool(request, host_id, pool):
 			
 			return [IP(dhcpstart), IP(dhcpend)]
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_ipv4_forward():
@@ -237,7 +238,7 @@ def pool(request, host_id, pool):
 			forwardDev = util.get_xml_path(xml, "/network/forward/@dev")
 			return [fw, forwardDev]
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	def create_net_pool(name_pool, forward, ipaddr, netmask, dhcp, start_dhcp, end_dhcp):
@@ -261,7 +262,7 @@ def pool(request, host_id, pool):
 				</network>"""
 			conn.networkDefineXML(xml)
 		except libvirt.libvirtError as e:
-			add_error(msg, 'libvirt')
+			add_error(e, 'libvirt')
 			return "error"
 
 	conn = vm_conn()
@@ -281,16 +282,16 @@ def pool(request, host_id, pool):
 			dhcp = request.POST.get('dhcp','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
 			if len(name_pool) > 20:
-				msg = u'Название пула не должно превышать 20 символов'
+				msg = _('The name of the network pool must not exceed 20 characters')
 				errors.append(msg)
 			if simbol:
-				msg = u'Название пула не должно содержать символы и русские буквы'
+				msg = _('The name of the network pool must not contain any characters and Russian characters')
 				errors.append(msg)
 			if not name_pool:
-				msg = u'Введите имя пула'
+				msg = _('Enter the name of the pool')
 				errors.append(msg)
 			if not net_addr:
-				msg = u'Введите IP подсеть'
+				msg = _('Enter the IP subnet')
 				errors.append(msg)
 			if not errors:
 				netmask = IP(net_addr).strNetmask()
@@ -299,16 +300,17 @@ def pool(request, host_id, pool):
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
 				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
-					msg = u'Возможно пул с такими данными существует'
+					msg = _('Such a pool already exists')
 					errors.append(msg)
 				if not errors:
 					net_set_autostart(name_pool)
 					net = get_conn_pool(name_pool)
 					if pool_start() is "error":
-						msg = u'Пул создан, но при запуске пула возникла ошибка, возможно указана существующая сеть'
+						msg = _('Pool is created, but when I run the pool fails, you may specify an existing network')
 						errors.append(msg)
 					else:
-						msg = u'Создание сетевого пула: %s' % (name_pool)
+						msg = _('Creating a network pool: ') 
+						msg = msg + name_pool
 						add_error(msg, 'user')
 						return HttpResponseRedirect('/network/%s/%s/' % (host_id, name_pool))
 					if errors:
@@ -326,15 +328,18 @@ def pool(request, host_id, pool):
 
 	if request.method == 'POST':
 		if request.POST.get('stop_pool',''):
-			msg = u'Остановка сетевого пула: %s' % (pool)
+			msg = _('Stop network pool: ')
+			msg = msg + pool
 			pool_stop()
 			add_error(msg, 'user')
 		if request.POST.get('start_pool',''):
-			msg = u'Запуск сетевого пула: %s' % (pool)
+			msg = _('Start network pool: ')
+			msg = msg + pool
 			pool_start()
 			add_error(msg, 'user')
 		if request.POST.get('del_pool',''):
-			msg = u'Удаление сетевого пула: %s' % (pool)
+			msg = _('Delete network pool: ')
+			msg = msg + pool
 			pool_delete()
 			add_error(msg, 'user')
 			return HttpResponseRedirect('/network/%s/' % (host_id))

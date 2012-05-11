@@ -1,22 +1,23 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
      <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="sidebar-nav well">
             <ul class="nav nav-list">
-              <li class="nav-header">Главное меню</li>
-              	<li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
-              	<li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
-			  <li class="nav-header"></i>Настройки сервера</li>
-			  	<li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
-			  	<li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
-			  	<li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
-			  	<li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
-			  	<li class="active"><a href="/logs/{{ host_id }}/"><i class="icon-list-alt icon-white"></i>Логи</a></li>
-              <li class="nav-header">Виртуальные машины</li>
+              <li class="nav-header">{% trans "Main Menu" %}</li>
+              	<li><a href="/dashboard/"><i class="icon-home"></i>{% trans "Dashboard" %}</a></li>
+              	<li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>{% trans "Server" %} <strong>{{ kvm_host.hostname }}</strong></a></li>
+			  <li class="nav-header"></i>{% trans "Server settings" %}</li>
+			  	<li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
+			  	<li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>{% trans "Storage" %}</a></li>
+			  	<li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>{% trans "Virtual networks" %}</a></li>
+			  	<li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
+			  	<li class="active"><a href="/logs/{{ host_id }}/"><i class="icon-list-alt icon-white"></i>{% trans "Logs" %}</a></li>
+              <li class="nav-header">{% trans "Virtual Machines" %}</li>
 	           {% if not all_vm %}
-			   <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+			   <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
 	   	       {% endif %}
 			   {% for name, state in all_vm.items %}
 			   <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
@@ -26,7 +27,7 @@
         </div>
 		<div class="span8">
 			<div class="page-header">
-   				<h2>Логирование</h2>
+   				<h2>{% trans "Logging" %}</h2>
    			</div>
   		    {% if errors %}
 			    {% for error in errors %}
@@ -41,9 +42,9 @@
             <thead>
               <tr>
                 <th>№:</th>
-                <th>Тип</th>
-                <th>Сообщение</th>
-                <th>Дата</th>
+                <th>{% trans "Type" %}</th>
+                <th>{% trans "Message" %}</th>
+                <th>{% trans "Date" %}</th>
               </tr>
             </thead>
             <tbody>
@@ -58,7 +59,7 @@
           </tbody>
           </table>
           {% else %}
-          <h4>У Вас отсутствуют какие либо логи</h4>
+          <h4>{% trans "You have no logs" %}</h4>
           {% endif %}
         </div>
     </div>

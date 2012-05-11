@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import libvirt, re, socket
+from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -31,7 +32,8 @@ def index(request):
 		hosts = Host(user_id=request.user.id, hostname=host, ipaddr=ip, login=usr, passwd=passw)
 		hosts.save()
 		kvm_host = Host.objects.get(user=request.user.id, hostname=host)
-		msg = u'Добавление сервера %s' % (host)
+		msg = _('Add server: ')
+		msg = msg + host
 		error_msg = Log(host_id=kvm_host.id, type='user', message=msg, user_id=request.user.id)
 		error_msg.save()
 
@@ -55,31 +57,31 @@ def index(request):
 			simbol = re.search('[^a-zA-Z0-9\_]+', name)
 			ipsimbol = re.search('[^0-9\.]+', ipaddr)
 			if len(name) > 20:
-				msg = u'Имя хоста не должно превышать 20 символов'
+				msg = _('The host name must not exceed 20 characters')
 				errors.append(msg)
 			if ipsimbol:
-				msg = u'IP адрес должен содержать только цифры разделенные "."'
+				msg = _('IP address must contain only numbers separated by "."')
 				errors.append(msg)
 			if simbol:
-				msg = u'Имя хоста не должно содержать символы и русские буквы'
+				msg = _('The host name must not contain any characters and Russian characters')
 				errors.append(msg)
 			else:
 				have_host = Host.objects.filter(user=request.user, hostname=name)
 				have_ip = Host.objects.filter(user=request.user, ipaddr=ipaddr)
 				if have_host or have_ip:
-					msg = u'Такой хост уже подключен'
+					msg = _('This host is already connected')
 					errors.append(msg)
 			if not name:
-				msg = u'Не было введено имя хоста'
+				msg = _('No hostname has been entered')
 				errors.append(msg)
 			if not ipaddr:
-				msg = u'Не был введен IP адрес'
+				msg = _('No IP address has been entered')
 				errors.append(msg)
 			if not login:
-				msg = u'Не был введен KVM логин'
+				msg = _('No KVM login was been entered')
 				errors.append(msg)
 			if not passw:
-				msg = u'Не был введен KVM пароль'
+				msg = _('No KVM password was been entered ')
 				errors.append(msg)
 			if not errors:
 				add_host(name, ipaddr, login, passw)

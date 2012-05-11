@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import libvirt, re, time, socket
 import virtinst.util as util
+from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -115,7 +116,8 @@ def index(request, host_id):
 		conn_type = conn.getURI()
 		conn.close()
 	else:
-		errors.append(u'Ошибка подключения: проверьте KVM логин и KVM пароль')
+		msg = _('Error connecting: Check the KVM login and KVM password')
+		errors.append(msg)
 		
 	return render_to_response('overview.html', locals())
 

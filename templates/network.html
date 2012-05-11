@@ -1,80 +1,81 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
      <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="sidebar-nav well">
             <ul class="nav nav-list">
-              <li class="nav-header">Главное меню</li>
-                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
-                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
-              <li class="nav-header"></i>Настройки сервера</li>
-                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
-                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
-                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
-                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
-                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>Логи</a></li>
-              <li class="nav-header">Сетевой пул</li>
-                <li><a href="/network/{{ host_id }}/new_net_pool/"><i class="icon-plus"></i>Создать пул</a></li>
-                {% for name, status in pools.items %}
-                {% if pool == name %}
-                <li class="active"><a href="/network/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
-                {% else %}
-                <li><a href="/network/{{ host_id }}/{{ name }}/"><font color="{% if status == 1 %}green{% else %}red{% endif %}"><i class="icon-folder-open"></i> {{ name }}</font></a></li>
-                {% endif %}
-                {% endfor %}
-              <li class="nav-header">Виртуальные машины</li>
-                {% if not all_vm %}
-                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
-                {% endif %}
-                {% for name, state in all_vm.items %}
-                <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
-                {% endfor %}
+              <li class="nav-header">{% trans "Main Menu" %}</li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>{% trans "Dashboard" %}</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>{% trans "Server" %} <strong>{{ kvm_host.hostname }}</strong></a></li>
+              <li class="nav-header"></i>{% trans "Server settings" %}</li>
+                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
+                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>{% trans "Storage" %}</a></li>
+                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>{% trans "Virtual networks" %}</a></li>
+                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
+                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>{% trans "Logs" %}</a></li>
+              <li class="nav-header">{% trans "Network pool" %}</li>
+                <li><a href="/network/{{ host_id }}/new_net_pool/"><i class="icon-plus"></i>{% trans "New pool" %}</a></li>
+              {% for name, status in pools.items %}
+          {% if pool == name %}
+              <li class="active"><a href="/network/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
+              {% else %}
+              <li><a href="/network/{{ host_id }}/{{ name }}/"><font color="{% if status == 1 %}green{% else %}red{% endif %}"><i class="icon-folder-open"></i> {{ name }}</font></a></li>
+              {% endif %}
+        {% endfor %}
+              <li class="nav-header">{% trans "Virtual Machines" %}</li>
+              {% if not all_vm %}
+              <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
+              {% endif %}
+              {% for name, state in all_vm.items %}
+              <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
+              {% endfor %}
             </ul>
           </div>
         </div>
     <div class="span8">
       <div class="page-header">
-          <h2>Виртуальные сети</h2>
+          <h2>{% trans "Virtual networks" %}</h2>
         </div>
       <div class="row">
         <div class="span2">
-          <p>Название пула</p>
-          <p>Устройство пула</p>
-          <p>Состояние</p>
+          <p>{% trans "Pool name" %}</p>
+          <p>{% trans "Device pool" %}</p>
+          <p>{% trans "State" %}</p>
         </div>
         <div class="span3">
           <p><strong>{{ pool }}</strong></p>
           <p>{{ bridge }}</p>
           <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
 			{% if status = 0 %}
-			<input type="submit" class="btn btn-primary" name="start_pool" value="Включить">
+			<input type="submit" class="btn btn-primary" name="start_pool" value="{% trans "Enable" %}">
 			{% else %}
-			<input type="submit" class="btn btn-primary" name="stop_pool" value="Выключить" onclick="return confirm('Вы уверены?')">
+			<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 			{% endif %}
 		  </form>
 		</div>
 	   </div>
 		{% if status = 0 %}
         <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
-			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+			<input type="submit" class="btn btn-primary" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 		</form>
 		{% else %}
       <hr>
-      <h4>Конфигурация IPv4:</h4><br>
+      <h4>{% trans "IPv4 configuration:" %}</h4><br>
         <div class="row">
         <div class="span2">
-          <p>Тип шлюза</p>
-          <p>Подсеть пула</p>
+          <p>{% trans "Type forwarding" %}</p>
+          <p>{% trans "Subnet pool" %}</p>
           <p>DHCP</p>
           {% if dhcprange %}
-          <p>Начало</p>
-          <p>Конец</p> {% endif %}
+          <p>{% trans "Start" %}</p>
+          <p>{% trans "End" %}</p> {% endif %}
         </div>
         <div class="span3">
           <p>{% if netmode.0 == 'nat' %} NAT {% endif %} {% if netmode.0 == 'route' %} ROUTE {% endif %} {% if not netmode.0 %} ISOLATE {% endif %}</p>
           <p>{{ network }}</p>
-          <p>{% if dhcprange %}<font color="green">включен</font>{% else %}<font color="red">не включен</font>{% endif %}</p>
+          <p>{% if dhcprange %}<font color="green">{% trans "on" %}</font>{% else %}<font color="red">{% trans "off" %}</font>{% endif %}</p>
           {% for dhcp in dhcprange %} 
             <p>{{ dhcp }}</p>
           {% endfor %}

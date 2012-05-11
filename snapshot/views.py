@@ -2,6 +2,7 @@
 from datetime import datetime
 import libvirt, re, time
 import virtinst.util as util
+from django.utils.translation import ugettext_lazy as _
 from virtmgr.network.IPy import IP
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -199,16 +200,19 @@ def snapshot(request, host_id, vname):
 	if request.method == 'POST':
 		if request.POST.get('delete',''):
 			name = request.POST.get('name','')
-			msg = u'Удаление снапшота: %s' % (name)
+			msg = _('Delete snapshot VM: ')
+			msg = msg + vname + ' => ' + name
 			add_error(msg,'user')
 			del_snapshot(name)
 			return HttpResponseRedirect('/snapshot/%s/%s/' % (host_id, vname))
 		if request.POST.get('revert',''):
 			name = request.POST.get('name','')
-			msg = u'Восстановление снапшота: %s' % (name)
+			msg = _('Revert snapshot VM: ')
+			msg = msg + vname + ' => ' + name
 			add_error(msg,'user')
         	revert_snapshot(name)
-        	message = u'Восстановление снапшота "%s" прошло успешно' % (name)
+        	message = _('Successful revert snapshot: ')
+        	message = message + name
 
 	conn.close()
 

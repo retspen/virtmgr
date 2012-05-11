@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name='yandex-verification' content='483f16ffaf876d7d' />
     <meta name="google-site-verification" content="D3zKGm9haWWk4GzKppFrVrdNyWaZE4ujH1J8bE--UAM" />
-    <meta name="description" content="Web Virtual Manager Machine" />
-    <meta name="keywords" content="web kvm, web libvirt, web virt-manager, web virt manager, kvm, libvirt, libvirt web interface, libvirt web frontend, libvirt web admin, libvirt web management, virt-manager, kvm web interface, kvm web panel, kvm web panel, kvm web manager, kvm web console" />
+    <meta name="description" content="WebVirtMgr is a libvirt-based Web interface for managing virtual machines" />
+    <meta name="keywords" content="виртуализация, виртуализация серверов, виртуальные машины, виртуалки, консолидация серверов, web kvm, web libvirt, web virt-manager, web virt manager, kvm, libvirt, libvirt web interface, libvirt web frontend, libvirt web admin, libvirt web management, virt-manager, kvm web interface, kvm web panel, kvm web panel, kvm web manager, kvm web console" />
     <meta name="author" content="Anatoliy Guskov">
-
+    {% load i18n %}
     <link href="/media/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -40,22 +40,22 @@
           <a class="brand strong" href="/">WebVirtMgr</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li><a href="/features">Возможности</a></li>
-              <li><a href="/screenshot">Скриншоты</a></li>
-              <li><a href="/docs">Документация</a></li>
-              <li><a href="/support">Поддержка</a></li>
+              <li><a href="/features">{% trans "Features" %}</a></li>
+              <li><a href="/screenshot">{% trans "Screenshots" %}</a></li>
+              <li><a href="/docs">{% trans "Docs" %}</a></li>
+              <li><a href="/support">{% trans "Support" %}</a></li>
             </ul>
             {% if request.user.is_authenticated %}
               <ul class="nav pull-right">
                 <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{ request.user }}<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a href="/user/logout">Выход</a></li>
+                    <li><a href="/user/logout">{% trans "Sign out" %}</a></li>
                   </ul>
                 </li>
               </ul>
             {% else %}
-              <a class="btn btn-primary pull-right" href="/user/login/"><strong>Войти</strong></a>
+              <a class="btn btn-primary pull-right" href="/user/login/"><strong>{% trans "Sign in" %}</strong></a>
             {% endif %}
           </div>
         </div>
@@ -85,14 +85,6 @@
     <script src="/media/js/bootstrap-carousel.js"></script>
     <script src="/media/js/bootstrap-typeahead.js"></script>
     {% block javascript %}{% endblock %}
-    <script>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'ru',
-          floatPosition: google.translate.TranslateElement.FloatPosition.BOTTOM_RIGHT
-          });
-      }
-    </script><script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- Yandex.Metrika counter -->
   	<script type="text/javascript">
   	(function (d, w, c) {

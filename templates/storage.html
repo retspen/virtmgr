@@ -1,21 +1,22 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
      <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="sidebar-nav well">
             <ul class="nav nav-list">
-              <li class="nav-header">Главное меню</li>
-                <li><a href="/dashboard/"><i class="icon-home"></i>Центр управления</a></li>
-                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>Cервер <strong>{{ kvm_host.hostname }}</strong></a></li>
-              <li class="nav-header"></i>Настройки сервера</li>
-                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
-                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>Хранилище</a></li>
-                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>Виртуальные сети</a></li>
-                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>Снапшоты</a></li>
-                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>Логи</a></li>
-              <li class="nav-header">Пул хранилища</li>
-                <li><a href="/storage/{{ host_id }}/new_stg_pool/"><i class="icon-plus"></i>Создать пул</a></li>
+              <li class="nav-header">{% trans "Main Menu" %}</li>
+                <li><a href="/dashboard/"><i class="icon-home"></i>{% trans "Dashboard" %}</a></li>
+                <li><a href="/overview/{{ host_id }}/"><i class="icon-info-sign"></i>{% trans "Server" %} <strong>{{ kvm_host.hostname }}</strong></a></li>
+              <li class="nav-header"></i>{% trans "Server settings" %}</li>
+                <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
+                <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>{% trans "Storage" %}</a></li>
+                <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>{% trans "Virtual networks" %}</a></li>
+                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
+                <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>{% trans "Logs" %}</a></li>
+              <li class="nav-header">{% trans "Storage pool" %}</li>
+                <li><a href="/storage/{{ host_id }}/new_stg_pool/"><i class="icon-plus"></i>{% trans "New pool" %}</a></li>
 	            {% for name, status in pools.items %}
 	  			{% if pool == name %}
 	            <li class="active"><a href="/storage/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
@@ -23,9 +24,9 @@
 	            <li><a href="/storage/{{ host_id }}/{{ name }}/"><font color="{% if status == 1 %}green{% else %}red{% endif %}"><i class="icon-folder-open"></i> {{ name }}</font></a></li>
 	            {% endif %}
 				{% endfor %}
-              <li class="nav-header">Виртуальные машины</li>
+              <li class="nav-header">{% trans "Virtual Machines" %}</li>
 	            {% if not all_vm %}
-	            <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>Создать ВМ</a></li>
+	            <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
 	            {% endif %}
 	            {% for name, state in all_vm.items %}
 	            <li><a href="/vm/{{ host_id }}/{{ name }}/"><font color="{% if state == 1 %}green{% endif %}{% if state == 5 %}red{% endif %}{% if state == 3 %}orange{% endif %}"><i class="icon-th-large"></i>{{ name }}</font></a></li>
@@ -35,14 +36,14 @@
         </div>
     <div class="span8">
       <div class="page-header">
-          <h2>Хранилище</h2>
+          <h2>{% trans "Storage" %}</h2>
         </div>
  		<div class="row">
 			<div class="span3">
-				<p>Название пула</p>
-				<p>Путь пула</p>
-				<p>Размер ({{ info.3|filesizeformat }} / {{ info.2|filesizeformat }})</p>
-				<p>Состояние</p>
+				<p>{% trans "Pool name" %}</p>
+				<p>{% trans "Pool path" %}</p>
+				<p>{% trans "Size" %} ({{ info.3|filesizeformat }} / {{ info.2|filesizeformat }})</p>
+				<p>{% trans "State" %}</p>
 			</div>
 			<div class="span3">
 				<p><strong>{{ pool }}</strong></p>
@@ -52,54 +53,53 @@
         		</div>
 				<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 					{% if status = 0 %}
-					<input type="submit" class="btn btn-primary" name="start_pool" value="Включить">
+					<input type="submit" class="btn btn-primary" name="start_pool" value="{% trans "Enable" %}">
 					{% else %}
-					<input type="submit" class="btn btn-primary" name="stop_pool" value="Выключить" onclick="return confirm('Вы уверены?')">
+					<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 					{% endif %}
 				</form>
 			</div>
 		</div>
 		{% if status = 0 %}
         <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-			<input type="submit" class="btn btn-primary" name="del_pool" value="Удалить" onclick="return confirm('Вы уверены?')">
+			<input type="submit" class="btn btn-primary" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 		</form>
 		{% endif %}
 	  {% if volinfo %}
 	  <hr>
       <div class="page-header">
-          <h3>Образы</h3>
+          <h3>{% trans "Images" %}</h3>
         </div>
 	  <table class="table table-condensed">
 		  <thead>
 	    	<tr>
-	    		<th>Название</th>
-		    	<th>Размер</th>
-		    	<th>Формат</th>
-		    	<th>Удалить</th>
-		    	<th>Клонировать</th>
+	    		<th>{% trans "Name" %}</th>
+		    	<th>{% trans "Size" %}</th>
+		    	<th>{% trans "Format" %}</th>
+		    	<th colspan="2">{% trans "Action" %}</th>
 		    </tr>
 		   </thead>
 		   <tbody>
 			   {% for name, info in volinfo.items %}
 				<tr>
 				  <td>{{ name }}</td><td>{{ info.0|filesizeformat }}</td><td>{{ info.1 }}</td>
-				  <td>
+				  <td style="width:60px;">
 					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 					  	<input type="hidden" name="img" value="{{ name }}">
-						<input type="submit" class="btn btn-primary" name="vol_del" value="Удалить" onclick="return confirm('Вы уверены?')">
+						<input type="submit" class="btn btn-primary" name="vol_del" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 					  </form>
 				  </td>
 				  <td>
 					<div id="myModalclone" class="modal hide fade">
 		            <div class="modal-header">
 		              <button class="close" data-dismiss="modal">&times;</button>
-		              <h3>Клонирование образа <font color="red">{{ name }}</font></h3>
+		              <h3>{% trans "Clone image" %} <font color="red">{{ name }}</font></h3>
 		            </div>
 		            <div class="modal-body">
 				      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 				        <fieldset>
 				          <div class="control-group">
-				          <label class="control-label">Название образа</label>
+				          <label class="control-label">{% trans "Name" %}</label>
 				            <div class="controls">
 				            	<input type="text" class="input-large" name="new_img" placeholder="Name" value="">
 				            	<input type="hidden" class="input-large" name="img" value="{{ name }}">
@@ -108,12 +108,12 @@
 						</fieldset>
 		            </div>
 		            <div class="modal-footer">
-		              <a href="#" class="btn" data-dismiss="modal">Отмена</a>
-		              <input type="submit" class="btn btn-primary" name="vol_clone" value="Клонировать">
+		              <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+		              <input type="submit" class="btn btn-primary" name="vol_clone" value="{% trans "Clone" %}">
 		              </form>
 		            </div>
 		         	</div>				  	
-		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">Клонировать</a>{% else %}<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">Клонировать</a>{% endif %}
+		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">{% trans "Clone" %}</a>{% else %}<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">{% trans "Clone" %}</a>{% endif %}
 				  </td>	
 				</tr>
 				{% endfor %}
@@ -121,7 +121,7 @@
       </table>
       {% else %}
        <hr>
-       <h4>Какие либо образы отсутствуют или пул не активен</h4><br>
+       <h4>{% trans "No images or pool is not active" %}</h4><br>
        {% endif %}
 	   {% if status = 1 %}
 	   {% if errors %}
@@ -135,23 +135,23 @@
 		<div id="myModaladd" class="modal hide fade">
 		    <div class="modal-header">
 			    <button class="close" data-dismiss="modal">&times;</button>
-		        <h3>Новый образ</h3>
+		        <h3>{% trans "New image" %}</h3>
 		    </div>
 		 <div class="modal-body">
 	      <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
 	        <fieldset>
 	          <div class="control-group">
-	          <label class="control-label">Название образа</label>
+	          <label class="control-label">{% trans "Name" %}</label>
 	            <div class="controls">
 	            	<input type="text" class="input-large" name="img" placeholder="Name" value="">
 	            </div>
 	           </div>
 	          <div class="control-group">
-	          <label class="control-label">Размер образа</label>
+	          <label class="control-label">{% trans "Size" %}</label>
 	            <div class="controls">
 	              <select name="size_max">
 	              	{% for num in hdd_size %}
-	                <option value="{{ num }}" {% if num == 8 %}selected{% endif %}>{{ num }} ГБ</option>
+	                <option value="{{ num }}" {% if num == 8 %}selected{% endif %}>{{ num }} {% trans "Gb" %}</option>
 	                {% endfor %}
 	              </select>
 	            </div>
@@ -159,12 +159,12 @@
 	          </fieldset>
 		    </div>
 		    <div class="modal-footer">
-		    	<a href="#" class="btn" data-dismiss="modal">Отмена</a>
-		        <input type="submit" class="btn btn-primary" name="vol_add" value="Создать">
+		    	<a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+		        <input type="submit" class="btn btn-primary" name="vol_add" value="{% trans "Create" %}">
 		     </form>
 		    </div>
 		  </div>				  	
-		 <a data-toggle="modal" href="#myModaladd" class="btn btn-primary">Новый образ</a>
+		 <a data-toggle="modal" href="#myModaladd" class="btn btn-primary">{% trans "New image" %}</a>
 	 </div>
    </div>
 {% else %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block javascript %}
     <script type="text/javascript">
       $(function(){
@@ -8,54 +9,56 @@
 {% endblock %}
 {% block content %}
   <div class="container">
-   <h1>Скриншоты</h1>
+   <h1>{% trans "Screenshots" %}</h1>
     <br>
+    <div class="row">
+      <div class="span8 offset2">
        <div id="myCarousel" class="carousel slide">
           <div class="carousel-inner">
             <div class="item active">
-              <img src="/media/img/virtmgr01.jpg" alt="">
+              <img src="/media/img/virtmgr01.jpg" alt="Ценр управления" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Ценр управления</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr02.jpg" alt="">
+              <img src="/media/img/virtmgr02.jpg" alt="Обзор сервера" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Обзор сервера</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr03.jpg" alt="">
+              <img src="/media/img/virtmgr03.jpg" alt="Создание виртуалной машины" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Создание виртуалной машины</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr04.jpg" alt="">
+              <img src="/media/img/virtmgr04.jpg" alt="Пул хранилища" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Пул хранилища</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr05.jpg" alt="">
+              <img src="/media/img/virtmgr05.jpg" alt="Сетевой пул" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Сетевой пул</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr06.jpg" alt="">
+              <img src="/media/img/virtmgr06.jpg" alt="Снапшоты" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Снапшоты</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr07.jpg" alt="">
+              <img src="/media/img/virtmgr07.jpg" alt="Управление виртуальной машиной" style="width:700px;">
               <div class="carousel-caption">
                 <h4>Управление виртуальной машиной</h4>
               </div>
             </div>
             <div class="item">
-              <img src="/media/img/virtmgr08.jpg" alt="">
+              <img src="/media/img/virtmgr08.jpg" alt="VNC панель" style="height:526px;">
               <div class="carousel-caption">
                 <h4>VNC панель</h4>
               </div>
@@ -64,4 +67,6 @@
           <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
           <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
         </div>
+      </div>
+    </div>
 {% endblock %}
