@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-10 16:45+0300\n"
+"POT-Creation-Date: 2012-05-11 09:13+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -987,46 +987,3 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:468
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#~ msgid "Reboot"
-#~ msgstr "Перезагрузить"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Часто Задаваемые Вопросы"
-
-#~ msgid "Change language"
-#~ msgstr "Изменить язык"
-
-#~ msgid "Language"
-#~ msgstr "Язык"
-
-#~ msgid "Change"
-#~ msgstr "Изменить"
-
-#~ msgid "Where to start?"
-#~ msgstr "С чего начать?"
-
-#~ msgid "and to confirm registration"
-#~ msgstr "и подтвердить регистрацию"
-
-#~ msgid "Install and"
-#~ msgstr "Установить и"
-
-#~ msgid "configure"
-#~ msgstr "настроить"
-
-#~ msgid "libvirt and KVM on your server"
-#~ msgstr "libvirt и KVM на вашем сервере"
-
-#~ msgid "and add your server to its management"
-#~ msgstr "и добавить ваш сервер для его управления"
-
-#~ msgid "Having problems?"
-#~ msgstr "Возникли проблемы?"
-
-#~ msgid ""
-#~ "If you have any problems working with the service we are always ready to "
-#~ "help you"
-#~ msgstr ""
-#~ "Если у вас возникли проблемы по работе с сервисом мы всегда готовы Вам "
-#~ "помочь"

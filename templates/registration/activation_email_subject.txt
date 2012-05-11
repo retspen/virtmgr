@@ -1,2 +1,1 @@
-{% load i18n %}
-{% trans "Confirm your account for a WebVirtMgr" %}
+Confirm your account for a WebVirtMgr

@@ -1,6 +1,17 @@
+Hello!
+
+To confirm the registration on service WebVirtMgr, please click on this link:
+http://{{ site }}/user/activate/{{ activation_key }}/
+
+Team WebVirtMgr.
+
+
+Please do not reply to this message, it was sent automatically. If you have questions or need help, you can always write a letter in support support@webvirtmgr.net.
+
+
 Здравствуйте!
 
-Для подтверждения регистрации в сервисе WebVirtMgr, пожалуйста, пройдите по указанной ссылке:
+Для подтверждения регистрации на сервисе WebVirtMgr, пожалуйста, пройдите по указанной ссылке:
 http://{{ site }}/user/activate/{{ activation_key }}/
 
 После подтверждения регистрации вы получите полный доступ к сервису WebVirtMgr.
