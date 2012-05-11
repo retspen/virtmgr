@@ -4,7 +4,8 @@
 <div class="container">
 <h1>{% trans "Docs" %}</h1>
 <br>
-<h2>{% trans "Setting up the server to work with the service" %}</h2>	<br>
+<h3>{% trans "Setting up the server to work with the service" %}</h3>	
+<br>
 <h4>ContOS, Fedora, RedHat</h4>
 <p>{% trans "Install packages libvirt-bin, KVM" %}</p>
 <pre>
@@ -48,8 +49,7 @@ listen_tcp = 1
 $ sudo service libvirt-bin restart
 </pre>
 <br>
-<p>{% trans "<code>saslpasswd2</code> command create a user who has access to the libvirt. When you run the command with the key <code>-a</code> to specify the application <code>libvirt</code> and the name of the user through the whitewashed, in this case <code>fred</code>" %}</p>
-<p>Командой <code>saslpasswd2</code> создаем пользователя, который получит доступ к libvirt. При запуске команды с помощью ключа <code>-a</code> необходимо указать приложение <code>libvirt</code> и имя пользователя через побел, в нашем случае это <code>fred</code></p>
+<p>{% trans "Adding users and setting their passwords is done with the <code>saslpasswd2</code> command. When running this command it is important to tell it that the appname is <code>libvirt</code>. As an example, to add a user <code>fred</code>, run" %}</p>
 <br>
 <h4>ContOS, Fedora, RedHat</h4>
 <pre>
@@ -65,7 +65,7 @@ Password: xxxxxx
 Again (for verification): xxxxxx
 </pre>
 <br>
-<p>Для просмотра и проверки созаднных аккаунтов можно использовать команду <code>sasldblistusers2</code>. Для этого с помощью ключа <code>-f</code> необходимо команде указать базу пользоватей libvirt, которая находиться и создается по умолчанию <code>/etc/libvirt/passwd.db</code></p>
+<p>{% trans "To see a list of all accounts the <code>sasldblistusers2</code> command can be used. This command expects to be given the path to the libvirt user database, which is kept in <code>/etc/libvirt/passwd.db</code>" %}</p>
 <br>
 <h4>ContOS, Fedora, RedHat</h4>
 <pre>
@@ -79,7 +79,7 @@ $ sudo sasldblistusers2 -f /etc/libvirt/passwd.db
 fred@webvirtmgr.net: userPassword
 </pre>
 <br>
-<p>Для выключения доступа используйте команду <code>saslpasswd2</code> как при добавлении, только еще необходимо добавить ключ <code>-d</code> перед именем пользователя</p>
+<p>{% trans "To disable a user's access, use the command <code>saslpasswd2</code> with the <code>-d</code>" %}</p>
 <br>
 <h4>ContOS, Fedora, RedHat</h4>
 <pre>
@@ -91,28 +91,28 @@ fred@webvirtmgr.net: userPassword
 $ sudo saslpasswd2 -a libvirt -d fred
 </pre>
 <br>
-<p>О настройке моста (br0) на сетевом интерфейсе для проброса сетевых интерфейсов виртуальных машин можно прочитать на <a href="http://wiki.libvirt.org/page/Networking#Bridged_networking_.28aka_.22shared_physical_device.22.29">вики</a> проекта libvirt.</p>
-<br />
+<h3>{% trans "Configuring the firewall" %}</h3>
+<br>
 <h4>ContOS, Fedora, RedHat</h4>
-<p>Если у Вас влючен фаирвол (iptables) необходимо добавить правило для libvirt, так как по умолчанию доступ к портам libvirt запрещен</p>
+<p>{% trans "Open access to ports libvirt" %}</p>
 <pre>
 # iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 16509 -j ACCEPT
 </pre>
 <br>
 <h4>Ubuntu, Debian</h4>
-<p>Если у Вас влючен фаирвол (ufw) необходимо добавить исключение для libvirt, так как по умолчанию доступ к портам libvirt запрещен для этого необходимо создать фаил <code>/etc/ufw/applications.d/libvirtd</code> и в него добавить следующие строки:</p>
+<p>{% trans "Create a file <code>/etc/ufw/applications.d/libvirtd</code> and it add the following lines" %}</p>
 <pre>
 [Libvirt]
 title=Virtualization library
-description=Open port for WebVirtMgr.
+description=Open port for WebVirtMgr
 ports=16509/tcp
 </pre>
-<p>Добавляем правило в цепочку фаирвола</p>
+<p>{% trans "Add a firewall rule in the chain" %}</p>
 <pre>
 $ sudo ufw allow from any to any app Libvirt
 </pre>
 <br>
-<h4>{% trans "Test connection" %}</h4>
+<h3>{% trans "Test connection" %}</h3>
 <p>{% trans "Before you add the ip address of your server in the control center perform the following test" %}</p>
 <pre>
 $ virsh -c qemu+tcp://{% trans "<strong>IP_address</strong>" %}/system nodeinfo
