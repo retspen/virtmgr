@@ -51,15 +51,15 @@
       	<div class="span8">
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
               {% if state = 5 %}
-                <input class="btn btn-primary" type="submit" name="start" value="{% trans "Start VM" %}">
+                <input class="btn btn-success" type="submit" name="start" value="{% trans "Start VM" %}">
               {% endif %}
               {% if state = 3 %}
-                <input class="btn btn-primary" type="submit" name="resume" value="{% trans "Resume" %}">
+                <input class="btn btn-success" type="submit" name="resume" value="{% trans "Resume" %}">
               {% endif %}
               {% if state = 1 %}
-                <input class="btn btn-primary" type="submit" name="suspend" value="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-                <input class="btn btn-primary" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
-                <input class="btn btn-primary" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
+                <input class="btn btn-warning" type="submit" name="suspend" value="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+                <input class="btn btn-danger" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
+                <input class="btn btn-danger" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
                 <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', 'child','width=800,height=600,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
@@ -116,10 +116,10 @@
                 {% if state != 3 %}
                 <input class="btn btn-primary" type="submit" name="snapshot" value="{% trans "Create snapshot" %}" {% if state == 1 %}onclick="return confirm('{% trans "Attention: When enabled, the virtual machine snapshot will be created on a lot longer. The virtual machine before creating the snapshot automatically switches to Paused and will be locked until you create it. Continue?" %}')"{% endif %}>
                 {% endif %}
-                {% if num_snapshot > 0 or state = 1 %}
-                <input class="btn btn-primary disabled" type="button" value="{% trans "Undefine" %}">
+                {% if state != 1 and state != 3 and num_snapshot = 0 %}
+                <input class="btn btn-danger" type="submit" name="undefine" value="{% trans "Undefine" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                 {% else %}
-                <input class="btn btn-primary" type="submit" name="undefine" value="{% trans "Undefine" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+                <input class="btn btn-danger disabled" type="button" value="{% trans "Undefine" %}">
                 {% endif %}
               </form>
             {% if num_snapshot > 0 %}

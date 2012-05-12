@@ -427,7 +427,7 @@ def index(request, host_id, vname):
             msg = msg + vname
             add_error(msg, 'user')
             vm_create_snapshot()
-            message = _('Successful create snapshot for VM: ')
+            message = _('Successful create snapshot for VM: %s' % (vname))
             return render_to_response('vm.html', locals())
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')

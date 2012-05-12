@@ -76,7 +76,7 @@
                   <td>
                     <form action="/snapshot/{{ host_id }}/{{ vname }}/" method="post">
                       <input type="hidden" name="name" value="{{ name }}">
-                      <input type="submit" class="btn btn-primary" name="delete" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+                      <input type="submit" class="btn btn-danger" name="delete" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                     </form>
                   </td>
                 </tr>

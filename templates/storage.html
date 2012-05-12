@@ -62,7 +62,7 @@
 		</div>
 		{% if status = 0 %}
         <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-			<input type="submit" class="btn btn-primary" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+			<input type="submit" class="btn btn-danger" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
 		</form>
 		{% endif %}
 	  {% if volinfo %}
@@ -84,12 +84,6 @@
 				<tr>
 				  <td>{{ name }}</td><td>{{ info.0|filesizeformat }}</td><td>{{ info.1 }}</td>
 				  <td style="width:60px;">
-					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-					  	<input type="hidden" name="img" value="{{ name }}">
-						<input type="submit" class="btn btn-primary" name="vol_del" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-					  </form>
-				  </td>
-				  <td>
 					<div id="myModalclone" class="modal hide fade">
 		            <div class="modal-header">
 		              <button class="close" data-dismiss="modal">&times;</button>
@@ -115,6 +109,12 @@
 		         	</div>				  	
 		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">{% trans "Clone" %}</a>{% else %}<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">{% trans "Clone" %}</a>{% endif %}
 				  </td>	
+				  <td>
+					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+					  	<input type="hidden" name="img" value="{{ name }}">
+						<input type="submit" class="btn btn-danger" name="vol_del" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
+					  </form>
+				  </td>
 				</tr>
 				{% endfor %}
 		    </tbody>
