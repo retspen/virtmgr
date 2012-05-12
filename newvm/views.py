@@ -177,8 +177,26 @@ def index(request, host_id):
 		except libvirt.libvirtError as e:
 			add_error(e, 'libvirt')
 			return "error"
+			
+	def create_volume(stg_pool, img, size_max):
+		try:
+			size_max = int(size_max) * 1073741824
+			xml = """
+				<volume>
+					<name>%s.img</name>
+					<capacity>%s</capacity>
+					<allocation>0</allocation>
+					<target>
+						<format type='qcow2'/>
+					</target>
+				</volume>""" % (img, size_max)
+			stg = conn.storagePoolLookupByName(stg_pool)
+			stg.createXML(xml,0)
+		except libvirt.libvirtError as e:
+			add_error(e,'libvirt')
+			return "error"
 	
-	def add_vm(name, mem, cpus, machine, emul, img_frmt, img, iso, bridge):
+	def add_vm(name, mem, cpus, machine, emul, img, iso, bridge):
 		try:
 			arch = 'x86_64'
 			hostcap = conn.getCapabilities()
@@ -218,7 +236,7 @@ def index(request, host_id):
 				xml += """<emulator>%s</emulator>""" % (emul[0])
 
 			xml += """<disk type='file' device='disk'>
-					      <driver name='qemu' type='%s'/>
+					      <driver name='qemu' type='qcow2'/>
 					      <source file='%s'/>
 					      <target dev='hda' bus='ide'/>
 					      <address type='drive' controller='0' bus='0' unit='0'/>
@@ -233,7 +251,7 @@ def index(request, host_id):
 					    <controller type='ide' index='0'>
 					      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
 					    </controller>
-					    """ % (img_frmt, img, iso)
+					    """ % (img, iso)
 
 			if re.findall("br", bridge):
 				xml += """<interface type='bridge'>
@@ -308,14 +326,20 @@ def index(request, host_id):
 		if simbol:
 			msg = _('The name of the virtual machine must not contain any characters and Russian characters')
 			errors.append(msg)
-		if not img:
+		if not img and not request.POST.get('hdd',''):
 			msg = _('Images of the HDD to a virtual machine not available. You need to create an HDD image')
 			errors.append(msg)
 		if not name:
 			msg = _('Enter the name of the virtual machine')
 			errors.append(msg)
 		if not errors:
-			add_vm(name, setmem, cpus, machine, emul, hdd_frmt, hdd, cdrom, netbr)
+			if request.POST.get('hdd',''):
+				size = request.POST.get('hdd','')
+				stg_pool = request.POST.get('stg_pool','')
+				create_volume(stg_pool, name, size)
+				img = name + '.img'
+				hdd = get_img_path(img)
+			add_vm(name, setmem, cpus, machine, emul, hdd, cdrom, netbr)
 			msg = _('Creating a virtual machine: ')
 			msg = msg + name
 			add_error(msg,'user')
