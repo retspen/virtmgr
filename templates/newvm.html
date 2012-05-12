@@ -36,106 +36,169 @@
             {{ error }}
             </div>
           {% endfor %}
-      {% endif %}
-      <form class="form-horizontal" action="/newvm/{{ host_id }}/" method="post">
-        <fieldset>
-          <div class="control-group">
-          <label class="control-label">{% trans "Name" %}</label>
-            <div class="controls">
-              <input class="input-large focused" type="text" name="name" placeholder="Name" value="">
+          {% endif %}
+          <h4>Подготовленные варианты</h4>
+          <br>
+          <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Name</th>
+                <th>VCPUs</th>
+                <th>Memory</th>
+                <th>Disk</th>
+                <th style="width:60px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>m1.xlarge</td>
+                <td>8</td>
+                <td>16384</td>
+                <td>160</td>
+                <td><a class="btn btn-primary" href>Создать</a></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>m1.large</td>
+                <td>4</td>
+                <td>8192</td>
+                <td>80</td>
+                <td><a class="btn btn-primary" href>Создать</a></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>m1.medium</td>
+                <td>2</td>
+                <td>4096</td>
+                <td>40</td>
+                <td><a class="btn btn-primary" href>Создать</a></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>m1.small</td>
+                <td>1</td>
+                <td>2048</td>
+                <td>20</td>
+                <td><a class="btn btn-primary" href>Создать</a></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>m1.mini</td>
+                <td>1</td>
+                <td>512</td>
+                <td>10</td>
+                <td><a class="btn btn-primary" href>Создать</a></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>m1.micro</td>
+                <td>1</td>
+                <td>256</td>
+                <td>5</td>
+                <td><a class="btn btn-primary" href>Создать</a></td>
+              </tr>
+            </tbody>
+            </table>
+          <div id="myModalCustomVM" class="modal hide fade">
+              <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                  <h3>{% trans "New virtual machine" %}</h3>
+              </div>
+           <div class="modal-body">
+            <form class="form-horizontal" action="/newvm/{{ host_id }}/" method="post">
+              <fieldset>
+                <div class="control-group">
+                <label class="control-label">{% trans "Name" %}</label>
+                  <div class="controls">
+                    <input class="input-large focused" type="text" name="name" placeholder="Name" value="">
+                  </div>
+                </div>
+                <div class="control-group">
+                <label class="control-label">{% trans "Memory" %}</label>
+                  <div class="controls">
+                    <select name="memory">
+                      <option value="256">256 Mb</option>
+                    {% if addmem > 512 %}
+                      <option value="512">512 Mb</option>
+                    {% endif %}
+                    {% if addmem > 768 %}
+                      <option value="768">768 Mb</option>
+                    {% endif %}
+                    {% if addmem > 1024 %}
+                      <option value="1024">1024 Mb</option>
+                    {% endif %}
+                    {% if addmem > 2048 %}
+                      <option value="2048">2048 Mb</option>
+                    {% endif %}
+                    {% if addmem > 4096 %}
+                      <option value="4096">4096 Mb</option>
+                    {% endif %}
+                    {% if addmem > 8192 %}
+                      <option value="8192">8192 Mb</option>
+                    {% endif %}
+                    </select>
+                  </div>
+                </div>     
+                <div class="control-group">
+                <label class="control-label">{% trans "Core" %}</label>
+                  <div class="controls">
+                    <select name="cpus">
+                    {% for cpu in cpus %}
+                      <option value="{{ cpu }}">{{ cpu }}</option>
+                    {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="control-group">
+                <label class="control-label">{% trans "CD image" %}</label>
+                  <div class="controls">
+                    <select name="iso">
+                    {% if all_iso != "error" %}
+                    {% for name in all_iso %}
+                      <option value="{{ name }}">{{ name }}</option>
+                    {% endfor %}
+                    {% endif %}
+                      <option value="">{% trans "Without image" %}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="control-group">
+                <label class="control-label">{% trans "HDD image" %}</label>
+                  <div class="controls">
+                    <select name="img">
+                    {% if all_iso != "error" %}
+                    {% for name in all_img %}
+                      <option value="{{ name }}">{{ name }}</option>
+                    {% endfor %}
+                    {% else %}
+                      <option value="">{% trans "None" %}</option>
+                    {% endif %}
+                    </select>
+                  </div>
+                </div>
+                <div class="control-group">
+                <label class="control-label">{% trans "Network" %}</label>
+                  <div class="controls">
+                    <select name="bridge">
+                    {% for net in bridge %}
+                      <option value="{{ net }}">{{net}}</option>
+                    {% endfor %}
+                      <option value="br0">br0 ({% trans "set up?" %})</option>
+                      <option value="br1">br1 ({% trans "set up?" %})</option>
+                    </select>
+                  </div>
+                </div>
+                </fieldset>
+              </div>
+              <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+                  <input class="btn btn-primary" type="submit" name="create" value="{% trans "Create" %}">
+                   </form>
+                </div>
             </div>
-          </div>
-          <div class="control-group">
-          <label class="control-label">{% trans "Arch" %}</label>
-            <div class="controls">
-              <select name="arch">
-                  <option value="i686">i686</option>
-                  {% if arch == 'x86_64' %}
-                    <option value="x86_64">x86_64</option>
-                  {% endif %}
-              </select>
-            </div>
-          </div>
-          <div class="control-group">
-          <label class="control-label">{% trans "Memory" %}</label>
-            <div class="controls">
-              <select name="memory">
-                <option value="256">256 Mb</option>
-              {% if addmem > 512 %}
-                <option value="512">512 Mb</option>
-              {% endif %}
-              {% if addmem > 768 %}
-                <option value="768">768 Mb</option>
-              {% endif %}
-              {% if addmem > 1024 %}
-                <option value="1024">1024 Mb</option>
-              {% endif %}
-              {% if addmem > 2048 %}
-                <option value="2048">2048 Mb</option>
-              {% endif %}
-              {% if addmem > 4096 %}
-                <option value="4096">4096 Mb</option>
-              {% endif %}
-              {% if addmem > 8192 %}
-                <option value="8192">8192 Mb</option>
-              {% endif %}
-              </select>
-            </div>
-          </div>     
-          <div class="control-group">
-          <label class="control-label">{% trans "Core" %}</label>
-            <div class="controls">
-              <select name="cpus">
-              {% for cpu in cpus %}
-                <option value="{{ cpu }}">{{ cpu }}</option>
-              {% endfor %}
-              </select>
-            </div>
-          </div>
-          <div class="control-group">
-          <label class="control-label">{% trans "CD image" %}</label>
-            <div class="controls">
-              <select name="iso">
-              {% if all_iso != "error" %}
-              {% for name in all_iso %}
-                <option value="{{ name }}">{{ name }}</option>
-              {% endfor %}
-              {% endif %}
-                <option value="">{% trans "Without image" %}</option>
-              </select>
-            </div>
-          </div>
-          <div class="control-group">
-          <label class="control-label">{% trans "HDD image" %}</label>
-            <div class="controls">
-              <select name="img">
-              {% if all_iso != "error" %}
-              {% for name in all_img %}
-                <option value="{{ name }}">{{ name }}</option>
-              {% endfor %}
-              {% else %}
-                <option value="">{% trans "None" %}</option>
-              {% endif %}
-              </select>
-            </div>
-          </div>
-          <div class="control-group">
-          <label class="control-label">{% trans "Network" %}</label>
-            <div class="controls">
-              <select name="bridge">
-              {% for net in bridge %}
-                <option value="{{ net }}">{{net}}</option>
-              {% endfor %}
-                <option value="br0">br0 ({% trans "set up?" %})</option>
-                <option value="br1">br1 ({% trans "set up?" %})</option>
-              </select>
-            </div>
-          </div>
-          <div class="controls">
-            <input class="btn btn-primary" type="submit" name="create" value="{% trans "Create" %}">
-          </div>
-          </fieldset>
-        </form>
+         <a data-toggle="modal" href="#myModalCustomVM" class="btn btn-primary">{% trans "Custom" %}</a>
        </div>
      </div>
 {% endblock %}

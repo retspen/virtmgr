@@ -86,14 +86,6 @@ def index(request, host_id):
 			add_error(e, 'libvirt')
 			return "error"
 	
-	def get_arch():
-		try:
-			arch = conn.getInfo()[0]
-			return arch
-		except libvirt.libvirtError as e:
-			add_error(e, 'libvirt')
-			return "error"
-
 	def find_all_iso():
 		try:
 			iso = []
@@ -186,8 +178,9 @@ def index(request, host_id):
 			add_error(e, 'libvirt')
 			return "error"
 	
-	def add_vm(name, mem, cpus, arch, machine, emul, img_frmt, img, iso, bridge):
+	def add_vm(name, mem, cpus, machine, emul, img_frmt, img, iso, bridge):
 		try:
+			arch = 'x86_64'
 			hostcap = conn.getCapabilities()
 			iskvm = re.search('kvm', hostcap)
 			if iskvm:
@@ -203,7 +196,7 @@ def index(request, host_id):
 					  <currentMemory>%s</currentMemory>
 					  <vcpu>%s</vcpu>
 					  <os>
-					    <type arch='%s' machine='%s'>hvm</type>
+					    <type arch='x86_64' machine='%s'>hvm</type>
 					    <boot dev='hd'/>
 					    <boot dev='cdrom'/>
 					    <bootmenu enable='yes'/>
@@ -217,7 +210,7 @@ def index(request, host_id):
 					  <on_poweroff>destroy</on_poweroff>
 					  <on_reboot>restart</on_reboot>
 					  <on_crash>restart</on_crash>
-					  <devices>""" % (domtype, name, mem, memaloc, cpus, arch, machine)
+					  <devices>""" % (domtype, name, mem, memaloc, cpus, machine)
 				
 			if arch == 'x86_64':
 				xml += """<emulator>%s</emulator>""" % (emul[1])
@@ -286,7 +279,6 @@ def index(request, host_id):
 	if bridge == "error":
 		msg = _('Network pools are not available or are not active')
 		errors.append(msg)			
-	arch = get_arch()
 	emul = get_emulator()
 	machine = get_machine()
 	addmem = get_mem()
@@ -302,7 +294,6 @@ def index(request, host_id):
 		iso = request.POST.get('iso','')		
 		img = request.POST.get('img','')
 		netbr = request.POST.get('bridge','')
-		archvm = request.POST.get('arch','') 
 		setmem = int(setmem) * 1024
 		hdd = get_img_path(img)
 		cdrom = get_img_path(iso)
@@ -324,7 +315,7 @@ def index(request, host_id):
 			msg = _('Enter the name of the virtual machine')
 			errors.append(msg)
 		if not errors:
-			add_vm(name, setmem, cpus, archvm, machine, emul, hdd_frmt, hdd, cdrom, netbr)
+			add_vm(name, setmem, cpus, machine, emul, hdd_frmt, hdd, cdrom, netbr)
 			msg = _('Creating a virtual machine: ')
 			msg = msg + name
 			add_error(msg,'user')
