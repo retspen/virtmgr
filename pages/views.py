@@ -5,9 +5,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import translation
 
 def index(request):
-	#request.session['language'] = 'en'
-	#translation.activate('en')
-	request.session['django_language'] = 'en'
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/dashboard/')
 	else:
