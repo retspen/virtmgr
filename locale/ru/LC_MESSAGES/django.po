@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-13 12:16+0300\n"
+"POT-Creation-Date: 2012-05-13 22:18+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -651,7 +651,7 @@ msgstr "Новая виртуальная машина"
 
 #: templates/newvm.html:40
 msgid "Templates new VM"
-msgstr "Щаблоны новых ВМ"
+msgstr "Шаблоны новых ВМ"
 
 #: templates/newvm.html:46 templates/newvm.html.py:113
 #: templates/newvm.html:213 templates/newvm.html.py:276
