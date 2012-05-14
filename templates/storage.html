@@ -16,7 +16,7 @@
                 <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
                 <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>{% trans "Logs" %}</a></li>
               <li class="nav-header">{% trans "Storage pool" %}</li>
-                <li><a href="/storage/{{ host_id }}/new_stg_pool/"><i class="icon-plus"></i>{% trans "New pool" %}</a></li>
+                <li><a data-toggle="modal" href="#myModalnewstg"><i class="icon-plus"></i>{% trans "New pool" %}</a></li>
 	            {% for name, status in pools.items %}
 	  			{% if pool == name %}
 	            <li class="active"><a href="/storage/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
@@ -39,6 +39,39 @@
           <h2>{% trans "Storage" %}</h2>
         </div>
  		<div class="row">
+            <div id="myModalnewstg" class="modal hide fade">
+              <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                  <h3>{% trans "New storage pool" %}</h3>
+              </div>
+           <div class="modal-body">
+ 		   <form class="form-horizontal" action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+ 			<fieldset>
+	          <div class="control-group">
+	          <label class="control-label">{% trans "Pool name" %}</label>
+	            <div class="controls">
+	            	<input type="text" class="input-medium" name="name_pool" value="">
+	            </div>
+	           </div>
+	          <div class="control-group">
+	          <label class="control-label">{% trans "Pool path" %}</label>
+	            <div class="controls">
+	             <input type="text" class="input-medium" name="path_pool" value="/var/lib/libvirt/images/">
+	            </div>
+	           </div>
+	         </fieldset>
+              </div>
+              <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+                   <input type="submit" class="btn btn-primary" name="new_stg_pool" value="{% trans "Create" %}">
+                   </form>
+              </div>
+           </div>
+           {% if pool == "new_stg_pool" %}
+           <div class="span3">
+           {% trans "<h3>Storage pools not found</h3>" %}
+       	   </div>
+           {% else %}
 			<div class="span3">
 				<p>{% trans "Pool name" %}</p>
 				<p>{% trans "Pool path" %}</p>
@@ -59,6 +92,7 @@
 					{% endif %}
 				</form>
 			</div>
+			{% endif %}
 		</div>
 		{% if status = 0 %}
         <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">

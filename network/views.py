@@ -10,7 +10,7 @@ from virtmgr.model.models import *
 def index(request, host_id):
 	
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/user/login')
 	
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
@@ -274,8 +274,18 @@ def pool(request, host_id, pool):
 	all_vm = get_vms()
 	errors = []
 
-	if pool == "new_net_pool":
-		if request.method == 'POST':
+	if pool != 'new_net_pool':
+		net = get_conn_pool(pool)
+		bridge = get_net_info('bridge')
+		status = get_net_info('status')
+		if status == 1:
+			start = get_net_info('start')
+			network = get_ipv4_net()
+			dhcprange = get_ipv4_dhcp_range()
+			netmode = get_ipv4_forward()
+
+	if request.method == 'POST':
+		if request.POST.get('new_net_pool',''):
 			name_pool = request.POST.get('name_pool','')
 			net_addr = request.POST.get('net_addr','')
 			forward = request.POST.get('forward','')
@@ -314,19 +324,7 @@ def pool(request, host_id, pool):
 						add_error(msg, 'user')
 						return HttpResponseRedirect('/network/%s/%s/' % (host_id, name_pool))
 					if errors:
-						return render_to_response('network_new.html', locals())
-		return render_to_response('network_new.html', locals())
-
-	net = get_conn_pool(pool)
-	bridge = get_net_info('bridge')
-	status = get_net_info('status')
-	if status == 1:
-		start = get_net_info('start')
-		network = get_ipv4_net()
-		dhcprange = get_ipv4_dhcp_range()
-		netmode = get_ipv4_forward()
-
-	if request.method == 'POST':
+						return render_to_response('network.html', locals())
 		if request.POST.get('stop_pool',''):
 			msg = _('Stop network pool: ')
 			msg = msg + pool
@@ -351,6 +349,6 @@ def pool(request, host_id, pool):
 
 def redir(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/user/login')
 	else:
 		return HttpResponseRedirect('/dashboard')

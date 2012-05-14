@@ -9,7 +9,7 @@ from virtmgr.model.models import *
 def index(request, host_id):
 
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/user/login')
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
@@ -307,9 +307,23 @@ def pool(request, host_id, pool):
 
 	pools = get_storages()
 	all_vm = get_vms()
+	
+	if pool != 'new_stg_pool':
+		stg = get_conn_pool(pool)
+		status = get_stg_info('status')
+		if status == 1:
+			pool_refresh()
+			info = get_stg_info('info')
+			stype = get_type()
+			spath = get_target_path()
+			start = get_stg_info('start')
+			listvol = get_stg_info('list')
+			volinfo = get_vl_info(listvol)
+			hdd_size = range(1,101)
+		errors = []
 
-	if pool == "new_stg_pool":
-		if request.method == 'POST':
+	if request.method == 'POST':
+		if request.POST.get('new_stg_pool',''):
 			name_pool = request.POST.get('name_pool','')
 			path_pool = request.POST.get('path_pool','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name_pool)
@@ -342,23 +356,7 @@ def pool(request, host_id, pool):
 						add_error(msg,'user')
 						return HttpResponseRedirect('/storage/%s/%s/' % (host_id, name_pool))
 				if errors:
-					return render_to_response('storage_new.html', locals())
-		return render_to_response('storage_new.html', locals())
-
-	stg = get_conn_pool(pool)
-	status = get_stg_info('status')
-	if status == 1:
-		pool_refresh()
-		info = get_stg_info('info')
-		stype = get_type()
-		spath = get_target_path()
-		start = get_stg_info('start')
-		listvol = get_stg_info('list')
-		volinfo = get_vl_info(listvol)
-		hdd_size = range(1,101)
-	errors = []
-
-	if request.method == 'POST':
+					return render_to_response('storage.html', locals())
 		if request.POST.get('stop_pool',''):
 			pool_stop()
 			msg = _('Stop storage pool: ')
@@ -439,6 +437,6 @@ def pool(request, host_id, pool):
 
 def redir(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/user/login')
 	else:
 		return HttpResponseRedirect('/dashboard/')

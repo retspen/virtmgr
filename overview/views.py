@@ -11,6 +11,10 @@ def index(request, host_id):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
+	def add_error(msg):
+		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg.save()
+
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def vm_conn():
@@ -49,8 +53,7 @@ def index(request, host_id):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except libvirt.libvirtError as e:
-			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
-			error_msg.save()
+			add_error(e)
 			return "error"
 
 	def get_info():
@@ -64,8 +67,7 @@ def index(request, host_id):
 			info.append(util.get_xml_path(xml_inf, "/sysinfo/processor/entry[6]"))
 			return info
 		except libvirt.libvirtError as e:
-			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
-			error_msg.save()
+			add_error(e)
 			return "error"
 
 	def get_mem_usage():
@@ -78,8 +80,7 @@ def index(request, host_id):
 			memusage = (allmem - freemem)
 			return allmem, memusage, percent
 		except libvirt.libvirtError as e:
-			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
-			error_msg.save()
+			add_error(e)
 			return "error"
 
 	def get_cpu_usage():
@@ -101,8 +102,7 @@ def index(request, host_id):
 		        			diff_usage == 0
 			return diff_usage
 		except libvirt.libvirtError as e:
-			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
-			error_msg.save()
+			add_error(e)
 			return "error"		
 
 	errors = []
