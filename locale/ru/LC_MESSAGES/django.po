@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-13 22:18+0300\n"
+"POT-Creation-Date: 2012-05-14 10:53+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -55,29 +55,29 @@ msgstr "Не был введен KVM логин"
 msgid "No KVM password was been entered "
 msgstr "Не был введен KVM пароль"
 
-#: network/views.py:285
+#: network/views.py:295
 msgid "The name of the network pool must not exceed 20 characters"
 msgstr "Название сетевого пула не должно превышать 20 символов"
 
-#: network/views.py:288
+#: network/views.py:298
 msgid ""
 "The name of the network pool must not contain any characters and Russian "
 "characters"
 msgstr "Название сетевого пула не должно содержать символы и русские буквы"
 
-#: network/views.py:291 storage/views.py:323
+#: network/views.py:301 storage/views.py:337
 msgid "Enter the name of the pool"
 msgstr "Введите название пула"
 
-#: network/views.py:294
+#: network/views.py:304
 msgid "Enter the IP subnet"
 msgstr "Введите IP подсеть"
 
-#: network/views.py:303 storage/views.py:330
+#: network/views.py:313 storage/views.py:344
 msgid "Such a pool already exists"
 msgstr "Возможно пул с такими данными существует"
 
-#: network/views.py:309
+#: network/views.py:319
 msgid ""
 "Pool is created, but when I run the pool fails, you may specify an existing "
 "network"
@@ -85,19 +85,19 @@ msgstr ""
 "Пул создан, но при запуске пула возникла ошибка, возможно указана "
 "существующая сеть"
 
-#: network/views.py:312
+#: network/views.py:322
 msgid "Creating a network pool: "
 msgstr "Создание сетевого пула: "
 
-#: network/views.py:331
+#: network/views.py:329
 msgid "Stop network pool: "
 msgstr "Остановка сетевого пула: "
 
-#: network/views.py:336
+#: network/views.py:334
 msgid "Start network pool: "
 msgstr "Запуск сетевого пула: "
 
-#: network/views.py:341
+#: network/views.py:339
 msgid "Delete network pool: "
 msgstr "Удаление сетевого пула: "
 
@@ -155,21 +155,21 @@ msgstr "Восстановление снапшота ВМ: "
 msgid "Successful revert snapshot: "
 msgstr "Успешное восстановление снапшота: "
 
-#: storage/views.py:317
+#: storage/views.py:331
 msgid "The name of the storage pool must not exceed 20 characters"
 msgstr "Название пула хранилища не должно превышать 20 символов"
 
-#: storage/views.py:320
+#: storage/views.py:334
 msgid ""
 "The name of the storage pool must not contain any characters and Russian "
 "characters"
 msgstr "Название пула хранилища не должно содержать символы и русские буквы"
 
-#: storage/views.py:326
+#: storage/views.py:340
 msgid "Enter the path of the pool"
 msgstr "Введите путь пула"
 
-#: storage/views.py:336
+#: storage/views.py:350
 msgid ""
 "Pool is created, but when I run the pool fails, you may specify the path "
 "does not exist"
@@ -177,56 +177,56 @@ msgstr ""
 "Пул создан, но при запуске пула возникла ошибка, возможно указан не "
 "существующий путь"
 
-#: storage/views.py:340
+#: storage/views.py:354
 msgid "Creating a storage pool: "
 msgstr "Создание пула хранилища: "
 
-#: storage/views.py:364
+#: storage/views.py:362
 msgid "Stop storage pool: "
 msgstr "Остановка пула хранилища: "
 
-#: storage/views.py:370
+#: storage/views.py:368
 msgid "Start storage pool: "
 msgstr "Запуск пула хранилища: "
 
-#: storage/views.py:376
+#: storage/views.py:374
 msgid "Delete storage pool: "
 msgstr "Удаление пула хранилища: "
 
-#: storage/views.py:383
+#: storage/views.py:381
 msgid "Delete image: "
 msgstr "Удаление образа: "
 
-#: storage/views.py:392 storage/views.py:418
+#: storage/views.py:390 storage/views.py:416
 msgid "The name of the images must not exceed 20 characters"
 msgstr "Название образа не должно превышать 20 символов"
 
-#: storage/views.py:395 storage/views.py:421
+#: storage/views.py:393 storage/views.py:419
 msgid ""
 "The name of the image must not contain any characters and Russian characters"
 msgstr "Название образ не должно содержать символы и русские буквы"
 
-#: storage/views.py:398 storage/views.py:415
+#: storage/views.py:396 storage/views.py:413
 msgid "Enter image name"
 msgstr "Введите имя образа"
 
-#: storage/views.py:401
+#: storage/views.py:399
 msgid "Enter image size"
 msgstr "Введите размер образа"
 
-#: storage/views.py:405
+#: storage/views.py:403
 msgid "Create image: "
 msgstr "Создание образа: "
 
-#: storage/views.py:424
+#: storage/views.py:422
 msgid "The image of the same name already exists"
 msgstr "Образ с таким именем уже существует"
 
-#: storage/views.py:427
+#: storage/views.py:425
 msgid "You can only clone a virtual machine images"
 msgstr "Клонировать можно только образы виртуальных машин"
 
-#: storage/views.py:431
+#: storage/views.py:429
 msgid "Cloning image: "
 msgstr "Клонирование образа: "
 
@@ -256,10 +256,8 @@ msgid "Sign in"
 msgstr "Войти"
 
 #: templates/dashboard.html:6 templates/logs.html:10 templates/network.html:10
-#: templates/network_new.html:10 templates/newvm.html:10
-#: templates/overview.html:10 templates/snapshot.html:10
-#: templates/storage.html:10 templates/storage_new.html:10
-#: templates/vm.html:10
+#: templates/newvm.html:10 templates/overview.html:10
+#: templates/snapshot.html:10 templates/storage.html:10 templates/vm.html:10
 msgid "Dashboard"
 msgstr "Центр управления"
 
@@ -281,7 +279,7 @@ msgid "Status"
 msgstr "Статус"
 
 #: templates/dashboard.html:16 templates/newvm.html:50
-#: templates/snapshot.html:58 templates/storage.html:79
+#: templates/snapshot.html:58 templates/storage.html:113
 msgid "Action"
 msgstr "Действие"
 
@@ -297,16 +295,16 @@ msgstr "не доступен"
 msgid "Manage"
 msgstr "Управление"
 
-#: templates/dashboard.html:31 templates/network.html:61
-#: templates/snapshot.html:79 templates/storage.html:65
-#: templates/storage.html.py:115
+#: templates/dashboard.html:31 templates/network.html:67
+#: templates/snapshot.html:79 templates/storage.html:99
+#: templates/storage.html.py:149
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/dashboard.html:31 templates/network.html:54
-#: templates/network.html.py:61 templates/snapshot.html:70
-#: templates/snapshot.html.py:79 templates/storage.html:58
-#: templates/storage.html.py:65 templates/storage.html:115
+#: templates/dashboard.html:31 templates/network.html:60
+#: templates/network.html.py:67 templates/snapshot.html:70
+#: templates/snapshot.html.py:79 templates/storage.html:91
+#: templates/storage.html.py:99 templates/storage.html:149
 #: templates/vm.html:60 templates/vm.html.py:93 templates/vm.html.py:95
 #: templates/vm.html:102 templates/vm.html.py:120
 msgid "Are you sure?"
@@ -324,11 +322,12 @@ msgstr "Подключить новый хост"
 msgid "KVM password"
 msgstr "KVM пароль"
 
-#: templates/dashboard.html:84 templates/newvm.html:198
-#: templates/newvm.html.py:262 templates/newvm.html:325
-#: templates/newvm.html.py:388 templates/newvm.html:451
-#: templates/newvm.html.py:514 templates/newvm.html:577
-#: templates/storage.html:105 templates/storage.html.py:162
+#: templates/dashboard.html:84 templates/network.html:132
+#: templates/newvm.html:198 templates/newvm.html.py:262
+#: templates/newvm.html:325 templates/newvm.html.py:388
+#: templates/newvm.html:451 templates/newvm.html.py:514
+#: templates/newvm.html:577 templates/storage.html:65
+#: templates/storage.html.py:139 templates/storage.html:196
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -475,77 +474,61 @@ msgstr ""
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
-#: templates/logs.html:9 templates/network.html:9 templates/network_new.html:9
-#: templates/newvm.html:9 templates/overview.html:9 templates/snapshot.html:9
-#: templates/storage.html:9 templates/storage_new.html:9 templates/vm.html:9
+#: templates/logs.html:9 templates/network.html:9 templates/newvm.html:9
+#: templates/overview.html:9 templates/snapshot.html:9
+#: templates/storage.html:9 templates/vm.html:9
 msgid "Main Menu"
 msgstr "Главное меню"
 
-#: templates/logs.html:11 templates/network.html:11
-#: templates/network_new.html:11 templates/newvm.html:11
+#: templates/logs.html:11 templates/network.html:11 templates/newvm.html:11
 #: templates/overview.html:11 templates/snapshot.html:11
-#: templates/storage.html:11 templates/storage_new.html:11
-#: templates/vm.html:11
+#: templates/storage.html:11 templates/vm.html:11
 msgid "Server"
 msgstr "Сервер"
 
-#: templates/logs.html:12 templates/network.html:12
-#: templates/network_new.html:12 templates/newvm.html:12
+#: templates/logs.html:12 templates/network.html:12 templates/newvm.html:12
 #: templates/overview.html:12 templates/snapshot.html:12
-#: templates/storage.html:12 templates/storage_new.html:12
-#: templates/vm.html:12
+#: templates/storage.html:12 templates/vm.html:12
 msgid "Server settings"
 msgstr "Настройки сервера"
 
 #: templates/logs.html:13 templates/logs.html.py:20 templates/network.html:13
-#: templates/network.html.py:29 templates/network_new.html:13
-#: templates/network_new.html.py:29 templates/newvm.html:13
+#: templates/network.html.py:29 templates/newvm.html:13
 #: templates/newvm.html.py:20 templates/overview.html:13
 #: templates/overview.html.py:20 templates/snapshot.html:13
 #: templates/snapshot.html.py:31 templates/storage.html:13
-#: templates/storage.html.py:29 templates/storage_new.html:13
-#: templates/storage_new.html.py:29 templates/vm.html:13
-#: templates/vm.html.py:20
+#: templates/storage.html.py:29 templates/vm.html:13 templates/vm.html.py:20
 msgid "New VM"
 msgstr "Создать ВМ"
 
-#: templates/logs.html:14 templates/network.html:14
-#: templates/network_new.html:14 templates/newvm.html:14
+#: templates/logs.html:14 templates/network.html:14 templates/newvm.html:14
 #: templates/overview.html:14 templates/snapshot.html:14
-#: templates/storage.html:14 templates/storage.html.py:39
-#: templates/storage_new.html:14 templates/vm.html:14
+#: templates/storage.html:14 templates/storage.html.py:39 templates/vm.html:14
 msgid "Storage"
 msgstr "Хранилище"
 
 #: templates/logs.html:15 templates/network.html:15
-#: templates/network.html.py:39 templates/network_new.html:15
-#: templates/newvm.html:15 templates/overview.html:15
-#: templates/snapshot.html:15 templates/storage.html:15
-#: templates/storage_new.html:15 templates/vm.html:15
+#: templates/network.html.py:39 templates/newvm.html:15
+#: templates/overview.html:15 templates/snapshot.html:15
+#: templates/storage.html:15 templates/vm.html:15
 msgid "Virtual networks"
 msgstr "Виртуальные сети"
 
-#: templates/logs.html:16 templates/network.html:16
-#: templates/network_new.html:16 templates/newvm.html:16
+#: templates/logs.html:16 templates/network.html:16 templates/newvm.html:16
 #: templates/overview.html:16 templates/snapshot.html:16
-#: templates/storage.html:16 templates/storage_new.html:16
-#: templates/vm.html:16
+#: templates/storage.html:16 templates/vm.html:16
 msgid "Snapshots"
 msgstr "Снапшоты"
 
-#: templates/logs.html:17 templates/network.html:17
-#: templates/network_new.html:17 templates/newvm.html:17
+#: templates/logs.html:17 templates/network.html:17 templates/newvm.html:17
 #: templates/overview.html:17 templates/snapshot.html:17
-#: templates/storage.html:17 templates/storage_new.html:17
-#: templates/vm.html:17
+#: templates/storage.html:17 templates/vm.html:17
 msgid "Logs"
 msgstr "Логи"
 
-#: templates/logs.html:18 templates/network.html:27
-#: templates/network_new.html:27 templates/newvm.html:18
+#: templates/logs.html:18 templates/network.html:27 templates/newvm.html:18
 #: templates/overview.html:18 templates/snapshot.html:29
-#: templates/storage.html:27 templates/storage_new.html:27
-#: templates/vm.html:18
+#: templates/storage.html:27 templates/vm.html:18
 msgid "Virtual Machines"
 msgstr "Виртуальные машины"
 
@@ -569,76 +552,79 @@ msgstr "Дата"
 msgid "You have no logs"
 msgstr "У Вас отсутствуют какие либо логи"
 
-#: templates/network.html:18 templates/network_new.html:18
+#: templates/network.html:18
 msgid "Network pool"
 msgstr "Сетевой пул"
 
-#: templates/network.html:19 templates/network_new.html:19
-#: templates/storage.html:19 templates/storage_new.html:19
+#: templates/network.html:19 templates/storage.html:19
 msgid "New pool"
 msgstr "Новый пул"
 
-#: templates/network.html:43 templates/network_new.html:52
-#: templates/storage.html:43 templates/storage_new.html:52
+#: templates/network.html:44
+msgid "Network pool not found"
+msgstr "Сетевые пулы не найдены"
+
+#: templates/network.html:49 templates/network.html.py:103
+#: templates/storage.html:51 templates/storage.html.py:76
 msgid "Pool name"
 msgstr "Название пула"
 
-#: templates/network.html:44
+#: templates/network.html:50
 msgid "Device pool"
 msgstr "Устройство пула"
 
-#: templates/network.html:45 templates/storage.html:46 templates/vm.html:69
+#: templates/network.html:51 templates/storage.html:79 templates/vm.html:69
 msgid "State"
 msgstr "Состояние"
 
-#: templates/network.html:52 templates/storage.html:56 templates/vm.html:95
+#: templates/network.html:58 templates/storage.html:89 templates/vm.html:95
 msgid "Enable"
 msgstr "Включить"
 
-#: templates/network.html:54 templates/storage.html:58 templates/vm.html:93
+#: templates/network.html:60 templates/storage.html:91 templates/vm.html:93
 msgid "Disable"
 msgstr "Выключить"
 
-#: templates/network.html:65
+#: templates/network.html:71
 msgid "IPv4 configuration:"
 msgstr "Конфигурация IPv4:"
 
-#: templates/network.html:68 templates/network_new.html:70
+#: templates/network.html:74 templates/network.html.py:121
 msgid "Type forwarding"
 msgstr "Тип шлюза"
 
-#: templates/network.html:69 templates/network_new.html:58
+#: templates/network.html:75 templates/network.html.py:109
 msgid "Subnet pool"
 msgstr "Подсеть пула"
 
-#: templates/network.html:72
+#: templates/network.html:78
 msgid "Start"
 msgstr "Начало"
 
-#: templates/network.html:73
+#: templates/network.html:79
 msgid "End"
 msgstr "Конец"
 
-#: templates/network.html:78
+#: templates/network.html:84
 msgid "on"
 msgstr "включен"
 
-#: templates/network.html:78
+#: templates/network.html:84
 msgid "off"
 msgstr "не включен"
 
-#: templates/network_new.html:39
-msgid "New network pool"
-msgstr "Новый сетевой пул"
+#: templates/network.html:97 templates/storage.html:45
+msgid "New storage pool"
+msgstr "Новый пул хранилища"
 
-#: templates/network_new.html:80 templates/newvm.html:60
+#: templates/network.html:133 templates/newvm.html:60
 #: templates/newvm.html.py:68 templates/newvm.html:76
 #: templates/newvm.html.py:84 templates/newvm.html:92
 #: templates/newvm.html.py:100 templates/newvm.html:199
 #: templates/newvm.html.py:263 templates/newvm.html:326
 #: templates/newvm.html.py:389 templates/newvm.html:452
 #: templates/newvm.html.py:515 templates/newvm.html:578
-#: templates/storage.html:163 templates/storage_new.html:64
+#: templates/storage.html:66 templates/storage.html.py:197
 msgid "Create"
 msgstr "Создать"
 
@@ -657,8 +643,8 @@ msgstr "Шаблоны новых ВМ"
 #: templates/newvm.html:213 templates/newvm.html.py:276
 #: templates/newvm.html:339 templates/newvm.html.py:402
 #: templates/newvm.html:465 templates/newvm.html.py:528
-#: templates/snapshot.html:56 templates/storage.html:76
-#: templates/storage.html.py:96 templates/storage.html:144
+#: templates/snapshot.html:56 templates/storage.html:110
+#: templates/storage.html.py:130 templates/storage.html:178
 #: templates/vm.html:68
 msgid "Name"
 msgstr "Название"
@@ -726,7 +712,7 @@ msgstr "Своя ВМ"
 #: templates/newvm.html:222 templates/newvm.html.py:285
 #: templates/newvm.html:348 templates/newvm.html.py:411
 #: templates/newvm.html:474 templates/newvm.html.py:537
-#: templates/storage.html:18 templates/storage_new.html:18
+#: templates/storage.html:18
 msgid "Storage pool"
 msgstr "Пул хранилища"
 
@@ -766,46 +752,46 @@ msgstr "У Вас отсутствуют какие либо снапшоты"
 msgid "Revert"
 msgstr "Возвратиться"
 
-#: templates/storage.html:44 templates/storage_new.html:58
+#: templates/storage.html:57 templates/storage.html.py:77
 msgid "Pool path"
 msgstr "Путь пула"
 
-#: templates/storage.html:45 templates/storage.html.py:77
-#: templates/storage.html:150
+#: templates/storage.html:72
+msgid "Storage pools not found"
+msgstr "Пулы хранилища не найдены"
+
+#: templates/storage.html:78 templates/storage.html.py:111
+#: templates/storage.html:184
 msgid "Size"
 msgstr "Размер"
 
-#: templates/storage.html:71
+#: templates/storage.html:105
 msgid "Images"
 msgstr "Образы"
 
-#: templates/storage.html:78
+#: templates/storage.html:112
 msgid "Format"
 msgstr "Формат"
 
-#: templates/storage.html:90
+#: templates/storage.html:124
 msgid "Clone image"
 msgstr "Клонирование образа"
 
-#: templates/storage.html:106 templates/storage.html.py:110
+#: templates/storage.html:140 templates/storage.html.py:144
 msgid "Clone"
 msgstr "Клонировать"
 
-#: templates/storage.html:124
+#: templates/storage.html:158
 msgid "No images or pool is not active"
 msgstr "Как либо образы отсутствуют или пул не активен"
 
-#: templates/storage.html:138 templates/storage.html.py:167
+#: templates/storage.html:172 templates/storage.html.py:201
 msgid "New image"
 msgstr "Новый образ"
 
-#: templates/storage.html:154
+#: templates/storage.html:188
 msgid "Gb"
 msgstr "ГБ"
-
-#: templates/storage_new.html:39
-msgid "New storage pool"
-msgstr "Новый пул хранилища"
 
 #: templates/support.html:14
 msgid "Contact us"
@@ -1052,6 +1038,9 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:468
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
+
+#~ msgid "New network pool"
+#~ msgstr "Новый сетевой пул"
 
 #~ msgid "Arch"
 #~ msgstr "Архитектура"
