@@ -47,6 +47,13 @@
             </div>
           {% endfor %}
           {% endif %}
+    <div class="tabbable"> 
+     <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">VM</a></li>
+      <li>{% if state = 5 or state = 3 %}<a>VNC</a>{% else %}<a href="#tab2" data-toggle="tab">VNC: {{ vnc_port }}</a>{% endif %}</li>
+    </ul>
+    <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
       <div class="row">
       	<div class="span8">
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
@@ -60,7 +67,9 @@
                 <input class="btn btn-warning" type="submit" name="suspend" value="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                 <input class="btn btn-danger" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
                 <input class="btn btn-danger" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
-                <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', 'child','width=800,height=628,status=no,location=no,toolbar=no,menubar=no')">
+              {% endif %}
+              {% if state != 3 %}
+                <input class="btn btn-primary" type="submit" name="snapshot" value="{% trans "Create snapshot" %}" {% if state == 1 %}onclick="return confirm('{% trans "Attention: When enabled, the virtual machine snapshot will be created on a lot longer. The virtual machine before creating the snapshot automatically switches to Paused and will be locked until you create it. Continue?" %}')"{% endif %}>
               {% endif %}
               </form>
               </div>
@@ -113,9 +122,6 @@
                 </div>
               </div>
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
-                {% if state != 3 %}
-                <input class="btn btn-primary" type="submit" name="snapshot" value="{% trans "Create snapshot" %}" {% if state == 1 %}onclick="return confirm('{% trans "Attention: When enabled, the virtual machine snapshot will be created on a lot longer. The virtual machine before creating the snapshot automatically switches to Paused and will be locked until you create it. Continue?" %}')"{% endif %}>
-                {% endif %}
                 {% if state != 1 and state != 3 and num_snapshot = 0 %}
                 <input class="btn btn-danger" type="submit" name="undefine" value="{% trans "Undefine" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                 {% else %}
@@ -126,5 +132,20 @@
             <p><strong>{% trans "To cancel the definition of a virtual machine, delete images" %} <a href="/snapshot/{{ host_id }}/{{ vname }}/">{% trans "snapshots" %}</a></strong></p>
             {% endif %}
             </div>
+            <div class="tab-pane" id="tab2">
+              <applet archive="/media/java/vncviewer.jar" code="com.tightvnc.vncviewer.VncViewer" width="640" height="508">
+                <param name="SOCKETFACTORY" value="com.tightvnc.vncviewer.SshTunneledSocketFactory">
+                <param name="Show controls" value="Yes">
+                <param name="Offer relogin" value="Yes">
+                <param name="Open new window" value="No">
+                <param name="Scaling factor" value="auto">
+                <param name="SSHHOST" value="{{ kvm_host.ipaddr }}">
+                <param name="HOST" value="localhost">
+                <param name="PORT" value="{{ vnc_port }}">
+              </applet>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}
