@@ -51,6 +51,7 @@
      <ul class="nav nav-tabs">
       <li class="active"><a href="#tab1" data-toggle="tab">VM</a></li>
       <li>{% if state = 5 or state = 3 %}<a>VNC</a>{% else %}<a href="#tab2" data-toggle="tab">VNC: {{ vnc_port }}</a>{% endif %}</li>
+      <li><a href="#tab3" data-toggle="tab">XML</a></li>
     </ul>
     <div class="tab-content">
     <div class="tab-pane active" id="tab1">
@@ -143,6 +144,14 @@
                 <param name="HOST" value="localhost">
                 <param name="PORT" value="{{ vnc_port }}">
               </applet>
+            </div>
+            <div class="tab-pane" id="tab3">
+              <div class="row">
+                <div class="span8">
+<pre>{% for line in vm_xml %}
+{{ line }}{% endfor %}</pre>
+                </div>
+              </div>
             </div>
           </div>
         </div>

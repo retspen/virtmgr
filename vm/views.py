@@ -93,6 +93,15 @@ def index(request, host_id, vname):
          add_error(e, 'libvirt')
          return "error"
 
+   def get_vm_xml():
+      try:
+         xml = dom.XMLDesc(0)
+         xml_spl = xml.split('\n')
+         return xml_spl
+      except libvirt.libvirtError as e:
+         add_error(e, 'libvirt')
+         return "error"
+
    def get_vm_mem():
       try:
          xml = dom.XMLDesc(0)
@@ -348,6 +357,7 @@ def index(request, host_id, vname):
    cpu_usage = vm_cpu_usage()
    mem_usage = get_memusage()
    num_snapshot = get_snapshot_num()
+   vm_xml = get_vm_xml()
 
    # Post form html
    if request.method == 'POST':

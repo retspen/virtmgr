@@ -121,5 +121,18 @@
 				</div>
 			</div>
 		</div>
+			<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNine">
+					При прохождении теста вылазит ошибка "authentication failed" хотя логин и пароль ввожу правильно?
+				</a>
+			</div>
+			<div id="collapseNine" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					Убедитесь что <code>hostname</code> сервера соответствует записи в файле <code>/etc/hosts</code> или добавьте домен который можно посмотреть командой <code>sasldblistusers2 -f /etc/libvirt/passwd.db</code> к логину при авторизации.
+				</div>
+			</div>
+		</div>
 		<br>
 {% endblock %}
