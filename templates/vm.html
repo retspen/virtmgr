@@ -60,7 +60,7 @@
                 <input class="btn btn-warning" type="submit" name="suspend" value="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
                 <input class="btn btn-danger" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
                 <input class="btn btn-danger" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
-                <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', 'child','width=800,height=600,status=no,location=no,toolbar=no,menubar=no')">
+                <input class="btn btn-primary" type="button" value="VNC: {{ vnc_port }}" onclick="window.open('/vnc/{{ host_id }}/{{ vname }}/', 'child','width=800,height=628,status=no,location=no,toolbar=no,menubar=no')">
               {% endif %}
               </form>
               </div>

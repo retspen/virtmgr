@@ -198,7 +198,7 @@ def index(request, host_id):
 	
 	def add_vm(name, mem, cpus, machine, emul, img, iso, bridge):
 		try:
-			arch = 'x86_64'
+			arch = conn.getInfo()[0]
 			hostcap = conn.getCapabilities()
 			iskvm = re.search('kvm', hostcap)
 			if iskvm:
