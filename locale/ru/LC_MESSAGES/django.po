@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-14 10:53+0300\n"
+"POT-Creation-Date: 2012-05-14 12:05+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -322,7 +322,7 @@ msgstr "Подключить новый хост"
 msgid "KVM password"
 msgstr "KVM пароль"
 
-#: templates/dashboard.html:84 templates/network.html:132
+#: templates/dashboard.html:84 templates/network.html:131
 #: templates/newvm.html:198 templates/newvm.html.py:262
 #: templates/newvm.html:325 templates/newvm.html.py:388
 #: templates/newvm.html:451 templates/newvm.html.py:514
@@ -447,12 +447,13 @@ msgstr "<strong>IP_адрес</strong>"
 #: templates/features.html:7
 msgid ""
 "created as a centralized tool for managing virtual machines through a web "
-"browser for personal use. The project is absolutely free and is developed in "
-"free time."
+"browser for personal use. This project is an alternative to virt-manager for "
+"the browser. The project is absolutely free and is developed in free time."
 msgstr ""
 "создавался как централизованное средство управления виртуальными машинами "
-"через веб браузер для личного использования. Проект является абсолютно "
-"бесплатным и разрабатывается в свободное от работы время."
+"через веб браузер для личного использования. Эта альтернатива virt-manager "
+"только для браузера. Проект является абсолютно бесплатным и разрабатывается "
+"в свободное от работы время."
 
 #: templates/index.html:7
 msgid ""
@@ -564,7 +565,7 @@ msgstr "Новый пул"
 msgid "Network pool not found"
 msgstr "Сетевые пулы не найдены"
 
-#: templates/network.html:49 templates/network.html.py:103
+#: templates/network.html:49 templates/network.html.py:102
 #: templates/storage.html:51 templates/storage.html.py:76
 msgid "Pool name"
 msgstr "Название пула"
@@ -589,11 +590,11 @@ msgstr "Выключить"
 msgid "IPv4 configuration:"
 msgstr "Конфигурация IPv4:"
 
-#: templates/network.html:74 templates/network.html.py:121
+#: templates/network.html:74 templates/network.html.py:120
 msgid "Type forwarding"
 msgstr "Тип шлюза"
 
-#: templates/network.html:75 templates/network.html.py:109
+#: templates/network.html:75 templates/network.html.py:108
 msgid "Subnet pool"
 msgstr "Подсеть пула"
 
@@ -613,11 +614,11 @@ msgstr "включен"
 msgid "off"
 msgstr "не включен"
 
-#: templates/network.html:97 templates/storage.html:45
-msgid "New storage pool"
-msgstr "Новый пул хранилища"
+#: templates/network.html:96
+msgid "New network pool"
+msgstr "Новый сетевой пул"
 
-#: templates/network.html:133 templates/newvm.html:60
+#: templates/network.html:132 templates/newvm.html:60
 #: templates/newvm.html.py:68 templates/newvm.html:76
 #: templates/newvm.html.py:84 templates/newvm.html:92
 #: templates/newvm.html.py:100 templates/newvm.html:199
@@ -751,6 +752,10 @@ msgstr "У Вас отсутствуют какие либо снапшоты"
 #: templates/snapshot.html:70 templates/snapshot.html.py:72
 msgid "Revert"
 msgstr "Возвратиться"
+
+#: templates/storage.html:45
+msgid "New storage pool"
+msgstr "Новый пул хранилища"
 
 #: templates/storage.html:57 templates/storage.html.py:77
 msgid "Pool path"
@@ -1038,9 +1043,6 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:468
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#~ msgid "New network pool"
-#~ msgstr "Новый сетевой пул"
 
 #~ msgid "Arch"
 #~ msgstr "Архитектура"
