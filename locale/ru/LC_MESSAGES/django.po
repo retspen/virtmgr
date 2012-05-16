@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-16 16:02+0300\n"
+"POT-Creation-Date: 2012-05-16 16:16+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -930,6 +930,10 @@ msgstr "Вы уже вошли!"
 msgid "Log In"
 msgstr "Вход"
 
+#: templates/registration/login.html:21
+msgid "Lost password?"
+msgstr "Забыли пароль?"
+
 #: templates/registration/logout.html:7
 msgid "Logout"
 msgstr "Выход"
@@ -1043,9 +1047,6 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:482
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#~ msgid "Forgot password?"
-#~ msgstr "Забыли пароль?"
 
 #~ msgid "Arch"
 #~ msgstr "Архитектура"
