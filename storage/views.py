@@ -14,7 +14,11 @@ def index(request, host_id):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg):
-		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type='libvirt', 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_storages():
@@ -94,7 +98,11 @@ def pool(request, host_id, pool):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg, type_err):
-		error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type=type_err, 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_storages():

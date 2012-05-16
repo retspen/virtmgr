@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import libvirt, re, time, socket
+import libvirt, time
 import virtinst.util as util
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
@@ -8,11 +8,17 @@ from virtmgr.model.models import *
 
 def index(request, host_id):
 
+	""" Overview block """
+
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
 	def add_error(msg):
-		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+						type='libvirt', 
+						message=msg, 
+						user_id=request.user.id
+						)
 		error_msg.save()
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
@@ -25,7 +31,11 @@ def index(request, host_id):
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except libvirt.libvirtError as e:
-			error_msg = Log(host_id=host_id, type='libvirt', message=e, user_id=request.user.id)
+			error_msg = Log(host_id=host_id, 
+							type='libvirt', 
+							message=e, 
+							user_id=request.user.id
+							)
 			error_msg.save()
 			return "error"
 
@@ -59,7 +69,6 @@ def index(request, host_id):
 	def get_info():
 		try:
 			info = []
-			xml_cap = conn.getCapabilities()
 			xml_inf = conn.getSysinfo(0)
 			info.append(conn.getHostname())
 			info.append(conn.getInfo()[0])
@@ -122,6 +131,7 @@ def index(request, host_id):
 	return render_to_response('overview.html', locals())
 
 def redir(request):
+	""" redirect if not have in request host_id """
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 	else:

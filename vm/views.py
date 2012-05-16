@@ -3,7 +3,7 @@ import libvirt, re, time
 import virtinst.util as util
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext_lazy as _
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
 
@@ -15,7 +15,11 @@ def index(request, host_id, vname):
    kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
    def add_error(msg, type_err):
-      error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+      error_msg = Log(host_id=host_id, 
+                      type=type_err, 
+                      message=msg, 
+                      user_id=request.user.id
+                      )
       error_msg.save()
 
    def get_vms():
@@ -134,7 +138,7 @@ def index(request, host_id, vname):
       try:
          xml = dom.XMLDesc(0)
          hdd_path = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
-         image = re.sub('\/.*\/','', hdd_path)
+         image = re.sub('\/.*\/', '', hdd_path)
          size = dom.blockInfo(hdd_path, 0)[0]
          return image, size
       except libvirt.libvirtError as e:
@@ -146,7 +150,7 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          cdr_path = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
          if cdr_path:
-            image = re.sub('\/.*\/','', cdr_path)
+            image = re.sub('\/.*\/', '', cdr_path)
             size = dom.blockInfo(cdr_path, 0)[0]
             return image, cdr_path, size
          else:
@@ -319,7 +323,7 @@ def index(request, host_id, vname):
          xml += dom.XMLDesc(0)
          xml += """<active>0</active>\n
                   </domainsnapshot>"""
-         dom.snapshotCreateXML(xml,0)
+         dom.snapshotCreateXML(xml, 0)
       except libvirt.libvirtError as e:
          add_error(e, 'libvirt')
          return "error"

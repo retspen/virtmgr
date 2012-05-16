@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import libvirt, re, socket
+import re, socket
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -21,7 +21,12 @@ def index(request):
 				status = 1
 			except:
 				status = 2
-			name_ipddr[host.hostname] = (host.id, host.ipaddr, host.login, host.passwd, status)
+			name_ipddr[host.hostname] = (host.id, 
+										 host.ipaddr, 
+										 host.login, 
+										 host.passwd, 
+										 status
+										 )
 	   	return name_ipddr
 	
 	def del_host(host):
@@ -29,12 +34,21 @@ def index(request):
 		hosts.delete()
 
 	def add_host(host, ip, usr, passw):
-		hosts = Host(user_id=request.user.id, hostname=host, ipaddr=ip, login=usr, passwd=passw)
+		hosts = Host(user_id=request.user.id, 
+					 hostname=host, 
+					 ipaddr=ip, 
+					 login=usr, 
+					 passwd=passw
+					 )
 		hosts.save()
 		kvm_host = Host.objects.get(user=request.user.id, hostname=host)
 		msg = _('Add server: ')
 		msg = msg + host
-		error_msg = Log(host_id=kvm_host.id, type='user', message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=kvm_host.id, 
+			            type='user', 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_host_status(hosts):

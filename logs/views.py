@@ -18,7 +18,11 @@ def logs(request, host_id):
 	all_logs = Log.objects.filter(host=host_id, user=request.user.id).order_by('-date')[:50]
 
 	def add_error(msg):
-		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+						type='libvirt', 
+						message=msg, 
+						user_id=request.user.id
+						)
 		error_msg.save()
 
 	def get_vms():

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-import libvirt, re, time
-import virtinst.util as util
+import libvirt
 from django.utils.translation import ugettext_lazy as _
-from virtmgr.network.IPy import IP
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
@@ -16,7 +14,11 @@ def index(request, host_id):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg):
-		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type='libvirt', 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_vms():
@@ -79,11 +81,11 @@ def index(request, host_id):
 	if conn == "error":
 		return HttpResponseRedirect('/overview/%s/' % (host_id))
 
-	all_vm_snapshots = get_vm_snapshots()
+	all_vm_snap = get_vm_snapshots()
 	all_vm = get_vms()
 
 	if all_vm_snapshots:
-		return HttpResponseRedirect('/snapshot/%s/%s/' % (host_id, all_vm_snapshots.keys()[0]))
+		return HttpResponseRedirect('/snapshot/%s/%s/' % (host_id, all_vm_snap.keys()[0]))
 
 	return render_to_response('snapshot.html', locals())
 
@@ -95,7 +97,11 @@ def snapshot(request, host_id, vname):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg, type_err):
-		error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type=type_err, 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_vms():

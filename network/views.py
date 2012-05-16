@@ -15,7 +15,11 @@ def index(request, host_id):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg):
-		error_msg = Log(host_id=host_id, type='libvirt', message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type='libvirt', 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_vms():
@@ -95,7 +99,11 @@ def pool(request, host_id, pool):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg, type_err):
-		error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type=type_err, 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def get_vms():
@@ -241,7 +249,7 @@ def pool(request, host_id, pool):
 			add_error(e, 'libvirt')
 			return "error"
 
-	def create_net_pool(name_pool, forward, ipaddr, netmask, dhcp, start_dhcp, end_dhcp):
+	def create_net_pool(name_pool, forward, ipaddr, netmask, dhcp, s_dhcp, e_dhcp):
 		try:
 			xml = """
 				<network>
@@ -256,7 +264,7 @@ def pool(request, host_id, pool):
 			if dhcp == "yes":
 				xml += """<dhcp>
 							<range start='%s' end='%s' />
-						</dhcp>""" % (start_dhcp, end_dhcp)
+						</dhcp>""" % (s_dhcp, e_dhcp)
 					
 			xml += """</ip>
 				</network>"""

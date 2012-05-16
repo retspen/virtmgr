@@ -3,7 +3,7 @@ import libvirt, re
 import virtinst.util as util
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render_to_response
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from virtmgr.model.models import *
 
 def index(request, host_id):
@@ -14,7 +14,11 @@ def index(request, host_id):
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
 	def add_error(msg, type_err):
-		error_msg = Log(host_id=host_id, type=type_err, message=msg, user_id=request.user.id)
+		error_msg = Log(host_id=host_id, 
+			            type=type_err, 
+			            message=msg, 
+			            user_id=request.user.id
+			            )
 		error_msg.save()
 
 	def creds(credentials, user_data):
