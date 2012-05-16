@@ -104,7 +104,7 @@ def index(request, host_id):
 			        diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
 			        prev_total = total
 			        prev_idle = idle
-			        if num is 0: 
+			        if num == 0: 
 		        		time.sleep(1)
 		        	else:
 		        		if diff_usage < 0:

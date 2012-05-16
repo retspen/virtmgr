@@ -65,6 +65,7 @@
       <hr>
       <footer>
         <ul class="nav nav-pills pull-right">
+          <li><a><g:plusone size="medium" annotation="none"></g:plusone></a></li>
           <li><a href="http://twitter.com/webvirtmgr"><img style="height:20px" src="/media/img/twitter.png"> Twitter</a></li>
           <li><a href="http://facebook.com/WebVirtMgr"><img style="height:20px" src="/media/img/facebook.png"> Facebook</a></li>
         </ul>
@@ -85,6 +86,13 @@
     <script src="/media/js/bootstrap-carousel.js"></script>
     <script src="/media/js/bootstrap-typeahead.js"></script>
     {% block javascript %}{% endblock %}
+    <script type="text/javascript">
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-31724898-1']);
