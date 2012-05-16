@@ -138,9 +138,10 @@ def index(request, host_id, vname):
       try:
          xml = dom.XMLDesc(0)
          hdd_path = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
+         hdd_fmt = util.get_xml_path(xml, "/domain/devices/disk[1]/driver/@type")
          image = re.sub('\/.*\/', '', hdd_path)
          size = dom.blockInfo(hdd_path, 0)[0]
-         return image, size
+         return image, size, hdd_fmt
       except libvirt.libvirtError as e:
          add_error(e, 'libvirt')
          return "error"

@@ -69,7 +69,7 @@
                 <input class="btn btn-danger" type="submit" name="shutdown" value="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')">
                 <input class="btn btn-danger" type="submit" name="destroy" value="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')">
               {% endif %}
-              {% if state != 3 %}
+              {% if state != 3 and hdd.2 == 'qcow2' %}
                 <input class="btn btn-primary" type="submit" name="snapshot" value="{% trans "Create snapshot" %}" {% if state == 1 %}onclick="return confirm('{% trans "Attention: When enabled, the virtual machine snapshot will be created on a lot longer. The virtual machine before creating the snapshot automatically switches to Paused and will be locked until you create it. Continue?" %}')"{% endif %}>
               {% endif %}
               </form>

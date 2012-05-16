@@ -84,7 +84,7 @@ def index(request, host_id):
 	all_vm_snap = get_vm_snapshots()
 	all_vm = get_vms()
 
-	if all_vm_snapshots:
+	if all_vm_snap:
 		return HttpResponseRedirect('/snapshot/%s/%s/' % (host_id, all_vm_snap.keys()[0]))
 
 	return render_to_response('snapshot.html', locals())
