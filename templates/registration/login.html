@@ -10,14 +10,15 @@
   {% else %}
     <div class="container">
         <div class="row show-grid">
-          <div class="span4 offset4" style="width:265px;">
-            <h2>{% trans "Sign in" %}</h2><br>
-            <form class="well" action="/user/login/" method="post"> 
+          <div class="well span4 offset4" style="width:220px;">
+            <h2>{% trans "Log In" %}</h2>
+            <hr>
+            <form action="/user/login/" method="post"> 
               {{ form }}
-              <br><br>
-              <p class="pull-right"><a href="/user/password/reset">{% trans "Forgot password?" %}</a></p>
+              <hr>
               <input name="next" id="next" type="hidden" value="/dashboard/">
-              <input type="submit" class="btn btn-primary" value="{% trans "Sign in" %}">
+              <input type="submit" class="btn btn-primary pull-right" value="{% trans "Sign in" %}">
+              <p class="pull-left"><a href="/user/password/reset">Забыли пароль?</a></p>
             </form>
           </div>
         </div>

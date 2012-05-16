@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-16 14:35+0300\n"
+"POT-Creation-Date: 2012-05-16 16:02+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -250,8 +250,7 @@ msgstr "Поддержка"
 msgid "Sign out"
 msgstr "Выйти"
 
-#: templates/base.html:58 templates/registration/login.html:14
-#: templates/registration/login.html:20
+#: templates/base.html:58 templates/registration/login.html:20
 msgid "Sign in"
 msgstr "Войти"
 
@@ -411,7 +410,7 @@ msgstr ""
 
 #: templates/docs.html:94
 msgid "Configuring the firewall"
-msgstr "Настройки фаервола"
+msgstr "Настройки firewall"
 
 #: templates/docs.html:97
 msgid "Open access to ports libvirt"
@@ -438,7 +437,7 @@ msgid ""
 "Before you add the ip address of your server in the control center perform "
 "the following test"
 msgstr ""
-"Перед тем как добавить IP адрес в ценр управления выполните следующий тест"
+"Перед тем как добавить IP адрес в центр управления выполните следующий тест"
 
 #: templates/docs.html:118
 msgid "<strong>IP_address</strong>"
@@ -927,9 +926,9 @@ msgstr "вход"
 msgid "You have already sign in!"
 msgstr "Вы уже вошли!"
 
-#: templates/registration/login.html:18
-msgid "Forgot password?"
-msgstr "Забыли пароль?"
+#: templates/registration/login.html:14
+msgid "Log In"
+msgstr "Вход"
 
 #: templates/registration/logout.html:7
 msgid "Logout"
@@ -956,7 +955,7 @@ msgstr "Подтвердить пароль"
 msgid "We have sent instructions on how to reset your password on the email."
 msgstr "Мы отправлены инструкции о том, как изменить пароль на email."
 
-#: templates/registration/password_reset_form.html:18
+#: templates/registration/password_reset_form.html:20
 msgid "Rocevery"
 msgstr "Восстановить"
 
@@ -1044,6 +1043,9 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:482
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
+
+#~ msgid "Forgot password?"
+#~ msgstr "Забыли пароль?"
 
 #~ msgid "Arch"
 #~ msgstr "Архитектура"

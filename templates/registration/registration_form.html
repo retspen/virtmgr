@@ -10,12 +10,13 @@
   {% else %}
     <div class="container">
         <div class="row show-grid">
-          <div class="span4 offset4" style="width:265px;">
-            <h2>{% trans "Registration" %}</h2><br>
-            <form class="well" id="gaia_loginform" action="" method="post">
+          <div class="well span4 offset4" style="width:220px;">
+            <h2>{% trans "Registration" %}</h2>
+            <hr>
+            <form action="/user/register/" method="post">
               {{ form }}
-              <br><br>
-              <input type="submit" class="btn btn-primary" value="Регистрация">
+              <hr>
+              <input type="submit" class="btn btn-primary pull-right" value="Регистрация">
             </form>
           </div>
         </div>
