@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 12:29+0300\n"
+"POT-Creation-Date: 2012-05-17 17:25+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -475,6 +475,14 @@ msgstr ""
 #: templates/index.html:8
 msgid "Sign up"
 msgstr "Зарегистрироваться"
+
+#: templates/index.html:12
+msgid "Demo"
+msgstr "Демо"
+
+#: templates/index.html:18
+msgid "View a demo"
+msgstr "Посмотреть демо"
 
 #: templates/logs.html:9 templates/network.html:9 templates/newvm.html:9
 #: templates/overview.html:9 templates/snapshot.html:9
@@ -1047,7 +1055,8 @@ msgid "Create snapshot for VM: "
 msgstr "Создание снапшота для ВМ: "
 
 #: vm/views.py:445
-msgid "Successful create snapshot: "
+#, fuzzy, python-format
+msgid "Successful create snapshot for VM: %s"
 msgstr "Успешное восстановление снапшота: "
 
 #: vm/views.py:452

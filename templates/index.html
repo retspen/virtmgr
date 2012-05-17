@@ -6,5 +6,15 @@
         <h1>Web Virtual Manager</h1><br>
          <p>{% trans "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web interface for managing virtual machines. It allows you to create and configure new domains, and adjust a domain's resource allocation. A VNC viewer over a SSH tunnel presents a full graphical console to the guest domain. <strong>KVM</strong> is currently the only hypervisor supported" %}</p><br>
         <p><a class="btn btn-success btn-large" href="/user/register"><strong>{% trans "Sign up" %}</strong></a></p>
-        </div>
+        <div id="bigModal" class="modal hide fade">
+		    <div class="modal-header">
+		        <button class="close" data-dismiss="modal">&times;</button>
+		        <h3>{% trans "Demo" %}</h3>
+		    </div>
+	        <div class="modal-body">
+       			<iframe style="margin-left:15px;" src="http://player.vimeo.com/video/42338970?title=0&amp;byline=0&amp;portrait=0&amp;color=cebb2f" width="700" height="390" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+	        </div>
+         </div>				  	
+		<a data-toggle="modal" href="#bigModal" class="btn btn-info pull-right">{% trans "View a demo" %}</a>
+    </div>
 {% endblock %}
