@@ -118,7 +118,7 @@
 				<tr>
 				  <td>{{ name }}</td><td>{{ info.0|filesizeformat }}</td><td>{{ info.1 }}</td>
 				  <td style="width:60px;">
-					<div id="myModalclone" class="modal hide fade">
+					<div id="myModalclone{{ forloop.counter }}" class="modal hide fade">
 		            <div class="modal-header">
 		              <button class="close" data-dismiss="modal">&times;</button>
 		              <h3>{% trans "Clone image" %} <font color="red">{{ name }}</font></h3>
@@ -141,7 +141,7 @@
 		              </form>
 		            </div>
 		         	</div>				  	
-		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">{% trans "Clone" %}</a>{% else %}<a data-toggle="modal" href="#myModalclone" class="btn btn-primary">{% trans "Clone" %}</a>{% endif %}
+		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">{% trans "Clone" %}</a>{% else %}<a data-toggle="modal" href="#myModalclone{{ forloop.counter }}" class="btn btn-primary">{% trans "Clone" %}</a>{% endif %}
 				  </td>	
 				  <td>
 					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">

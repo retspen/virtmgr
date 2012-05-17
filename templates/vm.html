@@ -13,7 +13,7 @@
                 <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
                 <li><a href="/storage/{{ host_id }}/"><i class="icon-folder-open"></i>{% trans "Storage" %}</a></li>
                 <li><a href="/network/{{ host_id }}/"><i class="icon-signal"></i>{% trans "Virtual networks" %}</a></li>
-                <li><a href="/snapshot/{{ host_id }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
+                <li><a href="/snapshot/{{ host_id }}/{{ vname }}/"><i class="icon-download-alt"></i>{% trans "Snapshots" %}</a></li>
                 <li><a href="/logs/{{ host_id }}/"><i class="icon-list-alt"></i>{% trans "Logs" %}</a></li>
               <li class="nav-header">{% trans "Virtual Machines" %}</li>
                 {% if not all_vm %}
