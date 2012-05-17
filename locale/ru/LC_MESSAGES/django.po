@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-16 16:23+0300\n"
+"POT-Creation-Date: 2012-05-17 12:29+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -256,6 +256,7 @@ msgstr "Войти"
 
 #: templates/dashboard.html:6 templates/logs.html:10 templates/network.html:10
 #: templates/newvm.html:10 templates/overview.html:10
+#: templates/screenshot.html:19 templates/screenshot.html.py:21
 #: templates/snapshot.html:10 templates/storage.html:10 templates/vm.html:10
 msgid "Dashboard"
 msgstr "Центр управления"
@@ -516,7 +517,8 @@ msgid "Virtual networks"
 msgstr "Виртуальные сети"
 
 #: templates/logs.html:16 templates/network.html:16 templates/newvm.html:16
-#: templates/overview.html:16 templates/snapshot.html:16
+#: templates/overview.html:16 templates/screenshot.html:49
+#: templates/screenshot.html.py:51 templates/snapshot.html:16
 #: templates/storage.html:16 templates/vm.html:16
 msgid "Snapshots"
 msgstr "Снапшоты"
@@ -533,7 +535,8 @@ msgstr "Логи"
 msgid "Virtual Machines"
 msgstr "Виртуальные машины"
 
-#: templates/logs.html:30
+#: templates/logs.html:30 templates/screenshot.html:55
+#: templates/screenshot.html.py:57
 msgid "Logging"
 msgstr "Логирование"
 
@@ -553,7 +556,8 @@ msgstr "Дата"
 msgid "You have no logs"
 msgstr "У Вас отсутствуют какие либо логи"
 
-#: templates/network.html:18
+#: templates/network.html:18 templates/screenshot.html:43
+#: templates/screenshot.html.py:45
 msgid "Network pool"
 msgstr "Сетевой пул"
 
@@ -633,6 +637,7 @@ msgstr "Создать"
 #: templates/newvm.html:207 templates/newvm.html.py:270
 #: templates/newvm.html:333 templates/newvm.html.py:396
 #: templates/newvm.html:459 templates/newvm.html.py:522
+#: templates/screenshot.html:31 templates/screenshot.html.py:33
 msgid "New virtual machine"
 msgstr "Новая виртуальная машина"
 
@@ -713,6 +718,7 @@ msgstr "Своя ВМ"
 #: templates/newvm.html:222 templates/newvm.html.py:285
 #: templates/newvm.html:348 templates/newvm.html.py:411
 #: templates/newvm.html:474 templates/newvm.html.py:537
+#: templates/screenshot.html:37 templates/screenshot.html.py:39
 #: templates/storage.html:18
 msgid "Storage pool"
 msgstr "Пул хранилища"
@@ -736,6 +742,19 @@ msgstr "Тип подключения"
 #: templates/overview.html:47
 msgid "Libvirt version"
 msgstr "Версия libvirt"
+
+#: templates/screenshot.html:25 templates/screenshot.html.py:27
+msgid "Server overview"
+msgstr "Обзор сервера"
+
+#: templates/screenshot.html:61 templates/screenshot.html.py:63
+#: templates/vm.html:34
+msgid "Managing a virtual machine"
+msgstr "Управление виртуальной машиной"
+
+#: templates/screenshot.html:67 templates/screenshot.html.py:69
+msgid "VNC pannel"
+msgstr "VNC панель"
 
 #: templates/snapshot.html:18
 msgid "VM snapshots"
@@ -811,10 +830,6 @@ msgstr ""
 #: templates/support.html:19
 msgid "FAQ"
 msgstr "FAQ"
-
-#: templates/vm.html:34
-msgid "Managing a virtual machine"
-msgstr "Управление виртуальной машиной"
 
 #: templates/vm.html:62
 msgid "Start VM"
@@ -975,78 +990,74 @@ msgstr "На Ваш email отправлена ссылка для актива�
 msgid "Registration"
 msgstr "Регистрация"
 
-#: vm/views.py:371
+#: vm/views.py:372
 msgid "Suspend VM: "
 msgstr "Приостановка ВМ: "
 
-#: vm/views.py:376
+#: vm/views.py:377
 msgid "Error: VM alredy suspended"
 msgstr "Ошибка: возможно виртуальная машина уже приостановлена"
 
-#: vm/views.py:381
+#: vm/views.py:382
 msgid "Resume VM: "
 msgstr "Возобновление ВМ: "
 
-#: vm/views.py:386
+#: vm/views.py:387
 msgid "Error: VM alredy resume"
 msgstr "Ошибка: возможно виртуальная машина уже возобновлена"
 
-#: vm/views.py:391
+#: vm/views.py:392
 msgid "Start VM: "
 msgstr "Запуск ВМ: "
 
-#: vm/views.py:396
+#: vm/views.py:397
 msgid "Error: VM alredy start"
 msgstr "Ошибка: возможно виртуальная машина уже запущена"
 
-#: vm/views.py:401
+#: vm/views.py:402
 msgid "Shutdown VM: "
 msgstr "Выключить ВМ: "
 
-#: vm/views.py:406 vm/views.py:416
+#: vm/views.py:407 vm/views.py:417
 msgid "Error: VM alredy shutdown"
 msgstr "Ошибка: возможно виртуальная машина уже выключена"
 
-#: vm/views.py:411
+#: vm/views.py:412
 msgid "Force shutdown VM: "
 msgstr "Принудительно выключение ВМ: "
 
-#: vm/views.py:421
+#: vm/views.py:422
 msgid "Save state VM: "
 msgstr "Сохранение состояния ВМ: "
 
-#: vm/views.py:426
+#: vm/views.py:427
 msgid "Error: VM state alredy saved"
 msgstr "Ошибка: возможно виртуальная машина уже сохранена"
 
-#: vm/views.py:431
+#: vm/views.py:432
 msgid "Reboot VM: "
 msgstr "Перезагрузка ВМ: "
 
-#: vm/views.py:436
+#: vm/views.py:437
 msgid "Error: VM reboot"
 msgstr "Ошибка: возникли проблемы при перезагрузке"
 
-#: vm/views.py:440
+#: vm/views.py:441
 msgid "Create snapshot for VM: "
 msgstr "Создание снапшота для ВМ: "
 
-#: vm/views.py:444
-#, fuzzy, python-format
-msgid "Successful create snapshot for VM: %s"
+#: vm/views.py:445
+msgid "Successful create snapshot: "
 msgstr "Успешное восстановление снапшота: "
 
-#: vm/views.py:451
+#: vm/views.py:452
 msgid "Enable autostart for VM: "
 msgstr "Включение автозапуска для ВМ: "
 
-#: vm/views.py:460
+#: vm/views.py:461
 msgid "Disable autostart for VM: "
 msgstr "Выключение автозапуска для ВМ: "
 
-#: vm/views.py:482
+#: vm/views.py:483
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#~ msgid "Arch"
-#~ msgstr "Архитектура"
