@@ -34,7 +34,7 @@
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-					Почему отсутствует HDD образ при создании "Своей виртуальной машины"?
+					Почему отсутствует HDD образ при создании "Своей ВМ"?
 				</a>
 			</div>
 			<div id="collapseTwo" class="accordion-body collapse in">
@@ -65,7 +65,7 @@
 			</div>
 			<div id="collapseFour" class="accordion-body collapse in">
 				<div class="accordion-inner">
-					Проверьте настройки фаирвола. В Fedora - это iptables, a в Ubuntu - ufw.
+					Проверьте настройки firewall. В Fedora - это iptables, a в Ubuntu - ufw.
 				</div>
 			</div>
 		</div>
@@ -91,37 +91,24 @@
 			</div>
 			<div id="collapseSix" class="accordion-body collapse in">
 				<div class="accordion-inner">
-					Если вы хотите добавить память или изменить кол-во логических ЦПУ, Вы всегда можете <strong>удалить</strong> виртуальную машину и создать новую с улучшеными характеристиками при этом образ HDD не удаляется.
+					Если вы хотите добавить память или изменить кол-во логических ЦПУ, Вы всегда можете <strong>удалить</strong> виртуальную машину и <strong>создать</strong> новую с улучшеными характеристиками (при удалении виртуальной машины образ HDD не удаляется).
 				</div>
 			</div>
 		</div>
-	<div class="accordion" id="accordion2">
+		<div class="accordion" id="accordion2">
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">
-					Почему отсутствует возможность конфигурирования виртуальных машин (удаление и добавление оборудования)?
+					Почему у меня в виртуальной машине отсутствует кнопка "Создать снапшот"?
 				</a>
 			</div>
 			<div id="collapseSeven" class="accordion-body collapse in">
 				<div class="accordion-inner">
-					Добавим эту возможность позже (правда только для сетевых устройств и жестких дисков).
+					Создание снапшотов для образов HDD поддерживаются только формат "QCOW2", возможно Вы управляйте виртуальной машиной уже заранее созданной с другим форматом образа HDD.
 				</div>
 			</div>
 		</div>
-	<div class="accordion" id="accordion2">
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">
-					Почему не полностью поддерживаются виртуальные машины которые созданы не через сервис WebVirtMgr?
-				</a>
-			</div>
-			<div id="collapseEight" class="accordion-body collapse in">
-				<div class="accordion-inner">
-					При создании виртуальной машины создается xml фаил с ее настройками и для бысрого и легкого управления были удалены некоторые элементы, которые создаются локальным менеджером (например: virt-manager).
-				</div>
-			</div>
-		</div>
-			<div class="accordion" id="accordion2">
+		<div class="accordion" id="accordion2">
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNine">

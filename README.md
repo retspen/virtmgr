@@ -1,3 +1,9 @@
+Version 2.5:
+- bugfix
+- add template for new VM
+- new design control VM
+- fix translate
+
 Version 2.4:
 - bugfix
 - add gettext (russian)
