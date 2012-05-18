@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 17:25+0300\n"
+"POT-Creation-Date: 2012-05-18 08:33+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -230,27 +230,27 @@ msgstr "Клонировать можно только образы виртуа
 msgid "Cloning image: "
 msgstr "Клонирование образа: "
 
-#: templates/base.html:43 templates/features.html:5
+#: templates/base.html:47 templates/features.html:5
 msgid "Features"
 msgstr "Особенности"
 
-#: templates/base.html:44 templates/screenshot.html:12
+#: templates/base.html:48 templates/screenshot.html:12
 msgid "Screenshots"
 msgstr "Скриншоты"
 
-#: templates/base.html:45 templates/docs.html:5
+#: templates/base.html:49 templates/docs.html:5
 msgid "Docs"
 msgstr "Документация"
 
-#: templates/base.html:46 templates/support.html:12
+#: templates/base.html:50 templates/support.html:12
 msgid "Support"
 msgstr "Поддержка"
 
-#: templates/base.html:53
+#: templates/base.html:57
 msgid "Sign out"
 msgstr "Выйти"
 
-#: templates/base.html:58 templates/registration/login.html:20
+#: templates/base.html:62 templates/registration/login.html:20
 msgid "Sign in"
 msgstr "Войти"
 
@@ -732,8 +732,8 @@ msgid "Storage pool"
 msgstr "Пул хранилища"
 
 #: templates/overview.html:30
-msgid "Overview server"
-msgstr "Обзор сервера"
+msgid "Overview"
+msgstr "Обзор"
 
 #: templates/overview.html:43
 msgid "Processor(s)"
