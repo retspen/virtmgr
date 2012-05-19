@@ -344,6 +344,8 @@ def index(request, host_id):
 				img = name + '.img'
 				hdd = get_img_path(img)
 			add_vm(name, setmem, cpus, machine, emul, hdd, cdrom, netbr)
+			dom = conn.lookupByName(name)
+			dom.setAutostart(1)
 			msg = _('Creating a virtual machine: ')
 			msg = msg + name
 			add_error(msg,'user')
