@@ -60,6 +60,45 @@
 					<p>{{ sys_info }}</p>
 				</div>
 			</div>
+			{% if all_vm.items %}
+			<hr>
+			<h3>{% trans "Virtual Machines" %}</h3>
+			<hr>
+        	<table class="table table-borderd table-condensed">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Action" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for name, state in all_vm.items %}
+                <tr>
+                	<td>{{ forloop.counter }}</td>
+                	<td><a href="/vm/{{ host_id }}/{{ name }}/"><strong>{{ name }}</strong></a></td>
+                	<td>{% if state == 1 %}<font color="green">{% trans "power on" %}</font>{% endif %}{% if state == 5 %}<font color="red">{% trans "power off" %}</font>{% endif %}{% if state == 3 %}<font color="orange">{% trans "suspend" %}</font>{% endif %}</td>
+                	<td styl="width:30px;">
+                		<form action="/vm/{{ host_id }}/{{ name }}/" method="post">
+			                {% if state = 5 %}
+			                 <button class="btn btn-primary" type="submit" name="start" value="start" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></button>
+			                {% endif %}
+			                {% if state = 3 %}
+			                 <button class="btn btn-primary" type="submit" name="resume" value="resume" title="{% trans "Resume" %}"><i class="icon-pause icon-white"></i><i class="icon-play icon-white"></i></button>
+			                {% endif %}
+			                {% if state = 1 %}
+			                 <button class="btn btn-primary" type="submit" name="suspend" value="suspend" title="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-pause icon-white"></i></button>
+			                 <button class="btn btn-primary" type="submit" name="shutdown" value="suspend" title="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')"><i class="icon-stop icon-white"></i></button>
+			                 <button class="btn btn-primary" type="submit" name="destroy" value="destroy" title="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')"><i class="icon-off icon-white"></i></button>
+			                {% endif %}
+			             </form>
+			          </td>
+                </tr>
+                {% endfor %}
+          	</tbody>
+          </table>
+          {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -18,12 +18,12 @@
               <li class="nav-header">{% trans "Network pool" %}</li>
                 <li><a data-toggle="modal" href="#myModalnewnet"><i class="icon-plus"></i>{% trans "New pool" %}</a></li>
               {% for name, status in pools.items %}
-          {% if pool == name %}
+              {% if pool == name %}
               <li class="active"><a href="/network/{{ host_id }}/{{ name }}/"><i class="icon-folder-open icon-white"></i> {{ name }}</a></li>
               {% else %}
               <li><a href="/network/{{ host_id }}/{{ name }}/"><font color="{% if status == 1 %}green{% else %}red{% endif %}"><i class="icon-folder-open"></i> {{ name }}</font></a></li>
               {% endif %}
-        {% endfor %}
+              {% endfor %}
               <li class="nav-header">{% trans "Virtual Machines" %}</li>
               {% if not all_vm %}
               <li><a href="/newvm/{{ host_id }}/"><i class="icon-plus"></i>{% trans "New VM" %}</a></li>
@@ -54,19 +54,19 @@
           <p><strong>{{ pool }}</strong></p>
           <p>{{ bridge }}</p>
           <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
-			{% if status = 0 %}
-			<input type="submit" class="btn btn-primary" name="start_pool" value="{% trans "Enable" %}">
-			{% else %}
-			<input type="submit" class="btn btn-primary" name="stop_pool" value="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-			{% endif %}
-		  </form>
-		</div>
-	   </div>
-		{% if status = 0 %}
+      			{% if status = 0 %}
+      			<button type="submit" class="btn btn-primary" name="start_pool" value="start_pool" title="{% trans "Enable" %}"><i class="icon-play icon-white"></i></button>
+      			{% else %}
+      			<button type="submit" class="btn btn-primary" name="stop_pool" value="stop_pool" title="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-stop icon-white"></i></button>
+      			{% endif %}
+      		  </form>
+      	</div>
+      </div>
+      	{% if status = 0 %}
         <form action="/network/{{ host_id }}/{{ pool }}/" method="post">
-			<input type="submit" class="btn btn-danger" name="del_pool" value="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')">
-		</form>
-		{% else %}
+			   <button type="submit" class="btn btn-danger" name="del_pool" value="del_pool" title="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-trash icon-white"></i></button>
+    		</form>
+    		{% else %}
       <hr>
       <h4>{% trans "IPv4 configuration:" %}</h4><br>
         <div class="row">

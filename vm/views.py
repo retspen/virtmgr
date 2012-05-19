@@ -387,6 +387,7 @@ def index(request, host_id, vname):
             msg = _('Error: VM alredy resume')
             errors.append(msg)
       if request.POST.get('start',''):
+         print "Yes"
          try:
             dom.create()
             msg = _('Start VM: ')
