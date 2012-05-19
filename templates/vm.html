@@ -60,11 +60,19 @@
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                 {% if state = 5 %}
                  <button class="btn btn-primary" type="submit" name="start" value="start" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></button>
+                 <a class="btn btn-primary disabled" title="{% trans "Suspend" %}"><i class="icon-pause icon-white"></i></a>
+                 <a class="btn btn-primary disabled" title="{% trans "Shutdown" %}"><i class="icon-stop icon-white"></i></a>
+                 <a class="btn btn-primary disabled" title="{% trans "Force shutdown" %}"><i class="icon-off icon-white"></i></a>
                 {% endif %}
                 {% if state = 3 %}
                  <button class="btn btn-primary" type="submit" name="resume" value="resume" title="{% trans "Resume" %}"><i class="icon-play icon-white"></i></button>
+                 <a class="btn btn-primary disabled" title="{% trans "Suspend" %}"><i class="icon-pause icon-white"></i></a>
+                 <a class="btn btn-primary disabled" title="{% trans "Shutdown" %}"><i class="icon-stop icon-white"></i></a>
+                 <a class="btn btn-primary disabled" title="{% trans "Force shutdown" %}"><i class="icon-off icon-white"></i></a>
+                 <a class="btn btn-primary disabled" title="{% trans "Create snapshot" %}"><i class="icon-download-alt icon-white"></i></a>
                 {% endif %}
                 {% if state = 1 %}
+                <a class="btn btn-primary disabled" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></a>
                  <button class="btn btn-primary" type="submit" name="suspend" value="suspend" title="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-pause icon-white"></i></button>
                  <button class="btn btn-primary" type="submit" name="shutdown" value="suspend" title="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')"><i class="icon-stop icon-white"></i></button>
                  <button class="btn btn-primary" type="submit" name="destroy" value="destroy" title="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')"><i class="icon-off icon-white"></i></button>
@@ -81,8 +89,7 @@
                   <p>{% trans "Core" %}</p>
                   <p>{% trans "CPU utilization" %}</p>
                   <p>{% trans "Memory" %}</p>
-                  <p style="height:22px">{% trans "Memory use" %}</p>
-                  <p style="height:34px">{% trans "Autostart" %}</p>
+                  <p style="height:20px">{% trans "Memory use" %}</p>
                   <p>{% trans "HDD image" %}</p>
                   <p>{% trans "CD image" %}</p>
                 </div>
@@ -98,13 +105,6 @@
                     <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:205px;">
                         <div class="bar" style="width: {% if state == 1 %} {{ mem_usage.1 }}%; {% else %} 0%; {% endif %}"><font color="black">{% if state == 1 %} {{ mem_usage.1 }}% {% else %} 0% {% endif %}</font></div> 
                     </div>
-                    <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
-                      {% if autostart == 1 %}
-                        <button class="btn btn-primary" type="submit" name="auto_off" value="auto_off" title="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-stop icon-white"></i></button>
-                      {% else %}
-                        <button class="btn btn-primary" type="submit" name="auto_on" value="auto_on" title="{% trans "Enable" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-play icon-white"></i></button>
-                      {% endif %}
-                    </form>
                   <p>{{ hdd.0 }} | {{ hdd.1|filesizeformat }}</p>
                   <p>{% if cdrom == None %} {% else %} {{ cdrom.0 }} | {{ cdrom.2|filesizeformat }} {% endif %}
                     <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
