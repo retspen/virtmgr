@@ -62,7 +62,7 @@
                  <button class="btn btn-primary" type="submit" name="start" value="start" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></button>
                 {% endif %}
                 {% if state = 3 %}
-                 <button class="btn btn-primary" type="submit" name="resume" value="resume" title="{% trans "Resume" %}"><i class="icon-pause icon-white"></i><i class="icon-play icon-white"></i></button>
+                 <button class="btn btn-primary" type="submit" name="resume" value="resume" title="{% trans "Resume" %}"><i class="icon-play icon-white"></i></button>
                 {% endif %}
                 {% if state = 1 %}
                  <button class="btn btn-primary" type="submit" name="suspend" value="suspend" title="{% trans "Suspend" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-pause icon-white"></i></button>
