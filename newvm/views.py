@@ -279,6 +279,8 @@ def index(request, host_id):
 					  </devices>
 					</domain>"""
 			conn.defineXML(xml)
+			dom = conn.lookupByName(name)
+			dom.setAutostart(1)
 		except libvirt.libvirtError as e:
 			add_error(e, 'libvirt')
 			return "error"
@@ -344,8 +346,6 @@ def index(request, host_id):
 				img = name + '.img'
 				hdd = get_img_path(img)
 			add_vm(name, setmem, cpus, machine, emul, hdd, cdrom, netbr)
-			dom = conn.lookupByName(name)
-			dom.setAutostart(1)
 			msg = _('Creating a virtual machine: ')
 			msg = msg + name
 			add_error(msg,'user')

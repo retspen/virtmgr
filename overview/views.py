@@ -13,12 +13,12 @@ def index(request, host_id):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
-	def add_error(msg):
+	def add_error(msg, type_err):
 		error_msg = Log(host_id=host_id, 
-						type='libvirt', 
-						message=msg, 
-						user_id=request.user.id
-						)
+                      type=type_err, 
+                      message=msg, 
+                      user_id=request.user.id
+                      )
 		error_msg.save()
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
@@ -31,12 +31,7 @@ def index(request, host_id):
 		   	conn = libvirt.openAuth(uri, auth, 0)
 		   	return conn
 		except libvirt.libvirtError as e:
-			error_msg = Log(host_id=host_id, 
-							type='libvirt', 
-							message=e, 
-							user_id=request.user.id
-							)
-			error_msg.save()
+			add_error(e, 'libvirt')
 			return "error"
 
 	def creds(credentials, user_data):
@@ -63,7 +58,7 @@ def index(request, host_id):
 				vname[dom.name()] = dom.info()[0]
 			return vname
 		except libvirt.libvirtError as e:
-			add_error(e)
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_info():
@@ -76,7 +71,7 @@ def index(request, host_id):
 			info.append(util.get_xml_path(xml_inf, "/sysinfo/processor/entry[6]"))
 			return info
 		except libvirt.libvirtError as e:
-			add_error(e)
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_mem_usage():
@@ -89,7 +84,7 @@ def index(request, host_id):
 			memusage = (allmem - freemem)
 			return allmem, memusage, percent
 		except libvirt.libvirtError as e:
-			add_error(e)
+			add_error(e, 'libvirt')
 			return "error"
 
 	def get_cpu_usage():
@@ -111,8 +106,16 @@ def index(request, host_id):
 		        			diff_usage == 0
 			return diff_usage
 		except libvirt.libvirtError as e:
-			add_error(e)
-			return "error"		
+			add_error(e, 'libvirt')
+			return "error"
+	
+	def get_dom(vname):
+		try:
+			dom = conn.lookupByName(vname)
+			return dom
+		except libvirt.libvirtError as e:
+			add_error(e, 'libvirt')
+			return "error"
 
 	errors = []
 	conn = vm_conn()
@@ -123,10 +126,69 @@ def index(request, host_id):
 		cpu_usage = get_cpu_usage()
 		lib_virt_ver = conn.getLibVersion()
 		conn_type = conn.getURI()
-		conn.close()
 	else:
 		msg = _('Error connecting: Check the KVM login and KVM password')
 		errors.append(msg)
+		
+	if request.method == 'POST':
+		vname = request.POST.get('vname','')
+		dom = get_dom(vname)
+		if request.POST.get('suspend',''):
+			try:
+				dom.suspend()
+				msg = _('Suspend VM: ')
+				msg = msg + vname
+				add_error(msg, 'user')
+			except libvirt.libvirtError as e:
+				add_error(e, 'libvirt')
+				msg = _('Error: VM alredy suspended')
+				errors.append(msg)
+		if request.POST.get('resume',''):
+			try:
+				dom.resume()
+				msg = _('Resume VM: ')
+				msg = msg + vname
+				add_error(msg, 'user')
+			except libvirt.libvirtError as e:
+				add_error(e, 'libvirt')
+				msg = _('Error: VM alredy resume')
+				errors.append(msg)
+		if request.POST.get('start',''):
+			try:
+				dom.create()
+				msg = _('Start VM: ')
+				msg = msg + vname
+				add_error(msg, 'user')
+			except libvirt.libvirtError as e:
+				add_error(e, 'libvirt')
+				msg = _('Error: VM alredy start')
+				errors.append(msg)
+		if request.POST.get('shutdown',''):
+			try:
+				dom.shutdown()
+				msg = _('Shutdown VM: ')
+				msg = msg + vname
+				add_error(msg, 'user')
+			except libvirt.libvirtError as e:
+				add_error(e, 'libvirt')
+				msg = _('Error: VM alredy shutdown')
+				errors.append(msg)
+		if request.POST.get('destroy',''):
+			try:
+				dom.destroy()
+				msg = _('Force shutdown VM: ')
+				msg = msg + vname
+				add_error(msg, 'user')
+			except libvirt.libvirtError as e:
+				add_error(e, 'libvirt')
+				msg = _('Error: VM alredy shutdown')
+				errors.append(msg)
+            
+		if not errors:
+			return HttpResponseRedirect('/overview/%s/' % (host_id))
+	
+	if conn != "error":
+		conn.close()
 		
 	return render_to_response('overview.html', locals())
 

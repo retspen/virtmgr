@@ -80,7 +80,7 @@
 			</div>
 			<div class="span3">
 				<p><strong>{{ pool }}</strong></p>
-				<p>{{ spath }}</p>
+				<p>{% if not spath %}{% trans "None" %}{% else %}{{ spath }}{% endif %}</p>
 				<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:200px;">
         				<div class="bar" style="width: {{ info.4 }}%"><font color="black">{{ info.4 }}%</font></div>
         		</div>
@@ -141,7 +141,7 @@
 		              </form>
 		            </div>
 		         	</div>				  	
-		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled">{% trans "Clone" %}</a>{% else %}<a data-toggle="modal" href="#myModalclone{{ forloop.counter }}" class="btn btn-primary"><i class="icon-th icon-white"></i></a>{% endif %}
+		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled"><i class="icon-th icon-white"></i></a>{% else %}<a data-toggle="modal" href="#myModalclone{{ forloop.counter }}" class="btn btn-primary"><i class="icon-th icon-white"></i></a>{% endif %}
 				  </td>	
 				  <td>
 					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">

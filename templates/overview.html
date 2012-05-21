@@ -64,7 +64,7 @@
 			<hr>
 			<h3>{% trans "Virtual Machines" %}</h3>
 			<hr>
-        	<table class="table table-borderd table-condensed">
+        	<table class="table table-borderd table-condensed" style="width:650px;">
             <thead>
               <tr>
                 <th>№</th>
@@ -80,7 +80,8 @@
                 	<td><a href="/vm/{{ host_id }}/{{ name }}/"><strong>{{ name }}</strong></a></td>
                 	<td>{% if state == 1 %}<font color="green">{% trans "power on" %}</font>{% endif %}{% if state == 5 %}<font color="red">{% trans "power off" %}</font>{% endif %}{% if state == 3 %}<font color="orange">{% trans "suspend" %}</font>{% endif %}</td>
                 	<td>
-                		<form action="/vm/{{ host_id }}/{{ name }}/" method="post">
+                		<form action="/overview/{{ host_id }}/" method="post">
+                			<input type="hidden" name="vname" value="{{ name }}" />
 			                {% if state = 5 %}
 			                 <button class="btn btn-primary" type="submit" name="start" value="start" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></button>
 			                 <a class="btn btn-primary disabled" title="{% trans "Suspend" %}"><i class="icon-pause icon-white"></i></a>

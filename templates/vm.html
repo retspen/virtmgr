@@ -56,7 +56,7 @@
     <div class="tab-content">
     <div class="tab-pane active" id="tab1">
       <div class="row">
-      	<div class="span8">
+      	<div class="span4">
               <form action="/vm/{{ host_id }}/{{ vname }}/" method="post">
                 {% if state = 5 %}
                  <button class="btn btn-primary" type="submit" name="start" value="start" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></button>
@@ -80,8 +80,10 @@
               {% if state != 3 and hdd.2 == 'qcow2' %}
                 <button class="btn btn-primary" type="submit" name="snapshot" value="snapshot" title="{% trans "Create snapshot" %}" {% if state == 1 %}onclick="return confirm('{% trans "Attention: When enabled, the virtual machine snapshot will be created on a lot longer. The virtual machine before creating the snapshot automatically switches to Paused and will be locked until you create it. Continue?" %}')"{% endif %}><i class="icon-download-alt icon-white"></i></button>
               {% endif %}
-              </form>
+                </form>
+               </div>
               </div>
+              <div class="row">
                 <div class="span2">
                   <p>{% trans "Name" %}</p>
                   <p>{% trans "State" %}</p>

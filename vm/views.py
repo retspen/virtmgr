@@ -387,7 +387,6 @@ def index(request, host_id, vname):
             msg = _('Error: VM alredy resume')
             errors.append(msg)
       if request.POST.get('start',''):
-         print "Yes"
          try:
             dom.create()
             msg = _('Start VM: ')
@@ -417,26 +416,6 @@ def index(request, host_id, vname):
             add_error(e, 'libvirt')
             msg = _('Error: VM alredy shutdown')
             errors.append(msg)
-      if request.POST.get('save',''):
-         try:
-            dom.save(0)
-            msg = _('Save state VM: ')
-            msg = msg + vname
-            add_error(msg, 'user')
-         except libvirt.libvirtError as e:
-            add_error(e, 'libvirt')
-            msg = _('Error: VM state alredy saved')
-            errors.append(msg)
-      if request.POST.get('reboot',''):
-         try:
-            dom.reboot()
-            msg = _('Reboot VM: ')
-            msg = msg + vname
-            add_error(msg, 'user')
-         except libvirt.libvirtError as e:
-            add_error(e, 'libvirt')
-            msg = _('Error: VM reboot')
-            errors.append(msg)
       if request.POST.get('snapshot',''):
          try:
             msg = _('Create snapshot for VM: ')
@@ -447,7 +426,8 @@ def index(request, host_id, vname):
             return render_to_response('vm.html', locals())
          except libvirt.libvirtError as e:
             add_error(e, 'libvirt')
-            errors.append(u'Ошибка: при создании снапшота')
+            msg = _('Error: create snapshot')
+            errors.append(msg)
       if request.POST.get('auto_on',''):
          try:
             msg = _('Enable autostart for VM: ')
