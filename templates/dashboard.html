@@ -25,8 +25,8 @@
                   <td>{% if info.4 == 1 %}<font color="green">{% trans "available" %}</font>{% else %}<font color="red">{% trans "not available" %}</font>{% endif %}</td>
                   <td style="width:30px;">{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{ info.0 }}/'">{% trans "Manage" %}</button>{% else %}<a href="#" class="btn btn-primary disabled">{% trans "Manage" %}</a>{% endif %}
                   </td>
-                  <td>
-                    <form action="/dashboard/" method="post">
+                  <td style="width:30px;">
+                    <form action="/dashboard/" method="post" style="height:10px;">
                       <input type="hidden" name="host" value="{{name}}">
                       <button type="submit" class="btn btn-danger" name="delete" value="delete" title="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-trash icon-white"></i></button>
                     </form>
