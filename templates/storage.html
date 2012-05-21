@@ -84,9 +84,10 @@
 				<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px; width:200px;">
         				<div class="bar" style="width: {{ info.4 }}%"><font color="black">{{ info.4 }}%</font></div>
         		</div>
-				<form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+				<form action="/storage/{{ host_id }}/{{ pool }}/" method="post" style="height:10px;">
 					{% if status = 0 %}
 					<button type="submit" class="btn btn-primary" name="start_pool" value="start_pool" title="{% trans "Enable" %}"><i class="icon-play icon-white"></i></button>
+					<button type="submit" class="btn btn-danger" name="del_pool" value="del_pool" title="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-trash icon-white"></i></button>
 					{% else %}
 					<button type="submit" class="btn btn-primary" name="stop_pool" value="stop_pool" title="{% trans "Disable" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-stop icon-white"></i></button>
 					{% endif %}
@@ -94,11 +95,6 @@
 			</div>
 			{% endif %}
 		</div>
-		{% if status = 0 %}
-        <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
-			<button type="submit" class="btn btn-danger" name="del_pool" value="del_pool" title="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-trash icon-white"></i></button>
-		</form>
-		{% endif %}
 	  {% if volinfo %}
 	  <hr>
       <div class="page-header">
