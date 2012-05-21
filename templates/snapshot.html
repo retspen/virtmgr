@@ -50,7 +50,7 @@
         <br>
         <h4>{% trans "You have no snapshots" %}</h4>
         {% else %}
-          <table class="table table-condensed">
+          <table class="table table-condensed" style="width:650px;">
             <thead>
               <tr>
                 <th>{% trans "Name" %}</th>
@@ -73,7 +73,7 @@
                       {% endif %}
                     </form>
                   </td>
-                  <td>
+                  <td style="width:30px;">
                     <form action="/snapshot/{{ host_id }}/{{ vname }}/" method="post">
                       <input type="hidden" name="name" value="{{ name }}">
                       <button type="submit" class="btn btn-danger" name="delete" value="delete" title="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-trash icon-white"></i></button>

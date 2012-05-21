@@ -80,7 +80,7 @@
                 	<td><a href="/vm/{{ host_id }}/{{ name }}/"><strong>{{ name }}</strong></a></td>
                 	<td>{% if state == 1 %}<font color="green">{% trans "power on" %}</font>{% endif %}{% if state == 5 %}<font color="red">{% trans "power off" %}</font>{% endif %}{% if state == 3 %}<font color="orange">{% trans "suspend" %}</font>{% endif %}</td>
                 	<td>
-                		<form action="/overview/{{ host_id }}/" method="post">
+                		<form action="/overview/{{ host_id }}/" method="post" style="height:10px;">
                 			<input type="hidden" name="vname" value="{{ name }}" />
 			                {% if state = 5 %}
 			                 <button class="btn btn-primary" type="submit" name="start" value="start" title="{% trans "Start VM" %}"><i class="icon-play icon-white"></i></button>
@@ -100,8 +100,8 @@
 			                 <button class="btn btn-primary" type="submit" name="shutdown" value="suspend" title="{% trans "Shutdown" %}" onclick="return confirm('{% trans "Send shutdown signal?" %}')"><i class="icon-stop icon-white"></i></button>
 			                 <button class="btn btn-primary" type="submit" name="destroy" value="destroy" title="{% trans "Force shutdown" %}" onclick="return confirm('{% trans "Force shutdown?" %}')"><i class="icon-off icon-white"></i></button>
 			                {% endif %}
-			             </form>
-			          </td>
+			            </form>
+			        </td>
                 </tr>
                 {% endfor %}
           	</tbody>

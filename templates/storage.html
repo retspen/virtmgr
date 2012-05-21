@@ -104,7 +104,7 @@
       <div class="page-header">
           <h3>{% trans "Images" %}</h3>
         </div>
-	  <table class="table table-condensed">
+	  <table class="table table-condensed" style="width:650px;">
 		  <thead>
 	    	<tr>
 	    		<th>{% trans "Name" %}</th>
@@ -143,8 +143,8 @@
 		         	</div>				  	
 		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled"><i class="icon-th icon-white"></i></a>{% else %}<a data-toggle="modal" href="#myModalclone{{ forloop.counter }}" class="btn btn-primary"><i class="icon-th icon-white"></i></a>{% endif %}
 				  </td>	
-				  <td>
-					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post">
+				  <td style="width:30px;">
+					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post" style="height:10px;">
 					  	<input type="hidden" name="img" value="{{ name }}">
 						<button type="submit" class="btn btn-danger" name="vol_del" value="vol_del" title="{% trans "Delete" %}" onclick="return confirm('{% trans "Are you sure?" %}')"><i class="icon-trash icon-white"></i></button>
 					  </form>
