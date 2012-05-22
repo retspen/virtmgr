@@ -11,7 +11,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active',)    
 
 class HostAdmin(admin.ModelAdmin):
-    list_display = ('hostname', 'ipaddr', 'login', 'user')
+    list_display = ('hostname', 'ipaddr', 'user', 'state')
     
 class LogAdmin(admin.ModelAdmin):
     list_display = ('type', 'message', 'date', 'user')

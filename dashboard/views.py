@@ -39,8 +39,7 @@ def index(request):
 					 ipaddr=ip, 
 					 login=usr, 
 					 passwd=passw,
-					 state=0,
-					 snd_mail=0
+					 state=0
 					 )
 		hosts.save()
 		kvm_host = Host.objects.get(user=request.user.id, hostname=host)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 15:27+0300\n"
+"POT-Creation-Date: 2012-05-22 16:16+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -18,43 +18,43 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: dashboard/views.py:47
+#: dashboard/views.py:46
 msgid "Add server: "
 msgstr "Добавление сервера: "
 
-#: dashboard/views.py:80
+#: dashboard/views.py:79
 msgid "IP address can not be a private address space"
 msgstr "IP адрес не может быть частным адресным пространством"
 
-#: dashboard/views.py:83
+#: dashboard/views.py:82
 msgid "The host name must not exceed 20 characters"
 msgstr "Имя хоста не должно превышать 20 символов"
 
-#: dashboard/views.py:86
+#: dashboard/views.py:85
 msgid "IP address must contain only numbers separated by \".\""
 msgstr "IP адрес должен содержать только цифры разделенные \".\""
 
-#: dashboard/views.py:89
+#: dashboard/views.py:88
 msgid "The host name must not contain any characters and Russian characters"
 msgstr "Имя хоста не должно содержать символы и русские буквы"
 
-#: dashboard/views.py:95
+#: dashboard/views.py:94
 msgid "This host is already connected"
 msgstr "Такой хост уже подключен"
 
-#: dashboard/views.py:98
+#: dashboard/views.py:97
 msgid "No hostname has been entered"
 msgstr "Не было введено имя хоста"
 
-#: dashboard/views.py:101
+#: dashboard/views.py:100
 msgid "No IP address has been entered"
 msgstr "Не был введен IP адрес"
 
-#: dashboard/views.py:104
+#: dashboard/views.py:103
 msgid "No KVM login was been entered"
 msgstr "Не был введен KVM логин"
 
-#: dashboard/views.py:107
+#: dashboard/views.py:106
 msgid "No KVM password was been entered "
 msgstr "Не был введен KVM пароль"
 
