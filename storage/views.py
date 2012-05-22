@@ -198,7 +198,10 @@ def pool(request, host_id, pool):
 	def get_stg_info(get):
 		try:
 			if get == "info":
-				percent = (stg.info()[2] * 100) / stg.info()[3]
+				if stg.info()[3] == 0:
+					percent = 0
+				else:
+					percent = (stg.info()[2] * 100) / stg.info()[3]
 				stg_info = stg.info()
 				stg_info.append(percent)
 				return stg_info
