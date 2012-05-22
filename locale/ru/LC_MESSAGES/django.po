@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Anatoliy Guskov <anatoliy.guskov@gmail.com>, 2012.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-21 10:09+0300\n"
+"POT-Creation-Date: 2012-05-22 15:27+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -19,39 +18,43 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: dashboard/views.py:45
+#: dashboard/views.py:47
 msgid "Add server: "
 msgstr "Добавление сервера: "
 
-#: dashboard/views.py:74
+#: dashboard/views.py:80
+msgid "IP address can not be a private address space"
+msgstr "IP адрес не может быть частным адресным пространством"
+
+#: dashboard/views.py:83
 msgid "The host name must not exceed 20 characters"
 msgstr "Имя хоста не должно превышать 20 символов"
 
-#: dashboard/views.py:77
+#: dashboard/views.py:86
 msgid "IP address must contain only numbers separated by \".\""
 msgstr "IP адрес должен содержать только цифры разделенные \".\""
 
-#: dashboard/views.py:80
+#: dashboard/views.py:89
 msgid "The host name must not contain any characters and Russian characters"
 msgstr "Имя хоста не должно содержать символы и русские буквы"
 
-#: dashboard/views.py:86
+#: dashboard/views.py:95
 msgid "This host is already connected"
 msgstr "Такой хост уже подключен"
 
-#: dashboard/views.py:89
+#: dashboard/views.py:98
 msgid "No hostname has been entered"
 msgstr "Не было введено имя хоста"
 
-#: dashboard/views.py:92
+#: dashboard/views.py:101
 msgid "No IP address has been entered"
 msgstr "Не был введен IP адрес"
 
-#: dashboard/views.py:95
+#: dashboard/views.py:104
 msgid "No KVM login was been entered"
 msgstr "Не был введен KVM логин"
 
-#: dashboard/views.py:98
+#: dashboard/views.py:107
 msgid "No KVM password was been entered "
 msgstr "Не был введен KVM пароль"
 
@@ -310,12 +313,12 @@ msgstr "IP адрес"
 msgid "KVM login"
 msgstr "KVM логин"
 
-#: templates/dashboard.html:15 templates/overview.html:72
+#: templates/dashboard.html:15 templates/overview.html:71
 msgid "Status"
 msgstr "Статус"
 
-#: templates/dashboard.html:16 templates/overview.html:73
-#: templates/snapshot.html:58 templates/storage.html:113
+#: templates/dashboard.html:16 templates/overview.html:72
+#: templates/snapshot.html:58 templates/storage.html:109
 msgid "Action"
 msgstr "Действие"
 
@@ -331,17 +334,17 @@ msgstr "не доступен"
 msgid "Manage"
 msgstr "Управление"
 
-#: templates/dashboard.html:31 templates/network.html:67
-#: templates/snapshot.html:79 templates/storage.html:99
-#: templates/storage.html.py:149
+#: templates/dashboard.html:31 templates/network.html:59
+#: templates/snapshot.html:79 templates/storage.html:90
+#: templates/storage.html.py:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/dashboard.html:31 templates/network.html:60
-#: templates/network.html.py:67 templates/overview.html:99
+#: templates/dashboard.html:31 templates/network.html:59
+#: templates/network.html.py:61 templates/overview.html:97
 #: templates/snapshot.html:70 templates/snapshot.html.py:79
-#: templates/storage.html:91 templates/storage.html.py:99
-#: templates/storage.html:149 templates/vm.html:76 templates/vm.html.py:114
+#: templates/storage.html:90 templates/storage.html.py:92
+#: templates/storage.html:145 templates/vm.html:76 templates/vm.html.py:114
 #: templates/vm.html.py:130
 msgid "Are you sure?"
 msgstr "Вы уверены?"
@@ -358,12 +361,12 @@ msgstr "Подключить новый хост"
 msgid "KVM password"
 msgstr "KVM пароль"
 
-#: templates/dashboard.html:84 templates/network.html:131
+#: templates/dashboard.html:84 templates/network.html:128
 #: templates/newvm.html:198 templates/newvm.html.py:262
 #: templates/newvm.html:325 templates/newvm.html.py:388
 #: templates/newvm.html:451 templates/newvm.html.py:514
 #: templates/newvm.html:577 templates/storage.html:65
-#: templates/storage.html.py:139 templates/storage.html:196
+#: templates/storage.html.py:135 templates/storage.html:192
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -613,7 +616,7 @@ msgstr "Новый пул"
 msgid "Network pool not found"
 msgstr "Сетевые пулы не найдены"
 
-#: templates/network.html:49 templates/network.html.py:102
+#: templates/network.html:49 templates/network.html.py:99
 #: templates/storage.html:51 templates/storage.html.py:76
 msgid "Pool name"
 msgstr "Название пула"
@@ -630,50 +633,50 @@ msgstr "Состояние"
 msgid "Enable"
 msgstr "Включить"
 
-#: templates/network.html:60 templates/storage.html:91
+#: templates/network.html:61 templates/storage.html:92
 msgid "Disable"
 msgstr "Выключить"
 
-#: templates/network.html:71
+#: templates/network.html:68
 msgid "IPv4 configuration:"
 msgstr "Конфигурация IPv4:"
 
-#: templates/network.html:74 templates/network.html.py:120
+#: templates/network.html:71 templates/network.html.py:117
 msgid "Type forwarding"
 msgstr "Тип шлюза"
 
-#: templates/network.html:75 templates/network.html.py:108
+#: templates/network.html:72 templates/network.html.py:105
 msgid "Subnet pool"
 msgstr "Подсеть пула"
 
-#: templates/network.html:78
+#: templates/network.html:75
 msgid "Start"
 msgstr "Начало"
 
-#: templates/network.html:79
+#: templates/network.html:76
 msgid "End"
 msgstr "Конец"
 
-#: templates/network.html:84
+#: templates/network.html:81
 msgid "on"
 msgstr "включен"
 
-#: templates/network.html:84
+#: templates/network.html:81
 msgid "off"
 msgstr "не включен"
 
-#: templates/network.html:96
+#: templates/network.html:93
 msgid "New network pool"
 msgstr "Новый сетевой пул"
 
-#: templates/network.html:132 templates/newvm.html:60
+#: templates/network.html:129 templates/newvm.html:60
 #: templates/newvm.html.py:68 templates/newvm.html:76
 #: templates/newvm.html.py:84 templates/newvm.html:92
 #: templates/newvm.html.py:100 templates/newvm.html:199
 #: templates/newvm.html.py:263 templates/newvm.html:326
 #: templates/newvm.html.py:389 templates/newvm.html:452
 #: templates/newvm.html.py:515 templates/newvm.html:578
-#: templates/storage.html:66 templates/storage.html.py:197
+#: templates/storage.html:66 templates/storage.html.py:193
 msgid "Create"
 msgstr "Создать"
 
@@ -693,9 +696,9 @@ msgstr "Шаблоны новых ВМ"
 #: templates/newvm.html:213 templates/newvm.html.py:276
 #: templates/newvm.html:339 templates/newvm.html.py:402
 #: templates/newvm.html:465 templates/newvm.html.py:528
-#: templates/overview.html:71 templates/snapshot.html:56
-#: templates/storage.html:110 templates/storage.html.py:130
-#: templates/storage.html:178 templates/vm.html:88
+#: templates/overview.html:70 templates/snapshot.html:56
+#: templates/storage.html:106 templates/storage.html.py:126
+#: templates/storage.html:174 templates/vm.html:88
 msgid "Name"
 msgstr "Название"
 
@@ -788,50 +791,50 @@ msgstr "Тип подключения"
 msgid "Libvirt version"
 msgstr "Версия libvirt"
 
-#: templates/overview.html:81 templates/vm.html:100
+#: templates/overview.html:79 templates/vm.html:100
 msgid "power on"
 msgstr "вкючено"
 
-#: templates/overview.html:81 templates/vm.html:100
+#: templates/overview.html:79 templates/vm.html:100
 msgid "power off"
 msgstr "выключено"
 
-#: templates/overview.html:81 templates/vm.html:100
+#: templates/overview.html:79 templates/vm.html:100
 msgid "suspend"
 msgstr "приостановлено"
 
-#: templates/overview.html:86 templates/overview.html.py:98
+#: templates/overview.html:84 templates/overview.html.py:96
 #: templates/vm.html:62 templates/vm.html.py:75
 msgid "Start VM"
 msgstr "Запуск"
 
-#: templates/overview.html:87 templates/overview.html.py:93
-#: templates/overview.html:99 templates/vm.html:63 templates/vm.html.py:69
+#: templates/overview.html:85 templates/overview.html.py:91
+#: templates/overview.html:97 templates/vm.html:63 templates/vm.html.py:69
 #: templates/vm.html.py:76
 msgid "Suspend"
 msgstr "Приостановить"
 
-#: templates/overview.html:88 templates/overview.html.py:94
-#: templates/overview.html:100 templates/vm.html:64 templates/vm.html.py:70
+#: templates/overview.html:86 templates/overview.html.py:92
+#: templates/overview.html:98 templates/vm.html:64 templates/vm.html.py:70
 #: templates/vm.html.py:77
 msgid "Shutdown"
 msgstr "Выключить"
 
-#: templates/overview.html:89 templates/overview.html.py:95
-#: templates/overview.html:101 templates/vm.html:65 templates/vm.html.py:71
+#: templates/overview.html:87 templates/overview.html.py:93
+#: templates/overview.html:99 templates/vm.html:65 templates/vm.html.py:71
 #: templates/vm.html.py:78
 msgid "Force shutdown"
 msgstr "Завершить"
 
-#: templates/overview.html:92 templates/vm.html:68
+#: templates/overview.html:90 templates/vm.html:68
 msgid "Resume"
 msgstr "Возобновить"
 
-#: templates/overview.html:100 templates/vm.html:77
+#: templates/overview.html:98 templates/vm.html:77
 msgid "Send shutdown signal?"
 msgstr "Послать сигнал выключения?"
 
-#: templates/overview.html:101 templates/vm.html:78
+#: templates/overview.html:99 templates/vm.html:78
 msgid "Force shutdown?"
 msgstr "Выключить принудительно?"
 
@@ -876,36 +879,36 @@ msgstr "Путь пула"
 msgid "Storage pools not found"
 msgstr "Пулы хранилища не найдены"
 
-#: templates/storage.html:78 templates/storage.html.py:111
-#: templates/storage.html:184
+#: templates/storage.html:78 templates/storage.html.py:107
+#: templates/storage.html:180
 msgid "Size"
 msgstr "Размер"
 
-#: templates/storage.html:105
+#: templates/storage.html:101
 msgid "Images"
 msgstr "Образы"
 
-#: templates/storage.html:112
+#: templates/storage.html:108
 msgid "Format"
 msgstr "Формат"
 
-#: templates/storage.html:124
+#: templates/storage.html:120
 msgid "Clone image"
 msgstr "Клонирование образа"
 
-#: templates/storage.html:140
+#: templates/storage.html:136
 msgid "Clone"
 msgstr "Клонировать"
 
-#: templates/storage.html:158
+#: templates/storage.html:154
 msgid "No images or pool is not active"
 msgstr "Как либо образы отсутствуют или пул не активен"
 
-#: templates/storage.html:172 templates/storage.html.py:201
+#: templates/storage.html:168 templates/storage.html.py:197
 msgid "New image"
 msgstr "Новый образ"
 
-#: templates/storage.html:188
+#: templates/storage.html:184
 msgid "Gb"
 msgstr "ГБ"
 
@@ -1043,14 +1046,12 @@ msgid "Create snapshot for VM: "
 msgstr "Создание снапшота для ВМ: "
 
 #: vm/views.py:425
-#, fuzzy, python-format
-msgid "Successful create snapshot for VM: %s"
-msgstr "Успешное восстановление снапшота: "
+msgid "Successful create snapshot"
+msgstr "Успешное создание снапшота"
 
 #: vm/views.py:429
-#, fuzzy
 msgid "Error: create snapshot"
-msgstr "Создать снапшот"
+msgstr "Ошибка: Создания снапшота"
 
 #: vm/views.py:433
 msgid "Enable autostart for VM: "
@@ -1063,18 +1064,3 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:464
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#~ msgid "Save state VM: "
-#~ msgstr "Сохранение состояния ВМ: "
-
-#~ msgid "Error: VM state alredy saved"
-#~ msgstr "Ошибка: возможно виртуальная машина уже сохранена"
-
-#~ msgid "Reboot VM: "
-#~ msgstr "Перезагрузка ВМ: "
-
-#~ msgid "Error: VM reboot"
-#~ msgstr "Ошибка: возникли проблемы при перезагрузке"
-
-#~ msgid "Autostart"
-#~ msgstr "Автозапуск"

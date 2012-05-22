@@ -6,6 +6,8 @@ class Host(models.Model):
     ipaddr = models.CharField(max_length=16)
     login = models.CharField(max_length=20)
     passwd = models.CharField(max_length=20)
+    state = models.IntegerField()
+    #snd_mail = models.IntegerField()
     user = models.ForeignKey(User)
 
     def __unicode__(self):

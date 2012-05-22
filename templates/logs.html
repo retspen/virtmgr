@@ -51,7 +51,7 @@
                 {% for name in all_logs %}
                 <tr>
                   <td>{{ forloop.counter }}</td>
-                  <td><font color="{% if name.type == "user"%}green{% else %}red{% endif %}">{{ name.type }}</font></td>
+                  <td><font color="{% if name.type == "user"%}green{% endif %}{% if name.type == "libvirt"%}red{% endif %}{% if name.type == "scheduler"%}orange{% endif %}">{{ name.type }}</font></td>
                   <td>{{ name.message }}</td>
                   <td>{{ name.date|date:"M d H:i:s" }}</td>
                 </tr>
