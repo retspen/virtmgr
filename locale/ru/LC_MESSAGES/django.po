@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 16:16+0300\n"
+"POT-Creation-Date: 2012-05-23 14:06+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgid ""
 "characters"
 msgstr "Название сетевого пула не должно содержать символы и русские буквы"
 
-#: network/views.py:309 storage/views.py:345
+#: network/views.py:309 storage/views.py:348
 msgid "Enter the name of the pool"
 msgstr "Введите название пула"
 
@@ -76,7 +76,7 @@ msgstr "Введите название пула"
 msgid "Enter the IP subnet"
 msgstr "Введите IP подсеть"
 
-#: network/views.py:321 storage/views.py:352
+#: network/views.py:321 storage/views.py:355
 msgid "Such a pool already exists"
 msgstr "Возможно пул с такими данными существует"
 
@@ -194,21 +194,21 @@ msgstr "Восстановление снапшота ВМ: "
 msgid "Successful revert snapshot: "
 msgstr "Успешное восстановление снапшота: "
 
-#: storage/views.py:339
+#: storage/views.py:342
 msgid "The name of the storage pool must not exceed 20 characters"
 msgstr "Название пула хранилища не должно превышать 20 символов"
 
-#: storage/views.py:342
+#: storage/views.py:345
 msgid ""
 "The name of the storage pool must not contain any characters and Russian "
 "characters"
 msgstr "Название пула хранилища не должно содержать символы и русские буквы"
 
-#: storage/views.py:348
+#: storage/views.py:351
 msgid "Enter the path of the pool"
 msgstr "Введите путь пула"
 
-#: storage/views.py:358
+#: storage/views.py:361
 msgid ""
 "Pool is created, but when I run the pool fails, you may specify the path "
 "does not exist"
@@ -216,56 +216,56 @@ msgstr ""
 "Пул создан, но при запуске пула возникла ошибка, возможно указан не "
 "существующий путь"
 
-#: storage/views.py:362
+#: storage/views.py:365
 msgid "Creating a storage pool: "
 msgstr "Создание пула хранилища: "
 
-#: storage/views.py:370
+#: storage/views.py:373
 msgid "Stop storage pool: "
 msgstr "Остановка пула хранилища: "
 
-#: storage/views.py:376
+#: storage/views.py:379
 msgid "Start storage pool: "
 msgstr "Запуск пула хранилища: "
 
-#: storage/views.py:382
+#: storage/views.py:385
 msgid "Delete storage pool: "
 msgstr "Удаление пула хранилища: "
 
-#: storage/views.py:389
+#: storage/views.py:392
 msgid "Delete image: "
 msgstr "Удаление образа: "
 
-#: storage/views.py:398 storage/views.py:424
+#: storage/views.py:401 storage/views.py:427
 msgid "The name of the images must not exceed 20 characters"
 msgstr "Название образа не должно превышать 20 символов"
 
-#: storage/views.py:401 storage/views.py:427
+#: storage/views.py:404 storage/views.py:430
 msgid ""
 "The name of the image must not contain any characters and Russian characters"
 msgstr "Название образ не должно содержать символы и русские буквы"
 
-#: storage/views.py:404 storage/views.py:421
+#: storage/views.py:407 storage/views.py:424
 msgid "Enter image name"
 msgstr "Введите имя образа"
 
-#: storage/views.py:407
+#: storage/views.py:410
 msgid "Enter image size"
 msgstr "Введите размер образа"
 
-#: storage/views.py:411
+#: storage/views.py:414
 msgid "Create image: "
 msgstr "Создание образа: "
 
-#: storage/views.py:430
+#: storage/views.py:433
 msgid "The image of the same name already exists"
 msgstr "Образ с таким именем уже существует"
 
-#: storage/views.py:433
+#: storage/views.py:436
 msgid "You can only clone a virtual machine images"
 msgstr "Клонировать можно только образы виртуальных машин"
 
-#: storage/views.py:437
+#: storage/views.py:440
 msgid "Cloning image: "
 msgstr "Клонирование образа: "
 

@@ -137,7 +137,7 @@
 		              </form>
 		            </div>
 		         	</div>				  	
-		          	{% if info.1 == "iso" %}<a class="btn btn-primary disabled"><i class="icon-th icon-white"></i></a>{% else %}<a data-toggle="modal" href="#myModalclone{{ forloop.counter }}" class="btn btn-primary"><i class="icon-th icon-white"></i></a>{% endif %}
+		          	{% if info.1 == "qcow2" %}<a data-toggle="modal" href="#myModalclone{{ forloop.counter }}" class="btn btn-primary"><i class="icon-th icon-white"></i></a>{% else %}<a class="btn btn-primary disabled"><i class="icon-th icon-white"></i></a>{% endif %}
 				  </td>	
 				  <td style="width:30px;">
 					  <form action="/storage/{{ host_id }}/{{ pool }}/" method="post" style="height:10px;">
