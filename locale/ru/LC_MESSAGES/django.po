@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-23 14:06+0300\n"
+"POT-Creation-Date: 2012-05-24 11:31+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -269,27 +269,32 @@ msgstr "Клонировать можно только образы виртуа
 msgid "Cloning image: "
 msgstr "Клонирование образа: "
 
-#: templates/base.html:47 templates/features.html:5
+#: templates/base.html:48 templates/features.html:5
 msgid "Features"
 msgstr "Особенности"
 
-#: templates/base.html:48 templates/screenshot.html:12
+#: templates/base.html:49 templates/screenshot.html:12
 msgid "Screenshots"
 msgstr "Скриншоты"
 
-#: templates/base.html:49 templates/docs.html:5
+#: templates/base.html:50 templates/docs.html:5
 msgid "Docs"
 msgstr "Документация"
 
-#: templates/base.html:50 templates/support.html:12
+#: templates/base.html:51 templates/support.html:12
 msgid "Support"
 msgstr "Поддержка"
 
-#: templates/base.html:57
+#: templates/base.html:58 templates/registration/password_change_form.html:7
+#, fuzzy
+msgid "Change password"
+msgstr "Новый пароль"
+
+#: templates/base.html:59
 msgid "Sign out"
 msgstr "Выйти"
 
-#: templates/base.html:62 templates/registration/login.html:20
+#: templates/base.html:64 templates/registration/login.html:20
 msgid "Sign in"
 msgstr "Войти"
 
@@ -1004,9 +1009,14 @@ msgstr "Забыли пароль?"
 msgid "Logout"
 msgstr "Выход"
 
+#: templates/registration/password_change_done.html:7
 #: templates/registration/password_reset_complete.html:7
 msgid "Your password was successfully changed."
 msgstr "Ваш пароль успешно изменен."
+
+#: templates/registration/password_change_form.html:12
+msgid "Change"
+msgstr ""
 
 #: templates/registration/password_reset_confirm.html:6
 #: templates/registration/password_reset_form.html:14

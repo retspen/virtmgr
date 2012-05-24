@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     # Users
     url(r'^user/register/$', 'registration.views.register', {'form_class': RegistrationFormUniqueEmail, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
     url(r'^user/', include('registration.urls')),
-    url(r'^user/profile/$', include('registration.urls')),
 
     # Static pages
     url(r'^$', 'virtmgr.pages.views.index'),

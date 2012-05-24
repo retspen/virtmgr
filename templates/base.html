@@ -50,11 +50,12 @@
               <li><a href="/docs">{% trans "Docs" %}</a></li>
               <li><a href="/support">{% trans "Support" %}</a></li>
             </ul>
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated or user.is_authenticated %}
               <ul class="nav pull-right">
                 <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{ request.user }}<b class="caret"></b></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {% if request.user %}{{ request.user }}{% else %}{{ user }}{% endif %}<b class="caret"></b></a>
                   <ul class="dropdown-menu">
+                    <li><a href="/user/password/change">{% trans "Change password" %}</a></li>
                     <li><a href="/user/logout">{% trans "Sign out" %}</a></li>
                   </ul>
                 </li>
