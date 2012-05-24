@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-24 11:31+0300\n"
+"POT-Creation-Date: 2012-05-24 12:10+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -1013,6 +1013,11 @@ msgstr "Выход"
 #: templates/registration/password_reset_complete.html:7
 msgid "Your password was successfully changed."
 msgstr "Ваш пароль успешно изменен."
+
+#: templates/registration/password_change_done.html:8
+#: templates/registration/password_reset_done.html:8
+msgid "Go to home page"
+msgstr "Перейти на главную страницу"
 
 #: templates/registration/password_change_form.html:12
 msgid "Change"
