@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-24 12:10+0300\n"
+"POT-Creation-Date: 2012-05-25 20:14+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -268,6 +268,14 @@ msgstr "Клонировать можно только образы виртуа
 #: storage/views.py:440
 msgid "Cloning image: "
 msgstr "Клонирование образа: "
+
+#: templates/404.html:7
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+#: templates/500.html:7
+msgid "Internal Server Error"
+msgstr "Внутренняя ошибка сервера"
 
 #: templates/base.html:48 templates/features.html:5
 msgid "Features"
