@@ -4,7 +4,9 @@
    <div class="container">
       <div class="hero-unit">
         <h1>Web Virtual Manager</h1><br>
-         <p>{% trans "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web interface for managing virtual machines. It allows you to create and configure new domains, and adjust a domain's resource allocation. A VNC viewer over a SSH tunnel presents a full graphical console to the guest domain. <strong>KVM</strong> is currently the only hypervisor supported" %}</p><br>
+         <p>{% trans "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web interface for managing virtual machines. It allows you to create and configure new domains, and adjust a domain's resource allocation. A VNC viewer over a SSH tunnel presents a full graphical console to the guest domain. <strong>KVM</strong> is currently the only hypervisor supported" %}</p>
+         <br />
+         <br />
         <p><a class="btn btn-success btn-large" href="/user/register"><strong>{% trans "Sign up" %}</strong></a></p>
         <div id="bigModal" class="modal hide fade">
 		    <div class="modal-header">
@@ -20,16 +22,16 @@
     </div>
     <div class="row">
         <div class="span4">
-          <h3>Управление</h3>
-           <p>Для работы с сервисом вам понадобится любой дистрибутив linux и стандартный набор пакетов для управления виртуализацией. Для настройки и работы вам не нужны навыки системного администратора.</p>
+          <h3>Простота использования </h3>
+           <p>Для работы с сервисом вам понадобится ОС Linux и веб-браузер с установленным Java плагином. Интуитивно понятный веб-интерфейс с которым может справится любой системный администратор с любой квалификацией.</p>
         </div>
         <div class="span4">
           <h3>Безопасность</h3>
-           <p>Севрис WebVirtMgr использует для передачи логина и пароля шифрованое соединение. Сервис получает доступ только к гипервиозору KVM через библиотеку libvirt, а не ко всей ОС что повышает безопасность сервера в целом.</p>
+           <p>Сервис WebVirtMgr использует для передачи данных шифрованное соединение. Сервис получает доступ только к гипервиозору KVM через библиотеку libvirt, а не ко всей ОС что повышает безопасность сервера в целом.</p>
        </div>
         <div class="span4">
-          <h3>Логи и Снапшоты</h3>
-          <p>Вы всегда можете посмотреть что Вы и когда делали потому что все данные записываются в журнал. Для того чтобы Ваши данные не потерялись Вы всегда можете сделать снапшоты образа вашей виртуальной машины.</p>
+          <h3>Возможности</h3>
+          <p>Полный контроль над виртуализацией. Создание, выключение, установка, снапшоты - все это и не только вы можете делать с виртуальными машинами. Все ваши действия будут фиксироваться в журнале событий.</p>
         </div>
       </div>
 {% endblock %}

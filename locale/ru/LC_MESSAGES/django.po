@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-25 20:14+0300\n"
+"POT-Creation-Date: 2012-05-28 10:29+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -269,11 +269,11 @@ msgstr "Клонировать можно только образы виртуа
 msgid "Cloning image: "
 msgstr "Клонирование образа: "
 
-#: templates/404.html:7
+#: templates/404.html:8
 msgid "Page not found"
 msgstr "Страница не найдена"
 
-#: templates/500.html:7
+#: templates/500.html:8
 msgid "Internal Server Error"
 msgstr "Внутренняя ошибка сервера"
 
@@ -508,6 +508,74 @@ msgstr ""
 "manager</strong> только для браузера. Проект является <strong>абсолютно "
 "бесплатным</strong> и разрабатывается в свободное от работы время."
 
+#: templates/features.html:11
+msgid "Host system"
+msgstr "Хост система"
+
+#: templates/features.html:13 templates/features.html.py:26
+msgid "View CPU usage"
+msgstr "Просмотр загрузка ЦПУ"
+
+#: templates/features.html:14 templates/features.html.py:27
+msgid "View memory usage"
+msgstr "Просмотр загрузка памяти"
+
+#: templates/features.html:15
+msgid "Manage network pool"
+msgstr "Управление сетевым пулом"
+
+#: templates/features.html:16
+msgid "Manage storage pool"
+msgstr "Управление пулом хранилица"
+
+#: templates/features.html:17
+msgid "Manage VMs image"
+msgstr "Работа с образами ВМ"
+
+#: templates/features.html:18
+msgid "Cloning image VMs"
+msgstr "Клонирование образов ВМ"
+
+#: templates/features.html:19
+msgid "Manage snapshots"
+msgstr "Управление снапшотами"
+
+#: templates/features.html:20
+msgid "View logs"
+msgstr "Посмотр логов"
+
+#: templates/features.html:24
+msgid "Virtual machine"
+msgstr "Виртуальная машина"
+
+#: templates/features.html:28
+msgid "Manage ISO images"
+msgstr "Работа с ISO образами"
+
+#: templates/features.html:29 templates/overview.html:86
+#: templates/overview.html.py:92 templates/overview.html:98
+#: templates/vm.html:64 templates/vm.html.py:70 templates/vm.html.py:77
+msgid "Shutdown"
+msgstr "Выключить"
+
+#: templates/features.html:30 templates/overview.html:87
+#: templates/overview.html.py:93 templates/overview.html:99
+#: templates/vm.html:65 templates/vm.html.py:71 templates/vm.html.py:78
+msgid "Force shutdown"
+msgstr "Завершить"
+
+#: templates/features.html:31
+msgid "Installation"
+msgstr "Установка"
+
+#: templates/features.html:32
+msgid "VNC access"
+msgstr "VNC панель"
+
+#: templates/features.html:33
+msgid "Create snaphosts"
+msgstr "Создание снапшотов"
+
 #: templates/index.html:7
 msgid ""
 "<strong>WebVirtMgr</strong> is a <strong>libvirt</strong>-based Web "
@@ -521,18 +589,17 @@ msgstr ""
 "<strong>KVM</strong> и библиотека управления виртуализацией <strong>libvirt</"
 "strong>. Создание, установка, резервное копирование, настройка и запуск "
 "виртуальных машин реализованы в виде простого для освоения web-интерфейса. "
-"Для доступа к экрану виртуальной машины в окне браузера используется VNC-"
-"клиент"
+"Полный доступ к виртуальной машине осуществляется через VNC."
 
-#: templates/index.html:8
+#: templates/index.html:10
 msgid "Sign up"
 msgstr "Зарегистрироваться"
 
-#: templates/index.html:12
+#: templates/index.html:14
 msgid "Demo"
 msgstr "Демо"
 
-#: templates/index.html:19
+#: templates/index.html:21
 msgid "View a demo"
 msgstr "Посмотреть демо"
 
@@ -827,18 +894,6 @@ msgstr "Запуск"
 msgid "Suspend"
 msgstr "Приостановить"
 
-#: templates/overview.html:86 templates/overview.html.py:92
-#: templates/overview.html:98 templates/vm.html:64 templates/vm.html.py:70
-#: templates/vm.html.py:77
-msgid "Shutdown"
-msgstr "Выключить"
-
-#: templates/overview.html:87 templates/overview.html.py:93
-#: templates/overview.html:99 templates/vm.html:65 templates/vm.html.py:71
-#: templates/vm.html.py:78
-msgid "Force shutdown"
-msgstr "Завершить"
-
 #: templates/overview.html:90 templates/vm.html:68
 msgid "Resume"
 msgstr "Возобновить"
@@ -1013,7 +1068,7 @@ msgstr "Вход"
 msgid "Lost password?"
 msgstr "Забыли пароль?"
 
-#: templates/registration/logout.html:7
+#: templates/registration/logout.html:9
 msgid "Logout"
 msgstr "Выход"
 
