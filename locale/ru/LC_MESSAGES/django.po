@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-28 10:29+0300\n"
+"POT-Creation-Date: 2012-05-28 11:20+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -570,7 +570,7 @@ msgstr "Установка"
 
 #: templates/features.html:32
 msgid "VNC access"
-msgstr "VNC панель"
+msgstr "Доступ по VNC"
 
 #: templates/features.html:33
 msgid "Create snaphosts"
