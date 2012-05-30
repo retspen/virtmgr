@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 19:32+0300\n"
+"POT-Creation-Date: 2012-05-30 20:36+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -514,11 +514,11 @@ msgstr "Хост система"
 
 #: templates/features.html:13 templates/features.html.py:26
 msgid "View CPU usage"
-msgstr "Просмотр загрузка ЦПУ"
+msgstr "Просмотр загрузки ЦПУ"
 
 #: templates/features.html:14 templates/features.html.py:27
 msgid "View memory usage"
-msgstr "Просмотр загрузка памяти"
+msgstr "Просмотр загрузки памяти"
 
 #: templates/features.html:15
 msgid "Manage network pool"
