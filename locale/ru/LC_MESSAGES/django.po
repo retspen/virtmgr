@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-28 11:20+0300\n"
+"POT-Creation-Date: 2012-05-30 19:32+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -277,7 +277,7 @@ msgstr "Страница не найдена"
 msgid "Internal Server Error"
 msgstr "Внутренняя ошибка сервера"
 
-#: templates/base.html:48 templates/features.html:5
+#: templates/base.html:48 templates/features.html:5 templates/index.html:33
 msgid "Features"
 msgstr "Особенности"
 
@@ -602,6 +602,44 @@ msgstr "Демо"
 #: templates/index.html:21
 msgid "View a demo"
 msgstr "Посмотреть демо"
+
+#: templates/index.html:25
+msgid "Easy to use"
+msgstr "Простота использования"
+
+#: templates/index.html:26
+msgid ""
+"To work with this service you will need the OS Linux and Web browser with "
+"installed Java plug-in. An intuitive web interface, any system administrator "
+"can handle it with basic qualifications."
+msgstr ""
+"Для работы с сервисом вам понадобится ОС Linux и веб-браузер с установленным "
+"Java плагином. Интуитивно понятный веб-интерфейс с которым может справится "
+"любой системный администратор с любой квалификацией."
+
+#: templates/index.html:29
+msgid "Security"
+msgstr "Безопасность"
+
+#: templates/index.html:30
+msgid ""
+"WebVirtMgr service work with data encrypted connection. Service has access "
+"only to the KVM hypervisor via libvirt library, not to the entire OS, that "
+"improves the security of the server."
+msgstr ""
+"Сервис WebVirtMgr использует для передачи данных шифрованное соединение. "
+"Сервис получает доступ только к гипервизору KVM через библиотеку libvirt, а "
+"не ко всей ОС что повышает безопасность сервера в целом."
+
+#: templates/index.html:34
+msgid ""
+"Full control of virtualization. Creating, shutdown, installation, snapshots "
+"- all this and more you can do with your virtual machines. All your actions "
+"will be logged."
+msgstr ""
+"Полный контроль над виртуализацией. Создание, выключение, установка, "
+"снапшоты - все это и не только вы можете делать с вашими виртуальными "
+"машинами. Все ваши действия будут фиксироваться в журнале событий."
 
 #: templates/logs.html:9 templates/network.html:9 templates/newvm.html:9
 #: templates/overview.html:9 templates/snapshot.html:9
