@@ -141,7 +141,8 @@ def index(request, host_id, vname):
          hdd_fmt = util.get_xml_path(xml, "/domain/devices/disk[1]/driver/@type")
          image = re.sub('\/.*\/', '', hdd_path)
          size = dom.blockInfo(hdd_path, 0)[0]
-         return image, size, hdd_fmt
+         #return image, size, hdd_fmt
+         return hdd_path, size, hdd_fmt
       except libvirt.libvirtError as e:
          add_error(e, 'libvirt')
          return "error"
@@ -153,7 +154,8 @@ def index(request, host_id, vname):
          if cdr_path:
             image = re.sub('\/.*\/', '', cdr_path)
             size = dom.blockInfo(cdr_path, 0)[0]
-            return image, cdr_path, size
+            #return image, cdr_path, size
+            return cdr_path, cdr_path, size
          else:
             return cdr_path
       except libvirt.libvirtError as e:

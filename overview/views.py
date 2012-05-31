@@ -23,6 +23,7 @@ def index(request, host_id):
 
 	kvm_host = Host.objects.get(user=request.user.id, id=host_id)
 
+
 	def vm_conn():
 		flags = [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE]
 	  	auth = [flags, creds, None]
