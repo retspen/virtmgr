@@ -11,7 +11,6 @@
               <tr>
                 <th>{% trans "Hostname" %}</th>
                 <th>{% trans "IP address" %}</th>
-                <th>{% trans "KVM login" %}</th>
                 <th>{% trans "Status" %}</th>
                 <th colspan="2">{% trans "Action" %}</th>
               </tr>
@@ -21,9 +20,37 @@
                 <tr>
                   <td>{{ name }}</td>
                   <td>{{ info.1 }}</td>
-                  <td>{{ info.2 }}</td>
                   <td>{% if info.4 == 1 %}<font color="green">{% trans "available" %}</font>{% else %}<font color="red">{% trans "not available" %}</font>{% endif %}</td>
-                  <td style="width:30px;">{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{ info.0 }}/'">{% trans "Manage" %}</button>{% else %}<a href="#" class="btn btn-primary disabled">{% trans "Manage" %}</a>{% endif %}
+                  <td style="width:30px;">{% if not info.3 %}
+                     <div id="myModalkvm" class="modal hide fade">
+                        <div class="modal-header">
+                          <button class="close" data-dismiss="modal">&times;</button>
+                            <h3>{% trans "Authorization" %}</h3>
+                        </div>
+                     <div class="modal-body">
+                        <form class="form-horizontal" action="/overview/{{ info.0 }}/" method="post">
+                          <fieldset>
+                            <div class="control-group">
+                            <label class="control-label">{% trans "KVM login" %}</label>
+                              <div class="controls">
+                                <input type="text" name="login_kvm" class="input-large" placeholder="Name">
+                              </div>
+                            </div>
+                            <div class="control-group">
+                            <label class="control-label">{% trans "KVM password" %}</label>
+                              <div class="controls">
+                                <input type="password" name="passwd_kvm" class="input-large" placeholder="Password">
+                              </div>
+                            </div>
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+                            <input type="submit" class="btn btn-primary" name="manage" value="{% trans "Manage" %}">
+                         </form>
+                        </div>
+                      </div>   
+                    <a data-toggle="modal" href="#myModalkvm" class="btn btn-primary">{% trans "Authorization" %}</a>{% else %}{% if info.4 == 1 %}<button class="btn btn-primary" onclick="location.href='/overview/{{ info.0 }}/'">{% trans "Manage" %}</button>{% else %}<a href="#" class="btn btn-primary disabled">{% trans "Manage" %}</a>{% endif %}{% endif %}
                   </td>
                   <td style="width:30px;">
                     <form action="/dashboard/" method="post" style="height:10px;">
@@ -69,13 +96,13 @@
                 <div class="control-group">
                 <label class="control-label">{% trans "KVM login" %}</label>
                   <div class="controls">
-                    <input type="text" name="sshusr" class="input-large" placeholder="Name">
+                    <input type="text" name="sshusr" class="input-large" placeholder="{% trans "Optional" %}">
                   </div>
                 </div>
                 <div class="control-group">
                 <label class="control-label">{% trans "KVM password" %}</label>
                   <div class="controls">
-                    <input type="password" name="passw" class="input-large" placeholder="Password">
+                    <input type="password" name="passw" class="input-large" placeholder="{% trans "Optional" %}">
                   </div>
                 </div>
                 </fieldset>
@@ -86,6 +113,6 @@
              </form>
             </div>
           </div>            
-         <a data-toggle="modal" href="#myModal" class="btn btn-primary">{% trans "Add connect" %}</a>
+         <a data-toggle="modal" href="#myModal" class="btn btn-primary">{% trans "Add connect" %}</a>         
    </div>
 {% endblock %}

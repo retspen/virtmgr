@@ -56,6 +56,10 @@ def index(request):
 		for host, info in hosts.items():
 			print host, info
 
+#	if request.session['login_kvm'] or request.session['passwd_kvm']:
+#		del request.session['login_kvm']
+#		del request.session['passwd_kvm']
+
 	host_info = get_hosts_status()
 	errors = []
 
@@ -99,12 +103,12 @@ def index(request):
 			if not ipaddr:
 				msg = _('No IP address has been entered')
 				errors.append(msg)
-			if not login:
-				msg = _('No KVM login was been entered')
-				errors.append(msg)
-			if not passw:
-				msg = _('No KVM password was been entered ')
-				errors.append(msg)
+			#if not login:
+			#	msg = _('No KVM login was been entered')
+			#	errors.append(msg)
+			#if not passw:
+			#	msg = _('No KVM password was been entered ')
+			#	errors.append(msg)
 			if not errors:
 				add_host(name, ipaddr, login, passw)
 				return HttpResponseRedirect('/dashboard/')
