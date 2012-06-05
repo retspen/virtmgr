@@ -74,7 +74,7 @@ def index(request):
 			login = request.POST.get('sshusr','')
 			passw = request.POST.get('passw','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name)
-			ipsimbol = re.search('[^0-9\.]+', ipaddr)
+			ipsimbol = re.search('[^a-z0-9\.]+', ipaddr)
 			privat_ip1 = re.search('172.', ipaddr)
 			privat_ip2 = re.search('192.', ipaddr)
 			privat_ip3 = re.search('10.', ipaddr)
@@ -86,7 +86,7 @@ def index(request):
 				msg = _('The host name must not exceed 20 characters')
 				errors.append(msg)
 			if ipsimbol:
-				msg = _('IP address must contain only numbers separated by "."')
+				msg = _('Hostname must contain only numbers, or the domain name separated by "."')
 				errors.append(msg)
 			if simbol:
 				msg = _('The host name must not contain any characters and Russian characters')

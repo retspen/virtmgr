@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-31 18:16+0300\n"
+"POT-Creation-Date: 2012-06-05 15:59+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -31,8 +31,10 @@ msgid "The host name must not exceed 20 characters"
 msgstr "Имя хоста не должно превышать 20 символов"
 
 #: dashboard/views.py:89
-msgid "IP address must contain only numbers separated by \".\""
-msgstr "IP адрес должен содержать только цифры разделенные \".\""
+msgid ""
+"Hostname must contain only numbers, or the domain name separated by \".\""
+msgstr ""
+"Имя хоста должно содержать только цифры или доменное имя разделенное \".\""
 
 #: dashboard/views.py:92
 msgid "The host name must not contain any characters and Russian characters"
@@ -138,39 +140,39 @@ msgstr "Создание виртуальной машины: "
 msgid "Error connecting: Check the KVM login and KVM password"
 msgstr "Ошибка подключения: проверьте KVM логин и KVM пароль"
 
-#: overview/views.py:158 vm/views.py:387
+#: overview/views.py:159 vm/views.py:387
 msgid "Suspend VM: "
 msgstr "Приостановка ВМ: "
 
-#: overview/views.py:163 vm/views.py:392
+#: overview/views.py:164 vm/views.py:392
 msgid "Error: VM alredy suspended"
 msgstr "Ошибка: возможно виртуальная машина уже приостановлена"
 
-#: overview/views.py:168 vm/views.py:397
+#: overview/views.py:169 vm/views.py:397
 msgid "Resume VM: "
 msgstr "Возобновление ВМ: "
 
-#: overview/views.py:173 vm/views.py:402
+#: overview/views.py:174 vm/views.py:402
 msgid "Error: VM alredy resume"
 msgstr "Ошибка: возможно виртуальная машина уже возобновлена"
 
-#: overview/views.py:178 vm/views.py:407
+#: overview/views.py:179 vm/views.py:407
 msgid "Start VM: "
 msgstr "Запуск ВМ: "
 
-#: overview/views.py:183 vm/views.py:412
+#: overview/views.py:184 vm/views.py:412
 msgid "Error: VM alredy start"
 msgstr "Ошибка: возможно виртуальная машина уже запущена"
 
-#: overview/views.py:188 vm/views.py:417
+#: overview/views.py:189 vm/views.py:417
 msgid "Shutdown VM: "
 msgstr "Выключить ВМ: "
 
-#: overview/views.py:193 overview/views.py:203 vm/views.py:422 vm/views.py:432
+#: overview/views.py:194 overview/views.py:204 vm/views.py:422 vm/views.py:432
 msgid "Error: VM alredy shutdown"
 msgstr "Ошибка: возможно виртуальная машина уже выключена"
 
-#: overview/views.py:198 vm/views.py:427
+#: overview/views.py:199 vm/views.py:427
 msgid "Force shutdown VM: "
 msgstr "Принудительно выключение ВМ: "
 
@@ -306,13 +308,20 @@ msgid "Dashboard"
 msgstr "Центр управления"
 
 #: templates/dashboard.html:12 templates/dashboard.html.py:85
+#: templates/newvm.html:46 templates/newvm.html.py:113
+#: templates/newvm.html:213 templates/newvm.html.py:276
+#: templates/newvm.html:339 templates/newvm.html.py:402
+#: templates/newvm.html:465 templates/newvm.html.py:528
+#: templates/overview.html:70 templates/snapshot.html:56
+#: templates/storage.html:106 templates/storage.html.py:126
+#: templates/storage.html:174 templates/vm.html:88
+msgid "Name"
+msgstr "Название"
+
+#: templates/dashboard.html:13 templates/dashboard.html.py:91
 #: templates/overview.html:42
 msgid "Hostname"
 msgstr "Имя хоста"
-
-#: templates/dashboard.html:13 templates/dashboard.html.py:91
-msgid "IP address"
-msgstr "IP адрес"
 
 #: templates/dashboard.html:14 templates/overview.html:71
 msgid "Status"
@@ -811,16 +820,6 @@ msgstr "Новая виртуальная машина"
 msgid "Templates new VM"
 msgstr "Шаблоны новых ВМ"
 
-#: templates/newvm.html:46 templates/newvm.html.py:113
-#: templates/newvm.html:213 templates/newvm.html.py:276
-#: templates/newvm.html:339 templates/newvm.html.py:402
-#: templates/newvm.html:465 templates/newvm.html.py:528
-#: templates/overview.html:70 templates/snapshot.html:56
-#: templates/storage.html:106 templates/storage.html.py:126
-#: templates/storage.html:174 templates/vm.html:88
-msgid "Name"
-msgstr "Название"
-
 #: templates/newvm.html:47
 msgid "VCPUs"
 msgstr "VCPUs"
@@ -1181,13 +1180,3 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:479
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#, fuzzy
-#~ msgid "Connect to host"
-#~ msgstr "Подключить"
-
-#~ msgid "No KVM login was been entered"
-#~ msgstr "Не был введен KVM логин"
-
-#~ msgid "No KVM password was been entered "
-#~ msgstr "Не был введен KVM пароль"

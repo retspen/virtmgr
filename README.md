@@ -1,3 +1,8 @@
+Version 2.6:
+- bugfix
+- manual authtorization when manage host
+- fix templates
+
 Version 2.5:
 - bugfix
 - add template for new VM

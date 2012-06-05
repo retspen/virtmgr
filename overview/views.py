@@ -144,11 +144,12 @@ def index(request, host_id):
 		errors.append(msg)
 		
 	if request.method == 'POST':
-		if request.POST.get('login_kvm','') or request.POST.get('passwd_kvm',''):
-			login_kvm = request.POST.get('login_kvm','')
-			passwd_kvm = request.POST.get('passwd_kvm','')
+		login_kvm = request.POST.get('login_kvm','')
+		passwd_kvm = request.POST.get('passwd_kvm','')
+		if login_kvm or passwd_kvm:
 			request.session['login_kvm'] = login_kvm 
 			request.session['passwd_kvm'] = passwd_kvm
+			return HttpResponseRedirect('/overview/%s/' % (host_id))
 		vname = request.POST.get('vname','')
 		if vname:
 			dom = get_dom(vname)

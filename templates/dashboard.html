@@ -9,8 +9,8 @@
         <table class="table table-condensed">
             <thead>
               <tr>
+                <th>{% trans "Name" %}</th>
                 <th>{% trans "Hostname" %}</th>
-                <th>{% trans "IP address" %}</th>
                 <th>{% trans "Status" %}</th>
                 <th colspan="2">{% trans "Action" %}</th>
               </tr>
@@ -82,13 +82,13 @@
             <form class="form-horizontal" action="/dashboard/" method="post">
               <fieldset>
                 <div class="control-group">
-                <label class="control-label">{% trans "Hostname" %}</label>
+                <label class="control-label">{% trans "Name" %}</label>
                   <div class="controls">
                     <input type="text" name="name" class="input-large focused" placeholder="Name">
                   </div>
                  </div>
                 <div class="control-group">
-                <label class="control-label">{% trans "IP address" %}</label>
+                <label class="control-label">{% trans "Hostname" %}</label>
                   <div class="controls">
                     <input type="text" name="ipaddr" class="input-large" placeholder="x.x.x.x">
                   </div>
