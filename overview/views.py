@@ -104,19 +104,23 @@ def index(request, host_id):
 		try:
 			prev_idle = 0
 			prev_total = 0
-			for num in range(2):
-			        idle = conn.getCPUStats(-1,0).values()[1]
-			        total = sum(conn.getCPUStats(-1,0).values())
-			        diff_idle = idle - prev_idle
-			        diff_total = total - prev_total
-			        diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
-			        prev_total = total
-			        prev_idle = idle
-			        if num == 0: 
-		        		time.sleep(1)
-		        	else:
-		        		if diff_usage < 0:
-		        			diff_usage == 0
+			cpu = conn.getCPUStats(-1,0)
+			if type(cpu) == type(dict()):
+				for num in range(2):
+				        idle = conn.getCPUStats(-1,0).values()[1]
+				        total = sum(conn.getCPUStats(-1,0).values())
+				        diff_idle = idle - prev_idle
+				        diff_total = total - prev_total
+				        diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
+				        prev_total = total
+				        prev_idle = idle
+				        if num == 0: 
+			        		time.sleep(1)
+			        	else:
+			        		if diff_usage < 0:
+			        			diff_usage == 0
+			else:
+				diff_usage = None
 			return diff_usage
 		except libvirt.libvirtError as e:
 			add_error(e, 'libvirt')
