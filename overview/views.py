@@ -91,7 +91,7 @@ def index(request, host_id):
 		try:
 			allmem = conn.getInfo()[1] * 1048576
 			get_freemem = conn.getMemoryStats(-1,0)
-			if type(get_freemem) == type(dict()):
+			if type(get_freemem) == dict:
 				freemem = (get_freemem.values()[0] + get_freemem.values()[2] + get_freemem.values()[3]) * 1024
 			else:
 				freemem = get_freemem  * 1024
@@ -108,7 +108,7 @@ def index(request, host_id):
 			prev_idle = 0
 			prev_total = 0
 			cpu = conn.getCPUStats(-1,0)
-			if type(cpu) == type(dict()):
+			if type(cpu) == dict:
 				for num in range(2):
 				        idle = conn.getCPUStats(-1,0).values()[1]
 				        total = sum(conn.getCPUStats(-1,0).values())
