@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-06 15:31+0300\n"
+"POT-Creation-Date: 2012-06-07 08:10+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -136,43 +136,43 @@ msgstr "Введите название виртуальной машины"
 msgid "Creating a virtual machine: "
 msgstr "Создание виртуальной машины: "
 
-#: overview/views.py:147
+#: overview/views.py:150
 msgid "Error connecting: Check the KVM login and KVM password"
 msgstr "Ошибка подключения: проверьте KVM логин и KVM пароль"
 
-#: overview/views.py:163 vm/views.py:387
+#: overview/views.py:166 vm/views.py:387
 msgid "Suspend VM: "
 msgstr "Приостановка ВМ: "
 
-#: overview/views.py:168 vm/views.py:392
+#: overview/views.py:171 vm/views.py:392
 msgid "Error: VM alredy suspended"
 msgstr "Ошибка: возможно виртуальная машина уже приостановлена"
 
-#: overview/views.py:173 vm/views.py:397
+#: overview/views.py:176 vm/views.py:397
 msgid "Resume VM: "
 msgstr "Возобновление ВМ: "
 
-#: overview/views.py:178 vm/views.py:402
+#: overview/views.py:181 vm/views.py:402
 msgid "Error: VM alredy resume"
 msgstr "Ошибка: возможно виртуальная машина уже возобновлена"
 
-#: overview/views.py:183 vm/views.py:407
+#: overview/views.py:186 vm/views.py:407
 msgid "Start VM: "
 msgstr "Запуск ВМ: "
 
-#: overview/views.py:188 vm/views.py:412
+#: overview/views.py:191 vm/views.py:412
 msgid "Error: VM alredy start"
 msgstr "Ошибка: возможно виртуальная машина уже запущена"
 
-#: overview/views.py:193 vm/views.py:417
+#: overview/views.py:196 vm/views.py:417
 msgid "Shutdown VM: "
 msgstr "Выключить ВМ: "
 
-#: overview/views.py:198 overview/views.py:208 vm/views.py:422 vm/views.py:432
+#: overview/views.py:201 overview/views.py:211 vm/views.py:422 vm/views.py:432
 msgid "Error: VM alredy shutdown"
 msgstr "Ошибка: возможно виртуальная машина уже выключена"
 
-#: overview/views.py:203 vm/views.py:427
+#: overview/views.py:206 vm/views.py:427
 msgid "Force shutdown VM: "
 msgstr "Принудительно выключение ВМ: "
 

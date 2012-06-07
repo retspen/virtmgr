@@ -90,8 +90,11 @@ def index(request, host_id):
 	def get_mem_usage():
 		try:
 			allmem = conn.getInfo()[1] * 1048576
-			freemem = conn.getMemoryStats(-1,0)
-			freemem = (freemem.values()[0] + freemem.values()[2] + freemem.values()[3]) * 1024
+			get_freemem = conn.getMemoryStats(-1,0)
+			if type(get_freemem) == type(dict()):
+				freemem = (get_freemem.values()[0] + get_freemem.values()[2] + get_freemem.values()[3]) * 1024
+			else:
+				freemem = get_freemem  * 1024
 			percent = (freemem * 100) / allmem
 			percent = 100 - percent
 			memusage = (allmem - freemem)
