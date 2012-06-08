@@ -93,11 +93,12 @@ def index(request, host_id):
 			get_freemem = conn.getMemoryStats(-1,0)
 			if type(get_freemem) == dict:
 				freemem = (get_freemem.values()[0] + get_freemem.values()[2] + get_freemem.values()[3]) * 1024
+				percent = (freemem * 100) / allmem
+				percent = 100 - percent
+				memusage = (allmem - freemem)
 			else:
-				freemem = get_freemem  * 1024
-			percent = (freemem * 100) / allmem
-			percent = 100 - percent
-			memusage = (allmem - freemem)
+				memusage = None
+				percent = None
 			return allmem, memusage, percent
 		except libvirt.libvirtError as e:
 			add_error(e, 'libvirt')
