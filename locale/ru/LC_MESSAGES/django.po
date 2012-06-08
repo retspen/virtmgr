@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-07 08:10+0300\n"
+"POT-Creation-Date: 2012-06-08 10:15+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -70,11 +70,15 @@ msgstr "Введите название пула"
 msgid "Enter the IP subnet"
 msgstr "Введите IP подсеть"
 
-#: network/views.py:347 storage/views.py:381
+#: network/views.py:347
+msgid "IP subnet must be 192.168.1.0/24 or 192.168.1.0/26"
+msgstr "IP-подсеть должна быть 192.168.1.0/24 или 192.168.1.0/26"
+
+#: network/views.py:353 storage/views.py:381
 msgid "Such a pool already exists"
 msgstr "Возможно пул с такими данными существует"
 
-#: network/views.py:353
+#: network/views.py:359
 msgid ""
 "Pool is created, but when I run the pool fails, you may specify an existing "
 "network"
@@ -82,19 +86,19 @@ msgstr ""
 "Пул создан, но при запуске пула возникла ошибка, возможно указана "
 "существующая сеть"
 
-#: network/views.py:356
+#: network/views.py:362
 msgid "Creating a network pool: "
 msgstr "Создание сетевого пула: "
 
-#: network/views.py:363
+#: network/views.py:369
 msgid "Stop network pool: "
 msgstr "Остановка сетевого пула: "
 
-#: network/views.py:368
+#: network/views.py:374
 msgid "Start network pool: "
 msgstr "Запуск сетевого пула: "
 
-#: network/views.py:373
+#: network/views.py:379
 msgid "Delete network pool: "
 msgstr "Удаление сетевого пула: "
 
@@ -354,7 +358,7 @@ msgid "KVM password"
 msgstr "KVM пароль"
 
 #: templates/dashboard.html:48 templates/dashboard.html.py:111
-#: templates/network.html:128 templates/newvm.html:198
+#: templates/network.html:140 templates/newvm.html:198
 #: templates/newvm.html.py:262 templates/newvm.html:325
 #: templates/newvm.html.py:388 templates/newvm.html:451
 #: templates/newvm.html.py:514 templates/newvm.html:577
@@ -367,14 +371,14 @@ msgstr "Отмена"
 msgid "Manage"
 msgstr "Управление"
 
-#: templates/dashboard.html:58 templates/network.html:59
+#: templates/dashboard.html:58 templates/network.html:71
 #: templates/snapshot.html:79 templates/storage.html:90
 #: templates/storage.html.py:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/dashboard.html:58 templates/network.html:59
-#: templates/network.html.py:61 templates/overview.html:97
+#: templates/dashboard.html:58 templates/network.html:71
+#: templates/network.html.py:73 templates/overview.html:97
 #: templates/snapshot.html:70 templates/snapshot.html.py:79
 #: templates/storage.html:90 templates/storage.html.py:92
 #: templates/storage.html:145 templates/vm.html:76 templates/vm.html.py:114
@@ -745,64 +749,64 @@ msgstr "Сетевой пул"
 msgid "New pool"
 msgstr "Новый пул"
 
-#: templates/network.html:44
+#: templates/network.html:56
 msgid "Network pool not found"
 msgstr "Сетевые пулы не найдены"
 
-#: templates/network.html:49 templates/network.html.py:99
+#: templates/network.html:61 templates/network.html.py:111
 #: templates/storage.html:51 templates/storage.html.py:76
 msgid "Pool name"
 msgstr "Название пула"
 
-#: templates/network.html:50
+#: templates/network.html:62
 msgid "Device pool"
 msgstr "Устройство пула"
 
-#: templates/network.html:51 templates/storage.html:79 templates/vm.html:89
+#: templates/network.html:63 templates/storage.html:79 templates/vm.html:89
 msgid "State"
 msgstr "Состояние"
 
-#: templates/network.html:58 templates/storage.html:89
+#: templates/network.html:70 templates/storage.html:89
 msgid "Enable"
 msgstr "Включить"
 
-#: templates/network.html:61 templates/storage.html:92
+#: templates/network.html:73 templates/storage.html:92
 msgid "Disable"
 msgstr "Выключить"
 
-#: templates/network.html:68
+#: templates/network.html:80
 msgid "IPv4 configuration:"
 msgstr "Конфигурация IPv4:"
 
-#: templates/network.html:71 templates/network.html.py:117
+#: templates/network.html:83 templates/network.html.py:129
 msgid "Type forwarding"
 msgstr "Тип шлюза"
 
-#: templates/network.html:72 templates/network.html.py:105
+#: templates/network.html:84 templates/network.html.py:117
 msgid "Subnet pool"
 msgstr "Подсеть пула"
 
-#: templates/network.html:75
+#: templates/network.html:87
 msgid "Start"
 msgstr "Начало"
 
-#: templates/network.html:76
+#: templates/network.html:88
 msgid "End"
 msgstr "Конец"
 
-#: templates/network.html:81
+#: templates/network.html:93
 msgid "on"
 msgstr "включен"
 
-#: templates/network.html:81
+#: templates/network.html:93
 msgid "off"
 msgstr "не включен"
 
-#: templates/network.html:93
+#: templates/network.html:105
 msgid "New network pool"
 msgstr "Новый сетевой пул"
 
-#: templates/network.html:129 templates/newvm.html:60
+#: templates/network.html:141 templates/newvm.html:60
 #: templates/newvm.html.py:68 templates/newvm.html:76
 #: templates/newvm.html.py:84 templates/newvm.html:92
 #: templates/newvm.html.py:100 templates/newvm.html:199

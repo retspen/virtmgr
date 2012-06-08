@@ -337,12 +337,18 @@ def pool(request, host_id, pool):
 			if not net_addr:
 				msg = _('Enter the IP subnet')
 				errors.append(msg)
-			if not errors:
+			try:
 				netmask = IP(net_addr).strNetmask()
 				ipaddr = IP(net_addr)
 				gw_ipaddr = ipaddr[1].strNormal()
 				start_dhcp = ipaddr[2].strNormal()
 				end_dhcp = ipaddr[254].strNormal()
+			except:
+				msg = _('IP subnet must be 192.168.1.0/24 or 192.168.1.0/26')
+				errors.append(msg)
+			if errors:
+				return render_to_response('network.html', locals())
+			if not errors:
 				if create_net_pool(name_pool, forward, gw_ipaddr, netmask, dhcp, start_dhcp, end_dhcp) is "error":
 					msg = _('Such a pool already exists')
 					errors.append(msg)
