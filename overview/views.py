@@ -122,7 +122,7 @@ def index(request, host_id):
 			        		time.sleep(1)
 			        	else:
 			        		if diff_usage < 0:
-			        			diff_usage == 0
+			        			diff_usage = 0
 			else:
 				diff_usage = None
 			return diff_usage
