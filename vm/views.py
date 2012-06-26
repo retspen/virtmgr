@@ -152,7 +152,7 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          hdd_path = util.get_xml_path(xml, "/domain/devices/disk[1]/source/@file")
          hdd_fmt = util.get_xml_path(xml, "/domain/devices/disk[1]/driver/@type")
-         image = re.sub('\/.*\/', '', hdd_path)
+         #image = re.sub('\/.*\/', '', hdd_path)
          size = dom.blockInfo(hdd_path, 0)[0]
          #return image, size, hdd_fmt
          return hdd_path, size, hdd_fmt
@@ -165,7 +165,7 @@ def index(request, host_id, vname):
          xml = dom.XMLDesc(0)
          cdr_path = util.get_xml_path(xml, "/domain/devices/disk[2]/source/@file")
          if cdr_path:
-            image = re.sub('\/.*\/', '', cdr_path)
+            #image = re.sub('\/.*\/', '', cdr_path)
             size = dom.blockInfo(cdr_path, 0)[0]
             #return image, cdr_path, size
             return cdr_path, cdr_path, size
