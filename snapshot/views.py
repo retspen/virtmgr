@@ -201,7 +201,7 @@ def snapshot(request, host_id, vname):
 				snapshots[snapshot] = (datetime.fromtimestamp(int(snapshot)), dom.info()[0])
 			return snapshots
 		except libvirt.libvirtError as e:
-			add_error(e)
+			add_error(e,'libvirt')
 			return "error"
 
 	def del_snapshot(name_snap):
