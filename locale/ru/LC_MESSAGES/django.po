@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-04 19:51+0300\n"
+"POT-Creation-Date: 2012-07-17 10:10+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -140,45 +140,45 @@ msgstr "Введите название виртуальной машины"
 msgid "Creating a virtual machine: "
 msgstr "Создание виртуальной машины: "
 
-#: overview/views.py:151
-msgid "Error connecting: Check the KVM login and KVM password"
-msgstr "Ошибка подключения: проверьте KVM логин и KVM пароль"
-
-#: overview/views.py:167 vm/views.py:387
+#: overview/views.py:157 vm/views.py:387
 msgid "Suspend VM: "
 msgstr "Приостановка ВМ: "
 
-#: overview/views.py:172 vm/views.py:392
+#: overview/views.py:162 vm/views.py:392
 msgid "Error: VM alredy suspended"
 msgstr "Ошибка: возможно виртуальная машина уже приостановлена"
 
-#: overview/views.py:177 vm/views.py:397
+#: overview/views.py:167 vm/views.py:397
 msgid "Resume VM: "
 msgstr "Возобновление ВМ: "
 
-#: overview/views.py:182 vm/views.py:402
+#: overview/views.py:172 vm/views.py:402
 msgid "Error: VM alredy resume"
 msgstr "Ошибка: возможно виртуальная машина уже возобновлена"
 
-#: overview/views.py:187 vm/views.py:407
+#: overview/views.py:177 vm/views.py:407
 msgid "Start VM: "
 msgstr "Запуск ВМ: "
 
-#: overview/views.py:192 vm/views.py:412
+#: overview/views.py:182 vm/views.py:412
 msgid "Error: VM alredy start"
 msgstr "Ошибка: возможно виртуальная машина уже запущена"
 
-#: overview/views.py:197 vm/views.py:417
+#: overview/views.py:187 vm/views.py:417
 msgid "Shutdown VM: "
 msgstr "Выключить ВМ: "
 
-#: overview/views.py:202 overview/views.py:212 vm/views.py:422 vm/views.py:432
+#: overview/views.py:192 overview/views.py:202 vm/views.py:422 vm/views.py:432
 msgid "Error: VM alredy shutdown"
 msgstr "Ошибка: возможно виртуальная машина уже выключена"
 
-#: overview/views.py:207 vm/views.py:427
+#: overview/views.py:197 vm/views.py:427
 msgid "Force shutdown VM: "
 msgstr "Принудительно выключение ВМ: "
+
+#: overview/views.py:219
+msgid "Error connecting: Check the KVM login and KVM password"
+msgstr "Ошибка подключения: проверьте KVM логин и KVM пароль"
 
 #: snapshot/views.py:235
 msgid "Delete snapshot VM: "
@@ -292,9 +292,8 @@ msgid "Support"
 msgstr "Поддержка"
 
 #: templates/base.html:58 templates/registration/password_change_form.html:7
-#, fuzzy
 msgid "Change password"
-msgstr "Новый пароль"
+msgstr "Изменить пароль"
 
 #: templates/base.html:59
 msgid "Sign out"
@@ -382,7 +381,7 @@ msgstr "Удалить"
 #: templates/snapshot.html:70 templates/snapshot.html.py:79
 #: templates/storage.html:90 templates/storage.html.py:92
 #: templates/storage.html:145 templates/vm.html:76 templates/vm.html.py:114
-#: templates/vm.html.py:130
+#: templates/vm.html.py:134
 msgid "Are you sure?"
 msgstr "Вы уверены?"
 
@@ -1072,19 +1071,19 @@ msgstr "из"
 msgid "Disconnect"
 msgstr "Отключить"
 
-#: templates/vm.html:122
+#: templates/vm.html:123 templates/vm.html.py:125
 msgid "Connect"
 msgstr "Подключить"
 
-#: templates/vm.html:130 templates/vm.html.py:132
+#: templates/vm.html:134 templates/vm.html.py:136
 msgid "Undefine"
 msgstr "Удалить"
 
-#: templates/vm.html:136
+#: templates/vm.html:140
 msgid "To cancel the definition of a virtual machine, delete images"
 msgstr "Для того чтобы удалить виртуальную машину удалите ее"
 
-#: templates/vm.html:136
+#: templates/vm.html:140
 msgid "snapshots"
 msgstr "снапшоты"
 
@@ -1131,7 +1130,7 @@ msgstr "Перейти на главную страницу"
 
 #: templates/registration/password_change_form.html:12
 msgid "Change"
-msgstr ""
+msgstr "Изменить"
 
 #: templates/registration/password_reset_confirm.html:6
 #: templates/registration/password_reset_form.html:14
@@ -1189,6 +1188,3 @@ msgstr "Выключение автозапуска для ВМ: "
 #: vm/views.py:479
 msgid "Undefine VM: "
 msgstr "Удаление ВМ: "
-
-#~ msgid "sing in"
-#~ msgstr "вход"
