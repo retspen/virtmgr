@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-19 18:30+0300\n"
+"POT-Creation-Date: 2012-07-19 18:52+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
@@ -136,11 +136,11 @@ msgstr ""
 msgid "Enter the name of the virtual machine"
 msgstr "Введите название виртуальной машины"
 
-#: newvm/views.py:356
+#: newvm/views.py:362
 msgid "Hardware acceleration is not found"
 msgstr "Аппаратная акселерация отсутствует"
 
-#: newvm/views.py:359
+#: newvm/views.py:365
 msgid "Creating a virtual machine: "
 msgstr "Создание виртуальной машины: "
 
