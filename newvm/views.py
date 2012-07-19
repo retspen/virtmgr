@@ -352,17 +352,21 @@ def index(request, host_id):
 			msg = _('Enter the name of the virtual machine')
 			errors.append(msg)
 		if not errors:
-			if request.POST.get('hdd',''):
-				size = request.POST.get('hdd','')
-				stg_pool = request.POST.get('stg_pool','')
-				create_volume(stg_pool, name, size)
-				img = name + '.img'
-				hdd = get_img_path(img)
-			add_vm(name, setmem, cpus, machine, emul, hdd, cdrom, netbr)
-			msg = _('Creating a virtual machine: ')
-			msg = msg + name
-			add_error(msg,'user')
-			return HttpResponseRedirect('/vm/%s/%s/' % (host_id, name))
+			if add_vm(name, setmem, cpus, machine, emul, hdd, cdrom, netbr) is 'error':
+				msg = _('Hardware acceleration is not found')
+				errors.append(msg)
+			else:
+				msg = _('Creating a virtual machine: ')
+				msg = msg + name
+				add_error(msg,'user')
+				if request.POST.get('hdd',''):
+						size = request.POST.get('hdd','')
+						stg_pool = request.POST.get('stg_pool','')
+						create_volume(stg_pool, name, size)
+						img = name + '.img'
+						hdd = get_img_path(img)
+				return HttpResponseRedirect('/vm/%s/%s/' % (host_id, name))
+
 
 	conn.close()
 

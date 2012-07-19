@@ -8,8 +8,6 @@ from virtmgr.model.models import *
 
 def index(request, host_id):
 
-	""" Overview block """
-
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/user/login/')
 
