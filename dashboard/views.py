@@ -74,7 +74,7 @@ def index(request):
 			login = request.POST.get('sshusr','')
 			passw = request.POST.get('passw','')
 			simbol = re.search('[^a-zA-Z0-9\_]+', name)
-			ipsimbol = re.search('[^a-z0-9\.]+', ipaddr)
+			ipsimbol = re.search('[^a-z0-9\.\-]+', ipaddr)
 			domain = re.search('[\.]+', ipaddr)
 			privat_ip1 = re.search('^172\.', ipaddr)
 			privat_ip2 = re.search('^192\.', ipaddr)
