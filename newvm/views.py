@@ -180,7 +180,7 @@ def index(request, host_id):
 				emulator.append(util.get_xml_path(xml,"/capabilities/guest[1]/arch/emulator"))
 				emulator.append(util.get_xml_path(xml,"/capabilities/guest[2]/arch/emulator"))
 			else:
-				emulator = util.get_xml_path(xml,"/capabilities/guest[1]/arch/@name")
+				emulator = util.get_xml_path(xml,"/capabilities/guest/arch/emulator")
 			return emulator
 		except libvirt.libvirtError as e:
 			add_error(e, 'libvirt')
@@ -250,7 +250,7 @@ def index(request, host_id):
 			if arch == 'x86_64':
 				xml += """<emulator>%s</emulator>""" % (emul[1])
 			else:
-				xml += """<emulator>%s</emulator>""" % (emul[0])
+				xml += """<emulator>%s</emulator>""" % (emul)
 
 			xml += """<disk type='file' device='disk'>
 					      <driver name='qemu' type='qcow2'/>
