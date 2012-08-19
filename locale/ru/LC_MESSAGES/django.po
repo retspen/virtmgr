@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-31 18:42+0300\n"
+"POT-Creation-Date: 2012-08-19 15:55+0300\n"
 "PO-Revision-Date: 2012-05-06 14:41+0300\n"
 "Last-Translator: Anatoliy Guskov <anatoliy.guskov@gmail.com>\n"
 "Language-Team: RU <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: dashboard/views.py:46
 msgid "Add server: "
@@ -385,7 +385,7 @@ msgstr "Удалить"
 #: templates/snapshot.html:70 templates/snapshot.html.py:79
 #: templates/storage.html:90 templates/storage.html.py:92
 #: templates/storage.html:145 templates/vm.html:76 templates/vm.html.py:114
-#: templates/vm.html.py:134
+#: templates/vm.html.py:138
 msgid "Are you sure?"
 msgstr "Вы уверены?"
 
@@ -871,7 +871,7 @@ msgstr "Образ HDD"
 #: templates/newvm.html:293 templates/newvm.html.py:356
 #: templates/newvm.html:419 templates/newvm.html.py:482
 #: templates/newvm.html:545 templates/snapshot.html:20
-#: templates/storage.html:83
+#: templates/storage.html:83 templates/vm.html:122
 msgid "None"
 msgstr "Отсутствует"
 
@@ -1075,19 +1075,19 @@ msgstr "из"
 msgid "Disconnect"
 msgstr "Отключить"
 
-#: templates/vm.html:123 templates/vm.html.py:125
+#: templates/vm.html:127 templates/vm.html.py:129
 msgid "Connect"
 msgstr "Подключить"
 
-#: templates/vm.html:134 templates/vm.html.py:136
+#: templates/vm.html:138 templates/vm.html.py:140
 msgid "Undefine"
 msgstr "Удалить"
 
-#: templates/vm.html:140
+#: templates/vm.html:144
 msgid "To cancel the definition of a virtual machine, delete images"
 msgstr "Для того чтобы удалить виртуальную машину удалите ее"
 
-#: templates/vm.html:140
+#: templates/vm.html:144
 msgid "snapshots"
 msgstr "снапшоты"
 
