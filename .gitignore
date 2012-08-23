@@ -1,3 +1,4 @@
+urls.py
 settings.py
 *.pyc
 .DS_Store
