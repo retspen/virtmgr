@@ -58,6 +58,11 @@ urlpatterns = patterns('',
     url(r'^vm/(\d+)/$', 'virtmgr.vm.views.redir_two'),
     url(r'^vm/', 'virtmgr.vm.views.redir_one'),
     
+    # VNC    
+    url(r'^vnc/(\d+)/(\w+)/$', 'virtmgr.vnc.views.index'),
+    url(r'^vnc/(\d+)/$', 'virtmgr.vnc.views.redir_two'),
+    url(r'^vnc/', 'virtmgr.vnc.views.redir_one'),
+    
     # Media
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
 
