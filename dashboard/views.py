@@ -76,8 +76,8 @@ def index(request):
 			simbol = re.search('[^a-zA-Z0-9\_]+', name)
 			ipsimbol = re.search('[^a-z0-9\.\-]+', ipaddr)
 			domain = re.search('[\.]+', ipaddr)
-			privat_ip1 = re.search('^172\.', ipaddr)
-			privat_ip2 = re.search('^192\.', ipaddr)
+			privat_ip1 = re.search('^172\.16\.', ipaddr)
+			privat_ip2 = re.search('^192\.168\.', ipaddr)
 			privat_ip3 = re.search('^10\.', ipaddr)
 			privat_ip4 = re.search('^127\.', ipaddr)
 			if privat_ip1 or privat_ip2 or privat_ip3 or privat_ip4:
