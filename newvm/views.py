@@ -249,7 +249,7 @@ def index(request, host_id):
 			xml += """<disk type='file' device='disk'>
 					      <driver name='qemu' type='qcow2'/>
 					      <source file='%s'/>
-					      <target dev='hda' bus='ide'/>
+					      <target dev='sda' bus='sata'/>
 					    </disk>
 					    <disk type='file' device='cdrom'>
 					      <driver name='qemu' type='raw'/>
