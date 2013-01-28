@@ -922,7 +922,7 @@ msgstr "Версия libvirt"
 
 #: templates/overview.html:79 templates/vm.html:101
 msgid "power on"
-msgstr "вкючено"
+msgstr "включено"
 
 #: templates/overview.html:79 templates/vm.html:101
 msgid "power off"
