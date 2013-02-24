@@ -21,7 +21,7 @@ def index(request):
 				status = 1
 			except:
 				status = 2
-			name_ipddr[host.hostname] = (host.id, 
+			name_ipddr[host.id] = (host.hostname, 
 										 host.ipaddr, 
 										 host.login, 
 										 host.passwd, 
