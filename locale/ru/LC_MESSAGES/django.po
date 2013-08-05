@@ -444,7 +444,7 @@ msgstr ""
 
 #: templates/docs.html:41
 msgid "Start the daemon libvirtd"
-msgstr "Запускаем деном libvirtd"
+msgstr "Запускаем демон libvirtd"
 
 #: templates/docs.html:47
 msgid ""
